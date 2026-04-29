@@ -2,6 +2,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 import { getPosts } from "@/lib/queries";
+import { urlFor } from "../../../sanity/lib/image";
+
 
 export const metadata = {
   title: "Blog & Insights — Nguyễn Đức Quảng",
@@ -58,7 +60,7 @@ export default async function BlogPage() {
                     <div className="aspect-[16/9] bg-gradient-to-br from-blue-sky to-blue-soft flex items-center justify-center"
                       style={{ background: "var(--blue-sky)" }}>
                       {post.coverImage ? (
-                        <img src={post.coverImage} alt={post.title} className="w-full h-full object-cover"/>
+                        <img src={urlFor(post.coverImage).width(600).height(338).url()} alt={post.title} className="w-full h-full object-cover"/>
                       ) : (
                         <span className="text-[0.72rem] font-bold uppercase tracking-widest" style={{ color: "var(--blue)" }}>{post.category || "Insights"}</span>
                       )}
