@@ -28,7 +28,6 @@ export const postType = defineType({
       of: [
         { type: "block" },
         { type: "image", options: { hotspot: true } },
-        { type: "code", options: { language: "javascript" } },
       ],
     }),
     defineField({ name: "seoTitle", title: "SEO Title", type: "string" }),
