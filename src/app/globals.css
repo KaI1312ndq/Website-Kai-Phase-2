@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --blue: #2563EB;
+  --blue-deep: #0F2A5F;
+  --blue-sky: #EAF2FF;
+  --blue-soft: #D6E7FF;
+  --orange: #FF5A2A;
+  --bg: #F7F4EF;
+  --text: #111827;
+  --muted: #5B6472;
+  --white: #FFFFFF;
+  --dark: #0B1220;
+  --border: #E5E7EB;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-be-vietnam), sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Reveal animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+.reveal-d1 { transition-delay: 0.1s; }
+.reveal-d2 { transition-delay: 0.18s; }
+.reveal-d3 { transition-delay: 0.26s; }
+.reveal-d4 { transition-delay: 0.34s; }
+
+/* Section tag */
+.section-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blue);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.section-tag::before {
+  content: '';
+  width: 20px;
+  height: 2px;
+  background: var(--blue);
+}
+
+/* Portable text styles */
+.prose-ndq h2 { font-size: 1.5rem; font-weight: 700; margin: 2rem 0 1rem; }
+.prose-ndq h3 { font-size: 1.2rem; font-weight: 600; margin: 1.5rem 0 0.75rem; }
+.prose-ndq p { line-height: 1.8; margin-bottom: 1rem; color: var(--muted); }
+.prose-ndq strong { color: var(--text); font-weight: 600; }
+.prose-ndq ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
+.prose-ndq li { line-height: 1.8; color: var(--muted); margin-bottom: 0.25rem; }
+.prose-ndq a { color: var(--blue); text-decoration: underline; }
+.prose-ndq blockquote {
+  border-left: 3px solid var(--blue);
+  padding-left: 1rem;
+  font-style: italic;
+  color: var(--muted);
+  margin: 1.5rem 0;
+}
+
+/* FAQ details */
+details summary::-webkit-details-marker { display: none; }
+details[open] summary svg { transform: rotate(180deg); }
+details summary svg { transition: transform 0.2s; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--blue-soft); border-radius: 3px; }
