@@ -30,14 +30,41 @@ export default function ContactForm() {
     e.preventDefault();
     if (!form.name || !form.email || !form.phone) return;
     setState("loading");
+
+    const interestLabel: Record<string, string> = { course: "Khoá học Offline", consulting: "Tư vấn 1-1", project: "Dự án Freelance", offline: "Khoá học Offline", online: "Khoá học Online" };
+    const whoLabel: Record<string, string> = { student: "Sinh viên", fresher: "Mới đi làm", marketer: "Đang làm Marketing", other: "Khác" };
+
+    const payload = {
+      access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY,
+      subject: `[NĐQ] Liên hệ mới từ ${form.name}`,
+      from_name: `Liên hệ website · ${form.name}`,
+      botcheck: "",
+      "Họ tên": form.name,
+      Email: form.email,
+      "SĐT / Zalo": form.phone || "—",
+      "Quan tâm": interestLabel[form.interest] || form.interest || "—",
+      "Đối tượng": whoLabel[form.who] || form.who || "—",
+      "Lời nhắn": form.message || "—",
+    };
+
     try {
-      const res = await fetch("/api/contact", {
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, type: form.interest }),
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload),
       });
-      if (res.ok) setState("success");
-      else setState("error");
+      const data = await res.json().catch(() => ({} as any));
+      if (res.ok && data?.success) {
+        setState("success");
+      } else {
+        const fallback = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...form, type: form.interest }),
+        });
+        if (fallback.ok) setState("success");
+        else setState("error");
+      }
     } catch { setState("error"); }
   };
 

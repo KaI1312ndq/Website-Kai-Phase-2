@@ -37,14 +37,46 @@ export default function ApplyForm() {
     e.preventDefault();
     if (!form.name || !form.email || !form.phone) return;
     setState("loading");
+
+    const stageLabel: Record<string, string> = { student: "Sinh viên", fresher: "Mới đi làm", marketer: "Đang làm Marketing", other: "Khác" };
+    const slotLabel: Record<string, string> = { morning: "Sáng (9–11h)", afternoon: "Chiều (14–16h)", evening: "Tối (19–21h)" };
+    const commitLabel: Record<string, string> = { yes: "Có", try: "Sẽ cố gắng", no: "Chưa cam kết" };
+
+    const payload = {
+      access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY,
+      subject: `[Ecom Foundation · K1] Application — ${form.name}`,
+      from_name: `Ecom Foundation Apply · ${form.name}`,
+      botcheck: "",
+      "Họ tên": form.name,
+      Email: form.email,
+      "Zalo / SĐT": form.phone,
+      "Giai đoạn": stageLabel[form.stage] || form.stage || "—",
+      "Mục tiêu": form.goal || "—",
+      "Laptop + Excel": form.hasLaptop === "yes" ? "Có" : form.hasLaptop === "no" ? "Chưa" : "—",
+      "Cam kết tham dự": commitLabel[form.commit] || "—",
+      "Slot quick meet": slotLabel[form.slot] || form.slot || "—",
+    };
+
     try {
-      const res = await fetch("/api/course-apply", {
+      // Submit directly to Web3Forms from the browser (bypasses Cloudflare server-side block)
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload),
       });
-      if (res.ok) setState("success");
-      else setState("error");
+      const data = await res.json().catch(() => ({} as any));
+      if (res.ok && data?.success) {
+        setState("success");
+      } else {
+        // Fallback: try server-side API (for environments without NEXT_PUBLIC key)
+        const fallback = await fetch("/api/course-apply", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+        });
+        if (fallback.ok) setState("success");
+        else setState("error");
+      }
     } catch { setState("error"); }
   };
 
