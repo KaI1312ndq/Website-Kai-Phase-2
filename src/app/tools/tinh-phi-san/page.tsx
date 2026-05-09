@@ -74,20 +74,74 @@ const FAQS = [
 ];
 
 export default function Page() {
-  const jsonLd = {
+  const baseUrl = "https://nguyenducquang.website";
+  const pageUrl = `${baseUrl}/tools/tinh-phi-san`;
+
+  // 1. WebApplication — main tool
+  const appLd = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
     name: "Tính phí sàn TikTok Shop & Shopee",
     applicationCategory: "BusinessApplication",
+    applicationSubCategory: "Marketplace fee calculator",
     operatingSystem: "Web",
     description: "Công cụ tính phí sàn TikTok Shop và Shopee, so sánh Mall vs Non-Mall, áp dụng bảng phí mới 2026.",
-    url: "https://nguyenducquang.website/tools/tinh-phi-san",
+    url: pageUrl,
     inLanguage: "vi-VN",
     isAccessibleForFree: true,
-    creator: { "@type": "Person", name: "Nguyễn Đức Quảng" },
+    creator: { "@type": "Person", name: "Nguyễn Đức Quảng", url: baseUrl },
     offers: { "@type": "Offer", price: 0, priceCurrency: "VND" },
+    featureList: [
+      "Tính phí hoa hồng nền tảng theo bảng 2026",
+      "So sánh Mall vs Non-Mall đồng thời",
+      "Hỗ trợ Voucher Extra, Voucher Extra Plus, SFR, Pi Ship",
+      "Tìm ngành hàng nhanh bằng từ khoá",
+      "Tính lợi nhuận và margin trên mỗi đơn hàng",
+    ],
   };
 
+  // 2. Breadcrumb
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Trang chủ", item: baseUrl },
+      { "@type": "ListItem", position: 2, name: "Tools", item: `${baseUrl}/tools` },
+      { "@type": "ListItem", position: 3, name: "Tính phí sàn", item: pageUrl },
+    ],
+  };
+
+  // 3. HowTo — how to use the tool
+  const howToLd = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: "Cách dùng tool tính phí sàn TikTok Shop & Shopee",
+    description: "Hướng dẫn 3 bước sử dụng công cụ tính phí sàn để so sánh lợi nhuận giữa TikTok Shop và Shopee.",
+    inLanguage: "vi-VN",
+    totalTime: "PT2M",
+    step: [
+      {
+        "@type": "HowToStep",
+        position: 1,
+        name: "Nhập sản phẩm",
+        text: "Nhập giá bán, COGS (giá vốn), voucher seller áp dụng, và phí ship buyer trả. Đây là 4 thông số quyết định doanh thu thực và phí giao dịch.",
+      },
+      {
+        "@type": "HowToStep",
+        position: 2,
+        name: "Tìm ngành hàng",
+        text: "Gõ từ khoá vào ô tìm kiếm (vd 'búp bê', 'sữa rửa mặt', 'máy lọc') — tool tự match ngành cấp 1/2/3 cho cả TikTok và Shopee. Phí hoa hồng hiển thị realtime.",
+      },
+      {
+        "@type": "HowToStep",
+        position: 3,
+        name: "So sánh 4 phương án",
+        text: "Output hiện song song lợi nhuận và margin của 4 option (Shopee Non-Mall, Shopee Mall, TikTok Non-Mall, TikTok Mall). Card 'Best' highlight phương án lãi cao nhất.",
+      },
+    ],
+  };
+
+  // 4. FAQ
   const faqLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -98,12 +152,25 @@ export default function Page() {
     })),
   };
 
+  // Combined LD payload
+  const allLd = [appLd, breadcrumbLd, howToLd, faqLd];
+
   return (
     <>
       <Navbar />
       <main>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+        {allLd.map((ld, i) => (
+          <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }} />
+        ))}
+
+        {/* Visible breadcrumb (a11y + UX + small SEO boost) */}
+        <nav aria-label="Breadcrumb" className="sr-only">
+          <ol>
+            <li><Link href="/">Trang chủ</Link></li>
+            <li><Link href="/tools">Tools</Link></li>
+            <li>Tính phí sàn TikTok Shop & Shopee</li>
+          </ol>
+        </nav>
 
         {/* HERO */}
         <section className="relative overflow-hidden border-b" style={{ borderColor: "var(--line)" }}>
@@ -178,19 +245,23 @@ export default function Page() {
                 </thead>
                 <tbody style={{ color: "var(--ink-soft)" }}>
                   {[
-                    { l: "Phí hoa hồng (default)", v: ["10.5%", "13.5%", "12.5%", "15.5%"] },
-                    { l: "Phí hoa hồng (range)", v: ["~7-13%", "~10-17%", "~11.5-15%", "~13-18%"] },
+                    { l: "Phí hoa hồng (range)", v: ["7% – 13%", "10% – 17%", "11.5% – 15%", "13% – 18%"] },
                     { l: "Phí giao dịch", v: ["6%", "6%", "6%", "6%"] },
-                    { l: "Phí xử lý đơn / CSHT", v: ["3.000đ", "3.000đ", "3.000đ", "3.000đ"] },
+                    { l: "Phí xử lý đơn / CSHT", v: ["3.000đ (CSHT)", "3.000đ (CSHT)", "3.000đ", "3.000đ"] },
                     { l: "Voucher Extra", v: ["4% (cap 50k)", "4% (cap 50k)", "4% (cap 50k)", "4% (cap 50k)"] },
                     { l: "Voucher Extra Plus", v: ["—", "—", "5.5% (cap 80k)", "5.5% (cap 80k)"] },
                     { l: "SFR / Pi Ship", v: ["1.600đ Pi Ship", "1.600đ Pi Ship", "1.620đ SFR", "1.620đ SFR"] },
                     { l: "Áp dụng từ", v: ["08/05/2026", "08/05/2026", "09/05/2026", "09/05/2026"] },
-                  ].map((row, i) => (
-                    <tr key={i} style={{ borderTop: "1px solid var(--line)" }}>
+                    {
+                      l: "Tổng phí áp lên SP 500k",
+                      v: ["~75.000–110.000đ", "~95.000–130.000đ", "~85.000–115.000đ", "~100.000–130.000đ"],
+                      highlight: true,
+                    },
+                  ].map((row: any, i) => (
+                    <tr key={i} style={{ borderTop: "1px solid var(--line)", background: row.highlight ? "rgba(20,110,245,0.06)" : "transparent" }}>
                       <td className="px-4 py-3 font-semibold text-white">{row.l}</td>
-                      {row.v.map((v, j) => (
-                        <td key={j} className="px-4 py-3">{v}</td>
+                      {row.v.map((v: string, j: number) => (
+                        <td key={j} className="px-4 py-3" style={{ color: row.highlight ? "white" : undefined, fontWeight: row.highlight ? 600 : undefined }}>{v}</td>
                       ))}
                     </tr>
                   ))}
@@ -344,6 +415,34 @@ export default function Page() {
                   <p className="text-[0.95rem] leading-[1.75] mt-3 pr-8" style={{ color: "var(--ink-mute)" }}>{item.a}</p>
                 </details>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Related links — internal SEO juice */}
+        <section className="relative border-t" style={{ borderColor: "var(--line)" }}>
+          <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-12 md:py-16">
+            <div className="section-tag">Khám phá thêm</div>
+            <h2 className="t-h2 mb-8 text-white">Resources <span className="grad-text">cho seller TMĐT.</span></h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
+              <Link href="/tools" className="group glass p-6 block">
+                <div className="text-[0.62rem] font-bold uppercase tracking-[0.16em] mb-2" style={{ color: "#7da9ff" }}>Tools</div>
+                <h3 className="text-[1.05rem] font-semibold text-white mb-2 tracking-tight group-hover:grad-text transition-all">Tất cả tools</h3>
+                <p className="text-[0.88rem] leading-[1.6]" style={{ color: "var(--ink-mute)" }}>Bộ công cụ free cho seller — fee calc, ROAS calc, P&L template (sắp có).</p>
+                <div className="mt-3 text-[0.82rem] font-semibold grad-text">Xem danh sách →</div>
+              </Link>
+              <Link href="/ecom-foundation" className="group glass p-6 block">
+                <div className="text-[0.62rem] font-bold uppercase tracking-[0.16em] mb-2" style={{ color: "#7da9ff" }}>Khoá học</div>
+                <h3 className="text-[1.05rem] font-semibold text-white mb-2 tracking-tight group-hover:grad-text transition-all">Foundation Ecommerce</h3>
+                <p className="text-[0.88rem] leading-[1.6]" style={{ color: "var(--ink-mute)" }}>12 buổi · 6 tuần. Module Vận hành sàn dạy chi tiết về tư duy giá, phí sàn, tồn kho, P&L 1 năm.</p>
+                <div className="mt-3 text-[0.82rem] font-semibold grad-text">Xem khoá học →</div>
+              </Link>
+              <Link href="/blog" className="group glass p-6 block">
+                <div className="text-[0.62rem] font-bold uppercase tracking-[0.16em] mb-2" style={{ color: "#7da9ff" }}>Blog</div>
+                <h3 className="text-[1.05rem] font-semibold text-white mb-2 tracking-tight group-hover:grad-text transition-all">Insights TMĐT</h3>
+                <p className="text-[0.88rem] leading-[1.6]" style={{ color: "var(--ink-mute)" }}>Góc nhìn thực chiến về Performance Marketing, vận hành sàn và team building.</p>
+                <div className="mt-3 text-[0.82rem] font-semibold grad-text">Đọc blog →</div>
+              </Link>
             </div>
           </div>
         </section>

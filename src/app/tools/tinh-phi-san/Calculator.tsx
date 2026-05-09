@@ -11,9 +11,9 @@ const PLATFORMS: PlatformKey[] = ["shopeeNonMall", "shopeeMall", "tiktokNonMall"
 
 const DEFAULT_EXTRAS: ExtraCost[] = [
   { id: "ads", label: "Quảng cáo", mode: "percent", value: 15 },
-  { id: "marketing", label: "Marketing khác", mode: "percent", value: 5 },
-  { id: "fulfill", label: "Fulfillment", mode: "percent", value: 2 },
-  { id: "staff", label: "Nhân sự", mode: "percent", value: 1 },
+  { id: "fulfill", label: "Fulfillment", mode: "percent", value: 5 },
+  { id: "staff", label: "Nhân sự", mode: "percent", value: 10 },
+  { id: "marketing", label: "Marketing khác", mode: "percent", value: 0 },
 ];
 
 type TtVoucher = "none" | "extra" | "extraPlus";
@@ -531,28 +531,43 @@ export default function Calculator() {
 
                   <div className="mb-4 pt-4 border-t" style={{ borderColor: "rgba(255,255,255,0.10)" }}>
                     <div className="flex items-center justify-between mb-2.5">
-                      <div className="text-[0.65rem] font-bold uppercase tracking-[0.18em]" style={{ color: "rgba(255,255,255,0.5)" }}>Phí sàn</div>
+                      <div className="text-[0.65rem] font-bold uppercase tracking-[0.18em]" style={{ color: "rgba(255,255,255,0.5)" }}>
+                        Phí sàn · {pct(r.result.totalPlatformFee, price)}
+                      </div>
                       <div className="text-[0.95rem] font-bold" style={{ color: "#ff8da3" }}>-{fmt(r.result.totalPlatformFee)}đ</div>
                     </div>
                     <div className="space-y-1.5 text-[0.82rem]">
-                      <Row label={`Hoa hồng ${r.commission}%`} val={-r.result.commission} muted />
-                      <Row label={`Giao dịch ${r.config.txnRate}%`} val={-r.result.txn} muted hint={`base ${fmt(r.result.txnBase)}đ`} />
-                      <Row label="Xử lý đơn" val={-r.result.perOrder} muted />
-                      {r.result.voucherExtra > 0 && <Row label="Voucher Extra" val={-r.result.voucherExtra} muted />}
-                      {r.result.voucherExtraPlus > 0 && <Row label="Voucher Extra+" val={-r.result.voucherExtraPlus} muted />}
-                      {r.result.sfr > 0 && <Row label="SFR" val={-r.result.sfr} muted />}
-                      {r.result.piShip > 0 && <Row label="Pi Ship" val={-r.result.piShip} muted />}
+                      <Row label={`Hoa hồng ${r.commission}%`} val={-r.result.commission} muted pct={pct(r.result.commission, price)} />
+                      <Row label={`Giao dịch ${r.config.txnRate}%`} val={-r.result.txn} muted hint={`base ${fmt(r.result.txnBase)}đ`} pct={pct(r.result.txn, price)} />
+                      <Row label={isTt ? "Phí xử lý đơn" : "Phí cơ sở hạ tầng"} val={-r.result.perOrder} muted pct={pct(r.result.perOrder, price)} />
+                      {r.result.voucherExtra > 0 && <Row label="Voucher Extra" val={-r.result.voucherExtra} muted pct={pct(r.result.voucherExtra, price)} />}
+                      {r.result.voucherExtraPlus > 0 && <Row label="Voucher Extra+" val={-r.result.voucherExtraPlus} muted pct={pct(r.result.voucherExtraPlus, price)} />}
+                      {r.result.sfr > 0 && <Row label="SFR" val={-r.result.sfr} muted pct={pct(r.result.sfr, price)} />}
+                      {r.result.piShip > 0 && <Row label="Pi Ship" val={-r.result.piShip} muted pct={pct(r.result.piShip, price)} />}
+                    </div>
+                  </div>
+
+                  <div className="mb-4 pt-4 border-t" style={{ borderColor: "rgba(255,255,255,0.10)" }}>
+                    <div className="flex items-center justify-between mb-2.5">
+                      <div className="text-[0.65rem] font-bold uppercase tracking-[0.18em]" style={{ color: "rgba(255,255,255,0.5)" }}>
+                        Chi phí khác · {pct(r.result.totalExtras, price)}
+                      </div>
+                      <div className="text-[0.95rem] font-bold" style={{ color: "#ff8da3" }}>-{fmt(r.result.totalExtras)}đ</div>
+                    </div>
+                    <div className="space-y-1.5 text-[0.82rem]">
+                      {r.result.extras.map((e, j) => <Row key={j} label={e.label} val={-e.amount} muted pct={pct(e.amount, price)} />)}
                     </div>
                   </div>
 
                   <div className="pt-4 border-t" style={{ borderColor: "rgba(255,255,255,0.10)" }}>
                     <div className="flex items-center justify-between mb-2.5">
-                      <div className="text-[0.65rem] font-bold uppercase tracking-[0.18em]" style={{ color: "rgba(255,255,255,0.5)" }}>Chi phí + Vốn</div>
-                      <div className="text-[0.95rem] font-bold" style={{ color: "#ff8da3" }}>-{fmt(r.result.totalExtras + r.result.cogs)}đ</div>
+                      <div className="text-[0.65rem] font-bold uppercase tracking-[0.18em]" style={{ color: "rgba(255,255,255,0.5)" }}>
+                        Vốn · {pct(r.result.cogs, price)}
+                      </div>
+                      <div className="text-[0.95rem] font-bold" style={{ color: "#ff8da3" }}>-{fmt(r.result.cogs)}đ</div>
                     </div>
                     <div className="space-y-1.5 text-[0.82rem]">
-                      {r.result.extras.map((e, j) => <Row key={j} label={e.label} val={-e.amount} muted />)}
-                      <Row label="COGS" val={-r.result.cogs} muted />
+                      <Row label="COGS" val={-r.result.cogs} muted pct={pct(r.result.cogs, price)} />
                     </div>
                   </div>
                 </div>
@@ -570,15 +585,23 @@ export default function Calculator() {
   );
 }
 
-function Row({ label, val, muted, bold, hint }: { label: string; val: number; muted?: boolean; bold?: boolean; hint?: string }) {
+function pct(part: number, total: number) {
+  if (!total || total <= 0) return "0%";
+  return `${((part / total) * 100).toFixed(1)}%`;
+}
+
+function Row({ label, val, muted, bold, hint, pct: pctVal }: { label: string; val: number; muted?: boolean; bold?: boolean; hint?: string; pct?: string }) {
   return (
     <div className="flex items-center justify-between gap-2">
       <span style={{ color: muted ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.85)" }}>
         {label}
         {hint && <span className="ml-1 text-[0.7rem]" style={{ color: "rgba(255,255,255,0.35)" }}>· {hint}</span>}
       </span>
-      <span className={bold ? "font-bold text-white" : ""} style={{ color: muted && !bold ? "rgba(255,255,255,0.78)" : undefined }}>
-        {val < 0 ? "-" : ""}{fmt(Math.abs(val))}đ
+      <span className="flex items-baseline gap-1.5">
+        {pctVal && <span className="text-[0.68rem]" style={{ color: "rgba(255,255,255,0.4)" }}>{pctVal}</span>}
+        <span className={bold ? "font-bold text-white" : ""} style={{ color: muted && !bold ? "rgba(255,255,255,0.78)" : undefined }}>
+          {val < 0 ? "-" : ""}{fmt(Math.abs(val))}đ
+        </span>
       </span>
     </div>
   );
