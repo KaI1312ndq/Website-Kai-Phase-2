@@ -64,9 +64,9 @@ export default function ContactForm() {
   }
 
   const interests = [
-    { val: "offline", label: "Khoá học\nOffline", icon: <IconLaptop /> },
-    { val: "online", label: "Khoá học\nOnline", icon: <IconMonitor /> },
+    { val: "course", label: "Khoá học\nOffline", icon: <IconLaptop /> },
     { val: "consulting", label: "Tư vấn\n1-1", icon: <IconUserCircle /> },
+    { val: "project", label: "Dự án\nFreelance", icon: <IconMonitor /> },
   ];
   const whoOptions = [
     { val: "student", label: "Sinh viên", icon: <IconCap /> },

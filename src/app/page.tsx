@@ -37,9 +37,39 @@ const IconLinkedIn = () => <svg width="16" height="16" viewBox="0 0 24 24" fill=
 
 /* ─────────────── DATA ─────────────── */
 const stats = [
-  { icon: <IconChart />, num: 60, suffix: "+", label: "Dự án Ecommerce", sub: "Triển khai & tối ưu" },
-  { icon: <IconCoin />, num: 10, suffix: "B+", label: "Ngân sách quảng cáo", sub: "Tháng / VNĐ" },
-  { icon: <IconUsers />, num: 12, suffix: "", label: "Thành viên team", sub: "Đã xây dựng & dẫn dắt" },
+  {
+    icon: <IconChart />,
+    num: 60,
+    suffix: "+",
+    label: "Dự án Ecommerce",
+    sub: "TikTok Shop · Shopee · Meta · Google",
+    trend: "+18% YoY",
+    trendColor: "#5fffaa",
+    color: "#4ad6ff",
+    chart: "M0 28 L20 26 L40 24 L60 18 L80 22 L100 14 L120 10 L140 12 L160 6 L180 4",
+  },
+  {
+    icon: <IconCoin />,
+    num: 10,
+    suffix: "B+",
+    label: "Ngân sách / tháng",
+    sub: "Quản lý hiệu quả · ROAS >7x",
+    trend: "Tỷ VNĐ",
+    trendColor: "#7da9ff",
+    color: "#7da9ff",
+    chart: "M0 24 L20 20 L40 22 L60 16 L80 18 L100 12 L120 14 L140 8 L160 10 L180 4",
+  },
+  {
+    icon: <IconUsers />,
+    num: 12,
+    suffix: "",
+    label: "Thành viên team",
+    sub: "Tuyển dụng · Đào tạo · Dẫn dắt",
+    trend: "20+ Mentees",
+    trendColor: "#a78bff",
+    color: "#a78bff",
+    chart: "M0 26 L20 24 L40 20 L60 22 L80 16 L100 18 L120 12 L140 10 L160 8 L180 6",
+  },
 ];
 
 const pillars = [
@@ -81,7 +111,7 @@ const mentorFeatures = [
   { icon: <IconUsers />, label: "Nhóm nhỏ", val: "1–5 người" },
   { icon: <IconCalendar />, label: "Thời gian", val: "2 tháng" },
   { icon: <IconHeart />, label: "Mentoring 1-1", val: "3 tháng tiếp theo" },
-  { icon: <IconPin />, label: "Hình thức", val: "Offline HN / Online" },
+  { icon: <IconPin />, label: "Hình thức", val: "100% Offline · Hà Nội" },
 ];
 
 const marqueeWords = ["Ecommerce", "TikTok Shop", "Shopee", "Performance Marketing", "Team Builder", "Growth Strategy", "Data-Driven", "Multi-Platform"];
@@ -179,22 +209,104 @@ export default function Home() {
         </section>
 
         {/* ═══════════════ STATS ═══════════════ */}
-        <section className="relative border-y" style={{ borderColor: "var(--line)" }}>
-          <div className="max-w-[1400px] mx-auto px-6 md:px-10 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x" style={{ borderColor: "var(--line)" }}>
-            {stats.map((s, i) => (
-              <Reveal key={i} delay={i * 0.08} className="flex items-center gap-5 px-6 md:px-10 py-10">
-                <div className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "var(--grad-primary-soft)", border: "1px solid rgba(20,110,245,0.25)" }}>
-                  {s.icon}
-                </div>
+        <section className="relative">
+          <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-16 md:py-20">
+            <Reveal>
+              <div className="flex items-end justify-between flex-wrap gap-4 mb-10">
                 <div>
-                  <div className="text-[2.2rem] font-bold tracking-tight leading-none text-white">
-                    <CounterStat to={s.num} suffix={s.suffix} />
-                  </div>
-                  <div className="text-[0.95rem] font-semibold mt-1.5 text-white">{s.label}</div>
-                  <div className="text-[0.82rem]" style={{ color: "var(--ink-mute)" }}>{s.sub}</div>
+                  <div className="section-tag">By the numbers</div>
+                  <h2 className="t-h2 text-white max-w-[640px]">
+                    Không nói suông — <span className="grad-text">số liệu thật</span> từ thực chiến.
+                  </h2>
                 </div>
-              </Reveal>
-            ))}
+                <Link href="/#casestudies" className="btn btn-ghost text-[0.85rem] py-2.5">
+                  Xem case studies <span className="arrow">→</span>
+                </Link>
+              </div>
+            </Reveal>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
+              {stats.map((s, i) => (
+                <Reveal key={i} delay={i * 0.1}>
+                  <motion.div whileHover={{ y: -4 }} transition={{ type: "spring", stiffness: 260, damping: 22 }}
+                    className="relative rounded-2xl p-6 md:p-7 overflow-hidden h-full group"
+                    style={{
+                      background: "linear-gradient(180deg, rgba(20,40,90,0.45) 0%, rgba(8,16,43,0.7) 100%)",
+                      border: "1px solid rgba(255,255,255,0.10)",
+                      boxShadow: "0 16px 40px rgba(5,10,31,0.4)",
+                      backdropFilter: "blur(16px)",
+                    }}>
+                    {/* Glow on hover */}
+                    <div className="absolute -top-12 -right-12 w-40 h-40 rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                      style={{ background: `radial-gradient(circle, ${s.color}40, transparent 70%)`, filter: "blur(20px)" }} />
+
+                    {/* Top row: icon + trend badge */}
+                    <div className="relative flex items-start justify-between mb-6">
+                      <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: "rgba(20,110,245,0.12)", border: "1px solid rgba(20,110,245,0.25)" }}>
+                        {s.icon}
+                      </div>
+                      <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md" style={{ background: `${s.color}15`, border: `1px solid ${s.color}30` }}>
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke={s.color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                          <polyline points="17 6 23 6 23 12" />
+                        </svg>
+                        <span className="text-[0.7rem] font-semibold" style={{ color: s.color }}>{s.trend}</span>
+                      </div>
+                    </div>
+
+                    {/* Big number */}
+                    <div className="relative text-[3.2rem] md:text-[3.6rem] font-bold tracking-tight leading-none text-white mb-3">
+                      <CounterStat to={s.num} suffix="" />
+                      <span style={{ background: `linear-gradient(120deg, ${s.color}, var(--wf-purple))`, WebkitBackgroundClip: "text", backgroundClip: "text", WebkitTextFillColor: "transparent" }}>{s.suffix}</span>
+                    </div>
+
+                    {/* Label + sub */}
+                    <div className="relative mb-5">
+                      <div className="text-[1rem] font-semibold text-white tracking-tight">{s.label}</div>
+                      <div className="text-[0.82rem] mt-1" style={{ color: "var(--ink-mute)" }}>{s.sub}</div>
+                    </div>
+
+                    {/* Sparkline */}
+                    <div className="relative pt-4 border-t" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+                      <svg viewBox="0 0 180 32" className="w-full h-[36px]" preserveAspectRatio="none">
+                        <defs>
+                          <linearGradient id={`sparkLine${i}`} x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%" stopColor={s.color} stopOpacity="0.2" />
+                            <stop offset="100%" stopColor={s.color} stopOpacity="1" />
+                          </linearGradient>
+                          <linearGradient id={`sparkFill${i}`} x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor={s.color} stopOpacity="0.25" />
+                            <stop offset="100%" stopColor={s.color} stopOpacity="0" />
+                          </linearGradient>
+                        </defs>
+                        <path d={`${s.chart} L180 32 L0 32 Z`} fill={`url(#sparkFill${i})`} />
+                        <motion.path
+                          d={s.chart}
+                          fill="none"
+                          stroke={`url(#sparkLine${i})`}
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          initial={{ pathLength: 0 }}
+                          whileInView={{ pathLength: 1 }}
+                          viewport={{ once: true, amount: 0.6 }}
+                          transition={{ duration: 1.4, delay: 0.3 + i * 0.1, ease: "easeOut" }}
+                        />
+                        <motion.circle
+                          cx="180"
+                          cy={i === 0 ? 4 : i === 1 ? 4 : 6}
+                          r="3"
+                          fill={s.color}
+                          initial={{ opacity: 0, scale: 0 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={{ once: true, amount: 0.6 }}
+                          transition={{ delay: 1.6 + i * 0.1 }}
+                        />
+                      </svg>
+                    </div>
+                  </motion.div>
+                </Reveal>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -459,8 +571,9 @@ export default function Home() {
           <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent, rgba(20,30,80,0.4), transparent)" }} />
           <div className="blob blob-blue blob-anim" style={{ width: 600, height: 600, top: "-10%", left: "-10%" }} />
           <div className="blob blob-purple blob-anim" style={{ width: 500, height: 500, bottom: "-15%", right: "-10%", animationDelay: "3s" }} />
-          <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-28 grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-12 lg:gap-16 items-start">
-            <div>
+          <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-28">
+            {/* Header (full width) */}
+            <div className="max-w-[760px] mb-14">
               <Reveal><div className="section-tag">Chương trình Mentoring</div></Reveal>
               <Reveal delay={0.08}>
                 <h2 className="t-h1 text-white mb-5 tracking-tight">
@@ -468,10 +581,15 @@ export default function Home() {
                 </h2>
               </Reveal>
               <Reveal delay={0.14}>
-                <p className="text-[1rem] leading-[1.75] mb-7 max-w-[560px]" style={{ color: "var(--ink-soft)" }}>
+                <p className="text-[1.05rem] leading-[1.75]" style={{ color: "var(--ink-soft)" }}>
                   Chương trình mentoring 1-1 / nhóm nhỏ giúp bạn xây nền tảng Ecommerce bài bản. Không phải một khoá học về kỹ năng — mà về tư duy để gia nhập thị trường.
                 </p>
               </Reveal>
+            </div>
+
+            {/* Body 2-col */}
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-12 lg:gap-16 items-start">
+            <div>
 
               <Reveal delay={0.2}>
                 <p className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] mb-4" style={{ color: "var(--ink-mute)" }}>
@@ -563,7 +681,7 @@ export default function Home() {
                       {[
                         "2 tháng học chính + 3 tháng mentoring",
                         "Cohort nhỏ 1–5 người",
-                        "Offline Hà Nội hoặc Online",
+                        "100% Offline tại Hà Nội",
                       ].map((b) => (
                         <div key={b} className="flex items-start gap-2 text-[0.82rem]" style={{ color: "rgba(255,255,255,0.78)" }}>
                           <svg className="flex-shrink-0 mt-0.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4ad6ff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
@@ -612,6 +730,7 @@ export default function Home() {
                 </motion.div>
               </div>
             </Reveal>
+            </div>
           </div>
         </section>
 
