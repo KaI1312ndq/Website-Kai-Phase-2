@@ -100,16 +100,16 @@ const timeline = [
 ];
 
 const faqs = [
-  { q: "Khoá học này dành cho ai?", a: "Dành cho sinh viên, người mới đi làm, marketer đang muốn chuyển sang Ecom hoặc làm sâu hơn về TMĐT. Không yêu cầu kinh nghiệm trước." },
-  { q: "Học xong tôi sẽ làm được gì?", a: "Hiểu cách thị trường TMĐT VN vận hành, biết cách đọc số liệu để ra quyết định, xây được chiến lược cơ bản cho một ngành hàng, và tự tin bước vào môi trường Ecom thực tế." },
-  { q: "Khác gì so với các khoá học Ecom khác?", a: "Không dạy tool lẻ hay trick ngắn hạn. Tập trung vào tư duy — cách nhìn thị trường, cách đưa ra quyết định dựa trên data. Cohort nhỏ (1–5 người) nên mỗi buổi học thực sự là thảo luận." },
-  { q: "Phần Mentoring 3 tháng bao gồm những gì?", a: "Sau 2 tháng khoá học chính, bạn sẽ có 3 tháng tiếp tục được support 1-1 qua chat hoặc call định kỳ — review CV, định hướng career path trong Ecom." },
-  { q: "Làm thế nào để đăng ký?", a: "Nhắn tin qua email hoặc Zalo phía dưới trang. Mình sẽ trao đổi ngắn để hiểu mục tiêu của bạn trước khi confirm tham gia cohort tiếp theo." },
+  { q: "Khoá Foundation Ecommerce dành cho ai?", a: "Sinh viên muốn vào ngành TMĐT, người mới đi làm chuyển sang Ecom, marketer trẻ đang làm sàn nhưng muốn nâng tư duy. Không phù hợp nếu bạn đã hơn 3 năm Ecom expert — sẽ quá cơ bản." },
+  { q: "Lộ trình 12 buổi gồm những gì?", a: "5 module: Tư duy thị trường (2 buổi) · Chiến lược SP (1 buổi) · Vận hành sàn (2 buổi) · Performance Ads (4 buổi) · Data & Plan + Capstone (3 buổi). Mỗi buổi 2–3h, có quiz cuối buổi và bài thu hoạch Sheet. Chi tiết từng buổi xem ở trang Khoá học." },
+  { q: "Học phí bao nhiêu?", a: "Khoá 1 mở bán testing chỉ 999.000đ — giới hạn 7 học viên. Early-bird các khoá sau 2.999.000đ. Giá chuẩn 4.999.000đ. Đăng ký nhóm 2+ người giảm thêm 10%." },
+  { q: "Sau khoá có hỗ trợ gì?", a: "3 tháng mentoring 1-1 (tối thiểu 2 tuần/buổi) — career advice, CV review, technical Q&A, apply công việc. Thêm slide + template + Zalo group hỗ trợ vĩnh viễn." },
+  { q: "Apply thế nào?", a: "Vào trang Khoá học, điền application. Mình sẽ liên hệ trong 24h đặt lịch quick meet 15 phút để 2 bên cùng đánh giá phù hợp. Sau đó mới chuyển khoản — apply không phải nộp tiền là vào." },
 ];
 
 const mentorFeatures = [
-  { icon: <IconUsers />, label: "Nhóm nhỏ", val: "1–5 người" },
-  { icon: <IconCalendar />, label: "Thời gian", val: "2 tháng" },
+  { icon: <IconUsers />, label: "Lớp nhỏ", val: "1–7 người" },
+  { icon: <IconCalendar />, label: "Thời gian", val: "12 buổi · 6 tuần" },
   { icon: <IconHeart />, label: "Mentoring 1-1", val: "3 tháng tiếp theo" },
   { icon: <IconPin />, label: "Hình thức", val: "100% Offline · Hà Nội" },
 ];
@@ -159,7 +159,7 @@ export default function Home() {
                   <Link href="/#contact" className="btn btn-primary">
                     Làm việc cùng tôi <span className="arrow">→</span>
                   </Link>
-                  <Link href="/#mentoring" className="btn btn-ghost">
+                  <Link href="/ecom-foundation" className="btn btn-ghost">
                     Xem khoá Ecom Foundation <span className="arrow">→</span>
                   </Link>
                 </div>
@@ -574,15 +574,15 @@ export default function Home() {
           <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-28">
             {/* Header (full width) */}
             <div className="max-w-[760px] mb-14">
-              <Reveal><div className="section-tag">Chương trình Mentoring</div></Reveal>
+              <Reveal><div className="section-tag">Khoá học</div></Reveal>
               <Reveal delay={0.08}>
                 <h2 className="t-h1 text-white mb-5 tracking-tight">
-                  Ecom <span className="grad-text">Foundation.</span>
+                  Foundation <span className="grad-text">Ecommerce.</span>
                 </h2>
               </Reveal>
               <Reveal delay={0.14}>
                 <p className="text-[1.05rem] leading-[1.75]" style={{ color: "var(--ink-soft)" }}>
-                  Chương trình mentoring 1-1 / nhóm nhỏ giúp bạn xây nền tảng Ecommerce bài bản. Không phải một khoá học về kỹ năng — mà về tư duy để gia nhập thị trường.
+                  Khoá foundation về thương mại điện tử — 12 buổi · 6 tuần · 100% Offline Hà Nội. Xây tư duy đúng từ đầu để bước vào ngành làm thật, không học cho biết.
                 </p>
               </Reveal>
             </div>
@@ -593,16 +593,16 @@ export default function Home() {
 
               <Reveal delay={0.2}>
                 <p className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] mb-4" style={{ color: "var(--ink-mute)" }}>
-                  Nội dung chương trình (5 giai đoạn)
+                  5 module · 12 buổi · 1 capstone
                 </p>
                 <div className="flex flex-col gap-2.5 mb-9">
                   {[
-                    { num: "01", title: "Tổng quan thị trường TMĐT", items: ["Thị phần các sàn VN/SEA", "Hành vi người mua sắm online", "Omni Channel & Customer Journey"] },
-                    { num: "02", title: "Chiến lược kinh doanh Ecom", items: ["Kinh doanh TikTok Shop & Shopee", "Chiến lược sản phẩm & thị trường", "Phân tích đối thủ & định vị brand"] },
-                    { num: "03", title: "Performance Marketing", items: ["TikTok Ads từ A→Z", "Shopee Ads & Facebook Ads", "Đọc data & tối ưu campaign"] },
-                    { num: "04", title: "Vận hành & Lập kế hoạch", items: ["Lập kế hoạch & báo cáo thực chiến", "Phân tích data & đề xuất giải pháp", "Setup Ads & quản lý KOC/KOL"] },
-                    { num: "05", title: "P/L & Chiến lược dài hạn", items: ["P/L Marketplace", "Plan Digital Marketing 1 năm", "Conversion Tracking & Analytics"] },
-                  ].map((stage, i) => (
+                    { num: "M1", title: "Tư duy thị trường TMĐT", count: "2 buổi", items: ["Thương mại & Ecom hiện nay", "Sharing kinh nghiệm trainer", "Chiến lược kinh doanh đa sàn"], color: "#4ad6ff" },
+                    { num: "M2", title: "Chiến lược sản phẩm", count: "1 buổi", items: ["Phân tích đối thủ", "Định vị USP & SWOT", "Customer journey"], color: "#7da9ff" },
+                    { num: "M3", title: "Vận hành sàn", count: "2 buổi", items: ["Setup gian hàng A→Z", "Tư duy giá & phí sàn", "Tồn kho · Điểm gian hàng (Mall vs non-Mall)"], color: "#a78bff" },
+                    { num: "M4", title: "Performance Marketing", count: "4 buổi", items: ["Traffic & thuật toán", "Bộ chỉ số Marketing", "TikTok · Shopee · Facebook Ads · KOC"], color: "#ed52cb" },
+                    { num: "M5", title: "Data & Plan + Capstone", count: "3 buổi", items: ["Plan tháng/quý + IMC", "Plan 1 năm + P&L", "Phân tích data → giải pháp"], color: "#ffae13" },
+                  ].map((m, i) => (
                     <motion.div key={i}
                       initial={{ opacity: 0, x: -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
@@ -611,12 +611,15 @@ export default function Home() {
                       whileHover={{ x: 4 }}
                       className="glass px-4 py-3.5">
                       <div className="flex items-start gap-3">
-                        <span className="text-[0.78rem] font-bold flex-shrink-0 mt-0.5 grad-text">{stage.num}</span>
-                        <div>
-                          <div className="text-[0.92rem] font-semibold text-white mb-1.5 tracking-tight">{stage.title}</div>
+                        <span className="text-[0.82rem] font-bold flex-shrink-0 mt-0.5" style={{ color: m.color }}>{m.num}</span>
+                        <div className="flex-1">
+                          <div className="flex items-center justify-between gap-2 mb-1.5">
+                            <div className="text-[0.92rem] font-semibold text-white tracking-tight">{m.title}</div>
+                            <div className="text-[0.7rem] font-semibold flex-shrink-0" style={{ color: m.color }}>{m.count}</div>
+                          </div>
                           <div className="flex flex-wrap gap-1.5">
-                            {stage.items.map((item, j) => (
-                              <span key={j} className="text-[0.7rem] px-2 py-0.5 rounded-md" style={{ background: "rgba(20,110,245,0.12)", color: "#9bb6ff" }}>
+                            {m.items.map((item, j) => (
+                              <span key={j} className="text-[0.7rem] px-2 py-0.5 rounded-md" style={{ background: `${m.color}15`, color: m.color, border: `1px solid ${m.color}25` }}>
                                 {item}
                               </span>
                             ))}
@@ -643,8 +646,8 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
-                <Link href="/#contact" className="btn btn-primary">
-                  Tìm hiểu chi tiết <span className="arrow">→</span>
+                <Link href="/ecom-foundation" className="btn btn-primary">
+                  Xem chi tiết khoá học <span className="arrow">→</span>
                 </Link>
               </Reveal>
             </div>
@@ -667,7 +670,7 @@ export default function Home() {
                       <span className="text-[0.6rem] font-bold uppercase tracking-[0.16em]" style={{ color: "#7ee2ff" }}>Mở bán sớm</span>
                     </div>
 
-                    <div className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] mb-2" style={{ color: "rgba(255,255,255,0.55)" }}>Early-bird Cohort 01</div>
+                    <div className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] mb-2" style={{ color: "rgba(255,255,255,0.55)" }}>Early-bird Khoá 1</div>
 
                     <div className="flex items-baseline gap-2 mb-1">
                       <div className="text-[2.4rem] font-bold tracking-tight leading-none grad-text">2.999.000<span className="text-[0.95rem] font-normal align-top ml-1">đ</span></div>
@@ -680,7 +683,7 @@ export default function Home() {
                     <div className="space-y-2 mb-6 pb-6 border-b" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
                       {[
                         "2 tháng học chính + 3 tháng mentoring",
-                        "Cohort nhỏ 1–5 người",
+                        "Lớp nhỏ 1–5 người",
                         "100% Offline tại Hà Nội",
                       ].map((b) => (
                         <div key={b} className="flex items-start gap-2 text-[0.82rem]" style={{ color: "rgba(255,255,255,0.78)" }}>
@@ -697,7 +700,7 @@ export default function Home() {
                       Đăng ký nhóm <strong className="text-white">2+ người</strong> giảm thêm <strong className="grad-text">10%</strong>
                     </div>
 
-                    <Link href="/#contact" className="btn btn-primary w-full justify-center">
+                    <Link href="/ecom-foundation#apply" className="btn btn-primary w-full justify-center">
                       Đăng ký Early-bird <span className="arrow">→</span>
                     </Link>
                   </div>
@@ -739,7 +742,12 @@ export default function Home() {
           <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-28">
             <Reveal><div className="section-tag">FAQ</div></Reveal>
             <Reveal delay={0.08}>
-              <h2 className="t-h2 mb-12 text-white">Câu hỏi thường gặp<br />về <span className="grad-text">Mentoring.</span></h2>
+              <h2 className="t-h2 mb-3 text-white">Câu hỏi thường gặp<br />về <span className="grad-text">khoá học.</span></h2>
+            </Reveal>
+            <Reveal delay={0.14}>
+              <p className="t-caption mb-10 max-w-[520px]">
+                Câu hỏi sâu hơn về curriculum và policy — xem đầy đủ tại trang Khoá học.
+              </p>
             </Reveal>
             <div className="max-w-[760px]">
               {faqs.map((f, i) => (
@@ -757,6 +765,11 @@ export default function Home() {
                   </details>
                 </Reveal>
               ))}
+              <div className="mt-8">
+                <Link href="/ecom-foundation#faq" className="btn btn-ghost text-[0.85rem] py-2.5">
+                  Xem toàn bộ FAQ khoá học <span className="arrow">→</span>
+                </Link>
+              </div>
             </div>
           </div>
         </section>

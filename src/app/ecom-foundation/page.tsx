@@ -29,6 +29,27 @@ const IconLocation = () => <Ic d={<><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 
 const IconUsers = () => <Ic d={<><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /></>} w={16} />;
 const IconCalendar = () => <Ic d={<><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></>} w={16} />;
 
+/* Module-specific icons for curriculum cards */
+const ModuleIcon = ({ mod, color }: { mod: string; color: string }) => {
+  const props = { width: 22, height: 22, viewBox: "0 0 24 24", fill: "none", stroke: color, strokeWidth: 2, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+  switch (mod) {
+    case "M1": // Tư duy thị trường — lightbulb
+      return <svg {...props}><path d="M9 18h6M10 22h4" /><path d="M2 9a10 10 0 0120 0c0 4-3 6-3 9H5c0-3-3-5-3-9z" /></svg>;
+    case "M2": // Chiến lược SP — target
+      return <svg {...props}><circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="5" /><circle cx="12" cy="12" r="1.5" fill={color} stroke="none" /></svg>;
+    case "M3": // Vận hành sàn — store
+      return <svg {...props}><path d="M3 9l1.5-5h15L21 9" /><path d="M5 9v11a1 1 0 001 1h12a1 1 0 001-1V9" /><path d="M9 21v-6h6v6" /></svg>;
+    case "M4": // Performance — rocket / trending
+      return <svg {...props}><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" /></svg>;
+    case "M5": // Data & Plan — bar chart
+      return <svg {...props}><line x1="3" y1="20" x2="21" y2="20" /><rect x="5" y="10" width="3" height="10" /><rect x="10.5" y="6" width="3" height="14" /><rect x="16" y="13" width="3" height="7" /></svg>;
+    case "Final": // Capstone — trophy
+      return <svg {...props}><path d="M8 21h8" /><path d="M12 17v4" /><path d="M7 4h10v5a5 5 0 01-10 0V4z" /><path d="M17 6h3a2 2 0 01-2 4h-1" /><path d="M7 6H4a2 2 0 002 4h1" /></svg>;
+    default:
+      return <svg {...props}><circle cx="12" cy="12" r="9" /></svg>;
+  }
+};
+
 /* ─── PAGE ─── */
 export default function CoursePage() {
   return (
@@ -103,7 +124,7 @@ function CourseHero() {
           <Reveal delay={0.7}>
             <div className="flex gap-3 items-center flex-wrap">
               <Link href="#apply" className="btn btn-primary">
-                Đăng ký Cohort 01 — 999.000đ <span className="arrow">→</span>
+                Đăng ký Khoá 1 — 999.000đ <span className="arrow">→</span>
               </Link>
               <Link href="#curriculum" className="btn btn-ghost">
                 Xem lộ trình <span className="arrow">→</span>
@@ -112,7 +133,7 @@ function CourseHero() {
           </Reveal>
         </div>
 
-        {/* Cohort detail card */}
+        {/* Khoá detail card */}
         <Reveal delay={0.25}>
           <CohortCard />
         </Reveal>
@@ -356,8 +377,11 @@ function CurriculumSection() {
                     onClick={() => setOpenSession(open ? null : s.no)}
                     className="w-full text-left p-4 md:p-5 flex items-center gap-4"
                   >
-                    <div className="flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center font-bold text-[1rem] grad-text" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
-                      {String(s.no).padStart(2, "0")}
+                    <div className="flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center relative" style={{ background: `${moduleColor}10`, border: `1px solid ${moduleColor}30` }}>
+                      <ModuleIcon mod={s.module} color={moduleColor} />
+                      <span className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center font-bold text-[0.62rem] text-white" style={{ background: moduleColor, boxShadow: "0 2px 6px rgba(0,0,0,0.3)" }}>
+                        {s.no}
+                      </span>
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap mb-1">
@@ -406,7 +430,7 @@ function CurriculumSection() {
 /* ─── FORMAT ─── */
 function FormatSection() {
   const blocks = [
-    { icon: <IconBook />, title: "Training", desc: "Mỗi buổi 2–3 tiếng. Trainer chia sẻ tư duy + case study thực tế. Cohort nhỏ nên thực sự là thảo luận, không phải giảng 1 chiều." },
+    { icon: <IconBook />, title: "Training", desc: "Mỗi buổi 2–3 tiếng. Trainer chia sẻ tư duy + case study thực tế. Lớp nhỏ nên thực sự là thảo luận, không phải giảng 1 chiều." },
     { icon: <IconQuiz />, title: "Quiz cuối buổi", desc: "Quiz nhanh 5–10 câu (Google Form hoặc giấy) để chốt kiến thức key. Không pass/fail — chỉ giúp bạn biết mình đang ở đâu." },
     { icon: <IconChart />, title: "Bài thu hoạch", desc: "Bài tập về nhà làm bằng Sheet, nộp trước buổi sau. Trainer đọc và feedback 1-1. Không chấm điểm, chỉ đánh giá định tính." },
   ];
@@ -442,7 +466,7 @@ function FormatSection() {
             <div className="text-[0.92rem] leading-[1.7]">
               <strong className="text-white">Presentation lớn 2 tuần/lần.</strong>{" "}
               <span style={{ color: "var(--ink-soft)" }}>
-                Sau B2 (chiến lược kinh doanh), B5 (vận hành sàn), B8 (setup ads), và B11 (Plan 1 năm). Bạn trình bày — trainer + cohort cùng phản biện. Đây là phần xây tự tin và giao tiếp chuyên nghiệp.
+                Sau B2 (chiến lược kinh doanh), B5 (vận hành sàn), B8 (setup ads), và B11 (Plan 1 năm). Bạn trình bày — trainer + lớp cùng phản biện. Đây là phần xây tự tin và giao tiếp chuyên nghiệp.
               </span>
             </div>
           </div>
@@ -557,20 +581,20 @@ function TrainerSection() {
 function PricingSection() {
   const tiers = [
     {
-      name: "Cohort 01", badge: "Khoá đầu tiên", price: "999.000", featured: true,
+      name: "Khoá 1", badge: "Khoá đầu tiên", price: "999.000", featured: true,
       desc: "Mở bán testing — số lượng giới hạn",
       bullets: ["Full nội dung 12 buổi", "Slot giới hạn 7 học viên", "3 tháng mentoring 1-1", "Group hỗ trợ vĩnh viễn"],
-      cta: "Đăng ký Cohort 01",
+      cta: "Đăng ký Khoá 1",
     },
     {
-      name: "Early-bird", badge: "Cohort sau", price: "2.999.000",
+      name: "Early-bird", badge: "Khoá sau", price: "2.999.000",
       desc: "Đóng đơn trước cuối tháng — countdown tự reset",
       bullets: ["Full nội dung 12 buổi", "Slot mở rộng hơn", "3 tháng mentoring 1-1", "Group hỗ trợ vĩnh viễn"],
       cta: "Quan tâm Early-bird",
     },
     {
       name: "Giá chuẩn", badge: "Sau early-bird", price: "4.999.000",
-      desc: "Áp dụng các cohort sau early-bird",
+      desc: "Áp dụng các khoá sau early-bird",
       bullets: ["Full nội dung 12 buổi", "Slot mở rộng hơn", "3 tháng mentoring 1-1", "Group hỗ trợ vĩnh viễn"],
       cta: "Quan tâm",
     },
@@ -583,12 +607,12 @@ function PricingSection() {
         <Reveal><div className="section-tag">Học phí</div></Reveal>
         <Reveal delay={0.08}>
           <h2 className="t-h2 mb-3 text-white">
-            3 mức giá theo <span className="grad-text">cohort.</span>
+            3 mức giá theo <span className="grad-text">khoá học.</span>
           </h2>
         </Reveal>
         <Reveal delay={0.14}>
           <p className="t-caption mb-12 max-w-[520px]">
-            Cùng 1 nội dung. Mình giảm sâu cohort đầu để testing và build community trước.
+            Cùng 1 nội dung. Mình giảm sâu khoá đầu để testing và build community trước.
           </p>
         </Reveal>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
@@ -664,7 +688,7 @@ function ApplyFlowSection() {
     { no: "01", title: "Đăng ký form", desc: "Điền form bên dưới — không cam kết gì, chỉ là khởi đầu." },
     { no: "02", title: "Trainer review", desc: "Mình đọc application và liên hệ trong 24h để đặt lịch quick meet." },
     { no: "03", title: "Quick meet 15 phút", desc: "Zoom hoặc offline. Cùng nhau check phù hợp 2 chiều — bạn với khoá, mình với bạn." },
-    { no: "04", title: "Xác nhận + chuyển khoản", desc: "Phù hợp 2 bên: chuyển khoản học phí + sắp xếp lịch học cùng cohort." },
+    { no: "04", title: "Xác nhận + chuyển khoản", desc: "Phù hợp 2 bên: chuyển khoản học phí + sắp xếp lịch học cùng lớp." },
   ];
   return (
     <section className="relative">
@@ -731,7 +755,7 @@ function ApplySection() {
       <div className="relative max-w-[1200px] mx-auto px-6 md:px-10 py-20 md:py-28">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
           <div className="lg:pt-4">
-            <Reveal><div className="section-tag">Apply Cohort 01</div></Reveal>
+            <Reveal><div className="section-tag">Apply Khoá 1</div></Reveal>
             <Reveal delay={0.08}>
               <h2 className="t-h1 mb-5 text-white">
                 Sẵn sàng làm Ecom <span className="grad-text">thật?</span>
@@ -755,9 +779,9 @@ function ApplySection() {
                     <Ic d={<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />} w={16} color="#ffae13" />
                   </span>
                   <div className="text-[0.85rem] leading-[1.6]">
-                    <div className="font-bold text-white mb-0.5">Cohort 01 — chỉ 999.000đ</div>
+                    <div className="font-bold text-white mb-0.5">Khoá 1 — chỉ 999.000đ</div>
                     <div style={{ color: "var(--ink-soft)" }}>
-                      Khoá đầu tiên giới hạn <strong className="text-white">7 học viên</strong>. Mình giảm sâu để testing — cohort sau sẽ là 2.999.000đ rồi 4.999.000đ.
+                      Khoá đầu tiên giới hạn <strong className="text-white">7 học viên</strong>. Mình giảm sâu để testing — các khoá sau sẽ là 2.999.000đ rồi 4.999.000đ.
                     </div>
                   </div>
                 </div>

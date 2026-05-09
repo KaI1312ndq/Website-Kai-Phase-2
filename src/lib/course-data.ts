@@ -2,7 +2,7 @@ export const COURSE = {
   name: "Foundation Ecommerce",
   tagline: "Tư duy thật, Thực chiến thật.",
   cohort: {
-    label: "Cohort 01",
+    label: "Khoá 1",
     startsAt: "Dự kiến T7/2026",
     capacity: 7,
     location: "Khu Thanh Xuân, Hà Nội (chốt sau khi đủ học viên)",
@@ -171,7 +171,7 @@ export const SESSIONS: {
     bullets: [
       "Mỗi học viên trình bày Plan 1 năm cho brand mình chọn",
       "P&L chi tiết: doanh thu mục tiêu, chi phí, profit",
-      "Trainer + cohort phản biện 1-1, đưa feedback cụ thể",
+      "Trainer + lớp phản biện 1-1, đưa feedback cụ thể",
       "Đây là sản phẩm cuối — dùng để pitch khi xin việc",
     ],
     isPresentation: true,
@@ -229,8 +229,8 @@ export const OUTCOMES = [
     sub: "Apply công việc, phát triển sự nghiệp, làm việc đúng",
   },
   {
-    title: "Network cohort vĩnh viễn",
-    sub: "Zalo group hỗ trợ + connect các cohort sau",
+    title: "Network học viên vĩnh viễn",
+    sub: "Zalo group hỗ trợ + connect các khoá sau",
   },
 ];
 
@@ -245,11 +245,11 @@ export const AFTER_COURSE = [
   },
   {
     title: "Zalo group hỗ trợ vĩnh viễn",
-    desc: "Cộng tất cả cohort vào chung 1 group. Hỗ trợ kéo dài, không cắt sau khoá. Network qua các đợt.",
+    desc: "Cộng tất cả các khoá vào chung 1 group. Hỗ trợ kéo dài, không cắt sau khoá. Network qua các đợt.",
   },
   {
     title: "Network thực chiến",
-    desc: "Connect với học viên các cohort sau, các bạn đã đi làm Ecom thực tế. Mentoring và cơ hội cùng nhau lớn lên.",
+    desc: "Connect với học viên các khoá sau, các bạn đã đi làm Ecom thực tế. Mentoring và cơ hội cùng nhau lớn lên.",
   },
 ];
 
@@ -267,16 +267,16 @@ export const FAQS = [
     a: "Không. Đây là trách nhiệm của người học. Đó cũng là lý do mình có quick meet 15 phút trước khi nhận tiền — để chắc chắn 2 bên cùng phù hợp và cam kết.",
   },
   {
-    q: "999.000đ Cohort 01 vs 2.999.000đ Early-bird khác gì?",
-    a: "Cùng nội dung. Cohort 01 (999.000đ) là khoá đầu tiên mở bán, mình giảm để testing và build community. Sau đó Early-bird (2.999.000đ) cho cohort tiếp theo, rồi giá chuẩn 4.999.000đ về sau.",
+    q: "999.000đ Khoá 1 vs 2.999.000đ Early-bird khác gì?",
+    a: "Cùng nội dung. Khoá 1 (999.000đ) là khoá đầu tiên mở bán, mình giảm để testing và build community. Sau đó Early-bird (2.999.000đ) cho khoá tiếp theo, rồi giá chuẩn 4.999.000đ về sau.",
   },
   {
     q: "Học xong có giới thiệu việc làm không?",
     a: "Không cam kết, nhưng 3 tháng mentoring sau khoá sẽ hỗ trợ định hướng career, review CV, và apply công việc. Network của mình ở UpBase + các brand đã làm có thể là cầu nối khi phù hợp.",
   },
   {
-    q: "Có quay lại học cohort sau miễn phí không?",
-    a: "Có. Học viên cohort cũ có thể tham dự lại bất kỳ buổi nào của cohort sau miễn phí, miễn là còn slot trong phòng học.",
+    q: "Có quay lại học khoá sau miễn phí không?",
+    a: "Có. Học viên khoá cũ có thể tham dự lại bất kỳ buổi nào của khoá sau miễn phí, miễn là còn slot trong phòng học.",
   },
   {
     q: "Lịch học cụ thể thế nào?",
@@ -284,6 +284,6 @@ export const FAQS = [
   },
   {
     q: "Địa điểm cụ thể ở đâu?",
-    a: "Khu Thanh Xuân, Hà Nội. Chỗ cụ thể chốt sau khi đủ học viên — sẽ chọn không gian thoải mái cho cohort nhỏ 5–7 người.",
+    a: "Khu Thanh Xuân, Hà Nội. Chỗ cụ thể chốt sau khi đủ học viên — sẽ chọn không gian thoải mái cho lớp nhỏ 5–7 người.",
   },
 ];

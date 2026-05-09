@@ -168,7 +168,7 @@ export default function PersonalCard() {
             </div>
             <div className="flex-1 min-w-0">
               <div className="text-[0.6rem] font-semibold uppercase tracking-[0.14em]" style={{ color: "rgba(255,255,255,0.55)" }}>Now building</div>
-              <div className="text-[0.85rem] font-semibold text-white truncate">Ecom Foundation · Cohort 01</div>
+              <div className="text-[0.85rem] font-semibold text-white truncate">Ecom Foundation · K1</div>
             </div>
             <div className="text-[0.7rem] font-bold grad-text">SOON</div>
           </motion.div>
