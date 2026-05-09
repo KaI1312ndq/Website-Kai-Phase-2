@@ -1,9 +1,9 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import GradientBlobs from "@/components/GradientBlobs";
 import Link from "next/link";
 import { getPosts } from "@/lib/queries";
 import { urlFor } from "../../../sanity/lib/image";
-
 
 export const metadata = {
   title: "Blog & Insights — Nguyễn Đức Quảng",
@@ -20,69 +20,64 @@ export default async function BlogPage() {
     <>
       <Navbar />
       <main>
-        <div style={{ background: "var(--bg)" }}>
-          <div className="max-w-[1280px] mx-auto px-12 pt-20 pb-8">
+        <section className="relative overflow-hidden border-b" style={{ background: "white", borderColor: "var(--border)" }}>
+          <GradientBlobs blobs={[
+            { variant: "blue", size: 500, top: "-20%", right: "-5%" },
+            { variant: "purple", size: 420, bottom: "-30%", left: "-5%", delay: "2s" },
+          ]} />
+          <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 pt-16 pb-12 md:pt-24 md:pb-16">
             <div className="section-tag">Blog & Insights</div>
-            <h1 className="text-[clamp(2rem,4vw,3rem)] font-extrabold tracking-tight mb-4">
-              Góc nhìn từ<br/><span style={{ color: "var(--blue)" }}>thực chiến Ecom.</span>
+            <h1 className="t-display tracking-tight mb-5 max-w-[840px]">
+              Góc nhìn từ<br /><span className="grad-text">thực chiến Ecom.</span>
             </h1>
-            <p className="text-[0.95rem] max-w-lg" style={{ color: "var(--muted)" }}>
+            <p className="t-body-lg max-w-[560px]">
               Chia sẻ về Performance Marketing, Team Building, và cách tư duy trong thị trường TMĐT Việt Nam.
             </p>
           </div>
-        </div>
+        </section>
 
-        <div style={{ background: "white" }}>
-          <div className="max-w-[1280px] mx-auto px-12 py-16">
+        <section style={{ background: "white" }}>
+          <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-16 md:py-20">
             {posts.length === 0 ? (
-              <div className="text-center py-24">
-                <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6" style={{ background: "var(--blue-sky)" }}>
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>
+              <div className="text-center py-20 md:py-24 max-w-[480px] mx-auto">
+                <div className="w-16 h-16 rounded-wf-md flex items-center justify-center mx-auto mb-6" style={{ background: "var(--grad-primary)" }}>
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" /><polyline points="14 2 14 8 20 8" />
                   </svg>
                 </div>
-                <h3 className="text-[1.1rem] font-bold mb-2">Bài viết đang được chuẩn bị</h3>
-                <p className="text-[0.88rem]" style={{ color: "var(--muted)" }}>
-                  Sắp có — theo dõi LinkedIn để cập nhật sớm nhất.
-                </p>
-                <a href="https://www.linkedin.com/in/duc-quang-nguyen-b7495223a/" target="_blank" rel="noreferrer"
-                  className="inline-flex items-center gap-2 text-white font-semibold text-[0.88rem] px-5 py-2.5 rounded-lg mt-6 transition-all hover:-translate-y-0.5"
-                  style={{ background: "var(--blue)" }}>
-                  Theo dõi LinkedIn →
+                <h3 className="text-[1.4rem] font-semibold mb-3 tracking-tight">Bài viết đang được chuẩn bị</h3>
+                <p className="t-body mb-7">Sắp có — theo dõi LinkedIn để cập nhật sớm nhất.</p>
+                <a href="https://www.linkedin.com/in/duc-quang-nguyen-b7495223a/" target="_blank" rel="noreferrer" className="btn btn-primary">
+                  Theo dõi LinkedIn <span className="arrow">→</span>
                 </a>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 {posts.map((post: any) => (
                   <Link key={post._id} href={`/blog/${post.slug.current}`}
-                    className="group bg-white rounded-2xl border overflow-hidden transition-all hover:-translate-y-1 hover:shadow-xl"
-                    style={{ border: "1px solid var(--border)" }}>
-                    <div className="aspect-[16/9] bg-gradient-to-br from-blue-sky to-blue-soft flex items-center justify-center"
-                      style={{ background: "var(--blue-sky)" }}>
+                    className="group wf-card wf-card-blue overflow-hidden flex flex-col">
+                    <div className="aspect-[16/9] flex items-center justify-center overflow-hidden" style={{ background: "var(--grad-primary-soft)" }}>
                       {post.coverImage ? (
-                        <img src={urlFor(post.coverImage).width(600).height(338).url()} alt={post.title} className="w-full h-full object-cover"/>
+                        <img src={urlFor(post.coverImage).width(600).height(338).url()} alt={post.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                       ) : (
-                        <span className="text-[0.72rem] font-bold uppercase tracking-widest" style={{ color: "var(--blue)" }}>{post.category || "Insights"}</span>
+                        <span className="text-[0.72rem] font-semibold uppercase tracking-[0.16em] grad-text">{post.category || "Insights"}</span>
                       )}
                     </div>
-                    <div className="p-6">
+                    <div className="p-6 flex flex-col flex-1">
                       <div className="flex items-center gap-2 mb-3">
-                        <span className="text-[0.72rem] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full"
-                          style={{ background: "var(--blue-sky)", color: "var(--blue)" }}>
-                          {post.category || "Ecom"}
-                        </span>
-                        {post.readTime && <span className="text-[0.72rem]" style={{ color: "var(--muted)" }}>{post.readTime} phút đọc</span>}
+                        <span className="wf-badge text-[0.7rem]">{post.category || "Ecom"}</span>
+                        {post.readTime && <span className="text-[0.72rem] text-gray-500">{post.readTime} phút đọc</span>}
                       </div>
-                      <h2 className="text-[1rem] font-bold mb-2 leading-snug group-hover:text-blue-600 transition-colors">{post.title}</h2>
-                      {post.excerpt && <p className="text-[0.82rem] leading-[1.6] line-clamp-2" style={{ color: "var(--muted)" }}>{post.excerpt}</p>}
-                      <div className="mt-4 text-[0.78rem] font-semibold" style={{ color: "var(--blue)" }}>Đọc tiếp →</div>
+                      <h2 className="text-[1.05rem] font-semibold mb-2 leading-snug tracking-tight group-hover:text-wf-blue transition-colors">{post.title}</h2>
+                      {post.excerpt && <p className="text-[0.88rem] leading-[1.6] text-gray-600 line-clamp-2">{post.excerpt}</p>}
+                      <div className="mt-auto pt-4 text-[0.82rem] font-semibold grad-text">Đọc tiếp →</div>
                     </div>
                   </Link>
                 ))}
               </div>
             )}
           </div>
-        </div>
+        </section>
       </main>
       <Footer />
     </>
