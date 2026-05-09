@@ -72,11 +72,17 @@ function CarouselRow({ items, reverse = false, speed = 30 }: { items: any[], rev
       <div ref={track} className="flex gap-6 w-max" style={{ willChange: "transform" }}>
         {doubled.map((brand, i) => (
           <div key={i} className="flex items-center justify-center px-6 py-3 rounded-xl flex-shrink-0"
-            style={{ background: "white", border: "1px solid var(--border)", minWidth: "120px", height: "56px" }}>
+            style={{
+              background: brand.img ? "white" : "rgba(255,255,255,0.04)",
+              border: brand.img ? "1px solid rgba(0,0,0,0.06)" : "1px solid rgba(255,255,255,0.10)",
+              minWidth: "120px",
+              height: "56px",
+              backdropFilter: brand.img ? "none" : "blur(10px)",
+            }}>
             {brand.img ? (
-              <img src={brand.img} alt={brand.name} className="h-7 w-auto object-contain" style={{ maxWidth: "100px" }}/>
+              <img src={brand.img} alt={brand.name} className="h-7 w-auto object-contain" style={{ maxWidth: "100px" }} />
             ) : (
-              <span className="font-bold text-[0.82rem] whitespace-nowrap" style={{ color: "var(--muted)" }}>{brand.name}</span>
+              <span className="font-bold text-[0.92rem] whitespace-nowrap grad-text tracking-tight">{brand.name}</span>
             )}
           </div>
         ))}

@@ -7,7 +7,7 @@ import Marquee from "@/components/Marquee";
 import GradientBlobs from "@/components/GradientBlobs";
 import ContactForm from "@/components/ContactForm";
 import BrandsCarousel from "@/components/BrandsCarousel";
-import HeroDashboard from "@/components/HeroDashboard";
+import PersonalCard from "@/components/PersonalCard";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
@@ -93,18 +93,18 @@ export default function Home() {
       <Navbar />
       <main>
         {/* ═══════════════ HERO ═══════════════ */}
-        <section className="relative overflow-hidden">
+        <section className="relative overflow-hidden flex items-center" style={{ minHeight: "100vh" }}>
           <div className="grid-pattern" />
           <div className="blob blob-blue blob-anim" style={{ width: 700, height: 700, top: "-15%", left: "-10%" }} />
           <div className="blob blob-purple blob-anim" style={{ width: 600, height: 600, bottom: "-20%", right: "-10%", animationDelay: "3s" }} />
 
-          <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-[1.05fr_1fr] items-center gap-12 lg:gap-16 pt-28 pb-20 lg:pt-32 lg:pb-28">
+          <div className="relative w-full max-w-[1400px] mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-[1.05fr_1fr] items-center gap-12 lg:gap-16 pt-28 pb-20 lg:pt-24 lg:pb-16">
             <div className="relative z-10">
               <Reveal>
                 <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md mb-6" style={{ background: "rgba(20,110,245,0.12)", border: "1px solid rgba(20,110,245,0.3)" }}>
                   <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#7da9ff" }} />
                   <span className="text-[0.72rem] font-semibold tracking-[0.14em] uppercase" style={{ color: "#9bb6ff" }}>
-                    Performance Marketing · Ecom Manager
+                    Marketer · Leader · Mentor
                   </span>
                 </div>
               </Reveal>
@@ -120,7 +120,7 @@ export default function Home() {
 
               <Reveal delay={0.55}>
                 <p className="t-body-lg max-w-[500px] mb-8" style={{ color: "rgba(255,255,255,0.72)" }}>
-                  Tôi giúp thương hiệu tăng trưởng bền vững trên TikTok Shop, Shopee, Meta và các nền tảng Ecommerce — với kết quả đo lường bằng số thật.
+                  Tôi xây team, vận hành Ecom đa kênh và mentor cho thế hệ marketer mới — với kết quả đo lường bằng số thật, và sự nghiệp được xây dựng chậm mà chắc.
                 </p>
               </Reveal>
 
@@ -129,17 +129,53 @@ export default function Home() {
                   <Link href="/#contact" className="btn btn-primary">
                     Làm việc cùng tôi <span className="arrow">→</span>
                   </Link>
-                  <Link href="/#casestudies" className="btn btn-ghost">
-                    Xem kết quả tôi đã làm <span className="arrow">→</span>
+                  <Link href="/#mentoring" className="btn btn-ghost">
+                    Xem khoá Ecom Foundation <span className="arrow">→</span>
                   </Link>
+                </div>
+              </Reveal>
+
+              {/* Inline mini-stats */}
+              <Reveal delay={0.85}>
+                <div className="flex gap-6 md:gap-10 mt-12 pt-8 border-t" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+                  {[
+                    { val: "5+", label: "Năm kinh nghiệm" },
+                    { val: "60+", label: "Dự án Ecom" },
+                    { val: "10B+", label: "Ngân sách / tháng" },
+                    { val: "20+", label: "Mentees" },
+                  ].map((s) => (
+                    <div key={s.label}>
+                      <div className="text-[1.4rem] md:text-[1.6rem] font-bold tracking-tight grad-text leading-none">{s.val}</div>
+                      <div className="text-[0.72rem] mt-1.5" style={{ color: "rgba(255,255,255,0.5)" }}>{s.label}</div>
+                    </div>
+                  ))}
                 </div>
               </Reveal>
             </div>
 
             <Reveal delay={0.2}>
-              <HeroDashboard />
+              <PersonalCard />
             </Reveal>
           </div>
+
+          {/* Scroll indicator */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.4, duration: 0.6 }}
+            className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 hidden md:flex flex-col items-center gap-2"
+          >
+            <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em]" style={{ color: "rgba(255,255,255,0.4)" }}>Scroll</span>
+            <motion.div
+              animate={{ y: [0, 6, 0] }}
+              transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
+              style={{ color: "rgba(255,255,255,0.4)" }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </motion.div>
+          </motion.div>
         </section>
 
         {/* ═══════════════ STATS ═══════════════ */}
@@ -496,18 +532,85 @@ export default function Home() {
             </div>
 
             <Reveal delay={0.18}>
-              <motion.div whileHover={{ y: -4 }} transition={{ type: "spring", stiffness: 260, damping: 22 }}
-                className="rounded-2xl p-8 md:p-10 text-center lg:sticky lg:top-28"
-                style={{ background: "linear-gradient(180deg, rgba(20,40,90,0.6), rgba(8,16,43,0.85))", border: "1px solid rgba(255,255,255,0.12)", boxShadow: "0 24px 60px rgba(5,10,31,0.55)", backdropFilter: "blur(20px)" }}>
-                <div className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] mb-3" style={{ color: "var(--ink-mute)" }}>Đầu tư</div>
-                <div className="text-[3.5rem] font-bold text-white tracking-tight leading-none mb-1">
-                  3<span className="grad-text">–</span>5<span className="text-[1.2rem] font-normal align-top" style={{ color: "var(--ink-mute)" }}>M</span>
-                </div>
-                <div className="text-[0.85rem] mb-7" style={{ color: "var(--ink-mute)" }}>VNĐ / người</div>
-                <Link href="/#contact" className="btn btn-primary w-full justify-center">
-                  Đăng ký ngay <span className="arrow">→</span>
-                </Link>
-              </motion.div>
+              <div className="lg:sticky lg:top-28 flex flex-col gap-3">
+                {/* Early-bird featured card */}
+                <motion.div whileHover={{ y: -4 }} transition={{ type: "spring", stiffness: 260, damping: 22 }}
+                  className="relative rounded-2xl p-6 overflow-hidden"
+                  style={{
+                    background: "linear-gradient(160deg, rgba(20,110,245,0.18) 0%, rgba(122,61,255,0.18) 60%, rgba(8,16,43,0.85) 100%)",
+                    border: "1px solid rgba(74,214,255,0.35)",
+                    boxShadow: "0 24px 60px rgba(20,110,245,0.25), 0 0 0 1px rgba(74,214,255,0.15) inset",
+                  }}>
+                  <div className="absolute top-0 right-0 w-40 h-40 pointer-events-none" style={{ background: "radial-gradient(circle, rgba(74,214,255,0.30), transparent 70%)", filter: "blur(20px)" }} />
+
+                  <div className="relative">
+                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md mb-4" style={{ background: "rgba(74,214,255,0.15)", border: "1px solid rgba(74,214,255,0.3)" }}>
+                      <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#4ad6ff" }} />
+                      <span className="text-[0.6rem] font-bold uppercase tracking-[0.16em]" style={{ color: "#7ee2ff" }}>Mở bán sớm</span>
+                    </div>
+
+                    <div className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] mb-2" style={{ color: "rgba(255,255,255,0.55)" }}>Early-bird Cohort 01</div>
+
+                    <div className="flex items-baseline gap-2 mb-1">
+                      <div className="text-[2.4rem] font-bold tracking-tight leading-none grad-text">2.999.000<span className="text-[0.95rem] font-normal align-top ml-1">đ</span></div>
+                    </div>
+                    <div className="flex items-center gap-2 mb-5">
+                      <span className="text-[0.85rem] line-through" style={{ color: "rgba(255,255,255,0.4)" }}>4.999.000đ</span>
+                      <span className="text-[0.7rem] font-bold px-2 py-0.5 rounded-md" style={{ background: "rgba(0,215,34,0.15)", color: "#5fffaa", border: "1px solid rgba(0,215,34,0.3)" }}>-40%</span>
+                    </div>
+
+                    <div className="space-y-2 mb-6 pb-6 border-b" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+                      {[
+                        "2 tháng học chính + 3 tháng mentoring",
+                        "Cohort nhỏ 1–5 người",
+                        "Offline Hà Nội hoặc Online",
+                      ].map((b) => (
+                        <div key={b} className="flex items-start gap-2 text-[0.82rem]" style={{ color: "rgba(255,255,255,0.78)" }}>
+                          <svg className="flex-shrink-0 mt-0.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4ad6ff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                          {b}
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="flex items-center gap-2 mb-5 text-[0.78rem]" style={{ color: "rgba(255,255,255,0.65)" }}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a78bff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
+                      </svg>
+                      Đăng ký nhóm <strong className="text-white">2+ người</strong> giảm thêm <strong className="grad-text">10%</strong>
+                    </div>
+
+                    <Link href="/#contact" className="btn btn-primary w-full justify-center">
+                      Đăng ký Early-bird <span className="arrow">→</span>
+                    </Link>
+                  </div>
+                </motion.div>
+
+                {/* First-cohort flash note */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  className="rounded-xl p-4 flex items-start gap-3"
+                  style={{ background: "rgba(255,174,19,0.08)", border: "1px solid rgba(255,174,19,0.25)" }}
+                >
+                  <div className="w-8 h-8 rounded-md flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: "rgba(255,174,19,0.15)" }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffae13" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                    </svg>
+                  </div>
+                  <div className="text-[0.78rem] leading-[1.6]">
+                    <div className="font-bold mb-0.5" style={{ color: "#ffd479" }}>Khoá đầu tiên · chỉ 999k</div>
+                    <div style={{ color: "rgba(255,255,255,0.65)" }}>
+                      Số lượng giới hạn —{" "}
+                      <a href="https://zalo.me/0868464658" target="_blank" rel="noreferrer" className="underline font-semibold" style={{ color: "#ffd479" }}>
+                        inbox mình
+                      </a>{" "}
+                      để nhận thông tin sớm nhất.
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
             </Reveal>
           </div>
         </section>
