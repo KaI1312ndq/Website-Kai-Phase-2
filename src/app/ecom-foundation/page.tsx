@@ -86,7 +86,7 @@ function CourseHero() {
 
       <div className="relative w-full max-w-[1400px] mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] items-center gap-12 lg:gap-16 pt-28 pb-20 lg:pt-24 lg:pb-16">
         <div className="relative z-10">
-          <Reveal>
+          <Reveal instant>
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md mb-6" style={{ background: "rgba(74,214,255,0.12)", border: "1px solid rgba(74,214,255,0.3)" }}>
               <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#4ad6ff" }} />
               <span className="text-[0.72rem] font-semibold tracking-[0.14em] uppercase" style={{ color: "#7ee2ff" }}>
@@ -96,26 +96,26 @@ function CourseHero() {
           </Reveal>
 
           <h1 className="t-display tracking-tight mb-6 text-white">
-            <RevealText text="Foundation" className="block" />
-            <RevealText text="Ecommerce." className="block grad-text" delay={0.12} stagger={0.04} />
+            <RevealText instant text="Foundation" className="block" />
+            <RevealText instant text="Ecommerce." className="block grad-text" />
             <span className="block text-[0.55em] font-semibold mt-3" style={{ color: "rgba(255,255,255,0.65)" }}>
-              <RevealText text="Tư duy thật, Thực chiến thật." delay={0.32} />
+              <RevealText instant text="Tư duy thật, Thực chiến thật." />
             </span>
           </h1>
 
-          <Reveal delay={0.5}>
+          <Reveal instant>
             <p className="t-body-lg max-w-[520px] mb-8" style={{ color: "rgba(255,255,255,0.72)" }}>
               Khoá foundation về thương mại điện tử cho người mới và marketer trẻ — không dạy tool lẻ, không hứa hẹn ngắn hạn. Xây tư duy đúng từ đầu để bước vào ngành làm thật.
             </p>
           </Reveal>
 
-          <Reveal delay={0.6}>
+          <Reveal instant>
             <div className="mb-7">
               <CohortStatus />
             </div>
           </Reveal>
 
-          <Reveal delay={0.7}>
+          <Reveal instant>
             <div className="flex gap-3 items-center flex-wrap">
               <Link href="#apply" className="btn btn-primary">
                 Đăng ký Khoá 1 — 999.000đ <span className="arrow">→</span>

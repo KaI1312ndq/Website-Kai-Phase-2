@@ -181,7 +181,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
 
           <div className="relative w-full max-w-[1400px] mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-[1.05fr_1fr] items-center gap-12 lg:gap-16 pt-28 pb-20 lg:pt-24 lg:pb-16">
             <div className="relative z-10">
-              <Reveal>
+              <Reveal instant>
                 <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md mb-6" style={{ background: "rgba(20,110,245,0.12)", border: "1px solid rgba(20,110,245,0.3)" }}>
                   <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#7da9ff" }} />
                   <span className="text-[0.72rem] font-semibold tracking-[0.14em] uppercase" style={{ color: "#9bb6ff" }}>
@@ -191,21 +191,21 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
               </Reveal>
 
               <h1 className="t-display tracking-tight mb-6 text-white">
-                <RevealText text="Build teams." className="block" />
-                <RevealText text="Scale brands." className="block" delay={0.12} />
+                <RevealText instant text="Build teams." className="block" />
+                <RevealText instant text="Scale brands." className="block" />
                 <span className="block">
-                  <RevealText text="Grow" splitBy="char" delay={0.26} className="grad-text" stagger={0.05} />{" "}
-                  <RevealText text="smarter." delay={0.45} />
+                  <RevealText instant text="Grow" className="grad-text" />{" "}
+                  <RevealText instant text="smarter." />
                 </span>
               </h1>
 
-              <Reveal delay={0.55}>
+              <Reveal instant>
                 <p className="t-body-lg max-w-[500px] mb-8" style={{ color: "rgba(255,255,255,0.72)" }}>
                   Tôi xây team, vận hành Ecom đa kênh và mentor cho thế hệ marketer mới — với kết quả đo lường bằng số thật, và sự nghiệp được xây dựng chậm mà chắc.
                 </p>
               </Reveal>
 
-              <Reveal delay={0.7}>
+              <Reveal instant>
                 <div className="flex gap-3 items-center flex-wrap">
                   <Link href="/#contact" className="btn btn-primary">
                     Làm việc cùng tôi <span className="arrow">→</span>
@@ -217,7 +217,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
               </Reveal>
 
               {/* Inline mini-stats */}
-              <Reveal delay={0.85}>
+              <Reveal instant>
                 <div className="flex gap-6 md:gap-10 mt-12 pt-8 border-t" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
                   {[
                     { val: "5+", label: "Năm kinh nghiệm" },

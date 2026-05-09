@@ -6,9 +6,10 @@ import NoiseOverlay from "@/components/NoiseOverlay";
 import Analytics from "@/components/Analytics";
 import LeadPopup from "@/components/LeadPopup";
 
+// Reduced weights to cut critical font requests in half (was 5+4 = 9 weights → 3+2 = 5)
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin", "vietnamese"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "600", "700"],
   variable: "--font-jakarta",
   display: "swap",
   preload: true,
@@ -16,10 +17,10 @@ const jakarta = Plus_Jakarta_Sans({
 
 const beVietnam = Be_Vietnam_Pro({
   subsets: ["latin", "vietnamese"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "600"],
   variable: "--font-be-vn",
   display: "swap",
-  preload: true,
+  preload: false,
 });
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://nguyenducquang.website";
@@ -88,6 +89,7 @@ const personLd = {
   ],
   sameAs: ["https://www.linkedin.com/in/duc-quang-nguyen-b7495223a/"],
   email: "qforwork13@gmail.com",
+  telephone: "+84868464658",
   address: { "@type": "PostalAddress", addressLocality: "Hà Nội", addressCountry: "VN" },
 };
 
@@ -114,6 +116,7 @@ const organizationLd = {
   image: `${SITE_URL}/kai-photo.webp`,
   founder: { "@type": "Person", name: "Nguyễn Đức Quảng" },
   email: "qforwork13@gmail.com",
+  telephone: "+84868464658",
   priceRange: "999.000đ — 5.000.000đ",
   address: { "@type": "PostalAddress", addressLocality: "Hà Nội", addressRegion: "Thanh Xuân", addressCountry: "VN" },
   areaServed: { "@type": "Country", name: "Vietnam" },
