@@ -18,7 +18,7 @@ export default function LeadPopup() {
   const triggered = useRef(false);
 
   // Skip on /ecom-foundation (đã ở trang sales rồi) + studio + blog post detail
-  const skipPath = pathname?.startsWith("/ecom-foundation") || pathname?.startsWith("/studio") || pathname?.startsWith("/blog/");
+  const skipPath = pathname?.startsWith("/ecom-foundation") || pathname?.startsWith("/studio") || pathname?.startsWith("/blog/") || pathname?.startsWith("/tools");
 
   useEffect(() => {
     if (skipPath) return;

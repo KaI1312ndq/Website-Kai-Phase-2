@@ -5,8 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const links = [
   { label: "Về tôi", href: "/#about" },
-  { label: "Chuyên môn", href: "/#expertise" },
   { label: "Khoá học", href: "/ecom-foundation" },
+  { label: "Tools", href: "/tools" },
   { label: "Kết quả", href: "/#casestudies" },
   { label: "Blog", href: "/blog" },
 ];
