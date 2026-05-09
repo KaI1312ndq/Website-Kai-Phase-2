@@ -27,15 +27,25 @@ export async function GET(req: Request) {
     try {
       const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+          Origin: "https://nguyenducquang.website",
+          Referer: "https://nguyenducquang.website/",
+        },
         body: JSON.stringify({
           access_key: w,
           subject: "[NĐQ Diagnostic] Test email from /api/diagnostic?test=1",
           from_name: "Diagnostic Test",
+          email: c || "qforwork13@gmail.com",
           message: `Sent at ${new Date().toISOString()}. If you see this, Web3Forms is fully wired.`,
+          botcheck: "",
         }),
       });
-      const data = await res.json().catch(() => ({}));
+      const text = await res.text();
+      let data: any = {};
+      try { data = JSON.parse(text); } catch { data = { _raw: text.slice(0, 200) }; }
       result.web3forms_test = {
         http_status: res.status,
         body: data,

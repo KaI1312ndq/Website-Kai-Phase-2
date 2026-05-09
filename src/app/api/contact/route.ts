@@ -24,16 +24,25 @@ export async function POST(req: NextRequest) {
     if (process.env.WEB3FORMS_KEY) {
       const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+          Origin: "https://nguyenducquang.website",
+          Referer: "https://nguyenducquang.website/",
+        },
         body: JSON.stringify({
           access_key: process.env.WEB3FORMS_KEY,
           subject,
           from_name: `Liên hệ website · ${name}`,
+          email,
           replyto: email,
+          botcheck: "",
           ...fields,
         }),
       });
-      if (res.ok) delivered = true;
+      const data = await res.json().catch(() => ({} as any));
+      if (res.ok && data?.success) delivered = true;
     }
 
     if (!delivered && process.env.RESEND_API_KEY) {
