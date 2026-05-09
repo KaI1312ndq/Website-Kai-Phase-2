@@ -1,10 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, Be_Vietnam_Pro } from "next/font/google";
+import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import NoiseOverlay from "@/components/NoiseOverlay";
 import Analytics from "@/components/Analytics";
 import LeadPopup from "@/components/LeadPopup";
+import PageTransition from "@/components/PageTransition";
 
 // Reduced weights to cut critical font requests in half (was 5+4 = 9 weights → 3+2 = 5)
 const jakarta = Plus_Jakarta_Sans({
@@ -141,8 +143,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }} />
       </head>
       <body className="font-sans antialiased">
+        <NextTopLoader
+          color="#7da9ff"
+          height={2.5}
+          showSpinner={false}
+          shadow="0 0 12px rgba(20,110,245,0.6),0 0 6px rgba(122,61,255,0.4)"
+          easing="cubic-bezier(0.2, 0.8, 0.2, 1)"
+          speed={350}
+        />
         <NoiseOverlay />
-        <SmoothScroll>{children}</SmoothScroll>
+        <SmoothScroll>
+          <PageTransition>{children}</PageTransition>
+        </SmoothScroll>
         <LeadPopup />
         <Analytics />
       </body>
