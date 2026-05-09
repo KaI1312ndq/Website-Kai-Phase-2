@@ -60,6 +60,7 @@ export default function CoursePage() {
         <FitForSection />
         <OutcomesSection />
         <CurriculumSection />
+        <ToolCallout />
         <FormatSection />
         <AfterCourseSection />
         <TrainerSection />
@@ -420,6 +421,37 @@ function CurriculumSection() {
 }
 
 /* ─── FORMAT ─── */
+/* ─── Tool callout — links from M3 Vận hành sàn ─── */
+function ToolCallout() {
+  return (
+    <section className="relative">
+      <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-10 md:py-14">
+        <Reveal>
+          <div className="rounded-2xl p-6 md:p-7 relative overflow-hidden flex flex-col md:flex-row items-start md:items-center gap-5 md:gap-7"
+            style={{ background: "linear-gradient(135deg, rgba(74,214,255,0.10) 0%, rgba(122,61,255,0.10) 100%)", border: "1px solid rgba(74,214,255,0.30)" }}>
+            <div className="absolute top-0 right-0 w-40 h-40 pointer-events-none" style={{ background: "radial-gradient(circle, rgba(74,214,255,0.30), transparent 70%)", filter: "blur(20px)" }} />
+            <div className="relative w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "var(--grad-primary)", boxShadow: "0 4px 14px rgba(20,110,245,0.45)" }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="3" width="20" height="18" rx="2" /><line x1="2" y1="9" x2="22" y2="9" /><line x1="9" y1="3" x2="9" y2="21" />
+              </svg>
+            </div>
+            <div className="relative flex-1">
+              <div className="text-[0.62rem] font-bold uppercase tracking-[0.16em] mb-1.5" style={{ color: "#7ee2ff" }}>Tool miễn phí · Practice ngay</div>
+              <div className="text-[1.1rem] md:text-[1.2rem] font-bold tracking-tight text-white mb-1.5">Tính phí sàn TikTok Shop & Shopee</div>
+              <p className="text-[0.88rem] leading-[1.6]" style={{ color: "rgba(255,255,255,0.7)" }}>
+                Học xong B5 (Tư duy giá · Tồn kho · Điểm gian hàng), thực hành ngay với tool tính phí sàn — so sánh đồng thời 4 phương án Mall vs Non-Mall. Bảng phí 2026 mới nhất.
+              </p>
+            </div>
+            <Link href="/tools/tinh-phi-san" className="btn btn-primary flex-shrink-0">
+              Mở tool <span className="arrow">→</span>
+            </Link>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 function FormatSection() {
   const blocks = [
     { icon: <IconBook />, title: "Training", desc: "Mỗi buổi 2–3 tiếng. Trainer chia sẻ tư duy + case study thực tế. Lớp nhỏ nên thực sự là thảo luận, không phải giảng 1 chiều." },

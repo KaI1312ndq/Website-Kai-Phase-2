@@ -8,7 +8,7 @@ export default function Footer() {
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 pt-20 pb-10 grid grid-cols-2 md:grid-cols-12 gap-10">
         {/* Brand */}
-        <div className="col-span-2 md:col-span-5">
+        <div className="col-span-2 md:col-span-3">
           <Link href="/" className="inline-flex items-center gap-2.5 text-[1.3rem] font-bold tracking-tight text-white">
             <span className="relative w-9 h-9 rounded-[10px] flex items-center justify-center text-white font-bold text-[1rem] overflow-hidden" style={{ background: "var(--grad-primary)", boxShadow: "0 4px 14px rgba(20,110,245,0.45)" }}>
               <span className="relative z-10">K</span>
@@ -35,7 +35,7 @@ export default function Footer() {
         </div>
 
         {/* Columns */}
-        <div className="col-span-1 md:col-span-2 md:col-start-7">
+        <div className="col-span-1 md:col-span-2 md:col-start-5">
           <h4 className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] mb-4" style={{ color: "rgba(255,255,255,0.45)" }}>Khám phá</h4>
           <ul className="flex flex-col gap-2.5">
             {[
@@ -61,8 +61,8 @@ export default function Footer() {
               { label: "Ecom Consulting", href: "/#contact" },
               { label: "Performance MKT", href: "/#contact" },
               { label: "Team Building", href: "/#contact" },
-              { label: "Mentoring 1-1", href: "/#mentoring" },
-              { label: "Ecom Foundation", href: "/#mentoring" },
+              { label: "Mentoring 1-1", href: "/ecom-foundation" },
+              { label: "Ecom Foundation", href: "/ecom-foundation" },
             ].map((l) => (
               <li key={l.label}>
                 <Link href={l.href} className="text-[0.88rem] transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.55)" }}>
@@ -70,6 +70,23 @@ export default function Footer() {
                 </Link>
               </li>
             ))}
+          </ul>
+        </div>
+
+        <div className="col-span-1 md:col-span-2">
+          <h4 className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] mb-4" style={{ color: "rgba(255,255,255,0.45)" }}>Tools</h4>
+          <ul className="flex flex-col gap-2.5">
+            <li>
+              <Link href="/tools/tinh-phi-san" className="text-[0.88rem] transition-colors hover:text-white inline-flex items-center gap-2" style={{ color: "rgba(255,255,255,0.55)" }}>
+                Tính phí sàn TikTok & Shopee
+                <span className="text-[0.6rem] font-bold uppercase tracking-[0.14em] px-1.5 py-0.5 rounded" style={{ background: "rgba(0,215,34,0.15)", color: "#5fffaa", border: "1px solid rgba(0,215,34,0.3)" }}>Mới</span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/tools" className="text-[0.88rem] transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.55)" }}>
+                Tất cả tools
+              </Link>
+            </li>
           </ul>
         </div>
 

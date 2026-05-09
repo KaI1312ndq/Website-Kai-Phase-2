@@ -3,10 +3,29 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
-const links = [
+type Submenu = { label: string; desc?: string; href: string; badge?: string };
+type NavLink = { label: string; href: string; submenu?: Submenu[] };
+
+const links: NavLink[] = [
   { label: "Về tôi", href: "/#about" },
   { label: "Khoá học", href: "/ecom-foundation" },
-  { label: "Tools", href: "/tools" },
+  {
+    label: "Tools",
+    href: "/tools",
+    submenu: [
+      {
+        label: "Tính phí sàn TikTok & Shopee",
+        desc: "So sánh Mall vs Non-Mall · phí 2026 · miễn phí",
+        href: "/tools/tinh-phi-san",
+        badge: "Mới",
+      },
+      {
+        label: "ROAS Calculator",
+        desc: "Tính ROAS break-even theo cost & margin (sắp có)",
+        href: "/tools",
+      },
+    ],
+  },
   { label: "Kết quả", href: "/#casestudies" },
   { label: "Blog", href: "/blog" },
 ];
@@ -59,16 +78,63 @@ export default function Navbar() {
             {/* Center links */}
             <ul className="hidden md:flex items-center gap-0.5 list-none px-1.5 py-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
               {links.map((l) => (
-                <li key={l.href}>
+                <li key={l.label} className="relative group">
                   <Link
                     href={l.href}
-                    className="block px-4 py-1.5 text-[0.86rem] font-medium rounded-full transition-all"
+                    className="flex items-center gap-1 px-4 py-1.5 text-[0.86rem] font-medium rounded-full transition-all"
                     style={{ color: "rgba(255,255,255,0.72)" }}
                     onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.06)"; (e.currentTarget as HTMLElement).style.color = "white"; }}
                     onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.72)"; }}
                   >
                     {l.label}
+                    {l.submenu && (
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="opacity-50 group-hover:opacity-100 transition-opacity">
+                        <polyline points="6 9 12 15 18 9" />
+                      </svg>
+                    )}
                   </Link>
+                  {l.submenu && (
+                    // Dropdown panel — shows on hover. pt-3 below trigger creates a hoverable bridge so the panel doesn't disappear when cursor moves down.
+                    <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-200">
+                      <div className="rounded-xl p-2 min-w-[340px]" style={{
+                        background: "rgba(8,16,43,0.96)",
+                        border: "1px solid rgba(255,255,255,0.10)",
+                        boxShadow: "0 24px 60px rgba(5,10,31,0.55)",
+                        backdropFilter: "blur(20px) saturate(180%)",
+                      }}>
+                        {l.submenu.map((s) => (
+                          <Link key={s.href} href={s.href}
+                            className="flex items-start gap-3 px-3 py-2.5 rounded-lg transition-colors"
+                            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(20,110,245,0.10)"; }}
+                            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
+                          >
+                            <span className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: "rgba(20,110,245,0.12)", border: "1px solid rgba(20,110,245,0.22)" }}>
+                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7da9ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <rect x="2" y="3" width="20" height="18" rx="2" /><line x1="2" y1="9" x2="22" y2="9" /><line x1="9" y1="3" x2="9" y2="21" />
+                              </svg>
+                            </span>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2">
+                                <span className="text-[0.88rem] font-semibold text-white">{s.label}</span>
+                                {s.badge && <span className="text-[0.6rem] font-bold uppercase tracking-[0.14em] px-1.5 py-0.5 rounded-md" style={{ background: "rgba(0,215,34,0.15)", color: "#5fffaa", border: "1px solid rgba(0,215,34,0.3)" }}>{s.badge}</span>}
+                              </div>
+                              {s.desc && <div className="text-[0.75rem] mt-0.5 leading-snug" style={{ color: "rgba(255,255,255,0.55)" }}>{s.desc}</div>}
+                            </div>
+                          </Link>
+                        ))}
+                        <div className="border-t mt-1 pt-1" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+                          <Link href="/tools" className="flex items-center justify-between px-3 py-2 rounded-lg transition-colors text-[0.78rem] font-semibold"
+                            style={{ color: "rgba(255,255,255,0.6)" }}
+                            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.04)"; (e.currentTarget as HTMLElement).style.color = "white"; }}
+                            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)"; }}
+                          >
+                            <span>Xem tất cả tools</span>
+                            <span>→</span>
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </li>
               ))}
             </ul>
@@ -104,18 +170,29 @@ export default function Navbar() {
           >
             {links.map((l, i) => (
               <motion.div
-                key={l.href}
+                key={l.label}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 + i * 0.05 }}
+                className="text-center"
               >
                 <Link
                   href={l.href}
                   onClick={() => setMobileOpen(false)}
-                  className="text-[1.8rem] font-bold tracking-tight text-white"
+                  className="text-[1.6rem] font-bold tracking-tight text-white"
                 >
                   {l.label}
                 </Link>
+                {l.submenu && (
+                  <div className="mt-2 flex flex-col gap-1">
+                    {l.submenu.map((s) => (
+                      <Link key={s.href} href={s.href} onClick={() => setMobileOpen(false)}
+                        className="text-[0.85rem]" style={{ color: "rgba(255,255,255,0.6)" }}>
+                        ↳ {s.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </motion.div>
             ))}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 + links.length * 0.05 }}>
