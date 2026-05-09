@@ -88,7 +88,10 @@ const expertise = [
 const caseStudies = [
   { platform: "TikTok Shop · Fashion", metric: "11B", unit: "", label: "Doanh thu 3 ngày Super Brand Day", detail: "Top 1 TikTok Shop Fashion", role: "Lead Media + Content Strategy", award: "Best Commerce Campaign Gold — TikTok Awards 2024", tags: ["TikTok Shop", "Media", "KOC/KOL"] },
   { platform: "Multi-platform · Health & Beauty", metric: "60", unit: "+", label: "Dự án triển khai đồng thời", detail: "TikTok · Shopee · Meta · Google", role: "Digital Marketing Manager", award: "Ngân sách 10B+/tháng, tăng trưởng 5-20%/tháng", tags: ["Performance", "Multi-platform", "ROAS"] },
-  { platform: "Sắp cập nhật", metric: "—", unit: "", label: "Case study thứ 3", detail: "", role: "", award: "", tags: [] as string[] },
+  { platform: "Multi-platform · Health & Beauty 2", metric: "5-20", unit: "%", label: "Tăng trưởng tháng-on-tháng", detail: "Quản lý team Performance", role: "Team Lead", award: "", tags: ["Performance", "Growth"] },
+  { platform: "Sắp cập nhật", metric: "—", unit: "", label: "Case study thứ 4", detail: "", role: "", award: "", tags: [] as string[] },
+  { platform: "Sắp cập nhật", metric: "—", unit: "", label: "Case study thứ 5", detail: "", role: "", award: "", tags: [] as string[] },
+  { platform: "Sắp cập nhật", metric: "—", unit: "", label: "Case study thứ 6", detail: "", role: "", award: "", tags: [] as string[] },
 ];
 
 const timeline = [
