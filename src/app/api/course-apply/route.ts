@@ -39,21 +39,33 @@ export async function POST(req: NextRequest) {
     };
 
     let delivered = false;
+    let providerError: string | null = null;
 
     // Provider 1 — Web3Forms (free, no domain verification needed)
     if (process.env.WEB3FORMS_KEY) {
-      const res = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          access_key: process.env.WEB3FORMS_KEY,
-          subject,
-          from_name: `Ecom Foundation Apply · ${name}`,
-          replyto: email,
-          ...fields,
-        }),
-      });
-      if (res.ok) delivered = true;
+      try {
+        const res = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            access_key: process.env.WEB3FORMS_KEY,
+            subject,
+            from_name: `Ecom Foundation Apply · ${name}`,
+            replyto: email,
+            ...fields,
+          }),
+        });
+        const data = await res.json().catch(() => ({} as any));
+        console.log("[course-apply] Web3Forms response:", res.status, data);
+        if (res.ok && data?.success) {
+          delivered = true;
+        } else {
+          providerError = `Web3Forms: ${data?.message || `HTTP ${res.status}`}`;
+        }
+      } catch (e) {
+        providerError = `Web3Forms exception: ${e instanceof Error ? e.message : String(e)}`;
+        console.error("[course-apply] Web3Forms fetch failed:", e);
+      }
     }
 
     // Provider 2 — Resend (requires verified domain)
@@ -80,8 +92,8 @@ export async function POST(req: NextRequest) {
     }
 
     if (!delivered) {
-      console.warn("[course-apply] No email provider configured or all failed. Submission:", JSON.stringify({ name, email, phone, stage }));
-      return NextResponse.json({ error: "no_provider", message: "Email chưa cấu hình. Inbox Zalo trực tiếp." }, { status: 503 });
+      console.warn("[course-apply] Delivery failed:", providerError, "Submission:", JSON.stringify({ name, email, phone, stage }));
+      return NextResponse.json({ error: "delivery_failed", detail: providerError || "no_provider", message: "Không gửi được email. Inbox Zalo trực tiếp." }, { status: 503 });
     }
 
     return NextResponse.json({ success: true });
