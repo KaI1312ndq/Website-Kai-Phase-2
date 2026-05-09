@@ -17,6 +17,63 @@ export const TIKTOK_DEFAULT_MALL = 15.5;
 export const SHOPEE_DEFAULT_MALL = 13.5;
 export const SHOPEE_DEFAULT_NONMALL = 10.5;
 
+/* ─── Search across all levels (free-text) ─── */
+
+function normalize(s: string): string {
+  return s
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "") // strip Vietnamese diacritics
+    .replace(/[đĐ]/g, "d")
+    .trim();
+}
+
+function tokens(s: string): string[] {
+  return normalize(s).split(/\s+/).filter(Boolean);
+}
+
+export type TiktokMatch = TiktokRow & { path: string };
+export type ShopeeMatch = ShopeeRow & { path: string; mallRate: number; nonMallRate: number };
+
+export function searchTiktok(q: string, limit = 30): TiktokMatch[] {
+  const ts = tokens(q);
+  if (!ts.length) return [];
+  const out: TiktokMatch[] = [];
+  for (const r of TIKTOK_ROWS) {
+    const haystack = normalize([r.g, r.l1, r.l2, r.l3].filter(Boolean).join(" "));
+    if (ts.every((t) => haystack.includes(t))) {
+      out.push({ ...r, path: [r.g, r.l1, r.l2, r.l3].filter(Boolean).join(" › ") });
+      if (out.length >= limit) break;
+    }
+  }
+  return out;
+}
+
+export function searchShopee(q: string, limit = 30): ShopeeMatch[] {
+  const ts = tokens(q);
+  if (!ts.length) return [];
+  // Combine Mall + NonMall rows so search hits both — dedupe by path
+  const seen = new Set<string>();
+  const all = [...SHOPEE_MALL_ROWS, ...SHOPEE_NONMALL_ROWS];
+  const out: ShopeeMatch[] = [];
+  for (const r of all) {
+    const path = [r.l1, r.l2, r.l3].filter(Boolean).join(" › ");
+    if (seen.has(path)) continue;
+    const haystack = normalize([r.l1, r.l2, r.l3].filter(Boolean).join(" "));
+    if (ts.every((t) => haystack.includes(t))) {
+      seen.add(path);
+      out.push({
+        ...r,
+        path,
+        mallRate: shopeeMallRate(r.l1, r.l2, r.l3),
+        nonMallRate: shopeeNonMallRate(r.l1, r.l2, r.l3),
+      });
+      if (out.length >= limit) break;
+    }
+  }
+  return out;
+}
+
 /* ─── Cascading distinct option helpers ─── */
 
 export function tiktokGroups(): string[] {
@@ -83,7 +140,6 @@ export type CalcInput = {
   cogs: number;
   sellerVoucherPct: number; // % seller giảm
   shippingBuyer: number;    // VND — Phí vận chuyển buyer phải trả (tham gia base phí giao dịch)
-  bankPromo: number;        // VND — Khuyến mãi từ ngân hàng (trừ khỏi base phí giao dịch)
   commissionRate: number;   // % phí hoa hồng nền tảng (theo platform/mall)
   txnRate: number;          // % phí giao dịch — TikTok 6, Shopee 6
   perOrderFee: number;      // VND — TikTok 3000 / Shopee 3000
@@ -121,9 +177,9 @@ export function compute(i: CalcInput): CalcResult {
   // Phí hoa hồng — tính trên giá sau seller voucher (theo CT chính thức TikTok)
   const commission = netRevenue * (i.commissionRate / 100);
 
-  // Phí giao dịch — tính trên (giá gốc + ship buyer trả - seller voucher - bank promo)
+  // Phí giao dịch — tính trên (giá gốc + ship buyer trả - seller voucher)
   // Theo CT chính thức Shopee/TikTok 2026
-  const txnBase = Math.max(0, i.price + (i.shippingBuyer || 0) - sellerVoucher - (i.bankPromo || 0));
+  const txnBase = Math.max(0, i.price + (i.shippingBuyer || 0) - sellerVoucher);
   const txn = txnBase * (i.txnRate / 100);
 
   const perOrder = i.perOrderFee;
