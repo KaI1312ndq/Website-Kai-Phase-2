@@ -7,7 +7,6 @@ import Countdown from "@/components/Countdown";
 import { trackEvent } from "@/lib/track";
 
 const STORAGE_KEY = "ndq.leadPopup.shown";
-const DISMISS_TTL = 1000 * 60 * 60 * 24 * 14; // 14 ngày
 
 type State = "idle" | "loading" | "success" | "error";
 
@@ -24,10 +23,9 @@ export default function LeadPopup() {
   useEffect(() => {
     if (skipPath) return;
 
-    // Đã dismiss gần đây
+    // Đã dismiss trong session này
     try {
-      const last = localStorage.getItem(STORAGE_KEY);
-      if (last && Date.now() - parseInt(last, 10) < DISMISS_TTL) return;
+      if (sessionStorage.getItem(STORAGE_KEY)) return;
     } catch {}
 
     function show() {
@@ -59,7 +57,7 @@ export default function LeadPopup() {
 
   function close(reason: "x" | "backdrop" | "submitted") {
     setOpen(false);
-    try { localStorage.setItem(STORAGE_KEY, String(Date.now())); } catch {}
+    try { sessionStorage.setItem(STORAGE_KEY, "1"); } catch {}
     if (reason !== "submitted") trackEvent("lead_popup_dismissed", { reason });
   }
 
