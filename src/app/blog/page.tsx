@@ -5,9 +5,13 @@ import Link from "next/link";
 import { getPosts } from "@/lib/queries";
 import { urlFor } from "../../../sanity/lib/image";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://nguyenducquang.website";
+
 export const metadata = {
   title: "Blog & Insights — Nguyễn Đức Quảng",
-  description: "Góc nhìn thực tế về Ecommerce, Performance Marketing và Leadership.",
+  description: "Góc nhìn thực tế về Ecommerce, Performance Marketing và Leadership cho seller TMĐT Việt Nam.",
+  alternates: { canonical: "/blog" },
+  openGraph: { type: "website", title: "Blog & Insights — Nguyễn Đức Quảng", description: "Góc nhìn thực tế về Ecommerce, Performance Marketing và Leadership." },
 };
 
 export const revalidate = 60;
@@ -16,10 +20,38 @@ export default async function BlogPage() {
   let posts: any[] = [];
   try { posts = await getPosts(20); } catch {}
 
+  const blogLd = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    name: "Blog & Insights — Nguyễn Đức Quảng",
+    url: `${SITE_URL}/blog`,
+    inLanguage: "vi-VN",
+    publisher: { "@type": "Person", name: "Nguyễn Đức Quảng", url: SITE_URL },
+    description: "Góc nhìn thực tế về Ecommerce, Performance Marketing và Leadership.",
+    blogPost: posts.slice(0, 10).map((p: any) => ({
+      "@type": "BlogPosting",
+      headline: p.title,
+      url: `${SITE_URL}/blog/${p.slug.current}`,
+      datePublished: p.publishedAt,
+      author: { "@type": "Person", name: "Nguyễn Đức Quảng" },
+    })),
+  };
+
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Trang chủ", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` },
+    ],
+  };
+
   return (
     <>
       <Navbar />
       <main>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
         <section className="relative overflow-hidden border-b" style={{ borderColor: "var(--line)" }}>
           <div className="grid-pattern" />
           <GradientBlobs blobs={[

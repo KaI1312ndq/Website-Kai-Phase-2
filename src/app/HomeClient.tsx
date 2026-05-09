@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Reveal, { RevealText } from "@/components/Reveal";
@@ -579,7 +580,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
                     {/* Photo */}
                     <div className="relative" style={{ background: "linear-gradient(135deg, #0d1c52 0%, #142768 100%)" }}>
                       <div className="absolute inset-0 z-0" style={{ backgroundImage: "radial-gradient(rgba(125,169,255,0.18) 1.2px, transparent 1.2px)", backgroundSize: "20px 20px", opacity: 0.5 }} />
-                      <img src="/kai-photo.png" alt="Nguyễn Đức Quảng" className="relative z-10 w-full h-auto block object-cover object-top" style={{ aspectRatio: "4/5" }} />
+                      <Image src="/kai-photo.webp" alt="Nguyễn Đức Quảng — Digital Marketing Manager" width={600} height={750} className="relative z-10 w-full h-auto block object-cover object-top" style={{ aspectRatio: "4/5" }} sizes="(max-width: 768px) 90vw, 360px" />
                       <div className="absolute inset-0 z-20" style={{ background: "linear-gradient(180deg, transparent 50%, rgba(8,16,43,0.85) 100%)" }} />
                     </div>
                     {/* Caption */}

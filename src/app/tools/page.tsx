@@ -3,10 +3,17 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://nguyenducquang.website";
+
 export const metadata: Metadata = {
   title: "Tools — Công cụ miễn phí cho seller TMĐT",
   description: "Bộ tools miễn phí cho seller Ecommerce: tính phí sàn TikTok Shop & Shopee, ROAS calculator, P&L template, và nhiều hơn nữa.",
   alternates: { canonical: "/tools" },
+  openGraph: {
+    type: "website",
+    title: "Tools — Công cụ miễn phí cho seller TMĐT",
+    description: "Bộ tools miễn phí cho seller Ecommerce: tính phí sàn TikTok & Shopee và nhiều hơn nữa.",
+  },
 };
 
 const TOOLS = [
@@ -52,10 +59,37 @@ const TOOLS = [
 ];
 
 export default function ToolsPage() {
+  const itemListLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Tools cho seller TMĐT",
+    description: "Bộ công cụ miễn phí: tính phí sàn TikTok & Shopee, ROAS, P&L template.",
+    url: `${SITE_URL}/tools`,
+    numberOfItems: TOOLS.length,
+    itemListElement: TOOLS.map((t, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: t.available ? `${SITE_URL}${t.href}` : `${SITE_URL}/tools`,
+      name: t.title,
+      description: t.desc,
+    })),
+  };
+
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Trang chủ", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Tools", item: `${SITE_URL}/tools` },
+    ],
+  };
+
   return (
     <>
       <Navbar />
       <main>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
         <section className="relative overflow-hidden border-b" style={{ borderColor: "var(--line)" }}>
           <div className="grid-pattern" />
           <div className="blob blob-blue blob-anim" style={{ width: 500, height: 500, top: "-20%", left: "-5%" }} />
