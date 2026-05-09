@@ -59,8 +59,8 @@ export async function POST(req: NextRequest) {
     }
 
     if (!delivered) {
-      console.warn("[contact] No email provider configured. Submission:", JSON.stringify({ name, email, type }));
-      return NextResponse.json({ success: true, warning: "no_provider" });
+      console.warn("[contact] No email provider configured or all failed. Submission:", JSON.stringify({ name, email, type }));
+      return NextResponse.json({ error: "no_provider", message: "Email chưa cấu hình. Inbox Zalo trực tiếp." }, { status: 503 });
     }
 
     return NextResponse.json({ success: true });

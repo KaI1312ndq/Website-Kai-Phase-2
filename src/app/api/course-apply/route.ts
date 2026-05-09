@@ -80,9 +80,8 @@ export async function POST(req: NextRequest) {
     }
 
     if (!delivered) {
-      // No provider configured — log so Vercel function logs surface it
-      console.warn("[course-apply] No email provider configured. Submission:", JSON.stringify({ name, email, phone, stage }));
-      return NextResponse.json({ success: true, warning: "no_provider" });
+      console.warn("[course-apply] No email provider configured or all failed. Submission:", JSON.stringify({ name, email, phone, stage }));
+      return NextResponse.json({ error: "no_provider", message: "Email chưa cấu hình. Inbox Zalo trực tiếp." }, { status: 503 });
     }
 
     return NextResponse.json({ success: true });
