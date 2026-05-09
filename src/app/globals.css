@@ -74,7 +74,8 @@
    BASE
    ───────────────────────────────────────── */
 * { box-sizing: border-box; }
-html { scroll-behavior: auto; -webkit-font-smoothing: antialiased; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; scroll-padding-top: 88px; }
+section[id] { scroll-margin-top: 88px; }
 body {
   font-family: "General Sans", "Inter", system-ui, -apple-system, Arial, sans-serif;
   font-weight: 500;
@@ -204,6 +205,30 @@ body {
   color: var(--ink);
   background: transparent;
   padding: 12px 0;
+}
+
+.btn-ghost-dark {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(8px);
+}
+.btn-ghost-dark:hover {
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.32);
+}
+
+/* Hero dark background */
+.hero-dark {
+  background: linear-gradient(135deg, #050a1f 0%, #0a1438 35%, #0d1c52 70%, #1a1f4a 100%);
+  color: white;
+}
+.hero-dark::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at top, rgba(20, 110, 245, 0.18), transparent 60%);
+  pointer-events: none;
 }
 
 /* ─────────────────────────────────────────

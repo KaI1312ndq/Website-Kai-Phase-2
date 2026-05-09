@@ -37,14 +37,14 @@ export default function Navbar() {
         transition={{ duration: 0.6, ease: [0.2, 0.8, 0.2, 1] }}
         className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
         style={{
-          background: scrolled ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.6)",
+          background: scrolled ? "rgba(255,255,255,0.85)" : "rgba(8,12,32,0.4)",
           backdropFilter: "blur(16px)",
           WebkitBackdropFilter: "blur(16px)",
-          borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent",
+          borderBottom: scrolled ? "1px solid var(--border)" : "1px solid rgba(255,255,255,0.06)",
         }}
       >
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 h-[68px] flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 text-[1.1rem] font-semibold tracking-tight text-ink">
+          <Link href="/" className={`flex items-center gap-2 text-[1.1rem] font-semibold tracking-tight transition-colors ${scrolled ? "text-ink" : "text-white"}`}>
             <span className="w-7 h-7 rounded-wf flex items-center justify-center text-white font-bold text-[0.85rem]" style={{ background: "var(--grad-primary)" }}>
               N
             </span>
@@ -57,7 +57,7 @@ export default function Navbar() {
               <li key={l.href}>
                 <Link
                   href={l.href}
-                  className="relative px-3.5 py-2 text-[0.92rem] font-medium text-gray-700 hover:text-ink transition-colors group"
+                  className={`relative px-3.5 py-2 text-[0.92rem] font-medium transition-colors group ${scrolled ? "text-gray-700 hover:text-ink" : "text-white/75 hover:text-white"}`}
                 >
                   {l.label}
                   <span className="absolute left-3.5 right-3.5 -bottom-0.5 h-[2px] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" style={{ background: "var(--grad-text)" }} />
@@ -79,9 +79,9 @@ export default function Navbar() {
             className="md:hidden flex flex-col gap-[5px] p-2 bg-transparent border-none cursor-pointer"
             aria-label="Toggle menu"
           >
-            <span className={`block w-[22px] h-[2px] bg-ink rounded transition-transform duration-300 ${mobileOpen ? "translate-y-[7px] rotate-45" : ""}`} />
-            <span className={`block w-[22px] h-[2px] bg-ink rounded transition-opacity duration-300 ${mobileOpen ? "opacity-0" : ""}`} />
-            <span className={`block w-[22px] h-[2px] bg-ink rounded transition-transform duration-300 ${mobileOpen ? "-translate-y-[7px] -rotate-45" : ""}`} />
+            <span className={`block w-[22px] h-[2px] rounded transition-transform duration-300 ${scrolled || mobileOpen ? "bg-ink" : "bg-white"} ${mobileOpen ? "translate-y-[7px] rotate-45" : ""}`} />
+            <span className={`block w-[22px] h-[2px] rounded transition-opacity duration-300 ${scrolled || mobileOpen ? "bg-ink" : "bg-white"} ${mobileOpen ? "opacity-0" : ""}`} />
+            <span className={`block w-[22px] h-[2px] rounded transition-transform duration-300 ${scrolled || mobileOpen ? "bg-ink" : "bg-white"} ${mobileOpen ? "-translate-y-[7px] -rotate-45" : ""}`} />
           </button>
         </div>
       </motion.nav>
@@ -124,9 +124,6 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Spacer */}
-      <div className="h-[68px]" aria-hidden />
     </>
   );
 }

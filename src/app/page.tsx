@@ -8,7 +8,7 @@ import GradientBlobs from "@/components/GradientBlobs";
 import ContactForm from "@/components/ContactForm";
 import BrandsCarousel from "@/components/BrandsCarousel";
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { useRef } from "react";
 
 /* ─────────────── ICONS ─────────────── */
@@ -93,89 +93,86 @@ const marqueeWords = ["Ecommerce", "TikTok Shop", "Shopee", "Performance Marketi
 /* ─────────────── PAGE ─────────────── */
 export default function Home() {
   const heroRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const photoY = useTransform(scrollYProgress, [0, 1], [0, 80]);
-  const photoScale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
-  const heroTextY = useTransform(scrollYProgress, [0, 1], [0, -40]);
 
   return (
     <>
       <Navbar />
       <main>
         {/* ═══════════════ HERO ═══════════════ */}
-        <section ref={heroRef} className="relative overflow-hidden" style={{ background: "white" }}>
-          <GradientBlobs blobs={[
-            { variant: "blue", size: 600, top: "-10%", left: "-10%" },
-            { variant: "purple", size: 520, bottom: "-15%", right: "0%", delay: "3s" },
-          ]} />
+        <section ref={heroRef} className="relative overflow-hidden hero-dark">
+          {/* Grid pattern */}
+          <div className="absolute inset-0 z-0 opacity-[0.07]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)", backgroundSize: "56px 56px", maskImage: "radial-gradient(ellipse at center, black 40%, transparent 80%)" }} />
+          {/* Glows */}
+          <div className="absolute top-[-10%] left-[-5%] w-[700px] h-[700px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(20,110,245,0.55), transparent 65%)", filter: "blur(40px)" }} />
+          <div className="absolute bottom-[-15%] right-[-10%] w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(122,61,255,0.45), transparent 65%)", filter: "blur(40px)" }} />
 
-          <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-2 items-end gap-10 lg:gap-12" style={{ minHeight: "calc(100vh - 68px)" }}>
-            <motion.div className="pt-12 pb-12 lg:pt-20 lg:pb-24 relative z-10" style={{ y: heroTextY }}>
+          <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-2 items-center gap-10 lg:gap-12 py-16 lg:py-24">
+            <div className="relative z-10">
               <Reveal>
-                <div className="wf-badge mb-7">
-                  <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "var(--wf-blue)" }} />
-                  Digital Marketing Manager
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-wf mb-6" style={{ background: "rgba(20,110,245,0.12)", border: "1px solid rgba(20,110,245,0.3)" }}>
+                  <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#7da9ff" }} />
+                  <span className="text-[0.78rem] font-semibold tracking-[0.06em]" style={{ color: "#9bb6ff" }}>Digital Marketing Manager</span>
                 </div>
               </Reveal>
 
-              <h1 className="t-display tracking-tight mb-6">
+              <h1 className="t-display tracking-tight mb-6 text-white">
                 <RevealText text="Build teams." className="block" />
-                <RevealText text="Scale brands." className="block" delay={0.15} />
+                <RevealText text="Scale brands." className="block" delay={0.12} />
                 <span className="block">
-                  <RevealText text="Grow" splitBy="char" delay={0.32} className="grad-text" stagger={0.06} />{" "}
-                  <RevealText text="smarter." delay={0.55} />
+                  <RevealText text="Grow" splitBy="char" delay={0.26} className="grad-text" stagger={0.05} />{" "}
+                  <RevealText text="smarter." delay={0.45} />
                 </span>
               </h1>
 
-              <Reveal delay={0.7}>
-                <p className="t-body-lg max-w-[480px] mb-8 text-gray-700">
+              <Reveal delay={0.55}>
+                <p className="t-body-lg max-w-[480px] mb-8" style={{ color: "rgba(255,255,255,0.7)" }}>
                   Tôi giúp thương hiệu tăng trưởng bền vững trên TikTok Shop, Shopee, Meta và các nền tảng Ecommerce.
                 </p>
               </Reveal>
 
-              <Reveal delay={0.8}>
+              <Reveal delay={0.65}>
                 <div className="flex gap-2.5 mb-9 flex-wrap">
                   {[
-                    { label: "TikTok", svg: <svg width="20" height="20" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.79a8.18 8.18 0 004.78 1.52V6.86a4.85 4.85 0 01-1.01-.17z" fill="#000" /></svg> },
+                    { label: "TikTok", svg: <svg width="20" height="20" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.79a8.18 8.18 0 004.78 1.52V6.86a4.85 4.85 0 01-1.01-.17z" fill="white" /></svg> },
                     { label: "Shopee", svg: <svg width="20" height="20" viewBox="0 0 192 192"><rect width="192" height="192" rx="40" fill="#EE4D2D" /><path d="M96 28c-22 0-40 18-40 40H40a8 8 0 00-8 8.8l10 88A8 8 0 0050 172h92a8 8 0 008-7.2l10-88A8 8 0 00152 68h-16c0-22-18-40-40-40zm0 14c14.4 0 26 11.6 26 26H70c0-14.4 11.6-26 26-26z" fill="white" /></svg> },
                     { label: "Meta", svg: <svg width="20" height="20" viewBox="0 0 24 24" fill="#0866FF"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z" /></svg> },
                     { label: "Google", svg: <svg width="20" height="20" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" /><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" /><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05" /><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" /></svg> },
                   ].map((p) => (
                     <motion.div key={p.label} whileHover={{ y: -3, scale: 1.05 }} transition={{ type: "spring", stiffness: 320, damping: 18 }}
-                      className="w-11 h-11 rounded-wf flex items-center justify-center cursor-default bg-white"
-                      style={{ border: "1px solid var(--border)", boxShadow: "var(--shadow-soft)" }}>
+                      className="w-11 h-11 rounded-wf flex items-center justify-center cursor-default"
+                      style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", backdropFilter: "blur(8px)" }}>
                       {p.svg}
                     </motion.div>
                   ))}
                 </div>
               </Reveal>
 
-              <Reveal delay={0.9}>
+              <Reveal delay={0.75}>
                 <div className="flex gap-3 items-center flex-wrap">
                   <Link href="/#contact" className="btn btn-primary">
                     Làm việc cùng tôi <span className="arrow">→</span>
                   </Link>
-                  <Link href="/#casestudies" className="btn btn-link">
+                  <Link href="/#casestudies" className="btn btn-ghost-dark">
                     Xem kết quả tôi đã làm <span className="arrow">→</span>
                   </Link>
                 </div>
               </Reveal>
-            </motion.div>
+            </div>
 
             {/* Photo */}
-            <motion.div className="relative flex justify-center lg:justify-end items-end overflow-visible" style={{ y: photoY, scale: photoScale }}>
-              <div className="absolute w-[380px] h-[440px] z-0" style={{ top: 20, left: "10%", background: "var(--grad-radial-blue)", filter: "blur(40px)", borderRadius: "50%" }} />
-              <div className="absolute w-[140px] h-[140px] z-0 opacity-60" style={{ bottom: 30, left: 0, backgroundImage: "radial-gradient(rgba(20,110,245,0.4) 1.5px, transparent 1.5px)", backgroundSize: "16px 16px" }} />
+            <div className="relative flex justify-center lg:justify-end items-center overflow-visible">
+              <div className="absolute w-[420px] h-[480px] z-0 rounded-full" style={{ top: "10%", left: "5%", background: "radial-gradient(circle, rgba(20,110,245,0.6), rgba(122,61,255,0.3) 50%, transparent 70%)", filter: "blur(50px)" }} />
+              <div className="absolute w-[140px] h-[140px] z-0 opacity-50" style={{ bottom: 30, left: 0, backgroundImage: "radial-gradient(rgba(155,182,255,0.5) 1.5px, transparent 1.5px)", backgroundSize: "16px 16px" }} />
               <motion.img
                 src="/kai-photo.png"
                 alt="Nguyễn Đức Quảng"
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 40, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 1, delay: 0.3, ease: [0.2, 0.8, 0.2, 1] }}
                 className="relative z-10 w-full block object-cover object-top"
-                style={{ maxWidth: "520px", minHeight: "480px", maxHeight: "680px" }}
+                style={{ maxWidth: "500px", maxHeight: "640px" }}
               />
-            </motion.div>
+            </div>
           </div>
         </section>
 
