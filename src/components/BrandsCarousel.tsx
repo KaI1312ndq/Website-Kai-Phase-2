@@ -87,9 +87,9 @@ function CarouselRow({ items, reverse = false, speed = 30 }: { items: any[], rev
 
 export default function BrandsCarousel() {
   return (
-    <div style={{ background: "white", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)" }}>
-      <div className="max-w-[1280px] mx-auto px-12 py-10">
-        <p className="text-center text-[0.72rem] font-bold uppercase tracking-widest mb-8" style={{ color: "var(--muted)" }}>Đã làm việc cùng</p>
+    <div className="border-y" style={{ borderColor: "var(--line)" }}>
+      <div className="max-w-[1280px] mx-auto px-6 md:px-12 py-10">
+        <p className="text-center text-[0.7rem] font-semibold uppercase tracking-[0.18em] mb-8" style={{ color: "var(--ink-mute)" }}>Đã làm việc cùng</p>
       </div>
       <div className="flex flex-col gap-4 pb-10">
         <CarouselRow items={ROW1} reverse={false} />

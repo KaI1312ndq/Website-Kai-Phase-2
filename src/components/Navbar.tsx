@@ -24,65 +24,71 @@ export default function Navbar() {
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
+    return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
 
   return (
     <>
       <motion.nav
-        initial={{ y: -40, opacity: 0 }}
+        initial={{ y: -32, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.2, 0.8, 0.2, 1] }}
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-        style={{
-          background: scrolled ? "rgba(255,255,255,0.85)" : "rgba(8,12,32,0.4)",
-          backdropFilter: "blur(16px)",
-          WebkitBackdropFilter: "blur(16px)",
-          borderBottom: scrolled ? "1px solid var(--border)" : "1px solid rgba(255,255,255,0.06)",
-        }}
+        className="fixed top-0 left-0 right-0 z-50"
       >
-        <div className="max-w-[1400px] mx-auto px-6 md:px-10 h-[68px] flex items-center justify-between">
-          <Link href="/" className={`flex items-center gap-2 text-[1.1rem] font-semibold tracking-tight transition-colors ${scrolled ? "text-ink" : "text-white"}`}>
-            <span className="w-7 h-7 rounded-wf flex items-center justify-center text-white font-bold text-[0.85rem]" style={{ background: "var(--grad-primary)" }}>
-              N
-            </span>
-            <span>NĐQ</span>
-            <span className="grad-text">.</span>
-          </Link>
-
-          <ul className="hidden md:flex items-center gap-1 list-none">
-            {links.map((l) => (
-              <li key={l.href}>
-                <Link
-                  href={l.href}
-                  className={`relative px-3.5 py-2 text-[0.92rem] font-medium transition-colors group ${scrolled ? "text-gray-700 hover:text-ink" : "text-white/75 hover:text-white"}`}
-                >
-                  {l.label}
-                  <span className="absolute left-3.5 right-3.5 -bottom-0.5 h-[2px] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" style={{ background: "var(--grad-text)" }} />
-                </Link>
-              </li>
-            ))}
-          </ul>
-
-          <Link
-            href="/#contact"
-            className="hidden md:inline-flex btn btn-primary text-[0.88rem] py-2.5 px-4"
+        <div className="max-w-[1400px] mx-auto px-4 md:px-6 pt-4">
+          <div
+            className="flex items-center justify-between rounded-2xl px-4 md:px-5 h-[60px] transition-all duration-300"
+            style={{
+              background: scrolled ? "rgba(8,16,43,0.78)" : "rgba(255,255,255,0.04)",
+              border: `1px solid ${scrolled ? "rgba(255,255,255,0.10)" : "rgba(255,255,255,0.08)"}`,
+              backdropFilter: "blur(20px) saturate(180%)",
+              WebkitBackdropFilter: "blur(20px) saturate(180%)",
+              boxShadow: scrolled ? "0 12px 40px rgba(5,10,31,0.45)" : "none",
+            }}
           >
-            Liên hệ
-            <span className="arrow">→</span>
-          </Link>
+            {/* Logo */}
+            <Link href="/" className="flex items-center gap-2.5 text-white">
+              <span className="relative w-9 h-9 rounded-[10px] flex items-center justify-center text-white font-bold text-[1rem] overflow-hidden" style={{ background: "var(--grad-primary)", boxShadow: "0 4px 14px rgba(20,110,245,0.45)" }}>
+                <span className="relative z-10">K</span>
+                <span className="absolute inset-0" style={{ background: "radial-gradient(circle at 30% 20%, rgba(255,255,255,0.4), transparent 60%)" }} />
+              </span>
+              <span className="text-[1.05rem] font-bold tracking-tight">Kai</span>
+              <span className="text-[1.05rem] font-bold grad-text">.</span>
+            </Link>
 
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden flex flex-col gap-[5px] p-2 bg-transparent border-none cursor-pointer"
-            aria-label="Toggle menu"
-          >
-            <span className={`block w-[22px] h-[2px] rounded transition-transform duration-300 ${scrolled || mobileOpen ? "bg-ink" : "bg-white"} ${mobileOpen ? "translate-y-[7px] rotate-45" : ""}`} />
-            <span className={`block w-[22px] h-[2px] rounded transition-opacity duration-300 ${scrolled || mobileOpen ? "bg-ink" : "bg-white"} ${mobileOpen ? "opacity-0" : ""}`} />
-            <span className={`block w-[22px] h-[2px] rounded transition-transform duration-300 ${scrolled || mobileOpen ? "bg-ink" : "bg-white"} ${mobileOpen ? "-translate-y-[7px] -rotate-45" : ""}`} />
-          </button>
+            {/* Center links */}
+            <ul className="hidden md:flex items-center gap-0.5 list-none px-1.5 py-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
+              {links.map((l) => (
+                <li key={l.href}>
+                  <Link
+                    href={l.href}
+                    className="block px-4 py-1.5 text-[0.86rem] font-medium rounded-full transition-all"
+                    style={{ color: "rgba(255,255,255,0.72)" }}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.06)"; (e.currentTarget as HTMLElement).style.color = "white"; }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.72)"; }}
+                  >
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            {/* CTA */}
+            <Link href="/#contact" className="hidden md:inline-flex btn btn-primary text-[0.85rem] py-2 px-4">
+              Liên hệ <span className="arrow">→</span>
+            </Link>
+
+            {/* Mobile burger */}
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="md:hidden flex flex-col gap-[5px] p-2 bg-transparent border-none cursor-pointer"
+              aria-label="Toggle menu"
+            >
+              <span className={`block w-[22px] h-[2px] bg-white rounded transition-transform duration-300 ${mobileOpen ? "translate-y-[7px] rotate-45" : ""}`} />
+              <span className={`block w-[22px] h-[2px] bg-white rounded transition-opacity duration-300 ${mobileOpen ? "opacity-0" : ""}`} />
+              <span className={`block w-[22px] h-[2px] bg-white rounded transition-transform duration-300 ${mobileOpen ? "-translate-y-[7px] -rotate-45" : ""}`} />
+            </button>
+          </div>
         </div>
       </motion.nav>
 
@@ -94,7 +100,7 @@ export default function Navbar() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-6 md:hidden"
-            style={{ background: "rgba(255,255,255,0.97)", backdropFilter: "blur(20px)" }}
+            style={{ background: "rgba(5,10,31,0.96)", backdropFilter: "blur(20px)" }}
           >
             {links.map((l, i) => (
               <motion.div
@@ -106,7 +112,7 @@ export default function Navbar() {
                 <Link
                   href={l.href}
                   onClick={() => setMobileOpen(false)}
-                  className="text-[1.8rem] font-semibold tracking-tight text-ink"
+                  className="text-[1.8rem] font-bold tracking-tight text-white"
                 >
                   {l.label}
                 </Link>

@@ -9,11 +9,12 @@ export default function Footer() {
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 pt-20 pb-10 grid grid-cols-2 md:grid-cols-12 gap-10">
         {/* Brand */}
         <div className="col-span-2 md:col-span-5">
-          <Link href="/" className="inline-flex items-center gap-2 text-[1.3rem] font-semibold tracking-tight text-white">
-            <span className="w-8 h-8 rounded-wf flex items-center justify-center text-white font-bold text-[0.95rem]" style={{ background: "var(--grad-primary)" }}>
-              N
+          <Link href="/" className="inline-flex items-center gap-2.5 text-[1.3rem] font-bold tracking-tight text-white">
+            <span className="relative w-9 h-9 rounded-[10px] flex items-center justify-center text-white font-bold text-[1rem] overflow-hidden" style={{ background: "var(--grad-primary)", boxShadow: "0 4px 14px rgba(20,110,245,0.45)" }}>
+              <span className="relative z-10">K</span>
+              <span className="absolute inset-0" style={{ background: "radial-gradient(circle at 30% 20%, rgba(255,255,255,0.4), transparent 60%)" }} />
             </span>
-            NĐQ<span className="grad-text">.</span>
+            Kai<span className="grad-text">.</span>
           </Link>
           <p className="text-[0.92rem] leading-[1.7] max-w-[380px] mt-5" style={{ color: "rgba(255,255,255,0.55)" }}>
             Ecom Growth Expert & Team Builder. Giúp thương hiệu tăng trưởng bền vững trên TMĐT — TikTok Shop, Shopee, Meta, Google.
@@ -77,7 +78,13 @@ export default function Footer() {
           <ul className="flex flex-col gap-2.5">
             <li><a href="mailto:qforwork13@gmail.com" className="text-[0.88rem] transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.55)" }}>qforwork13@gmail.com</a></li>
             <li><a href="https://zalo.me/0868464658" className="text-[0.88rem] transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.55)" }}>Zalo: 0868 464 658</a></li>
-            <li className="text-[0.78rem] mt-2" style={{ color: "rgba(255,255,255,0.35)" }}>📍 Hà Nội, Việt Nam</li>
+            <li className="inline-flex items-center gap-1.5 text-[0.78rem] mt-2" style={{ color: "rgba(255,255,255,0.35)" }}>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              Hà Nội, Việt Nam
+            </li>
           </ul>
         </div>
       </div>

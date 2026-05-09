@@ -7,37 +7,33 @@ import Marquee from "@/components/Marquee";
 import GradientBlobs from "@/components/GradientBlobs";
 import ContactForm from "@/components/ContactForm";
 import BrandsCarousel from "@/components/BrandsCarousel";
+import HeroDashboard from "@/components/HeroDashboard";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useRef } from "react";
 
 /* ─────────────── ICONS ─────────────── */
-const Ic = (d: string, stroke: string = "url(#g)", w = 22) => (
-  <svg width={w} height={w} viewBox="0 0 24 24" fill="none" stroke={stroke} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <defs>
-      <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stopColor="#146ef5" />
-        <stop offset="100%" stopColor="#7a3dff" />
-      </linearGradient>
-    </defs>
-    <path d={d} />
-  </svg>
+const sw = "#7da9ff";
+const Ic = ({ children, w = 22, color = sw }: { children: React.ReactNode; w?: number; color?: string }) => (
+  <svg width={w} height={w} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">{children}</svg>
 );
 
-const IconChart = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#146ef5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="18" y="3" width="4" height="18"/><rect x="10" y="8" width="4" height="13"/><rect x="2" y="13" width="4" height="8"/></svg>;
-const IconCoin = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#146ef5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 000 4h4a2 2 0 010 4H8"/><path d="M12 6v2m0 8v2"/></svg>;
-const IconUsers = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#146ef5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>;
-const IconTrend = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#146ef5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>;
-const IconTeam = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7a3dff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>;
-const IconNav = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#146ef5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>;
-const IconTarget = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#146ef5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>;
-const IconData = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7a3dff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><polyline points="2 20 22 20"/></svg>;
-const IconCart = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#146ef5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>;
-const IconCheck = ({ color = "#146ef5", w = 16 }: { color?: string; w?: number }) => <svg width={w} height={w} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>;
-const IconChevron = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#146ef5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg>;
-const IconCalendar = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7a3dff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>;
-const IconHeart = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#146ef5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>;
-const IconPin = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7a3dff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>;
+const IconChart = (p?: { color?: string }) => <Ic color={p?.color}><rect x="18" y="3" width="4" height="18" /><rect x="10" y="8" width="4" height="13" /><rect x="2" y="13" width="4" height="8" /></Ic>;
+const IconCoin = () => <Ic><circle cx="12" cy="12" r="10" /><path d="M16 8h-6a2 2 0 000 4h4a2 2 0 010 4H8" /><path d="M12 6v2m0 8v2" /></Ic>;
+const IconUsers = () => <Ic><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" /></Ic>;
+const IconTrend = () => <Ic w={20}><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" /></Ic>;
+const IconNav = () => <Ic w={20}><polygon points="3 11 22 2 13 21 11 13 3 11" /></Ic>;
+const IconTarget = () => <Ic w={20}><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></Ic>;
+const IconData = () => <Ic w={20}><line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" /><polyline points="2 20 22 20" /></Ic>;
+const IconCart = () => <Ic w={20}><circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" /><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" /></Ic>;
+const IconCheck = ({ color = "#7da9ff", w = 14 }: { color?: string; w?: number }) => <svg width={w} height={w} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>;
+const IconCalendar = () => <Ic w={18}><rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></Ic>;
+const IconHeart = () => <Ic w={18}><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" /></Ic>;
+const IconPin = () => <Ic w={18}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" /></Ic>;
+const IconTeam = () => <Ic w={20}><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" /></Ic>;
+const IconStar = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="url(#starG)"><defs><linearGradient id="starG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#4ad6ff" /><stop offset="100%" stopColor="#7a3dff" /></linearGradient></defs><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>;
+const IconMail = () => <Ic w={16}><rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></Ic>;
+const IconChat = () => <Ic w={16}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></Ic>;
+const IconLinkedIn = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="#7da9ff"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>;
 
 /* ─────────────── DATA ─────────────── */
 const stats = [
@@ -92,26 +88,24 @@ const marqueeWords = ["Ecommerce", "TikTok Shop", "Shopee", "Performance Marketi
 
 /* ─────────────── PAGE ─────────────── */
 export default function Home() {
-  const heroRef = useRef<HTMLDivElement>(null);
-
   return (
     <>
       <Navbar />
       <main>
         {/* ═══════════════ HERO ═══════════════ */}
-        <section ref={heroRef} className="relative overflow-hidden hero-dark">
-          {/* Grid pattern */}
-          <div className="absolute inset-0 z-0 opacity-[0.07]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)", backgroundSize: "56px 56px", maskImage: "radial-gradient(ellipse at center, black 40%, transparent 80%)" }} />
-          {/* Glows */}
-          <div className="absolute top-[-10%] left-[-5%] w-[700px] h-[700px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(20,110,245,0.55), transparent 65%)", filter: "blur(40px)" }} />
-          <div className="absolute bottom-[-15%] right-[-10%] w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(122,61,255,0.45), transparent 65%)", filter: "blur(40px)" }} />
+        <section className="relative overflow-hidden">
+          <div className="grid-pattern" />
+          <div className="blob blob-blue blob-anim" style={{ width: 700, height: 700, top: "-15%", left: "-10%" }} />
+          <div className="blob blob-purple blob-anim" style={{ width: 600, height: 600, bottom: "-20%", right: "-10%", animationDelay: "3s" }} />
 
-          <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-2 items-center gap-10 lg:gap-12 py-16 lg:py-24">
+          <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-[1.05fr_1fr] items-center gap-12 lg:gap-16 pt-28 pb-20 lg:pt-32 lg:pb-28">
             <div className="relative z-10">
               <Reveal>
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-wf mb-6" style={{ background: "rgba(20,110,245,0.12)", border: "1px solid rgba(20,110,245,0.3)" }}>
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md mb-6" style={{ background: "rgba(20,110,245,0.12)", border: "1px solid rgba(20,110,245,0.3)" }}>
                   <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#7da9ff" }} />
-                  <span className="text-[0.78rem] font-semibold tracking-[0.06em]" style={{ color: "#9bb6ff" }}>Digital Marketing Manager</span>
+                  <span className="text-[0.72rem] font-semibold tracking-[0.14em] uppercase" style={{ color: "#9bb6ff" }}>
+                    Performance Marketing · Ecom Manager
+                  </span>
                 </div>
               </Reveal>
 
@@ -125,71 +119,43 @@ export default function Home() {
               </h1>
 
               <Reveal delay={0.55}>
-                <p className="t-body-lg max-w-[480px] mb-8" style={{ color: "rgba(255,255,255,0.7)" }}>
-                  Tôi giúp thương hiệu tăng trưởng bền vững trên TikTok Shop, Shopee, Meta và các nền tảng Ecommerce.
+                <p className="t-body-lg max-w-[500px] mb-8" style={{ color: "rgba(255,255,255,0.72)" }}>
+                  Tôi giúp thương hiệu tăng trưởng bền vững trên TikTok Shop, Shopee, Meta và các nền tảng Ecommerce — với kết quả đo lường bằng số thật.
                 </p>
               </Reveal>
 
-              <Reveal delay={0.65}>
-                <div className="flex gap-2.5 mb-9 flex-wrap">
-                  {[
-                    { label: "TikTok", svg: <svg width="20" height="20" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.79a8.18 8.18 0 004.78 1.52V6.86a4.85 4.85 0 01-1.01-.17z" fill="white" /></svg> },
-                    { label: "Shopee", svg: <svg width="20" height="20" viewBox="0 0 192 192"><rect width="192" height="192" rx="40" fill="#EE4D2D" /><path d="M96 28c-22 0-40 18-40 40H40a8 8 0 00-8 8.8l10 88A8 8 0 0050 172h92a8 8 0 008-7.2l10-88A8 8 0 00152 68h-16c0-22-18-40-40-40zm0 14c14.4 0 26 11.6 26 26H70c0-14.4 11.6-26 26-26z" fill="white" /></svg> },
-                    { label: "Meta", svg: <svg width="20" height="20" viewBox="0 0 24 24" fill="#0866FF"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z" /></svg> },
-                    { label: "Google", svg: <svg width="20" height="20" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" /><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" /><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05" /><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" /></svg> },
-                  ].map((p) => (
-                    <motion.div key={p.label} whileHover={{ y: -3, scale: 1.05 }} transition={{ type: "spring", stiffness: 320, damping: 18 }}
-                      className="w-11 h-11 rounded-wf flex items-center justify-center cursor-default"
-                      style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", backdropFilter: "blur(8px)" }}>
-                      {p.svg}
-                    </motion.div>
-                  ))}
-                </div>
-              </Reveal>
-
-              <Reveal delay={0.75}>
+              <Reveal delay={0.7}>
                 <div className="flex gap-3 items-center flex-wrap">
                   <Link href="/#contact" className="btn btn-primary">
                     Làm việc cùng tôi <span className="arrow">→</span>
                   </Link>
-                  <Link href="/#casestudies" className="btn btn-ghost-dark">
+                  <Link href="/#casestudies" className="btn btn-ghost">
                     Xem kết quả tôi đã làm <span className="arrow">→</span>
                   </Link>
                 </div>
               </Reveal>
             </div>
 
-            {/* Photo */}
-            <div className="relative flex justify-center lg:justify-end items-center overflow-visible">
-              <div className="absolute w-[420px] h-[480px] z-0 rounded-full" style={{ top: "10%", left: "5%", background: "radial-gradient(circle, rgba(20,110,245,0.6), rgba(122,61,255,0.3) 50%, transparent 70%)", filter: "blur(50px)" }} />
-              <div className="absolute w-[140px] h-[140px] z-0 opacity-50" style={{ bottom: 30, left: 0, backgroundImage: "radial-gradient(rgba(155,182,255,0.5) 1.5px, transparent 1.5px)", backgroundSize: "16px 16px" }} />
-              <motion.img
-                src="/kai-photo.png"
-                alt="Nguyễn Đức Quảng"
-                initial={{ opacity: 0, y: 40, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 1, delay: 0.3, ease: [0.2, 0.8, 0.2, 1] }}
-                className="relative z-10 w-full block object-cover object-top"
-                style={{ maxWidth: "500px", maxHeight: "640px" }}
-              />
-            </div>
+            <Reveal delay={0.2}>
+              <HeroDashboard />
+            </Reveal>
           </div>
         </section>
 
         {/* ═══════════════ STATS ═══════════════ */}
-        <section className="border-y" style={{ background: "white", borderColor: "var(--border)" }}>
-          <div className="max-w-[1400px] mx-auto px-6 md:px-10 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x" style={{ borderColor: "var(--border)" }}>
+        <section className="relative border-y" style={{ borderColor: "var(--line)" }}>
+          <div className="max-w-[1400px] mx-auto px-6 md:px-10 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x" style={{ borderColor: "var(--line)" }}>
             {stats.map((s, i) => (
               <Reveal key={i} delay={i * 0.08} className="flex items-center gap-5 px-6 md:px-10 py-10">
-                <div className="w-14 h-14 rounded-wf-md flex items-center justify-center flex-shrink-0" style={{ background: "var(--grad-primary-soft)", border: "1px solid rgba(20,110,245,0.15)" }}>
+                <div className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "var(--grad-primary-soft)", border: "1px solid rgba(20,110,245,0.25)" }}>
                   {s.icon}
                 </div>
                 <div>
-                  <div className="text-[2.2rem] font-semibold tracking-tight leading-none">
+                  <div className="text-[2.2rem] font-bold tracking-tight leading-none text-white">
                     <CounterStat to={s.num} suffix={s.suffix} />
                   </div>
-                  <div className="text-[0.95rem] font-semibold mt-1.5">{s.label}</div>
-                  <div className="text-[0.82rem] text-gray-500">{s.sub}</div>
+                  <div className="text-[0.95rem] font-semibold mt-1.5 text-white">{s.label}</div>
+                  <div className="text-[0.82rem]" style={{ color: "var(--ink-mute)" }}>{s.sub}</div>
                 </div>
               </Reveal>
             ))}
@@ -197,11 +163,17 @@ export default function Home() {
         </section>
 
         {/* ═══════════════ MARQUEE ═══════════════ */}
-        <section className="py-10 md:py-12 overflow-hidden border-b" style={{ background: "white", borderColor: "var(--border)" }}>
+        <section className="py-10 md:py-14 overflow-hidden border-b" style={{ borderColor: "var(--line)" }}>
           <Marquee
             items={marqueeWords.map((w, i) => (
               <span key={i} className="inline-flex items-center gap-6">
-                <span className="text-[clamp(2rem,5vw,3.5rem)] font-semibold tracking-tight whitespace-nowrap" style={{ color: i % 2 === 0 ? "var(--ink)" : "transparent", WebkitTextStroke: i % 2 === 0 ? "0" : "1.5px var(--wf-blue)" }}>
+                <span
+                  className="text-[clamp(2rem,5vw,3.5rem)] font-bold tracking-tight whitespace-nowrap"
+                  style={{
+                    color: i % 2 === 0 ? "white" : "transparent",
+                    WebkitTextStroke: i % 2 === 0 ? "0" : "1.5px rgba(125,169,255,0.8)",
+                  }}
+                >
                   {w}
                 </span>
                 <span className="text-[2rem] grad-text">✦</span>
@@ -214,13 +186,13 @@ export default function Home() {
         <BrandsCarousel />
 
         {/* ═══════════════ ABOUT ═══════════════ */}
-        <section id="about" className="relative overflow-hidden" style={{ background: "white" }}>
-          <GradientBlobs blobs={[{ variant: "blue", size: 500, top: "10%", right: "-15%" }]} />
+        <section id="about" className="relative overflow-hidden">
+          <div className="blob blob-blue blob-anim" style={{ width: 500, height: 500, top: "10%", right: "-15%" }} />
           <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-28 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
             <div>
               <Reveal><div className="section-tag">Về tôi</div></Reveal>
               <Reveal delay={0.1}>
-                <h2 className="t-h1 mb-6">
+                <h2 className="t-h1 mb-6 text-white">
                   Tư duy chiến lược.<br />
                   Thực thi kỷ luật.<br />
                   <span className="grad-text">Tăng trưởng bền vững.</span>
@@ -228,10 +200,10 @@ export default function Home() {
               </Reveal>
               <Reveal delay={0.18}>
                 <p className="t-body mb-4 max-w-[480px]">
-                  Hơn 5 năm kinh nghiệm trong lĩnh vực <strong className="text-ink">Digital Marketing và Ecommerce</strong>. Tập trung vào hiệu quả thực tế, xây dựng hệ thống, đội nhóm và chiến lược tăng trưởng.
+                  Hơn 5 năm kinh nghiệm trong lĩnh vực <strong className="text-white">Digital Marketing và Ecommerce</strong>. Tập trung vào hiệu quả thực tế, xây dựng hệ thống, đội nhóm và chiến lược tăng trưởng.
                 </p>
                 <p className="t-body mb-8 max-w-[480px]">
-                  Tại <strong className="text-ink">UpBase</strong>, quản lý team 12 người phụ trách 60+ dự án trên TikTok Shop, Shopee, Meta, Google với ngân sách <strong className="text-ink">10 tỷ VNĐ/tháng</strong>.
+                  Tại <strong className="text-white">UpBase</strong>, quản lý team 12 người phụ trách 60+ dự án trên TikTok Shop, Shopee, Meta, Google với ngân sách <strong className="text-white">10 tỷ VNĐ/tháng</strong>.
                 </p>
                 <Link href="/#contact" className="btn btn-ghost">
                   Tìm hiểu thêm về tôi <span className="arrow">→</span>
@@ -242,12 +214,12 @@ export default function Home() {
               {pillars.map((p, i) => (
                 <Reveal key={i} delay={i * 0.08}>
                   <motion.div whileHover={{ y: -4 }} transition={{ type: "spring", stiffness: 280, damping: 22 }}
-                    className="wf-card wf-card-blue p-5 md:p-6 h-full">
-                    <div className="w-11 h-11 rounded-wf flex items-center justify-center mb-4" style={{ background: "var(--grad-primary-soft)" }}>
+                    className="glass p-5 md:p-6 h-full">
+                    <div className="w-11 h-11 rounded-lg flex items-center justify-center mb-4" style={{ background: "var(--grad-primary-soft)", border: "1px solid rgba(20,110,245,0.2)" }}>
                       {p.icon}
                     </div>
-                    <div className="text-[1rem] font-semibold mb-1.5 tracking-tight">{p.title}</div>
-                    <div className="text-[0.85rem] leading-[1.6] text-gray-600">{p.desc}</div>
+                    <div className="text-[1rem] font-semibold mb-1.5 tracking-tight text-white">{p.title}</div>
+                    <div className="text-[0.85rem] leading-[1.65]" style={{ color: "var(--ink-mute)" }}>{p.desc}</div>
                   </motion.div>
                 </Reveal>
               ))}
@@ -256,11 +228,14 @@ export default function Home() {
         </section>
 
         {/* ═══════════════ EXPERTISE ═══════════════ */}
-        <section id="expertise" className="relative" style={{ background: "var(--canvas-mute)" }}>
-          <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-28">
+        <section id="expertise" className="relative">
+          <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent, rgba(20,110,245,0.04), transparent)" }} />
+          <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-28">
             <Reveal><div className="section-tag">Chuyên môn</div></Reveal>
             <Reveal delay={0.08}>
-              <h2 className="t-h2 mb-3 max-w-[560px]">3 mảng chuyên môn chính.</h2>
+              <h2 className="t-h2 mb-3 max-w-[640px] text-white">
+                3 mảng chuyên môn <span className="grad-text">chính.</span>
+              </h2>
             </Reveal>
             <Reveal delay={0.14}>
               <p className="t-caption mb-12 max-w-[480px]">Tập trung vào những gì tạo ra kết quả lớn nhất.</p>
@@ -269,12 +244,12 @@ export default function Home() {
               {expertise.map((c, i) => (
                 <Reveal key={i} delay={i * 0.1}>
                   <motion.div whileHover={{ y: -6 }} transition={{ type: "spring", stiffness: 260, damping: 22 }}
-                    className="wf-card wf-card-blue bg-white p-7 md:p-8 h-full flex flex-col">
-                    <div className="w-12 h-12 rounded-wf-md flex items-center justify-center mb-5" style={{ background: "var(--grad-primary-soft)" }}>
+                    className="glass p-7 md:p-8 h-full flex flex-col">
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style={{ background: "var(--grad-primary-soft)", border: "1px solid rgba(20,110,245,0.2)" }}>
                       {c.icon}
                     </div>
-                    <h3 className="text-[1.1rem] font-semibold mb-3 leading-snug tracking-tight">{c.title}</h3>
-                    <p className="text-[0.92rem] leading-[1.65] mb-5 text-gray-600">{c.desc}</p>
+                    <h3 className="t-h3 mb-3 text-white">{c.title}</h3>
+                    <p className="text-[0.92rem] leading-[1.7] mb-5" style={{ color: "var(--ink-mute)" }}>{c.desc}</p>
                     <div className="flex flex-wrap gap-1.5 mt-auto">
                       {c.tags.map((t) => <span key={t} className="wf-badge text-[0.72rem]">{t}</span>)}
                     </div>
@@ -286,30 +261,29 @@ export default function Home() {
         </section>
 
         {/* ═══════════════ CASE STUDIES ═══════════════ */}
-        <section id="casestudies" className="relative overflow-hidden" style={{ background: "white" }}>
-          <GradientBlobs blobs={[{ variant: "purple", size: 500, top: "30%", left: "-15%" }]} />
+        <section id="casestudies" className="relative overflow-hidden">
+          <div className="blob blob-purple blob-anim" style={{ width: 500, height: 500, top: "30%", left: "-15%" }} />
           <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-28">
             <Reveal><div className="section-tag">Kết quả thực tế</div></Reveal>
-            <Reveal delay={0.08}><h2 className="t-h2 mb-3">Case Studies.</h2></Reveal>
+            <Reveal delay={0.08}><h2 className="t-h2 mb-3 text-white">Case <span className="grad-text">Studies.</span></h2></Reveal>
             <Reveal delay={0.14}><p className="t-caption mb-12 max-w-[480px]">Những con số thực tế từ các dự án đã triển khai.</p></Reveal>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
               {caseStudies.map((cs, i) => (
                 <Reveal key={i} delay={i * 0.1}>
                   <motion.div whileHover={{ y: -6 }} transition={{ type: "spring", stiffness: 260, damping: 22 }}
-                    className="wf-card wf-card-blue p-6 md:p-7 h-full"
-                    style={{ background: cs.tags.length === 0 ? "var(--canvas-mute)" : "white", borderTop: "3px solid transparent", borderImage: "linear-gradient(90deg, #146ef5, #7a3dff) 1" }}>
+                    className="glass-grad p-6 md:p-7 h-full">
                     <div className="flex items-center gap-2 mb-5">
-                      <div className="w-9 h-9 rounded-wf flex items-center justify-center" style={{ background: "var(--grad-primary-soft)" }}>
+                      <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: "var(--grad-primary-soft)", border: "1px solid rgba(20,110,245,0.2)" }}>
                         <IconTrend />
                       </div>
                       <span className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] grad-text">{cs.platform}</span>
                     </div>
-                    <div className="text-[2.4rem] font-semibold tracking-tight leading-none mb-1.5">
+                    <div className="text-[2.4rem] font-bold tracking-tight leading-none mb-2 text-white">
                       {cs.metric}<span className="grad-text">{cs.unit}</span>
                     </div>
-                    <p className="text-[0.85rem] mb-4 leading-snug text-gray-600">
+                    <p className="text-[0.85rem] mb-4 leading-snug" style={{ color: "var(--ink-mute)" }}>
                       {cs.label}
-                      {cs.detail && <><br /><strong className="text-ink">{cs.detail}</strong></>}
+                      {cs.detail && <><br /><strong className="text-white">{cs.detail}</strong></>}
                     </p>
                     {cs.tags.length > 0 && (
                       <div className="flex flex-wrap gap-1.5 mb-4">
@@ -317,7 +291,7 @@ export default function Home() {
                       </div>
                     )}
                     {cs.award && (
-                      <p className="text-[0.82rem] pt-4 border-t mt-3 grad-text font-semibold" style={{ borderColor: "var(--border)" }}>
+                      <p className="text-[0.82rem] pt-4 border-t mt-3 font-semibold grad-text" style={{ borderColor: "var(--line)" }}>
                         → {cs.award}
                       </p>
                     )}
@@ -328,72 +302,113 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ═══════════════ TIMELINE ═══════════════ */}
-        <section id="timeline" style={{ background: "var(--canvas-mute)" }}>
-          <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-28">
+        {/* ═══════════════ TIMELINE + PORTRAIT ═══════════════ */}
+        <section id="timeline" className="relative overflow-hidden">
+          <div className="blob blob-cyan blob-anim" style={{ width: 480, height: 480, top: "20%", right: "-10%" }} />
+          <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-28">
             <Reveal><div className="section-tag">Hành trình</div></Reveal>
             <Reveal delay={0.08}>
-              <h2 className="t-h2 mb-14 max-w-[640px]">
+              <h2 className="t-h2 mb-14 max-w-[640px] text-white">
                 Từng bước xây dựng <span className="grad-text">sự nghiệp.</span>
               </h2>
             </Reveal>
-            <div className="max-w-[760px] relative">
-              <div className="absolute left-5 top-2 bottom-2 w-[2px]" style={{ background: "linear-gradient(to bottom, #146ef5, #7a3dff, transparent)" }} />
-              {timeline.map((t, i) => (
-                <Reveal key={i} delay={i * 0.08} className="flex gap-6 relative">
-                  <div className="flex flex-col items-center">
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      whileInView={{ scale: 1 }}
-                      viewport={{ once: true, amount: 0.6 }}
-                      transition={{ type: "spring", stiffness: 260, damping: 18, delay: i * 0.08 }}
-                      className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 z-10"
-                      style={{
-                        background: t.current ? "var(--grad-primary)" : "white",
-                        border: t.current ? "none" : "2px solid var(--border)",
-                        boxShadow: t.current ? "0 0 0 6px rgba(20,110,245,0.15)" : "none",
-                      }}
-                    >
-                      <IconCheck color={t.current ? "white" : "#146ef5"} />
-                    </motion.div>
-                  </div>
-                  <div className="pb-10 flex-1">
-                    <div className="flex items-center flex-wrap gap-2 mb-1.5">
-                      <div className="text-[0.72rem] font-semibold uppercase tracking-[0.14em] grad-text">{t.year}</div>
-                      {t.logo === "UpBase" && <span className="text-[0.7rem] font-bold px-2.5 py-0.5 rounded-wf" style={{ background: "#0052CC", color: "white" }}>UpBase</span>}
-                      {t.logo === "TheBadGod" && <span className="text-[0.7rem] font-bold px-2.5 py-0.5 rounded-wf" style={{ background: "#1a5c2a", color: "white" }}>The Bad God</span>}
-                      {t.logo === "Xiaomi" && <span className="text-[0.7rem] font-bold px-2.5 py-0.5 rounded-wf" style={{ background: "#FF6900", color: "white" }}>Xiaomi</span>}
+
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-10 lg:gap-16 items-start">
+              {/* Timeline */}
+              <div className="relative">
+                <div className="absolute left-5 top-2 bottom-2 w-[2px]" style={{ background: "linear-gradient(to bottom, #4ad6ff, #146ef5, #7a3dff, transparent)" }} />
+                {timeline.map((t, i) => (
+                  <Reveal key={i} delay={i * 0.08} className="flex gap-6 relative">
+                    <div className="flex flex-col items-center">
+                      <motion.div
+                        initial={{ scale: 0 }}
+                        whileInView={{ scale: 1 }}
+                        viewport={{ once: true, amount: 0.6 }}
+                        transition={{ type: "spring", stiffness: 260, damping: 18, delay: i * 0.08 }}
+                        className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 z-10"
+                        style={{
+                          background: t.current ? "var(--grad-primary)" : "rgba(8,16,43,1)",
+                          border: t.current ? "none" : "2px solid rgba(125,169,255,0.4)",
+                          boxShadow: t.current ? "0 0 0 6px rgba(20,110,245,0.18), 0 4px 16px rgba(20,110,245,0.4)" : "none",
+                        }}
+                      >
+                        <IconCheck color={t.current ? "white" : "#7da9ff"} />
+                      </motion.div>
                     </div>
-                    <div className="text-[1.05rem] font-semibold mb-1.5 tracking-tight">{t.title}</div>
-                    <div className="text-[0.92rem] leading-[1.7] text-gray-600">{t.desc}</div>
-                  </div>
-                </Reveal>
-              ))}
+                    <div className="pb-10 flex-1">
+                      <div className="flex items-center flex-wrap gap-2 mb-1.5">
+                        <div className="text-[0.72rem] font-semibold uppercase tracking-[0.14em] grad-text">{t.year}</div>
+                        {t.logo === "UpBase" && <span className="text-[0.7rem] font-bold px-2.5 py-0.5 rounded-md" style={{ background: "#0052CC", color: "white" }}>UpBase</span>}
+                        {t.logo === "TheBadGod" && <span className="text-[0.7rem] font-bold px-2.5 py-0.5 rounded-md" style={{ background: "#1a5c2a", color: "white" }}>The Bad God</span>}
+                        {t.logo === "Xiaomi" && <span className="text-[0.7rem] font-bold px-2.5 py-0.5 rounded-md" style={{ background: "#FF6900", color: "white" }}>Xiaomi</span>}
+                      </div>
+                      <div className="text-[1.05rem] font-semibold mb-1.5 tracking-tight text-white">{t.title}</div>
+                      <div className="text-[0.92rem] leading-[1.7]" style={{ color: "var(--ink-mute)" }}>{t.desc}</div>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+
+              {/* Portrait card — sticky right */}
+              <Reveal delay={0.2}>
+                <div className="lg:sticky lg:top-28">
+                  <motion.div
+                    whileHover={{ y: -4 }}
+                    transition={{ type: "spring", stiffness: 240, damping: 22 }}
+                    className="rounded-2xl overflow-hidden relative"
+                    style={{
+                      background: "linear-gradient(180deg, rgba(20,40,90,0.5), rgba(8,16,43,0.85))",
+                      border: "1px solid rgba(255,255,255,0.10)",
+                      boxShadow: "0 24px 60px rgba(5,10,31,0.55)",
+                    }}
+                  >
+                    {/* Photo */}
+                    <div className="relative" style={{ background: "linear-gradient(135deg, #0d1c52 0%, #142768 100%)" }}>
+                      <div className="absolute inset-0 z-0" style={{ backgroundImage: "radial-gradient(rgba(125,169,255,0.18) 1.2px, transparent 1.2px)", backgroundSize: "20px 20px", opacity: 0.5 }} />
+                      <img src="/kai-photo.png" alt="Nguyễn Đức Quảng" className="relative z-10 w-full h-auto block object-cover object-top" style={{ aspectRatio: "4/5" }} />
+                      <div className="absolute inset-0 z-20" style={{ background: "linear-gradient(180deg, transparent 50%, rgba(8,16,43,0.85) 100%)" }} />
+                    </div>
+                    {/* Caption */}
+                    <div className="px-5 py-4 flex items-center justify-between gap-3 border-t" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+                      <div>
+                        <div className="text-[0.95rem] font-bold text-white tracking-tight">Nguyễn Đức Quảng</div>
+                        <div className="text-[0.78rem]" style={{ color: "var(--ink-mute)" }}>Digital Marketing Manager</div>
+                      </div>
+                      <div className="flex items-center gap-1.5 px-2 py-1 rounded-md" style={{ background: "rgba(0,215,34,0.10)", border: "1px solid rgba(0,215,34,0.25)" }}>
+                        <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#00d722" }} />
+                        <span className="text-[0.62rem] font-semibold uppercase tracking-[0.14em]" style={{ color: "#5fffaa" }}>Open</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
+              </Reveal>
             </div>
           </div>
         </section>
 
         {/* ═══════════════ TESTIMONIALS ═══════════════ */}
-        <section id="testimonials" style={{ background: "white" }}>
+        <section id="testimonials" className="relative">
           <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-28">
             <Reveal><div className="section-tag">Nhận xét</div></Reveal>
             <Reveal delay={0.08}>
-              <h2 className="t-h2 mb-12">Người đã làm việc<br /><span className="grad-text">cùng tôi nói gì.</span></h2>
+              <h2 className="t-h2 mb-12 text-white">Người đã làm việc<br /><span className="grad-text">cùng tôi nói gì.</span></h2>
             </Reveal>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
               {[0, 1, 2].map((i) => (
                 <Reveal key={i} delay={i * 0.1}>
                   <motion.div whileHover={{ y: -4 }} transition={{ type: "spring", stiffness: 260, damping: 22 }}
-                    className="wf-card p-7 md:p-8 h-full">
-                    <div className="flex gap-0.5 mb-4 grad-text">
-                      {[...Array(5)].map((_, j) => <span key={j} className="text-base">★</span>)}
+                    className="glass p-7 md:p-8 h-full">
+                    <div className="flex gap-0.5 mb-4">
+                      {[...Array(5)].map((_, j) => <IconStar key={j} />)}
                     </div>
-                    <p className="text-[0.95rem] leading-[1.75] italic mb-6 text-gray-700">"Sắp cập nhật — nhận xét từ client hoặc đồng nghiệp."</p>
-                    <div className="flex items-center gap-3 pt-4 border-t" style={{ borderColor: "var(--border)" }}>
+                    <p className="text-[0.95rem] leading-[1.75] italic mb-6" style={{ color: "var(--ink-soft)" }}>
+                      "Sắp cập nhật — nhận xét từ client hoặc đồng nghiệp."
+                    </p>
+                    <div className="flex items-center gap-3 pt-4 border-t" style={{ borderColor: "var(--line)" }}>
                       <div className="w-10 h-10 rounded-full flex-shrink-0" style={{ background: "var(--grad-primary)" }} />
                       <div>
-                        <div className="text-[0.9rem] font-semibold tracking-tight">Tên · Chức vụ</div>
-                        <div className="text-[0.78rem] text-gray-500">Công ty</div>
+                        <div className="text-[0.9rem] font-semibold tracking-tight text-white">Tên · Chức vụ</div>
+                        <div className="text-[0.78rem]" style={{ color: "var(--ink-mute)" }}>Công ty</div>
                       </div>
                     </div>
                   </motion.div>
@@ -404,27 +419,26 @@ export default function Home() {
         </section>
 
         {/* ═══════════════ MENTORING ═══════════════ */}
-        <section id="mentoring" className="relative overflow-hidden" style={{ background: "#080808" }}>
-          <div className="absolute inset-0 z-0 opacity-50">
-            <div className="blob blob-blue blob-anim" style={{ width: 600, height: 600, top: "-10%", left: "-10%", filter: "blur(100px)" }} />
-            <div className="blob blob-purple blob-anim" style={{ width: 500, height: 500, bottom: "-15%", right: "-10%", animationDelay: "3s", filter: "blur(100px)" }} />
-          </div>
+        <section id="mentoring" className="relative overflow-hidden">
+          <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent, rgba(20,30,80,0.4), transparent)" }} />
+          <div className="blob blob-blue blob-anim" style={{ width: 600, height: 600, top: "-10%", left: "-10%" }} />
+          <div className="blob blob-purple blob-anim" style={{ width: 500, height: 500, bottom: "-15%", right: "-10%", animationDelay: "3s" }} />
           <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-28 grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-12 lg:gap-16 items-start">
             <div>
-              <Reveal><div className="section-tag" style={{ color: "#7da9ff" }}>Chương trình Mentoring</div></Reveal>
+              <Reveal><div className="section-tag">Chương trình Mentoring</div></Reveal>
               <Reveal delay={0.08}>
                 <h2 className="t-h1 text-white mb-5 tracking-tight">
                   Ecom <span className="grad-text">Foundation.</span>
                 </h2>
               </Reveal>
               <Reveal delay={0.14}>
-                <p className="text-[1rem] leading-[1.75] mb-7 max-w-[560px]" style={{ color: "rgba(255,255,255,0.65)" }}>
+                <p className="text-[1rem] leading-[1.75] mb-7 max-w-[560px]" style={{ color: "var(--ink-soft)" }}>
                   Chương trình mentoring 1-1 / nhóm nhỏ giúp bạn xây nền tảng Ecommerce bài bản. Không phải một khoá học về kỹ năng — mà về tư duy để gia nhập thị trường.
                 </p>
               </Reveal>
 
               <Reveal delay={0.2}>
-                <p className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] mb-4" style={{ color: "rgba(255,255,255,0.4)" }}>
+                <p className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] mb-4" style={{ color: "var(--ink-mute)" }}>
                   Nội dung chương trình (5 giai đoạn)
                 </p>
                 <div className="flex flex-col gap-2.5 mb-9">
@@ -441,15 +455,14 @@ export default function Home() {
                       viewport={{ once: true, amount: 0.3 }}
                       transition={{ duration: 0.5, delay: i * 0.06 }}
                       whileHover={{ x: 4 }}
-                      className="rounded-wf-md px-4 py-3.5"
-                      style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                      className="glass px-4 py-3.5">
                       <div className="flex items-start gap-3">
                         <span className="text-[0.78rem] font-bold flex-shrink-0 mt-0.5 grad-text">{stage.num}</span>
                         <div>
                           <div className="text-[0.92rem] font-semibold text-white mb-1.5 tracking-tight">{stage.title}</div>
                           <div className="flex flex-wrap gap-1.5">
                             {stage.items.map((item, j) => (
-                              <span key={j} className="text-[0.7rem] px-2 py-0.5 rounded-wf" style={{ background: "rgba(20,110,245,0.15)", color: "#9bb6ff" }}>
+                              <span key={j} className="text-[0.7rem] px-2 py-0.5 rounded-md" style={{ background: "rgba(20,110,245,0.12)", color: "#9bb6ff" }}>
                                 {item}
                               </span>
                             ))}
@@ -464,14 +477,14 @@ export default function Home() {
               <Reveal delay={0.3}>
                 <div className="flex flex-wrap gap-3 mb-8">
                   {mentorFeatures.map((f, i) => (
-                    <div key={i} className="flex items-center gap-3 rounded-wf-md px-4 py-3"
-                      style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)" }}>
-                      <div className="w-9 h-9 rounded-wf flex items-center justify-center flex-shrink-0" style={{ background: "rgba(20,110,245,0.15)" }}>
+                    <div key={i} className="flex items-center gap-3 rounded-xl px-4 py-3"
+                      style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                      <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "rgba(20,110,245,0.12)", border: "1px solid rgba(20,110,245,0.2)" }}>
                         {f.icon}
                       </div>
                       <div>
                         <div className="text-[0.85rem] font-semibold text-white">{f.val}</div>
-                        <div className="text-[0.72rem]" style={{ color: "rgba(255,255,255,0.5)" }}>{f.label}</div>
+                        <div className="text-[0.72rem]" style={{ color: "var(--ink-mute)" }}>{f.label}</div>
                       </div>
                     </div>
                   ))}
@@ -484,13 +497,13 @@ export default function Home() {
 
             <Reveal delay={0.18}>
               <motion.div whileHover={{ y: -4 }} transition={{ type: "spring", stiffness: 260, damping: 22 }}
-                className="rounded-wf-md p-8 md:p-10 text-center sticky top-24"
-                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.12)", backdropFilter: "blur(16px)" }}>
-                <div className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] mb-3" style={{ color: "rgba(255,255,255,0.5)" }}>Đầu tư</div>
-                <div className="text-[3.5rem] font-semibold text-white tracking-tight leading-none mb-1">
-                  3<span className="grad-text">–</span>5<span className="text-[1.2rem] font-normal align-top" style={{ color: "rgba(255,255,255,0.5)" }}>M</span>
+                className="rounded-2xl p-8 md:p-10 text-center lg:sticky lg:top-28"
+                style={{ background: "linear-gradient(180deg, rgba(20,40,90,0.6), rgba(8,16,43,0.85))", border: "1px solid rgba(255,255,255,0.12)", boxShadow: "0 24px 60px rgba(5,10,31,0.55)", backdropFilter: "blur(20px)" }}>
+                <div className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] mb-3" style={{ color: "var(--ink-mute)" }}>Đầu tư</div>
+                <div className="text-[3.5rem] font-bold text-white tracking-tight leading-none mb-1">
+                  3<span className="grad-text">–</span>5<span className="text-[1.2rem] font-normal align-top" style={{ color: "var(--ink-mute)" }}>M</span>
                 </div>
-                <div className="text-[0.85rem] mb-7" style={{ color: "rgba(255,255,255,0.5)" }}>VNĐ / người</div>
+                <div className="text-[0.85rem] mb-7" style={{ color: "var(--ink-mute)" }}>VNĐ / người</div>
                 <Link href="/#contact" className="btn btn-primary w-full justify-center">
                   Đăng ký ngay <span className="arrow">→</span>
                 </Link>
@@ -500,25 +513,25 @@ export default function Home() {
         </section>
 
         {/* ═══════════════ FAQ ═══════════════ */}
-        <section id="faq" style={{ background: "white" }}>
+        <section id="faq" className="relative">
           <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-28">
             <Reveal><div className="section-tag">FAQ</div></Reveal>
             <Reveal delay={0.08}>
-              <h2 className="t-h2 mb-12">Câu hỏi thường gặp<br />về <span className="grad-text">Mentoring.</span></h2>
+              <h2 className="t-h2 mb-12 text-white">Câu hỏi thường gặp<br />về <span className="grad-text">Mentoring.</span></h2>
             </Reveal>
             <div className="max-w-[760px]">
               {faqs.map((f, i) => (
                 <Reveal key={i} delay={i * 0.05}>
-                  <details className="py-5 group" style={{ borderBottom: "1px solid var(--border)" }}>
-                    <summary className="flex justify-between items-center cursor-pointer text-[1rem] font-semibold list-none gap-4 group-hover:text-wf-blue transition-colors">
+                  <details className="py-5 group" style={{ borderBottom: "1px solid var(--line)" }}>
+                    <summary className="flex justify-between items-center cursor-pointer text-[1rem] font-semibold list-none gap-4 text-white group-hover:text-[#7da9ff] transition-colors">
                       {f.q}
                       <span className="flex-shrink-0">
-                        <svg className="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#146ef5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <svg className="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7da9ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                           <polyline points="6 9 12 15 18 9" />
                         </svg>
                       </span>
                     </summary>
-                    <p className="text-[0.95rem] leading-[1.75] mt-3 pr-8 text-gray-600">{f.a}</p>
+                    <p className="text-[0.95rem] leading-[1.75] mt-3 pr-8" style={{ color: "var(--ink-mute)" }}>{f.a}</p>
                   </details>
                 </Reveal>
               ))}
@@ -527,38 +540,35 @@ export default function Home() {
         </section>
 
         {/* ═══════════════ CONTACT ═══════════════ */}
-        <section id="contact" className="relative overflow-hidden border-t" style={{ background: "white", borderColor: "var(--border)" }}>
-          <GradientBlobs blobs={[
-            { variant: "blue", size: 600, top: "-20%", left: "-10%" },
-            { variant: "purple", size: 500, bottom: "-15%", right: "-10%", delay: "2s" },
-          ]} />
+        <section id="contact" className="relative overflow-hidden border-t" style={{ borderColor: "var(--line)" }}>
+          <div className="blob blob-blue blob-anim" style={{ width: 600, height: 600, top: "-20%", left: "-10%" }} />
+          <div className="blob blob-purple blob-anim" style={{ width: 500, height: 500, bottom: "-15%", right: "-10%", animationDelay: "2s" }} />
           <div className="relative max-w-[1200px] mx-auto px-6 md:px-10 py-20 md:py-28">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
               <div className="lg:pt-4">
                 <Reveal><div className="section-tag">Đăng ký & Liên hệ</div></Reveal>
                 <Reveal delay={0.08}>
-                  <h2 className="t-h1 mb-5">
+                  <h2 className="t-h1 mb-5 text-white">
                     Sẵn sàng tăng trưởng<br /><span className="grad-text">cùng tôi?</span>
                   </h2>
                 </Reveal>
                 <Reveal delay={0.14}>
                   <p className="t-body mb-8 max-w-[440px]">
-                    Để lại thông tin — mình sẽ liên hệ trong vòng <strong className="text-ink">24 giờ</strong> để trao đổi về khoá học hoặc dự án phù hợp với bạn.
+                    Để lại thông tin — mình sẽ liên hệ trong vòng <strong className="text-white">24 giờ</strong> để trao đổi về khoá học hoặc dự án phù hợp với bạn.
                   </p>
                 </Reveal>
                 <Reveal delay={0.2}>
-                  <div className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-3.5">
                     {[
-                      { href: "mailto:qforwork13@gmail.com", label: "qforwork13@gmail.com", svg: <><rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></> },
-                      { href: "https://zalo.me/0868464658", label: "Zalo: 0868 464 658", svg: <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /> },
-                      { href: "https://www.linkedin.com/in/duc-quang-nguyen-b7495223a/", label: "LinkedIn", svg: null, isLi: true },
+                      { href: "mailto:qforwork13@gmail.com", label: "qforwork13@gmail.com", icon: <IconMail /> },
+                      { href: "https://zalo.me/0868464658", label: "Zalo: 0868 464 658", icon: <IconChat /> },
+                      { href: "https://www.linkedin.com/in/duc-quang-nguyen-b7495223a/", label: "LinkedIn", icon: <IconLinkedIn /> },
                     ].map((c) => (
                       <a key={c.label} href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer"
-                        className="inline-flex items-center gap-3 text-[0.95rem] font-medium transition-colors hover:text-wf-blue text-gray-700">
-                        <span className="w-9 h-9 rounded-wf flex items-center justify-center flex-shrink-0" style={{ background: "var(--grad-primary-soft)" }}>
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill={c.isLi ? "#146ef5" : "none"} stroke={c.isLi ? "none" : "#146ef5"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            {c.isLi ? <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /> : c.svg}
-                          </svg>
+                        className="inline-flex items-center gap-3 text-[0.95rem] font-medium transition-colors hover:text-white"
+                        style={{ color: "var(--ink-soft)" }}>
+                        <span className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "var(--grad-primary-soft)", border: "1px solid rgba(20,110,245,0.2)" }}>
+                          {c.icon}
                         </span>
                         {c.label}
                       </a>
