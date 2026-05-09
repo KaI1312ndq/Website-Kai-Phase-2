@@ -2,7 +2,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Reveal, { RevealText } from "@/components/Reveal";
-import Countdown from "@/components/Countdown";
+import CohortStatus from "@/components/CohortStatus";
 import ApplyForm from "@/components/ApplyForm";
 import BrandsCarousel from "@/components/BrandsCarousel";
 import { COURSE, MODULES, SESSIONS, FIT_FOR, NOT_FIT_FOR, OUTCOMES, AFTER_COURSE, FAQS, type Module } from "@/lib/course-data";
@@ -108,16 +108,8 @@ function CourseHero() {
           </Reveal>
 
           <Reveal delay={0.6}>
-            <div className="rounded-xl p-4 mb-7" style={{ background: "rgba(20,40,90,0.45)", border: "1px solid rgba(74,214,255,0.25)" }}>
-              <div className="flex items-center justify-between flex-wrap gap-4 mb-3">
-                <div className="text-[0.7rem] font-semibold uppercase tracking-[0.16em]" style={{ color: "#7ee2ff" }}>
-                  Early-bird đóng đơn còn
-                </div>
-                <div className="text-[0.7rem]" style={{ color: "rgba(255,255,255,0.45)" }}>
-                  Reset cuối tháng
-                </div>
-              </div>
-              <Countdown />
+            <div className="mb-7">
+              <CohortStatus />
             </div>
           </Reveal>
 
@@ -767,9 +759,8 @@ function ApplySection() {
               </p>
             </Reveal>
             <Reveal delay={0.2}>
-              <div className="rounded-xl p-5 mb-6" style={{ background: "rgba(20,40,90,0.4)", border: "1px solid rgba(74,214,255,0.2)" }}>
-                <div className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] mb-2" style={{ color: "#7ee2ff" }}>Early-bird còn</div>
-                <Countdown />
+              <div className="mb-6">
+                <CohortStatus />
               </div>
             </Reveal>
             <Reveal delay={0.26}>

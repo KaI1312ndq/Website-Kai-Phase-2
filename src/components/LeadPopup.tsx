@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Countdown from "@/components/Countdown";
+import CohortStatus from "@/components/CohortStatus";
 import { trackEvent } from "@/lib/track";
 
 const STORAGE_KEY = "ndq.leadPopup.shown";
@@ -167,12 +167,9 @@ export default function LeadPopup() {
                   Để lại email — mình sẽ inbox Zalo để đặt lịch quick meet 15 phút. 2 bên cùng đánh giá phù hợp trước khi quyết định gì.
                 </p>
 
-                {/* Countdown */}
-                <div className="rounded-xl p-3 mb-5" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-[0.65rem] font-semibold uppercase tracking-[0.14em]" style={{ color: "rgba(255,255,255,0.5)" }}>Early-bird đóng đơn còn</span>
-                  </div>
-                  <Countdown compact />
+                {/* Cohort status */}
+                <div className="mb-5">
+                  <CohortStatus variant="compact" />
                 </div>
 
                 <div className="flex flex-col gap-3">
