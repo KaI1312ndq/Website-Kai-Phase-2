@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { trackEvent } from "@/lib/track";
 
 type FormState = "idle" | "loading" | "success" | "error";
 
@@ -55,6 +56,11 @@ export default function ContactForm() {
       });
       const data = await res.json().catch(() => ({} as any));
       if (res.ok && data?.success) {
+        trackEvent("contact_form_submitted", {
+          form: "homepage_contact",
+          interest: form.interest,
+          who: form.who,
+        });
         setState("success");
       } else {
         const fallback = await fetch("/api/contact", {
@@ -62,8 +68,10 @@ export default function ContactForm() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ ...form, type: form.interest }),
         });
-        if (fallback.ok) setState("success");
-        else setState("error");
+        if (fallback.ok) {
+          trackEvent("contact_form_submitted", { form: "homepage_contact", via: "fallback" });
+          setState("success");
+        } else setState("error");
       }
     } catch { setState("error"); }
   };

@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { trackEvent } from "@/lib/track";
 
 type State = "idle" | "loading" | "success" | "error";
 
@@ -66,6 +67,12 @@ export default function ApplyForm() {
       });
       const data = await res.json().catch(() => ({} as any));
       if (res.ok && data?.success) {
+        trackEvent("apply_form_submitted", {
+          form: "course_apply",
+          stage: form.stage,
+          commit: form.commit,
+          has_laptop: form.hasLaptop,
+        });
         setState("success");
       } else {
         // Fallback: try server-side API (for environments without NEXT_PUBLIC key)
@@ -74,8 +81,10 @@ export default function ApplyForm() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(form),
         });
-        if (fallback.ok) setState("success");
-        else setState("error");
+        if (fallback.ok) {
+          trackEvent("apply_form_submitted", { form: "course_apply", via: "fallback" });
+          setState("success");
+        } else setState("error");
       }
     } catch { setState("error"); }
   };
