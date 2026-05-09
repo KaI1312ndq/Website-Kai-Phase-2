@@ -123,14 +123,16 @@ const marqueeWords = ["Ecommerce", "TikTok Shop", "Shopee", "Performance Marketi
 type SanityCaseStudy = { _id: string; title?: string; brand?: string; platforms?: string[]; category?: string; role?: string; headline?: string; headlineLabel?: string; description?: string; award?: string; tags?: string[]; coverImage?: any };
 type SanityTestimonial = { _id: string; name: string; role?: string; company?: string; avatar?: any; content: string; rating?: number };
 type SanityTimeline = { _id: string; year: string; title: string; description?: string; current?: boolean };
+type SanityBrand = { _id: string; name: string; logo?: any; url?: string; order?: number };
 
 type Props = {
   sanityCaseStudies?: SanityCaseStudy[];
   sanityTestimonials?: SanityTestimonial[];
   sanityTimeline?: SanityTimeline[];
+  sanityBrands?: SanityBrand[];
 };
 
-export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sanityTimeline }: Props = {}) {
+export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sanityTimeline, sanityBrands }: Props = {}) {
   // Map Sanity → display shape, fall back to hardcoded if empty
   const caseStudyList = sanityCaseStudies && sanityCaseStudies.length
     ? sanityCaseStudies.map((c) => ({
@@ -378,7 +380,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
         </section>
 
         {/* ═══════════════ BRANDS ═══════════════ */}
-        <BrandsCarousel />
+        <BrandsCarousel brands={sanityBrands} />
 
         {/* ═══════════════ ABOUT ═══════════════ */}
         <section id="about" className="relative overflow-hidden">

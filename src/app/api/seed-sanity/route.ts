@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@sanity/client";
+import { DEFAULT_BRANDS } from "@/lib/brand-data";
 
 /**
  * Seed Sanity với content mặc định đang hiển thị trên homepage.
@@ -186,11 +187,52 @@ export async function GET(req: NextRequest) {
   await upsert("timeline", TIMELINE);
   await upsert("testimonial", TESTIMONIALS);
 
+  // Brands — upload base64 logos as Sanity assets, then create brand docs
+  const brandResults: { id: string; status: string }[] = [];
+  for (let i = 0; i < DEFAULT_BRANDS.length; i++) {
+    const b = DEFAULT_BRANDS[i];
+    try {
+      // Skip if already exists (avoid re-uploading on re-run)
+      const existing = await client.getDocument(b.seedId).catch(() => null);
+      if (existing) {
+        brandResults.push({ id: b.seedId, status: "exists, skipped" });
+        continue;
+      }
+
+      let logoField: any = undefined;
+      if (b.logoBase64) {
+        const m = b.logoBase64.match(/^data:image\/(\w+);base64,(.+)$/);
+        if (m) {
+          const ext = m[1] === "jpeg" ? "jpg" : m[1];
+          const buf = Buffer.from(m[2], "base64");
+          const asset = await client.assets.upload("image", buf, {
+            filename: `${b.seedId}.${ext}`,
+            contentType: `image/${m[1]}`,
+          });
+          logoField = { _type: "image", asset: { _type: "reference", _ref: asset._id } };
+        }
+      }
+
+      await client.createIfNotExists({
+        _id: b.seedId,
+        _type: "brand",
+        name: b.name,
+        order: i + 1,
+        featured: true,
+        ...(logoField ? { logo: logoField } : {}),
+      });
+      brandResults.push({ id: b.seedId, status: logoField ? "created with logo" : "created (text)" });
+    } catch (e) {
+      brandResults.push({ id: b.seedId, status: `error: ${e instanceof Error ? e.message : String(e)}` });
+    }
+  }
+
   return NextResponse.json({
     success: errors.length === 0,
     created_count: created.length,
     created,
     errors,
+    brands: brandResults,
     note: "Idempotent — gọi lại nhiều lần OK, không tạo trùng. Vào /studio để edit.",
   });
 }
