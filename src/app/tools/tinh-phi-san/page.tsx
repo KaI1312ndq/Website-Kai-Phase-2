@@ -143,8 +143,9 @@ export default function Page() {
                   <li>• <strong className="text-white">Hoa hồng nền tảng:</strong> 11.5%–17.8% (tuỳ ngành hàng + Mall/Non-Mall)</li>
                   <li>• <strong className="text-white">Phí giao dịch:</strong> 6%</li>
                   <li>• <strong className="text-white">Phí xử lý đơn:</strong> 3.000đ/đơn</li>
-                  <li>• <strong className="text-white">Voucher Extra:</strong> 4% (cap 50.000đ) — đăng ký</li>
-                  <li>• <strong className="text-white">Voucher Extra Plus:</strong> 5.5% (cap 80.000đ) — đăng ký</li>
+                  <li>• <strong className="text-white">Voucher Extra:</strong> 4% (cap 50.000đ) — đăng ký 1 trong 2</li>
+                  <li>• <strong className="text-white">Voucher Extra Plus:</strong> 5.5% (cap 80.000đ) — đăng ký 1 trong 2</li>
+                  <li>• <strong className="text-white">SFR (Bồi hoàn vận chuyển):</strong> 1.620đ/đơn — đăng ký</li>
                 </ul>
               </div>
               <div className="glass p-6">

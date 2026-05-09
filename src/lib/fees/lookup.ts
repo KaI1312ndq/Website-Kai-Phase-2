@@ -87,7 +87,8 @@ export type CalcInput = {
   perOrderFee: number;      // VND — TikTok 3000 / Shopee 3000
   voucherExtra?: { rate: number; cap?: number };
   voucherExtraPlus?: { rate: number; cap?: number };
-  piShip?: number;          // VND — Shopee 1600
+  piShip?: number;          // VND — Shopee 1.600đ
+  sfr?: number;             // VND — TikTok 1.620đ (bồi hoàn vận chuyển)
   extraCosts: ExtraCost[];
 };
 
@@ -101,6 +102,7 @@ export type CalcResult = {
   voucherExtra: number;
   voucherExtraPlus: number;
   piShip: number;
+  sfr: number;
   totalPlatformFee: number;
   extras: { label: string; amount: number }[];
   totalExtras: number;
@@ -128,8 +130,9 @@ export function compute(i: CalcInput): CalcResult {
     voucherExtraPlus = i.voucherExtraPlus.cap ? Math.min(raw, i.voucherExtraPlus.cap) : raw;
   }
   const piShip = i.piShip ?? 0;
+  const sfr = i.sfr ?? 0;
 
-  const totalPlatformFee = commission + txn + perOrder + voucherExtra + voucherExtraPlus + piShip;
+  const totalPlatformFee = commission + txn + perOrder + voucherExtra + voucherExtraPlus + piShip + sfr;
 
   const extras = i.extraCosts.map((c) => ({
     label: c.label,
@@ -150,6 +153,7 @@ export function compute(i: CalcInput): CalcResult {
     voucherExtra,
     voucherExtraPlus,
     piShip,
+    sfr,
     totalPlatformFee,
     extras,
     totalExtras,
@@ -169,6 +173,7 @@ export const PLATFORM_CONFIG = {
     perOrderFee: 3000,
     voucherExtraOptions: { rate: 4, cap: 50000 },
     voucherExtraPlusOptions: { rate: 5.5, cap: 80000 },
+    sfr: 1620,
   },
   tiktokMall: {
     label: "TikTok Shop · Mall",
@@ -179,6 +184,7 @@ export const PLATFORM_CONFIG = {
     perOrderFee: 3000,
     voucherExtraOptions: { rate: 4, cap: 50000 },
     voucherExtraPlusOptions: { rate: 5.5, cap: 80000 },
+    sfr: 1620,
   },
   shopeeNonMall: {
     label: "Shopee · Non-Mall",
