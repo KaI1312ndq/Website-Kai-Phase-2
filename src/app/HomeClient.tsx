@@ -120,7 +120,7 @@ const mentorFeatures = [
 const marqueeWords = ["Ecommerce", "TikTok Shop", "Shopee", "Performance Marketing", "Team Builder", "Growth Strategy", "Data-Driven", "Multi-Platform"];
 
 /* ─────────────── PAGE ─────────────── */
-type SanityCaseStudy = { _id: string; title?: string; brand?: string; platforms?: string[]; category?: string; role?: string; headline?: string; headlineLabel?: string; description?: string; award?: string; tags?: string[]; coverImage?: any };
+type SanityCaseStudy = { _id: string; title?: string; brand?: string; platforms?: string[]; category?: string; role?: string; headline?: string; headlineLabel?: string; description?: string; award?: string; tags?: string[]; coverImage?: any; slug?: { current: string } };
 type SanityTestimonial = { _id: string; name: string; role?: string; company?: string; avatar?: any; content: string; rating?: number };
 type SanityTimeline = { _id: string; year: string; title: string; description?: string; current?: boolean };
 type SanityBrand = { _id: string; name: string; logo?: any; url?: string; order?: number };
@@ -144,8 +144,9 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
         role: c.role || "",
         award: c.award || "",
         tags: c.tags || [],
+        slug: c.slug?.current,
       }))
-    : caseStudies;
+    : caseStudies.map((c) => ({ ...c, slug: undefined as string | undefined }));
 
   const timelineList = sanityTimeline && sanityTimeline.length
     ? sanityTimeline.map((t) => ({
@@ -465,10 +466,10 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
             <Reveal delay={0.08}><h2 className="t-h2 mb-3 text-white">Case <span className="grad-text">Studies.</span></h2></Reveal>
             <Reveal delay={0.14}><p className="t-caption mb-12 max-w-[480px]">Những con số thực tế từ các dự án đã triển khai.</p></Reveal>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
-              {caseStudyList.map((cs, i) => (
-                <Reveal key={i} delay={i * 0.1}>
+              {caseStudyList.map((cs, i) => {
+                const inner = (
                   <motion.div whileHover={{ y: -6 }} transition={{ type: "spring", stiffness: 260, damping: 22 }}
-                    className="glass-grad p-6 md:p-7 h-full">
+                    className="glass-grad p-6 md:p-7 h-full group">
                     <div className="flex items-center gap-2 mb-5">
                       <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: "var(--grad-primary-soft)", border: "1px solid rgba(20,110,245,0.2)" }}>
                         <IconTrend />
@@ -492,9 +493,25 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
                         → {cs.award}
                       </p>
                     )}
+                    {cs.slug && (
+                      <div className="text-[0.78rem] font-semibold mt-3 pt-3 border-t grad-text group-hover:underline" style={{ borderColor: "var(--line)" }}>
+                        Đọc chi tiết →
+                      </div>
+                    )}
                   </motion.div>
-                </Reveal>
-              ))}
+                );
+                return (
+                  <Reveal key={i} delay={i * 0.1}>
+                    {cs.slug ? (
+                      <Link href={`/case-study/${cs.slug}`} className="block h-full">
+                        {inner}
+                      </Link>
+                    ) : (
+                      inner
+                    )}
+                  </Reveal>
+                );
+              })}
             </div>
           </div>
         </section>

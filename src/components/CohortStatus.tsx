@@ -95,7 +95,7 @@ export default function CohortStatus({ variant = "default" }: { variant?: "defau
               Dự kiến <span className="grad-text">{month || "T7/2026"}</span>
             </div>
             <div className="text-[0.74rem] mt-0.5" style={{ color: "rgba(255,255,255,0.55)" }}>
-              Chốt khi đủ ít nhất 5 học viên
+              Đủ 5 học viên sẽ đóng nhận đơn
             </div>
           </div>
         </div>

@@ -84,7 +84,7 @@ export default function BrandsCarousel({ brands }: { brands?: SanityBrand[] } = 
       ? brands.map(sanityToDisplay)
       : DEFAULT_BRANDS.map(fallbackToDisplay);
 
-  const [row1, row2, row3] = distributeToRows(items, 3);
+  const rows = distributeToRows(items, 5);
 
   return (
     <div className="border-y" style={{ borderColor: "var(--line)" }}>
@@ -92,9 +92,9 @@ export default function BrandsCarousel({ brands }: { brands?: SanityBrand[] } = 
         <p className="text-center text-[0.7rem] font-semibold uppercase tracking-[0.18em] mb-8" style={{ color: "var(--ink-mute)" }}>Đã làm việc cùng</p>
       </div>
       <div className="flex flex-col gap-4 pb-10">
-        <CarouselRow items={row1} reverse={false} />
-        <CarouselRow items={row2} reverse={true} />
-        <CarouselRow items={row3} reverse={false} />
+        {rows.map((rowItems, i) => (
+          <CarouselRow key={i} items={rowItems} reverse={i % 2 === 1} />
+        ))}
       </div>
     </div>
   );
