@@ -70,9 +70,9 @@ export default async function BlogPage() {
         </section>
 
         <section className="relative">
-          <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-16 md:py-20">
+          <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-24 md:py-32">
             {posts.length === 0 ? (
-              <div className="text-center py-20 md:py-24 max-w-[480px] mx-auto">
+              <div className="text-center py-28 md:py-36 max-w-[480px] mx-auto">
                 <div className="w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-6" style={{ background: "var(--grad-primary)" }}>
                   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" /><polyline points="14 2 14 8 20 8" />

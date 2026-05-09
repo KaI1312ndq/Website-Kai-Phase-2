@@ -84,7 +84,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
 
         <section className="relative overflow-hidden border-b" style={{ borderColor: "var(--line)" }}>
           <div className="grid-pattern" />
-          <div className="relative max-w-[860px] mx-auto px-6 md:px-10 pt-28 pb-12 md:pt-32 md:pb-16">
+          <div className="relative max-w-[860px] mx-auto px-6 md:px-10 pt-32 pb-16 md:pt-40 md:pb-24">
             <Link href="/blog" className="inline-flex items-center gap-1.5 text-[0.85rem] font-medium mb-8 transition-colors hover:text-white" style={{ color: "var(--ink-mute)" }}>
               ← Quay lại Blog
             </Link>
@@ -99,7 +99,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
         </section>
 
         <section>
-          <div className="max-w-[760px] mx-auto px-6 md:px-10 py-16 md:py-20">
+          <div className="max-w-[760px] mx-auto px-6 md:px-10 py-24 md:py-32">
             <article className="prose-ndq">
               {post.body ? <PortableText value={post.body} /> : <p style={{ color: "var(--ink-mute)" }}>Nội dung đang được cập nhật...</p>}
             </article>

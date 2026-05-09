@@ -179,7 +179,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
           <div className="blob blob-blue blob-anim" style={{ width: 700, height: 700, top: "-15%", left: "-10%" }} />
           <div className="blob blob-purple blob-anim" style={{ width: 600, height: 600, bottom: "-20%", right: "-10%", animationDelay: "3s" }} />
 
-          <div className="relative w-full max-w-[1400px] mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-[1.05fr_1fr] items-center gap-12 lg:gap-16 pt-28 pb-20 lg:pt-24 lg:pb-16">
+          <div className="relative w-full max-w-[1400px] mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-[1.05fr_1fr] items-center gap-12 lg:gap-16 pt-32 pb-24 lg:pt-28 lg:pb-20">
             <div className="relative z-10">
               <Reveal instant>
                 <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md mb-6" style={{ background: "rgba(20,110,245,0.12)", border: "1px solid rgba(20,110,245,0.3)" }}>
@@ -261,7 +261,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
 
         {/* ═══════════════ STATS ═══════════════ */}
         <section className="relative">
-          <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-16 md:py-20">
+          <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-24 md:py-32">
             <Reveal>
               <div className="flex items-end justify-between flex-wrap gap-4 mb-10">
                 <div>
@@ -362,7 +362,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
         </section>
 
         {/* ═══════════════ MARQUEE ═══════════════ */}
-        <section className="py-10 md:py-14 overflow-hidden border-b" style={{ borderColor: "var(--line)" }}>
+        <section className="py-16 md:py-24 overflow-hidden border-b" style={{ borderColor: "var(--line)" }}>
           <Marquee
             items={marqueeWords.map((w, i) => (
               <span key={i} className="inline-flex items-center gap-6">
@@ -387,7 +387,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
         {/* ═══════════════ ABOUT ═══════════════ */}
         <section id="about" className="relative overflow-hidden">
           <div className="blob blob-blue blob-anim" style={{ width: 500, height: 500, top: "10%", right: "-15%" }} />
-          <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-28 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+          <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-28 md:py-40 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
             <div>
               <Reveal><div className="section-tag">Về tôi</div></Reveal>
               <Reveal delay={0.1}>
@@ -429,7 +429,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
         {/* ═══════════════ EXPERTISE ═══════════════ */}
         <section id="expertise" className="relative">
           <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent, rgba(20,110,245,0.04), transparent)" }} />
-          <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-28">
+          <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-28 md:py-40">
             <Reveal><div className="section-tag">Chuyên môn</div></Reveal>
             <Reveal delay={0.08}>
               <h2 className="t-h2 mb-3 max-w-[640px] text-white">
@@ -462,7 +462,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
         {/* ═══════════════ CASE STUDIES ═══════════════ */}
         <section id="casestudies" className="relative overflow-hidden">
           <div className="blob blob-purple blob-anim" style={{ width: 500, height: 500, top: "30%", left: "-15%" }} />
-          <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-28">
+          <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-28 md:py-40">
             <Reveal><div className="section-tag">Kết quả thực tế</div></Reveal>
             <Reveal delay={0.08}><h2 className="t-h2 mb-3 text-white">Case <span className="grad-text">Studies.</span></h2></Reveal>
             <Reveal delay={0.14}><p className="t-caption mb-12 max-w-[480px]">Những con số thực tế từ các dự án đã triển khai.</p></Reveal>
@@ -520,7 +520,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
         {/* ═══════════════ TIMELINE + PORTRAIT ═══════════════ */}
         <section id="timeline" className="relative overflow-hidden">
           <div className="blob blob-cyan blob-anim" style={{ width: 480, height: 480, top: "20%", right: "-10%" }} />
-          <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-28">
+          <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-28 md:py-40">
             <Reveal><div className="section-tag">Hành trình</div></Reveal>
             <Reveal delay={0.08}>
               <h2 className="t-h2 mb-14 max-w-[640px] text-white">
@@ -603,7 +603,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
 
         {/* ═══════════════ TESTIMONIALS ═══════════════ */}
         <section id="testimonials" className="relative">
-          <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-28">
+          <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-28 md:py-40">
             <Reveal><div className="section-tag">Nhận xét</div></Reveal>
             <Reveal delay={0.08}>
               <h2 className="t-h2 mb-12 text-white">Người đã làm việc<br /><span className="grad-text">cùng tôi nói gì.</span></h2>
@@ -638,7 +638,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
           <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent, rgba(20,30,80,0.4), transparent)" }} />
           <div className="blob blob-blue blob-anim" style={{ width: 600, height: 600, top: "-10%", left: "-10%" }} />
           <div className="blob blob-purple blob-anim" style={{ width: 500, height: 500, bottom: "-15%", right: "-10%", animationDelay: "3s" }} />
-          <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-28">
+          <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-28 md:py-40">
             {/* Header (full width) */}
             <div className="max-w-[760px] mb-14">
               <Reveal><div className="section-tag">Khoá học</div></Reveal>
@@ -806,7 +806,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
 
         {/* ═══════════════ FAQ ═══════════════ */}
         <section id="faq" className="relative">
-          <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-28">
+          <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-28 md:py-40">
             <Reveal><div className="section-tag">FAQ</div></Reveal>
             <Reveal delay={0.08}>
               <h2 className="t-h2 mb-3 text-white">Câu hỏi thường gặp<br />về <span className="grad-text">khoá học.</span></h2>
@@ -845,7 +845,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
         <section id="contact" className="relative overflow-hidden border-t" style={{ borderColor: "var(--line)" }}>
           <div className="blob blob-blue blob-anim" style={{ width: 600, height: 600, top: "-20%", left: "-10%" }} />
           <div className="blob blob-purple blob-anim" style={{ width: 500, height: 500, bottom: "-15%", right: "-10%", animationDelay: "2s" }} />
-          <div className="relative max-w-[1200px] mx-auto px-6 md:px-10 py-20 md:py-28">
+          <div className="relative max-w-[1200px] mx-auto px-6 md:px-10 py-28 md:py-40">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
               <div className="lg:pt-4">
                 <Reveal><div className="section-tag">Đăng ký & Liên hệ</div></Reveal>

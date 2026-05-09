@@ -177,7 +177,7 @@ export default function Page() {
           <div className="grid-pattern" />
           <div className="blob blob-blue blob-anim" style={{ width: 600, height: 600, top: "-15%", left: "-10%" }} />
           <div className="blob blob-purple blob-anim" style={{ width: 500, height: 500, bottom: "-20%", right: "-10%", animationDelay: "3s" }} />
-          <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 pt-28 md:pt-32 pb-12 md:pb-16">
+          <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 pt-32 md:pt-40 pb-16 md:pb-24">
             <Link href="/tools" className="inline-flex items-center gap-1.5 text-[0.85rem] font-medium mb-6 transition-colors hover:text-white" style={{ color: "var(--ink-mute)" }}>
               ← Tất cả Tools
             </Link>
@@ -199,14 +199,14 @@ export default function Page() {
 
         {/* CALCULATOR */}
         <section className="relative">
-          <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-12 md:py-16">
+          <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-28">
             <Calculator />
           </div>
         </section>
 
         {/* HOW-TO */}
         <section className="relative border-t" style={{ borderColor: "var(--line)" }}>
-          <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-16 md:py-20">
+          <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-24 md:py-32">
             <div className="section-tag">Hướng dẫn</div>
             <h2 className="t-h2 mb-8 text-white">Cách dùng <span className="grad-text">tool tính phí sàn.</span></h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -227,7 +227,7 @@ export default function Page() {
 
         {/* COMPARISON TABLE — TikTok vs Shopee */}
         <section className="relative border-t" style={{ borderColor: "var(--line)" }}>
-          <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-16 md:py-20">
+          <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-24 md:py-32">
             <div className="section-tag">So sánh phí 2026</div>
             <h2 className="t-h2 mb-3 text-white">TikTok Shop và Shopee — <span className="grad-text">sàn nào phí cao hơn?</span></h2>
             <p className="t-body mb-10 max-w-[680px]">Tổng quan các loại phí cố định và option giữa 2 sàn, cập nhật bảng phí mới nhất 05/2026.</p>
@@ -277,7 +277,7 @@ export default function Page() {
 
         {/* MALL vs NON-MALL guide */}
         <section className="relative border-t" style={{ borderColor: "var(--line)" }}>
-          <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-16 md:py-20">
+          <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-24 md:py-32">
             <div className="section-tag">Mall vs Non-Mall</div>
             <h2 className="t-h2 mb-3 text-white">Có nên đăng ký <span className="grad-text">Mall?</span></h2>
             <p className="t-body mb-10 max-w-[680px]">So sánh ưu/nhược của 2 loại shop, giúp seller quyết định khi nào nên upgrade lên Mall.</p>
@@ -309,7 +309,7 @@ export default function Page() {
 
         {/* GLOSSARY */}
         <section className="relative border-t" style={{ borderColor: "var(--line)" }}>
-          <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-16 md:py-20">
+          <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-24 md:py-32">
             <div className="section-tag">Thuật ngữ</div>
             <h2 className="t-h2 mb-10 text-white">Các loại phí <span className="grad-text">trên sàn TMĐT.</span></h2>
 
@@ -337,7 +337,7 @@ export default function Page() {
 
         {/* TIPS */}
         <section className="relative border-t" style={{ borderColor: "var(--line)" }}>
-          <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-16 md:py-20">
+          <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-24 md:py-32">
             <div className="section-tag">Tips thực chiến</div>
             <h2 className="t-h2 mb-10 text-white">5 cách tối ưu <span className="grad-text">phí sàn + margin.</span></h2>
 
@@ -363,7 +363,7 @@ export default function Page() {
 
         {/* FORMULA CALLOUT */}
         <section className="relative border-t" style={{ borderColor: "var(--line)" }}>
-          <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-16 md:py-20">
+          <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-24 md:py-32">
             <div className="section-tag">Công thức</div>
             <h2 className="t-h2 mb-10 text-white">Cách tool <span className="grad-text">tính phí.</span></h2>
 
@@ -398,7 +398,7 @@ export default function Page() {
 
         {/* FAQ */}
         <section className="relative border-t" style={{ borderColor: "var(--line)" }}>
-          <div className="max-w-[820px] mx-auto px-6 md:px-10 py-16 md:py-20">
+          <div className="max-w-[820px] mx-auto px-6 md:px-10 py-24 md:py-32">
             <div className="section-tag">FAQ</div>
             <h2 className="t-h2 mb-10 text-white">Câu hỏi <span className="grad-text">thường gặp.</span></h2>
             <div>
@@ -421,7 +421,7 @@ export default function Page() {
 
         {/* Related links — internal SEO juice */}
         <section className="relative border-t" style={{ borderColor: "var(--line)" }}>
-          <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-12 md:py-16">
+          <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-20 md:py-28">
             <div className="section-tag">Khám phá thêm</div>
             <h2 className="t-h2 mb-8 text-white">Resources <span className="grad-text">cho seller TMĐT.</span></h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
@@ -450,7 +450,7 @@ export default function Page() {
         {/* Course CTA */}
         <section className="relative border-t overflow-hidden" style={{ borderColor: "var(--line)" }}>
           <div className="blob blob-blue blob-anim" style={{ width: 500, height: 500, top: "-20%", right: "-10%" }} />
-          <div className="relative max-w-[1100px] mx-auto px-6 md:px-10 py-16 md:py-20 text-center">
+          <div className="relative max-w-[1100px] mx-auto px-6 md:px-10 py-24 md:py-32 text-center">
             <div className="section-tag justify-center" style={{ display: "inline-flex" }}>Đào tạo</div>
             <h2 className="t-h2 mb-4 text-white">
               Muốn hiểu sâu về <span className="grad-text">P&L sàn TMĐT?</span>

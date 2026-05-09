@@ -84,7 +84,7 @@ function CourseHero() {
       <div className="blob blob-blue blob-anim" style={{ width: 700, height: 700, top: "-15%", left: "-10%" }} />
       <div className="blob blob-purple blob-anim" style={{ width: 600, height: 600, bottom: "-20%", right: "-10%", animationDelay: "3s" }} />
 
-      <div className="relative w-full max-w-[1400px] mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] items-center gap-12 lg:gap-16 pt-28 pb-20 lg:pt-24 lg:pb-16">
+      <div className="relative w-full max-w-[1400px] mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] items-center gap-12 lg:gap-16 pt-32 pb-24 lg:pt-28 lg:pb-20">
         <div className="relative z-10">
           <Reveal instant>
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md mb-6" style={{ background: "rgba(74,214,255,0.12)", border: "1px solid rgba(74,214,255,0.3)" }}>
@@ -204,7 +204,7 @@ function CohortCard() {
 function FitForSection() {
   return (
     <section className="relative">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-24">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-28 md:py-36">
         <Reveal>
           <div className="section-tag">Đối tượng</div>
         </Reveal>
@@ -261,7 +261,7 @@ function OutcomesSection() {
   return (
     <section className="relative overflow-hidden">
       <div className="blob blob-cyan blob-anim" style={{ width: 480, height: 480, top: "20%", right: "-10%" }} />
-      <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-24">
+      <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-28 md:py-36">
         <Reveal><div className="section-tag">Outcomes</div></Reveal>
         <Reveal delay={0.08}>
           <h2 className="t-h2 mb-3 max-w-[640px] text-white">
@@ -304,7 +304,7 @@ function CurriculumSection() {
   return (
     <section id="curriculum" className="relative overflow-hidden">
       <div className="blob blob-purple blob-anim" style={{ width: 500, height: 500, top: "30%", left: "-15%" }} />
-      <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-28">
+      <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-28 md:py-40">
         <Reveal><div className="section-tag">Lộ trình</div></Reveal>
         <Reveal delay={0.08}>
           <h2 className="t-h2 mb-3 text-white">
@@ -426,7 +426,7 @@ function CurriculumSection() {
 function ToolCallout() {
   return (
     <section className="relative">
-      <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-10 md:py-14">
+      <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-16 md:py-24">
         <Reveal>
           <div className="rounded-2xl p-6 md:p-7 relative overflow-hidden flex flex-col md:flex-row items-start md:items-center gap-5 md:gap-7"
             style={{ background: "linear-gradient(135deg, rgba(74,214,255,0.10) 0%, rgba(122,61,255,0.10) 100%)", border: "1px solid rgba(74,214,255,0.30)" }}>
@@ -461,7 +461,7 @@ function FormatSection() {
   ];
   return (
     <section className="relative">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-24">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-28 md:py-36">
         <Reveal><div className="section-tag">Format</div></Reveal>
         <Reveal delay={0.08}>
           <h2 className="t-h2 mb-12 max-w-[640px] text-white">
@@ -507,7 +507,7 @@ function AfterCourseSection() {
   return (
     <section className="relative overflow-hidden">
       <div className="blob blob-blue blob-anim" style={{ width: 500, height: 500, top: "10%", left: "-15%" }} />
-      <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-24">
+      <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-28 md:py-36">
         <Reveal><div className="section-tag">Sau khoá</div></Reveal>
         <Reveal delay={0.08}>
           <h2 className="t-h2 mb-3 max-w-[640px] text-white">
@@ -540,7 +540,7 @@ function AfterCourseSection() {
 function TrainerSection() {
   return (
     <section className="relative">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-24">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-28 md:py-36">
         <div className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-10 lg:gap-16 items-start">
           <Reveal>
             <div className="rounded-2xl overflow-hidden relative" style={{
@@ -628,7 +628,7 @@ function PricingSection() {
   return (
     <section className="relative overflow-hidden">
       <div className="blob blob-cyan blob-anim" style={{ width: 480, height: 480, bottom: "10%", right: "-10%" }} />
-      <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-24">
+      <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-28 md:py-36">
         <Reveal><div className="section-tag">Học phí</div></Reveal>
         <Reveal delay={0.08}>
           <h2 className="t-h2 mb-3 text-white">
@@ -717,7 +717,7 @@ function ApplyFlowSection() {
   ];
   return (
     <section className="relative">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-24">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-28 md:py-36">
         <Reveal><div className="section-tag">Quy trình apply</div></Reveal>
         <Reveal delay={0.08}>
           <h2 className="t-h2 mb-12 max-w-[640px] text-white">
@@ -744,7 +744,7 @@ function ApplyFlowSection() {
 function FAQSection() {
   return (
     <section className="relative">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-28">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-28 md:py-40">
         <Reveal><div className="section-tag">FAQ</div></Reveal>
         <Reveal delay={0.08}>
           <h2 className="t-h2 mb-12 text-white">Câu hỏi <span className="grad-text">thường gặp.</span></h2>
@@ -777,7 +777,7 @@ function ApplySection() {
     <section id="apply" className="relative overflow-hidden border-t" style={{ borderColor: "var(--line)" }}>
       <div className="blob blob-blue blob-anim" style={{ width: 600, height: 600, top: "-20%", left: "-10%" }} />
       <div className="blob blob-purple blob-anim" style={{ width: 500, height: 500, bottom: "-15%", right: "-10%", animationDelay: "2s" }} />
-      <div className="relative max-w-[1200px] mx-auto px-6 md:px-10 py-20 md:py-28">
+      <div className="relative max-w-[1200px] mx-auto px-6 md:px-10 py-28 md:py-40">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
           <div className="lg:pt-4">
             <Reveal><div className="section-tag">Apply Khoá 1</div></Reveal>

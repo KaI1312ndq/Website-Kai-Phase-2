@@ -74,7 +74,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
           <div className="blob blob-blue blob-anim" style={{ width: 600, height: 600, top: "-15%", left: "-10%" }} />
           <div className="blob blob-purple blob-anim" style={{ width: 500, height: 500, bottom: "-20%", right: "-10%", animationDelay: "3s" }} />
 
-          <div className="relative max-w-[1200px] mx-auto px-6 md:px-10 pt-28 md:pt-32 pb-12 md:pb-16">
+          <div className="relative max-w-[1200px] mx-auto px-6 md:px-10 pt-32 md:pt-40 pb-16 md:pb-24">
             <Link href="/#casestudies" className="inline-flex items-center gap-1.5 text-[0.85rem] font-medium mb-8 transition-colors hover:text-white" style={{ color: "var(--ink-mute)" }}>
               ← Quay lại Case Studies
             </Link>
@@ -186,7 +186,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
         {/* RELATED */}
         {related.length > 0 && (
           <section className="relative border-t" style={{ borderColor: "var(--line)" }}>
-            <div className="max-w-[1200px] mx-auto px-6 md:px-10 py-16 md:py-20">
+            <div className="max-w-[1200px] mx-auto px-6 md:px-10 py-24 md:py-32">
               <div className="section-tag">Cùng chủ đề</div>
               <h2 className="t-h2 mb-10 text-white">
                 Case studies <span className="grad-text">liên quan.</span>

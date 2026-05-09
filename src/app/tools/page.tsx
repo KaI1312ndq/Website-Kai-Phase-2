@@ -94,7 +94,7 @@ export default function ToolsPage() {
           <div className="grid-pattern" />
           <div className="blob blob-blue blob-anim" style={{ width: 500, height: 500, top: "-20%", left: "-5%" }} />
           <div className="blob blob-purple blob-anim" style={{ width: 420, height: 420, bottom: "-30%", right: "-5%", animationDelay: "2s" }} />
-          <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 pt-28 md:pt-32 pb-12 md:pb-16">
+          <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 pt-32 md:pt-40 pb-16 md:pb-24">
             <div className="section-tag">Tools · Miễn phí</div>
             <h1 className="t-display tracking-tight mb-5 max-w-[840px] text-white">
               Công cụ cho<br /><span className="grad-text">seller TMĐT.</span>
@@ -106,7 +106,7 @@ export default function ToolsPage() {
         </section>
 
         <section className="relative">
-          <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-16 md:py-20">
+          <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-24 md:py-32">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {TOOLS.map((t) => {
                 const inner = (
