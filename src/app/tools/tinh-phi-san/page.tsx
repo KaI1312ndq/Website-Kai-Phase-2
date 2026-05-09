@@ -135,28 +135,38 @@ export default function Page() {
               ))}
             </div>
 
-            {/* Fee structure tables */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-12">
-              <div className="glass p-6">
-                <h3 className="text-[1.05rem] font-semibold text-white mb-4 tracking-tight">Phí TikTok Shop 2026</h3>
-                <ul className="space-y-2.5 text-[0.9rem]" style={{ color: "var(--ink-soft)" }}>
-                  <li>• <strong className="text-white">Hoa hồng nền tảng:</strong> 11.5%–17.8% (tuỳ ngành hàng + Mall/Non-Mall)</li>
-                  <li>• <strong className="text-white">Phí giao dịch:</strong> 6%</li>
-                  <li>• <strong className="text-white">Phí xử lý đơn:</strong> 3.000đ/đơn</li>
-                  <li>• <strong className="text-white">Voucher Extra:</strong> 4% (cap 50.000đ) — đăng ký 1 trong 2</li>
-                  <li>• <strong className="text-white">Voucher Extra Plus:</strong> 5.5% (cap 80.000đ) — đăng ký 1 trong 2</li>
-                  <li>• <strong className="text-white">SFR (Bồi hoàn vận chuyển):</strong> 1.620đ/đơn — đăng ký</li>
-                </ul>
-              </div>
+            {/* Fee structure tables — Shopee left, TikTok right */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
               <div className="glass p-6">
                 <h3 className="text-[1.05rem] font-semibold text-white mb-4 tracking-tight">Phí Shopee 2026</h3>
                 <ul className="space-y-2.5 text-[0.9rem]" style={{ color: "var(--ink-soft)" }}>
                   <li>• <strong className="text-white">Phí cố định:</strong> 8%–17% (tuỳ ngành hàng + Mall/Non-Mall)</li>
-                  <li>• <strong className="text-white">Phí giao dịch:</strong> 6%</li>
+                  <li>• <strong className="text-white">Phí giao dịch:</strong> 6% — tính trên (giá + phí ship buyer trả − voucher seller − KM ngân hàng)</li>
                   <li>• <strong className="text-white">Phí cơ sở hạ tầng:</strong> 3.000đ/đơn</li>
                   <li>• <strong className="text-white">Voucher Extra:</strong> 4% (cap 50.000đ) — đăng ký</li>
                   <li>• <strong className="text-white">Pi Ship:</strong> 1.600đ/đơn — đăng ký</li>
                 </ul>
+              </div>
+              <div className="glass p-6">
+                <h3 className="text-[1.05rem] font-semibold text-white mb-4 tracking-tight">Phí TikTok Shop 2026</h3>
+                <ul className="space-y-2.5 text-[0.9rem]" style={{ color: "var(--ink-soft)" }}>
+                  <li>• <strong className="text-white">Hoa hồng nền tảng:</strong> 11.5%–17.8% (tuỳ ngành hàng + Mall/Non-Mall)</li>
+                  <li>• <strong className="text-white">Phí giao dịch:</strong> 6% — cùng cơ sở tính như Shopee</li>
+                  <li>• <strong className="text-white">Phí xử lý đơn:</strong> 3.000đ/đơn</li>
+                  <li>• <strong className="text-white">Voucher Extra / Extra Plus:</strong> 4% (cap 50k) hoặc 5.5% (cap 80k) — đăng ký 1 trong 2</li>
+                  <li>• <strong className="text-white">SFR (Bồi hoàn vận chuyển):</strong> 1.620đ/đơn — đăng ký</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Formula callout */}
+            <div className="rounded-xl p-5 mb-12" style={{ background: "rgba(20,110,245,0.06)", border: "1px solid rgba(20,110,245,0.22)" }}>
+              <div className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] mb-2" style={{ color: "#9bb6ff" }}>Công thức phí giao dịch (cả 2 sàn)</div>
+              <div className="text-[0.92rem] leading-[1.7]" style={{ color: "rgba(255,255,255,0.85)" }}>
+                <strong className="text-white">Phí giao dịch (6%) = (Giá bán + Phí ship buyer trả − Voucher seller − Khuyến mãi ngân hàng) × 6%</strong>
+              </div>
+              <div className="text-[0.82rem] mt-2" style={{ color: "rgba(255,255,255,0.55)" }}>
+                Đây là lý do tool có thêm 2 input "Phí ship buyer trả" và "KM ngân hàng" — phí giao dịch tính trên số tiền buyer thực sự pay đến tay sàn, không phải doanh thu thực của seller.
               </div>
             </div>
           </div>
