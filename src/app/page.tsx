@@ -718,7 +718,7 @@ export default function Home() {
                     </svg>
                   </div>
                   <div className="text-[0.78rem] leading-[1.6]">
-                    <div className="font-bold mb-0.5" style={{ color: "#ffd479" }}>Khoá đầu tiên · chỉ 999k</div>
+                    <div className="font-bold mb-0.5" style={{ color: "#ffd479" }}>Khoá đầu tiên · chỉ 999.000đ</div>
                     <div style={{ color: "rgba(255,255,255,0.65)" }}>
                       Số lượng giới hạn —{" "}
                       <a href="https://zalo.me/0868464658" target="_blank" rel="noreferrer" className="underline font-semibold" style={{ color: "#ffd479" }}>
