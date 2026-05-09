@@ -214,9 +214,9 @@ export default function Home() {
             <Reveal>
               <div className="flex items-end justify-between flex-wrap gap-4 mb-10">
                 <div>
-                  <div className="section-tag">By the numbers</div>
-                  <h2 className="t-h2 text-white max-w-[640px]">
-                    Không nói suông — <span className="grad-text">số liệu thật</span> từ thực chiến.
+                  <div className="section-tag">Số liệu</div>
+                  <h2 className="t-h2 text-white max-w-[560px]">
+                    5 năm thực chiến,<br /><span className="grad-text">được đo bằng kết quả.</span>
                   </h2>
                 </div>
                 <Link href="/#casestudies" className="btn btn-ghost text-[0.85rem] py-2.5">
