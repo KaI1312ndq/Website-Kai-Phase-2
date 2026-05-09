@@ -143,7 +143,6 @@ function CourseHero() {
 }
 
 function CohortCard() {
-  const slotsFilled = 0;
   return (
     <div className="relative w-full max-w-[460px] mx-auto lg:mx-0 lg:ml-auto">
       <motion.div
@@ -176,7 +175,7 @@ function CohortCard() {
           {[
             { icon: <IconCalendar />, label: "Khai giảng", val: COURSE.cohort.startsAt },
             { icon: <IconClock />, label: "Thời lượng", val: `${COURSE.format.sessions} buổi · ${COURSE.format.weeks} tuần · ${COURSE.format.hoursPerSession}/buổi` },
-            { icon: <IconUsers />, label: "Slot", val: `${slotsFilled}/${COURSE.cohort.capacity} học viên` },
+            { icon: <IconUsers />, label: "Quy mô lớp", val: "Lớp nhỏ · 4–7 người" },
             { icon: <IconLocation />, label: "Địa điểm", val: COURSE.cohort.location },
           ].map((it, i) => (
             <div key={i} className="flex items-start gap-3">
@@ -190,14 +189,15 @@ function CohortCard() {
             </div>
           ))}
 
-          {/* Slot bar */}
+          {/* Highlight pill */}
           <div className="pt-2">
-            <div className="flex items-center justify-between text-[0.72rem] mb-1.5">
-              <span style={{ color: "rgba(255,255,255,0.5)" }}>Slot còn lại</span>
-              <span className="font-bold grad-text">{COURSE.cohort.capacity - slotsFilled}/{COURSE.cohort.capacity}</span>
-            </div>
-            <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.06)" }}>
-              <div className="h-full rounded-full" style={{ width: `${(slotsFilled / COURSE.cohort.capacity) * 100}%`, background: "var(--grad-primary)" }} />
+            <div className="rounded-lg px-3.5 py-2.5 flex items-center gap-2.5" style={{ background: "rgba(74,214,255,0.08)", border: "1px solid rgba(74,214,255,0.22)" }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4ad6ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 18h6M10 22h4" /><path d="M2 9a10 10 0 0120 0c0 4-3 6-3 9H5c0-3-3-5-3-9z" />
+              </svg>
+              <span className="text-[0.78rem]" style={{ color: "rgba(255,255,255,0.78)" }}>
+                Lớp nhỏ giữ chất lượng — <strong className="text-white">tối đa 7</strong>, chốt khi đủ ít nhất <strong className="text-white">5</strong>.
+              </span>
             </div>
           </div>
         </div>
