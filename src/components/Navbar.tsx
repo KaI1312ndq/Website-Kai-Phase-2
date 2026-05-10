@@ -8,6 +8,7 @@ type NavLink = { label: string; href: string; submenu?: Submenu[] };
 
 const links: NavLink[] = [
   { label: "Về tôi", href: "/#about" },
+  { label: "Case Study", href: "/#casestudies" },
   { label: "Khoá học", href: "/ecom-foundation" },
   {
     label: "Tools",
@@ -33,9 +34,31 @@ const links: NavLink[] = [
       },
     ],
   },
-  { label: "Kết quả", href: "/#casestudies" },
+  {
+    label: "Test",
+    href: "/quiz",
+    submenu: [
+      {
+        label: "Test Phong Cách Lãnh Đạo",
+        desc: "15 câu · 6 phong cách kinh điển · ~5 phút",
+        href: "/quiz/phong-cach-lanh-dao",
+        badge: "Mới",
+      },
+      {
+        label: "Test Tính Cách MBTI",
+        desc: "70 câu chuẩn quốc tế · 16 kiểu · ~15 phút",
+        href: "/quiz/mbti",
+        badge: "Mới",
+      },
+      {
+        label: "Test Hướng Nghiệp Marketing",
+        desc: "12 câu · 5 archetype career · ~5 phút",
+        href: "/quiz/huong-nghiep-marketing",
+        badge: "Mới",
+      },
+    ],
+  },
   { label: "Blog", href: "/blog" },
-  { label: "Quiz", href: "/quiz" },
 ];
 
 export default function Navbar() {
@@ -74,17 +97,18 @@ export default function Navbar() {
             }}
           >
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2.5 text-white">
-              <span className="relative w-9 h-9 rounded-[10px] flex items-center justify-center text-white font-bold text-[1rem] overflow-hidden" style={{ background: "var(--grad-primary)", boxShadow: "0 4px 14px rgba(20,110,245,0.45)" }}>
+            <Link href="/" className="flex items-center gap-2.5 text-white group">
+              <span className="relative w-9 h-9 rounded-[10px] flex items-center justify-center text-white font-bold text-[1rem] overflow-hidden transition-transform group-hover:scale-[1.05]" style={{ background: "var(--grad-primary)", boxShadow: "0 4px 14px rgba(20,110,245,0.45)" }}>
                 <span className="relative z-10">K</span>
                 <span className="absolute inset-0" style={{ background: "radial-gradient(circle at 30% 20%, rgba(255,255,255,0.4), transparent 60%)" }} />
               </span>
-              <span className="text-[1.05rem] font-bold tracking-tight">Kai</span>
-              <span className="text-[1.05rem] font-bold grad-text">.</span>
+              <span className="text-[1.05rem] font-bold tracking-tight leading-none">
+                Kai<span className="grad-text">.</span>
+              </span>
             </Link>
 
-            {/* Center links */}
-            <ul className="hidden md:flex items-center gap-0.5 list-none px-1.5 py-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
+            {/* Right-aligned links */}
+            <ul className="hidden md:flex items-center gap-0.5 list-none px-1.5 py-1.5 rounded-full ml-auto" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", boxShadow: "0 2px 12px rgba(0,0,0,0.2)" }}>
               {links.map((l) => (
                 <li key={l.label} className="relative group">
                   <Link
@@ -147,11 +171,6 @@ export default function Navbar() {
               ))}
             </ul>
 
-            {/* CTA */}
-            <Link href="/#contact" className="hidden md:inline-flex btn btn-primary text-[0.85rem] py-2 px-4">
-              Liên hệ <span className="arrow">→</span>
-            </Link>
-
             {/* Mobile burger */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
@@ -203,15 +222,6 @@ export default function Navbar() {
                 )}
               </motion.div>
             ))}
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 + links.length * 0.05 }}>
-              <Link
-                href="/#contact"
-                onClick={() => setMobileOpen(false)}
-                className="btn btn-primary text-[1rem] mt-4"
-              >
-                Liên hệ ngay <span className="arrow">→</span>
-              </Link>
-            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

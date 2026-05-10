@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getPosts, getCaseStudies } from "@/lib/queries";
-import { QUIZZES } from "@/lib/quiz/compute";
+import { QUIZZES, getQuizArchetypes } from "@/lib/quiz/compute";
 
 // Force ISR with hourly refresh — keeps sitemap fast and reliable for crawlers
 export const revalidate = 3600;
@@ -54,6 +54,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly" as const,
       priority: 0.78,
     })),
+    // Each archetype result page is its own SEO landing
+    ...QUIZZES.flatMap((q) =>
+      getQuizArchetypes(q.slug).map((a) => ({
+        url: `${baseUrl}/quiz/${q.slug}/result/${a.id}`,
+        lastModified: new Date(),
+        changeFrequency: "monthly" as const,
+        priority: 0.7,
+      }))
+    ),
     ...caseStudyUrls,
     ...postUrls,
   ];

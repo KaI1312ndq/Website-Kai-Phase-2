@@ -28,7 +28,8 @@ const DICH_LABELS: Record<string, string> = {
 
 export default function QuizResult({ config, result, onRetake }: Props) {
   const { archetype } = result;
-  const shareUrl = typeof window !== "undefined" ? window.location.href : "";
+  const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
+  const shareUrl = baseUrl ? `${baseUrl}/quiz/${config.slug}/result/${archetype.id}` : "";
   const shareTitle = `Tôi vừa làm "${config.name}" — kết quả: ${archetype.name}!`;
 
   return (
@@ -163,6 +164,9 @@ export default function QuizResult({ config, result, onRetake }: Props) {
 
       {/* Share */}
       <div className="mt-8">
+        <div className="text-[0.78rem] mb-3" style={{ color: "rgba(255,255,255,0.5)" }}>
+          🔗 Trang chi tiết: <Link href={`/quiz/${config.slug}/result/${archetype.id}`} className="underline" style={{ color: archetype.color }}>{`/quiz/${config.slug}/result/${archetype.id}`}</Link>
+        </div>
         <ShareButtons url={shareUrl} title={shareTitle} />
       </div>
 

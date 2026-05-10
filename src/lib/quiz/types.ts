@@ -51,5 +51,5 @@ export type QuizConfig = {
   /** Whether result requires lead capture (email/phone) */
   gateResult: boolean;
   /** Internal: type for scoring */
-  scoringType: "leadership" | "mbti";
+  scoringType: "leadership" | "mbti" | "career";
 };

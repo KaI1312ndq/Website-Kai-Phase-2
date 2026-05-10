@@ -2,6 +2,7 @@ import type { QuizConfig, QuizQuestion, QuizArchetype } from "./types";
 import { LEADERSHIP_QUESTIONS, LEADERSHIP_STYLES } from "./data/leadership";
 import { MBTI_TYPES } from "./data/mbti-types";
 import { MBTI_QUESTIONS as MBTI_QS_DATA } from "./data/mbti-questions";
+import { CAREER_QUESTIONS, CAREER_ARCHETYPES } from "./data/career";
 
 export const QUIZZES: QuizConfig[] = [
   {
@@ -28,6 +29,18 @@ export const QUIZZES: QuizConfig[] = [
     gateResult: true,
     scoringType: "mbti",
   },
+  {
+    slug: "huong-nghiep-marketing",
+    name: "Test Hướng Nghiệp Marketing & Ecom",
+    shortDescription: "12 câu — xác định bạn phù hợp role nào trong ngành Marketing/Ecom: Creator, Analyst, Communicator, Builder, hay Operator.",
+    longDescription: "Bạn đang phân vân giữa Performance Marketing, Brand, Content, Sales, hay Product? Bài test này dựa trên 5 archetype career trong ngành Marketing/Ecom, giúp bạn xác định role phù hợp với tính cách + skills của mình. Có gợi ý lương VN, kỹ năng cần học, và lộ trình 3 bước.",
+    estimatedMinutes: 5,
+    questionCount: 12,
+    color: "#5fffaa",
+    emoji: "🚀",
+    gateResult: true,
+    scoringType: "career",
+  },
 ];
 
 export function getQuiz(slug: string): QuizConfig | undefined {
@@ -37,12 +50,14 @@ export function getQuiz(slug: string): QuizConfig | undefined {
 export function getQuizQuestions(slug: string): QuizQuestion[] {
   if (slug === "phong-cach-lanh-dao") return LEADERSHIP_QUESTIONS;
   if (slug === "mbti") return MBTI_QS_DATA;
+  if (slug === "huong-nghiep-marketing") return CAREER_QUESTIONS;
   return [];
 }
 
 export function getQuizArchetypes(slug: string): QuizArchetype[] {
   if (slug === "phong-cach-lanh-dao") return LEADERSHIP_STYLES;
   if (slug === "mbti") return MBTI_TYPES;
+  if (slug === "huong-nghiep-marketing") return CAREER_ARCHETYPES;
   return [];
 }
 
@@ -112,5 +127,28 @@ export function computeMBTIResult(answers: Record<number, string>): {
   return { type, scores, dichotomies };
 }
 
+/**
+ * Compute career result: count occurrences per archetype, return top one.
+ */
+export function computeCareerResult(answers: Record<number, string>): {
+  topId: string;
+  scores: Record<string, number>;
+  ranked: Array<{ id: string; score: number }>;
+} {
+  const scores: Record<string, number> = {};
+  for (const q of CAREER_QUESTIONS) {
+    const optKey = answers[q.id];
+    if (!optKey) continue;
+    const opt = q.options.find((o) => o.key === optKey);
+    if (!opt) continue;
+    for (const s of opt.scores) scores[s] = (scores[s] || 0) + 1;
+  }
+  const ranked = Object.entries(scores)
+    .map(([id, score]) => ({ id, score }))
+    .sort((a, b) => b.score - a.score);
+  const topId = ranked[0]?.id || "builder";
+  return { topId, scores, ranked };
+}
+
 // Re-export so seed can use them
-export { MBTI_TYPES, LEADERSHIP_STYLES };
+export { MBTI_TYPES, LEADERSHIP_STYLES, CAREER_ARCHETYPES };
