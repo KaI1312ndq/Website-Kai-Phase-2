@@ -2,10 +2,21 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import GradientBlobs from "@/components/GradientBlobs";
 import Link from "next/link";
-import { getPosts } from "@/lib/queries";
+import { getPaginatedPosts, getFeaturedPosts } from "@/lib/queries";
 import { urlFor } from "../../../sanity/lib/image";
+import BlogFilterBar from "@/components/blog/BlogFilterBar";
+import Pagination from "@/components/blog/Pagination";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://nguyenducquang.website";
+
+const CATEGORY_LABELS: Record<string, string> = {
+  ecom: "Ecommerce",
+  performance: "Performance",
+  leadership: "Leadership",
+  tiktok: "TikTok Shop",
+  shopee: "Shopee",
+  mindset: "Mindset",
+};
 
 export const metadata = {
   title: "Blog & Insights — Nguyễn Đức Quảng",
@@ -16,9 +27,40 @@ export const metadata = {
 
 export const revalidate = 60;
 
-export default async function BlogPage() {
-  let posts: any[] = [];
-  try { posts = await getPosts(20); } catch {}
+type SearchParams = { page?: string; category?: string; q?: string };
+
+export default async function BlogPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
+  const params = await searchParams;
+  const page = Math.max(1, parseInt(params.page || "1", 10) || 1);
+  const category = params.category || "all";
+  const search = params.q || "";
+
+  const isFiltered = category !== "all" || search.length > 0;
+
+  // Fetch in parallel
+  const [paginated, featuredPosts] = await Promise.all([
+    getPaginatedPosts({ page, perPage: 9, category: category === "all" ? undefined : category, search }).catch(() => ({
+      posts: [], total: 0, totalPages: 0, page: 1, perPage: 9, categoryCounts: {} as Record<string, number>,
+    })),
+    isFiltered || page > 1 ? Promise.resolve([] as any[]) : getFeaturedPosts().catch(() => [] as any[]),
+  ]);
+
+  const { posts, total, totalPages, categoryCounts } = paginated;
+
+  // Build category chip options
+  const allCount = Object.values(categoryCounts).reduce((s, n) => s + n, 0);
+  const categoryOptions = [
+    { value: "all", label: "Tất cả", count: allCount },
+    ...Object.entries(CATEGORY_LABELS)
+      .map(([value, label]) => ({ value, label, count: categoryCounts[value] || 0 }))
+      .filter((c) => c.count > 0),
+  ];
+
+  // Build base URL for pagination
+  const baseQS = new URLSearchParams();
+  if (category !== "all") baseQS.set("category", category);
+  if (search) baseQS.set("q", search);
+  const baseUrl = baseQS.toString() ? `/blog?${baseQS.toString()}` : "/blog";
 
   const blogLd = {
     "@context": "https://schema.org",
@@ -52,67 +94,171 @@ export default async function BlogPage() {
       <main>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogLd) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
+
+        {/* HERO */}
         <section className="relative overflow-hidden border-b" style={{ borderColor: "var(--line)" }}>
           <div className="grid-pattern" />
           <GradientBlobs blobs={[
             { variant: "blue", size: 500, top: "-20%", right: "-5%" },
             { variant: "purple", size: 420, bottom: "-30%", left: "-5%", delay: "2s" },
           ]} />
-          <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 pt-32 pb-14 md:pt-36 md:pb-20">
+          <div className="relative max-w-[1300px] mx-auto px-6 md:px-10 pt-32 pb-12 md:pt-36 md:pb-16">
             <div className="section-tag">Blog & Insights</div>
             <h1 className="t-display tracking-tight mb-5 max-w-[840px] text-white">
               Góc nhìn từ<br /><span className="grad-text">thực chiến Ecom.</span>
             </h1>
-            <p className="t-body-lg max-w-[560px]">
-              Chia sẻ về Performance Marketing, Team Building, và cách tư duy trong thị trường TMĐT Việt Nam.
+            <p className="t-body-lg max-w-[640px]">
+              Chia sẻ về Performance Marketing, P&L gian hàng, Team Building và cách tư duy trong thị trường TMĐT Việt Nam.
             </p>
           </div>
         </section>
 
+        {/* FEATURED POSTS — only show on first page, no filter */}
+        {!isFiltered && page === 1 && featuredPosts.length > 0 && (
+          <section className="relative border-b" style={{ borderColor: "var(--line)" }}>
+            <div className="max-w-[1300px] mx-auto px-6 md:px-10 py-16 md:py-20">
+              <div className="flex items-end justify-between mb-8 flex-wrap gap-3">
+                <div>
+                  <div className="section-tag">Bài nổi bật</div>
+                  <h2 className="t-h2 text-white">Đáng đọc <span className="grad-text">trước nhất.</span></h2>
+                </div>
+              </div>
+              <FeaturedPostsGrid posts={featuredPosts.slice(0, 3)} />
+            </div>
+          </section>
+        )}
+
+        {/* MAIN POSTS — filter + grid + pagination */}
         <section className="relative">
-          <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-24 md:py-32">
+          <div className="max-w-[1300px] mx-auto px-6 md:px-10 py-16 md:py-20">
+            <div className="flex items-end justify-between mb-8 flex-wrap gap-3">
+              <div>
+                <div className="section-tag">{isFiltered ? "Kết quả" : "Tất cả bài viết"}</div>
+                <h2 className="t-h2 text-white">
+                  {search
+                    ? <>Tìm kiếm: <span className="grad-text">"{search}"</span></>
+                    : category !== "all"
+                      ? <>Chuyên mục: <span className="grad-text">{CATEGORY_LABELS[category] || category}</span></>
+                      : <>Bài viết <span className="grad-text">mới nhất.</span></>}
+                </h2>
+                {total > 0 && (
+                  <p className="text-[0.88rem] mt-2" style={{ color: "var(--ink-mute)" }}>
+                    {total} bài viết{totalPages > 1 ? ` · Trang ${page}/${totalPages}` : ""}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <BlogFilterBar
+              categories={categoryOptions}
+              currentCategory={category}
+              currentSearch={search}
+            />
+
             {posts.length === 0 ? (
-              <div className="text-center py-28 md:py-36 max-w-[480px] mx-auto">
+              <div className="text-center py-20 max-w-[480px] mx-auto">
                 <div className="w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-6" style={{ background: "var(--grad-primary)" }}>
                   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" /><polyline points="14 2 14 8 20 8" />
+                    <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
                   </svg>
                 </div>
-                <h3 className="text-[1.4rem] font-bold mb-3 tracking-tight text-white">Bài viết đang được chuẩn bị</h3>
-                <p className="t-body mb-7">Sắp có — theo dõi LinkedIn để cập nhật sớm nhất.</p>
-                <a href="https://www.linkedin.com/in/duc-quang-nguyen-b7495223a/" target="_blank" rel="noreferrer" className="btn btn-primary">
-                  Theo dõi LinkedIn <span className="arrow">→</span>
-                </a>
+                <h3 className="text-[1.3rem] font-bold mb-3 tracking-tight text-white">Không tìm thấy bài viết</h3>
+                <p className="t-body mb-7">
+                  {search ? `Chưa có bài nào khớp "${search}".` : "Chuyên mục này chưa có bài viết."} Hãy thử filter khác.
+                </p>
+                <Link href="/blog" className="btn btn-primary">Xem tất cả bài viết →</Link>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {posts.map((post: any) => (
-                  <Link key={post._id} href={`/blog/${post.slug.current}`}
-                    className="group glass overflow-hidden flex flex-col">
-                    <div className="aspect-[16/9] flex items-center justify-center overflow-hidden" style={{ background: "var(--grad-primary-soft)" }}>
-                      {post.coverImage ? (
-                        <img src={urlFor(post.coverImage).width(600).height(338).url()} alt={post.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                      ) : (
-                        <span className="text-[0.72rem] font-semibold uppercase tracking-[0.16em] grad-text">{post.category || "Insights"}</span>
-                      )}
-                    </div>
-                    <div className="p-6 flex flex-col flex-1">
-                      <div className="flex items-center gap-2 mb-3">
-                        <span className="wf-badge text-[0.7rem]">{post.category || "Ecom"}</span>
-                        {post.readTime && <span className="text-[0.72rem]" style={{ color: "var(--ink-mute)" }}>{post.readTime} phút đọc</span>}
-                      </div>
-                      <h2 className="text-[1.05rem] font-semibold mb-2 leading-snug tracking-tight text-white group-hover:text-[#7da9ff] transition-colors">{post.title}</h2>
-                      {post.excerpt && <p className="text-[0.88rem] leading-[1.6] line-clamp-2" style={{ color: "var(--ink-mute)" }}>{post.excerpt}</p>}
-                      <div className="mt-auto pt-4 text-[0.82rem] font-semibold grad-text">Đọc tiếp →</div>
-                    </div>
-                  </Link>
+                  <PostCard key={post._id} post={post} />
                 ))}
               </div>
             )}
+
+            <Pagination currentPage={page} totalPages={totalPages} baseUrl={baseUrl} />
           </div>
         </section>
       </main>
       <Footer />
     </>
+  );
+}
+
+/* ─── Featured grid: 1 big + 2 small ─── */
+function FeaturedPostsGrid({ posts }: { posts: any[] }) {
+  if (posts.length === 0) return null;
+  const [primary, ...rest] = posts;
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-5">
+      {/* Primary */}
+      <Link href={`/blog/${primary.slug.current}`} className="group glass overflow-hidden flex flex-col">
+        <div className="aspect-[16/10] overflow-hidden flex items-center justify-center" style={{ background: "var(--grad-primary-soft)" }}>
+          {primary.coverImage ? (
+            <img src={urlFor(primary.coverImage).width(900).height(560).url()} alt={primary.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+          ) : (
+            <span className="text-[0.85rem] font-semibold uppercase tracking-[0.16em] grad-text">{primary.category || "Insights"}</span>
+          )}
+        </div>
+        <div className="p-7 flex flex-col flex-1">
+          <div className="flex items-center gap-2 mb-3 flex-wrap">
+            <span className="wf-badge text-[0.7rem]" style={{ background: "rgba(20,110,245,0.18)", borderColor: "rgba(20,110,245,0.4)", color: "#7da9ff" }}>★ Featured</span>
+            <span className="wf-badge text-[0.7rem]">{CATEGORY_LABELS[primary.category] || primary.category}</span>
+            {primary.readTime && <span className="text-[0.72rem]" style={{ color: "var(--ink-mute)" }}>· {primary.readTime} phút đọc</span>}
+          </div>
+          <h3 className="text-[1.3rem] md:text-[1.45rem] font-bold mb-3 leading-snug tracking-tight text-white group-hover:text-[#7da9ff] transition-colors">
+            {primary.title}
+          </h3>
+          {primary.excerpt && <p className="text-[0.92rem] leading-[1.6] line-clamp-3" style={{ color: "var(--ink-mute)" }}>{primary.excerpt}</p>}
+          <div className="mt-auto pt-5 text-[0.85rem] font-semibold grad-text">Đọc bài →</div>
+        </div>
+      </Link>
+
+      {/* Secondary stack */}
+      <div className="flex flex-col gap-5">
+        {rest.slice(0, 2).map((p: any) => (
+          <Link key={p._id} href={`/blog/${p.slug.current}`} className="group glass overflow-hidden flex flex-row flex-1">
+            <div className="w-[40%] flex-shrink-0 flex items-center justify-center overflow-hidden" style={{ background: "var(--grad-primary-soft)" }}>
+              {p.coverImage ? (
+                <img src={urlFor(p.coverImage).width(400).height(360).url()} alt={p.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              ) : (
+                <span className="text-[0.65rem] font-semibold uppercase tracking-[0.14em] grad-text">{p.category || "Insights"}</span>
+              )}
+            </div>
+            <div className="p-5 flex flex-col flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-2 flex-wrap">
+                <span className="wf-badge text-[0.65rem]">{CATEGORY_LABELS[p.category] || p.category}</span>
+                {p.readTime && <span className="text-[0.68rem]" style={{ color: "var(--ink-mute)" }}>· {p.readTime}p</span>}
+              </div>
+              <h3 className="text-[0.98rem] font-semibold leading-snug tracking-tight text-white group-hover:text-[#7da9ff] transition-colors line-clamp-3">{p.title}</h3>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Standard post card ─── */
+function PostCard({ post }: { post: any }) {
+  return (
+    <Link href={`/blog/${post.slug.current}`} className="group glass overflow-hidden flex flex-col">
+      <div className="aspect-[16/9] flex items-center justify-center overflow-hidden" style={{ background: "var(--grad-primary-soft)" }}>
+        {post.coverImage ? (
+          <img src={urlFor(post.coverImage).width(600).height(338).url()} alt={post.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+        ) : (
+          <span className="text-[0.72rem] font-semibold uppercase tracking-[0.16em] grad-text">{post.category || "Insights"}</span>
+        )}
+      </div>
+      <div className="p-6 flex flex-col flex-1">
+        <div className="flex items-center gap-2 mb-3 flex-wrap">
+          <span className="wf-badge text-[0.7rem]">{CATEGORY_LABELS[post.category] || post.category || "Ecom"}</span>
+          {post.readTime && <span className="text-[0.72rem]" style={{ color: "var(--ink-mute)" }}>{post.readTime} phút đọc</span>}
+        </div>
+        <h2 className="text-[1.05rem] font-semibold mb-2 leading-snug tracking-tight text-white group-hover:text-[#7da9ff] transition-colors">{post.title}</h2>
+        {post.excerpt && <p className="text-[0.88rem] leading-[1.6] line-clamp-2" style={{ color: "var(--ink-mute)" }}>{post.excerpt}</p>}
+        <div className="mt-auto pt-4 text-[0.82rem] font-semibold grad-text">Đọc tiếp →</div>
+      </div>
+    </Link>
   );
 }

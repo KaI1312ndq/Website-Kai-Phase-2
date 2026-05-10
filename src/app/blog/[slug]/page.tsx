@@ -2,11 +2,12 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getPost, getPosts, getRelatedPosts } from "@/lib/queries";
+import { getPost, getPosts, getRelatedPosts, getCommentsForPost } from "@/lib/queries";
 import { urlFor } from "../../../../sanity/lib/image";
 import { extractHeadings } from "@/lib/blog/headings";
 import BlogSidebar from "@/components/blog/BlogSidebar";
 import PortableTextWithIds from "@/components/blog/PortableTextWithIds";
+import CommentSection from "@/components/blog/CommentSection";
 import { notFound } from "next/navigation";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://nguyenducquang.website";
@@ -53,7 +54,13 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   if (!post) notFound();
 
   let relatedPosts: any[] = [];
-  try { relatedPosts = await getRelatedPosts(post.category, slug, 4); } catch {}
+  let comments: any[] = [];
+  try {
+    [relatedPosts, comments] = await Promise.all([
+      getRelatedPosts(post.category, slug, 4),
+      getCommentsForPost(post._id),
+    ]);
+  } catch {}
 
   const image = post.coverImage ? urlFor(post.coverImage).width(1600).height(900).url() : undefined;
   const headings = extractHeadings(post.body || []);
@@ -181,6 +188,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                     </Link>
                   </div>
                 </div>
+
+                {/* Comments */}
+                <CommentSection postId={post._id} initialComments={comments} />
               </article>
 
               {/* Sidebar */}
