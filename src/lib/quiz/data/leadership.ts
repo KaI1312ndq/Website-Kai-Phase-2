@@ -1,0 +1,402 @@
+import type { QuizArchetype, QuizQuestion } from "../types";
+
+/**
+ * 6 phong cách lãnh đạo — based on Goleman + Lewin frameworks.
+ * Mapping option key → archetype ID:
+ *   A = autocratic, B = democratic, C = laissez-faire,
+ *   D = transformational, E = transactional, F = servant
+ */
+
+export const LEADERSHIP_QUESTIONS: QuizQuestion[] = [
+  {
+    id: 1,
+    text: "Trong một dự án mới, bạn sẽ:",
+    options: [
+      { key: "A", text: "Ra quyết định và thông báo cho cả nhóm", scores: ["autocratic"] },
+      { key: "B", text: "Tổ chức họp, lắng nghe ý kiến trước khi quyết định", scores: ["democratic"] },
+      { key: "C", text: "Để nhóm tự chủ động triển khai, chỉ góp ý khi cần thiết", scores: ["laissez-faire"] },
+      { key: "D", text: "Truyền cảm hứng về mục tiêu lớn, khuyến khích sáng tạo", scores: ["transformational"] },
+      { key: "E", text: "Giao nhiệm vụ rõ ràng, kiểm tra tiến độ nghiêm ngặt", scores: ["transactional"] },
+      { key: "F", text: "Tìm cách đáp ứng nhu cầu phát triển của từng thành viên", scores: ["servant"] },
+    ],
+  },
+  {
+    id: 2,
+    text: "Nếu có mâu thuẫn trong nhóm, bạn sẽ:",
+    options: [
+      { key: "A", text: "Can thiệp và tự giải quyết theo ý mình", scores: ["autocratic"] },
+      { key: "B", text: "Yêu cầu các bên cùng ngồi lại, thảo luận", scores: ["democratic"] },
+      { key: "C", text: "Để nhóm tự xử lý, tránh can thiệp sâu", scores: ["laissez-faire"] },
+      { key: "D", text: "Dẫn dắt qua những giá trị chung, truyền cảm hứng vượt qua mâu thuẫn", scores: ["transformational"] },
+      { key: "E", text: "Giao quyền giải quyết nhưng kiểm soát kết quả", scores: ["transactional"] },
+      { key: "F", text: "Tìm hiểu và lắng nghe cả hai phía để hỗ trợ phát triển cá nhân", scores: ["servant"] },
+    ],
+  },
+  {
+    id: 3,
+    text: "Đối với quyết định quan trọng, cách bạn thường làm là:",
+    options: [
+      { key: "A", text: "Tự quyết định theo kinh nghiệm, không cần bàn luận", scores: ["autocratic"] },
+      { key: "B", text: "Chia sẻ thông tin, hỏi ý cả nhóm trước khi chốt", scores: ["democratic"] },
+      { key: "C", text: "Để nhóm quyết định riêng, bạn chỉ phê duyệt cuối cùng", scores: ["laissez-faire"] },
+      { key: "D", text: "Khuyến khích nhìn nhận từ nhiều góc độ và học hỏi", scores: ["transformational"] },
+      { key: "E", text: "Dựa trên tiêu chí thành tích rõ ràng, ai làm tốt sẽ được thưởng", scores: ["transactional"] },
+      { key: "F", text: "Ưu tiên giải pháp mang lại lợi ích cho mọi thành viên", scores: ["servant"] },
+    ],
+  },
+  {
+    id: 4,
+    text: "Khi giao việc cho thành viên, bạn:",
+    options: [
+      { key: "A", text: "Chỉ định rõ ai làm gì, thời gian cụ thể", scores: ["autocratic"] },
+      { key: "B", text: "Trao đổi và thống nhất mục tiêu, phương án thực hiện", scores: ["democratic"] },
+      { key: "C", text: "Đưa ra mục tiêu chung, để mọi người tự phân chia", scores: ["laissez-faire"] },
+      { key: "D", text: "Định hình bức tranh lớn, thúc đẩy sáng tạo cá nhân", scores: ["transformational"] },
+      { key: "E", text: "Nêu rõ yêu cầu và đánh giá kết quả hàng tuần", scores: ["transactional"] },
+      { key: "F", text: "Chuẩn bị nguồn lực, hỗ trợ đào tạo để mỗi người phát triển", scores: ["servant"] },
+    ],
+  },
+  {
+    id: 5,
+    text: "Nếu nhóm gặp khó khăn với thử nghiệm mới:",
+    options: [
+      { key: "A", text: "Giữ nguyên phương án cũ, không chấp nhận rủi ro", scores: ["autocratic"] },
+      { key: "B", text: "Họp nhóm để lấy ý kiến và tìm phương án khác", scores: ["democratic"] },
+      { key: "C", text: "Để nhóm tự học hỏi từ thất bại", scores: ["laissez-faire"] },
+      { key: "D", text: "Khuyến khích tiếp tục thử nghiệm, rút kinh nghiệm để cải tiến", scores: ["transformational"] },
+    ],
+  },
+  {
+    id: 6,
+    text: "Đối với nhân viên có hiệu suất thấp, bạn sẽ:",
+    options: [
+      { key: "A", text: "Kiểm điểm và yêu cầu thay đổi theo chỉ đạo", scores: ["autocratic"] },
+      { key: "B", text: "Trao đổi, hỏi nguyên nhân và cùng tìm giải pháp", scores: ["democratic"] },
+      { key: "C", text: "Để người đó tự chịu trách nhiệm với kết quả", scores: ["laissez-faire"] },
+      { key: "D", text: "Truyền động lực, xác lập kỳ vọng mới và hỗ trợ phát triển", scores: ["transformational"] },
+      { key: "E", text: "Điều chỉnh nhiệm vụ, đặt chỉ tiêu và đánh giá khắt khe hơn", scores: ["transactional"] },
+      { key: "F", text: "Lắng nghe khó khăn và hỗ trợ đào tạo, phát triển cá nhân", scores: ["servant"] },
+    ],
+  },
+  {
+    id: 7,
+    text: "Khi nhóm thành công vượt kỳ vọng, bạn phản hồi thế nào?",
+    options: [
+      { key: "A", text: "Ghi nhận theo tiêu chuẩn, duy trì sự kiểm soát", scores: ["autocratic"] },
+      { key: "B", text: "Tổ chức khen thưởng, chia sẻ niềm vui", scores: ["democratic"] },
+      { key: "C", text: "Để nhóm tự tổ chức ăn mừng, bạn không can thiệp", scores: ["laissez-faire"] },
+      { key: "D", text: "Truyền cảm hứng về mục tiêu lớn hơn trong tương lai", scores: ["transformational"] },
+      { key: "E", text: "Thưởng nóng, đánh giá cao thành tích rõ ràng", scores: ["transactional"] },
+      { key: "F", text: "Đề cao sự đóng góp cá nhân, hỗ trợ phát triển thêm", scores: ["servant"] },
+    ],
+  },
+  {
+    id: 8,
+    text: "Nếu cần thay đổi chiến lược giữa chừng:",
+    options: [
+      { key: "A", text: "Quyết định và ra thông báo mới", scores: ["autocratic"] },
+      { key: "B", text: "Thảo luận với nhóm, lắng nghe góp ý trước khi chốt", scores: ["democratic"] },
+      { key: "C", text: "Để mọi người tự thích ứng, hỗ trợ khi cần", scores: ["laissez-faire"] },
+      { key: "D", text: "Truyền cảm hứng để cả nhóm chủ động dẫn dắt thay đổi", scores: ["transformational"] },
+      { key: "E", text: "Đặt ra chỉ tiêu mới, giám sát và thưởng phạt theo kết quả", scores: ["transactional"] },
+      { key: "F", text: "Đảm bảo mọi thành viên đều được trang bị kỹ năng mới", scores: ["servant"] },
+    ],
+  },
+  {
+    id: 9,
+    text: "Khi có thành viên đề xuất ý tưởng mới, bạn:",
+    options: [
+      { key: "A", text: "Đánh giá rồi quyết định có thực hiện hay không", scores: ["autocratic"] },
+      { key: "B", text: "Thảo luận cùng nhóm trước khi triển khai", scores: ["democratic"] },
+      { key: "C", text: "Để mọi người tự chọn cách triển khai", scores: ["laissez-faire"] },
+      { key: "D", text: "Ủng hộ, khích lệ các ý tưởng sáng tạo", scores: ["transformational"] },
+      { key: "E", text: "Chỉ thực hiện nếu ý tưởng phù hợp tiêu chí thành tích", scores: ["transactional"] },
+      { key: "F", text: "Hỗ trợ thành viên triển khai, tạo môi trường phát triển", scores: ["servant"] },
+    ],
+  },
+  {
+    id: 10,
+    text: "Khi tổ chức gặp stress, bạn xử lý bằng cách:",
+    options: [
+      { key: "A", text: "Kiểm soát tiến độ sát sao, không khoan nhượng", scores: ["autocratic"] },
+      { key: "B", text: "Chia sẻ thông tin, tổ chức họp khích lệ tinh thần", scores: ["democratic"] },
+      { key: "C", text: "Để nhóm tự giải quyết, bạn giảm can thiệp", scores: ["laissez-faire"] },
+      { key: "D", text: "Truyền cảm hứng vượt khó, lan tỏa tinh thần lạc quan", scores: ["transformational"] },
+      { key: "E", text: "Đánh giá hiệu suất, đưa ra thưởng phạt rõ ràng", scores: ["transactional"] },
+      { key: "F", text: "Quan tâm, hỗ trợ từng cá nhân giảm căng thẳng", scores: ["servant"] },
+    ],
+  },
+  {
+    id: 11,
+    text: "Đối với các quy trình trong tổ chức:",
+    options: [
+      { key: "A", text: "Yêu cầu tuân thủ tuyệt đối", scores: ["autocratic"] },
+      { key: "B", text: "Thống nhất điều chỉnh dựa trên ý kiến tập thể", scores: ["democratic"] },
+      { key: "C", text: "Cho phép linh hoạt, mỗi người chủ động tùy tình huống", scores: ["laissez-faire"] },
+      { key: "D", text: "Khuyến khích cải tiến quy trình liên tục", scores: ["transformational"] },
+      { key: "E", text: "Kiểm tra định kỳ, thưởng – phạt dựa vào thực thi", scores: ["transactional"] },
+      { key: "F", text: "Đào tạo để nhân viên hiểu và phát triển quy trình phù hợp", scores: ["servant"] },
+    ],
+  },
+  {
+    id: 12,
+    text: "Khi nhóm cần làm việc với deadline gấp:",
+    options: [
+      { key: "A", text: "Chỉ đạo sát sao, kiểm soát toàn bộ", scores: ["autocratic"] },
+      { key: "B", text: "Thống nhất kế hoạch hành động dựa trên thảo luận", scores: ["democratic"] },
+      { key: "C", text: "Để mọi người tự sắp xếp, tự giải quyết", scores: ["laissez-faire"] },
+      { key: "D", text: "Truyền cảm hứng vượt qua thử thách", scores: ["transformational"] },
+      { key: "E", text: "Đặt mục tiêu rõ ràng, thưởng khi hoàn thành xuất sắc", scores: ["transactional"] },
+      { key: "F", text: "Hỗ trợ nhân viên vượt khó, thúc đẩy tinh thần đoàn kết", scores: ["servant"] },
+    ],
+  },
+  {
+    id: 13,
+    text: "Đối với các quy định mới từ cấp trên:",
+    options: [
+      { key: "A", text: "Yêu cầu mọi người thực thi ngay lập tức", scores: ["autocratic"] },
+      { key: "B", text: "Trao đổi, giải thích lý do và lấy ý kiến trước khi thi hành", scores: ["democratic"] },
+      { key: "C", text: "Để mọi người chủ động thích nghi tùy năng lực", scores: ["laissez-faire"] },
+      { key: "D", text: "Chia sẻ tầm nhìn, dẫn dắt sự thay đổi quy định", scores: ["transformational"] },
+      { key: "E", text: "Đánh giá thực hiện và thưởng – phạt công khai", scores: ["transactional"] },
+      { key: "F", text: "Đào tạo, hỗ trợ từng cá nhân nắm vững quy định mới", scores: ["servant"] },
+    ],
+  },
+  {
+    id: 14,
+    text: "Vai trò lãnh đạo mà bạn muốn được ghi nhận nhất là:",
+    options: [
+      { key: "A", text: "Người kiểm soát và ra quyết định toàn diện", scores: ["autocratic"] },
+      { key: "B", text: "Người kết nối tập thể, thúc đẩy thảo luận", scores: ["democratic"] },
+      { key: "C", text: "Người tạo môi trường tự chủ cho đội ngũ", scores: ["laissez-faire"] },
+      { key: "D", text: "Người truyền cảm hứng, thay đổi và sáng tạo", scores: ["transformational"] },
+      { key: "E", text: "Người thúc đẩy kết quả bằng hệ thống minh bạch", scores: ["transactional"] },
+      { key: "F", text: "Người phát triển con người và đội nhóm", scores: ["servant"] },
+    ],
+  },
+  {
+    id: 15,
+    text: "Theo bạn, yếu tố quan trọng nhất để tổ chức bền vững là:",
+    options: [
+      { key: "A", text: "Kỷ luật và kiểm soát chặt chẽ", scores: ["autocratic"] },
+      { key: "B", text: "Sức mạnh tập thể, sự đồng thuận", scores: ["democratic"] },
+      { key: "C", text: "Tự chủ, sáng tạo cá nhân", scores: ["laissez-faire"] },
+      { key: "D", text: "Đổi mới và truyền cảm hứng liên tục", scores: ["transformational"] },
+      { key: "E", text: "Hiệu suất, thành tích rõ ràng", scores: ["transactional"] },
+      { key: "F", text: "Phát triển con người lâu dài", scores: ["servant"] },
+    ],
+  },
+];
+
+export const LEADERSHIP_STYLES: QuizArchetype[] = [
+  {
+    id: "autocratic",
+    name: "Lãnh đạo Độc đoán",
+    tagline: "Quyết đoán · Kỷ luật · Hành động nhanh",
+    color: "#ff6b9d",
+    description: [
+      "Bạn là người ra quyết định một chiều, không ngần ngại nhận trách nhiệm. Trong tình huống khẩn cấp, khi mọi người đang lúng túng, bạn là người đứng ra cầm lái và đưa cả đội qua khủng hoảng.",
+      "Phong cách này cực kỳ hiệu quả ở môi trường kỷ luật cao như quân đội, y tế cấp cứu, sản xuất công nghiệp — nơi mệnh lệnh rõ ràng quan trọng hơn thảo luận.",
+      "Tuy nhiên, nếu lạm dụng, bạn dễ khiến nhân viên mất động lực sáng tạo và tăng tỷ lệ nghỉ việc. Hãy biết khi nào nên 'tắt chế độ độc đoán' để chuyển sang dân chủ.",
+    ],
+    strengths: [
+      "Quyết đoán nhanh trong khủng hoảng",
+      "Cấu trúc rõ ràng, ít nhầm lẫn",
+      "Hiệu quả với nhóm thiếu kinh nghiệm",
+      "Tự chịu trách nhiệm hoàn toàn",
+    ],
+    weaknesses: [
+      "Giảm sáng tạo và cam kết của nhân viên",
+      "Rủi ro quá phụ thuộc vào 1 người",
+      "Tinh thần làm việc thấp, dễ bất mãn",
+      "Hạn chế phát triển năng lực đội ngũ",
+    ],
+    context: [
+      "Tình huống khẩn cấp / khủng hoảng",
+      "Quân đội, y tế cấp cứu, sản xuất công nghiệp",
+      "Nhóm thiếu kinh nghiệm cần chỉ dẫn",
+      "Nhiệm vụ ngắn hạn, rõ ràng",
+    ],
+    advice: [
+      "Tạo không gian lắng nghe khi không khẩn cấp",
+      "Giải thích 'tại sao' để tăng cam kết",
+      "Đầu tư đào tạo để dần phát triển dân chủ",
+      "Linh hoạt: độc đoán trong khủng hoảng, dân chủ khi ổn định",
+    ],
+  },
+  {
+    id: "democratic",
+    name: "Lãnh đạo Dân chủ",
+    tagline: "Đồng thuận · Hợp tác · Trao quyền",
+    color: "#4ad6ff",
+    description: [
+      "Bạn tin vào sức mạnh tập thể — luôn lắng nghe, thảo luận và để đa dạng quan điểm dẫn đến quyết định tốt nhất. Nhân viên cảm thấy được tôn trọng, gắn kết và sáng tạo.",
+      "Phong cách này mạnh ở tổ chức sáng tạo, công nghệ, R&D, startup — nơi đổi mới đến từ trí tuệ tập thể.",
+      "Điểm yếu: quy trình chậm, không phù hợp tình huống gấp. Cần biết khi nào 'tắt thảo luận' để quyết đoán.",
+    ],
+    strengths: [
+      "Tăng gắn kết và hài lòng nhân viên",
+      "Khuyến khích sáng tạo, đa dạng góc nhìn",
+      "Quyết định chất lượng cao từ trí tuệ tập thể",
+      "Giảm tỷ lệ nghỉ việc đáng kể",
+    ],
+    weaknesses: [
+      "Quy trình chậm, tốn thời gian thảo luận",
+      "Khó đạt đồng thuận trong nhóm lớn",
+      "Không hiệu quả với nhóm thiếu kinh nghiệm",
+      "Rủi ro mất kiểm soát nếu không quản lý tốt",
+    ],
+    context: [
+      "Tổ chức sáng tạo, công nghệ, startup",
+      "Dự án cần đổi mới và đa góc nhìn",
+      "Đội ngũ có kinh nghiệm chuyên môn",
+      "Môi trường ổn định, không áp lực thời gian",
+    ],
+    advice: [
+      "Đặt khung thời gian cho mỗi cuộc thảo luận",
+      "Quyết đoán khi đã đủ thông tin",
+      "Đào tạo để mọi người đóng góp chất lượng",
+      "Chuyển sang độc đoán khi khủng hoảng, chuyển đổi khi cần thay đổi",
+    ],
+  },
+  {
+    id: "laissez-faire",
+    name: "Lãnh đạo Tự do / Ủy quyền",
+    tagline: "Tin tưởng · Tự chủ · Sáng tạo",
+    color: "#a78bff",
+    description: [
+      "Bạn trao quyền tối đa, can thiệp tối thiểu. Nhân viên được tự do thử nghiệm, tự quyết — bạn chỉ cung cấp nguồn lực và hỗ trợ khi được yêu cầu.",
+      "Phong cách này phát huy tối đa với đội ngũ chuyên gia: nhà nghiên cứu, designer, lập trình viên senior, ngành sáng tạo.",
+      "Cẩn trọng: với nhóm thiếu kinh nghiệm, phong cách này dễ tạo cảm giác 'sếp thờ ơ', năng suất thấp. Theo nghiên cứu Kurt Lewin, đây là phong cách kém hiệu quả nhất nếu áp sai bối cảnh.",
+    ],
+    strengths: [
+      "Khuyến khích sáng tạo và đổi mới tối đa",
+      "Phát triển kỹ năng tự lập của nhân viên",
+      "Tăng hài lòng công việc, môi trường thoải mái",
+      "Quyết định nhanh, không bottleneck",
+    ],
+    weaknesses: [
+      "Thiếu định hướng cho nhóm non kinh nghiệm",
+      "Lãnh đạo dễ bị xem là thờ ơ",
+      "Năng suất thấp nhất nếu không đúng đối tượng",
+      "Mất kiểm soát, vai trò không rõ ràng",
+    ],
+    context: [
+      "Đội ngũ chuyên gia, kinh nghiệm cao",
+      "Ngành sáng tạo: quảng cáo, nghệ thuật, truyền thông",
+      "Startup linh hoạt, văn hoá tự chủ",
+      "Môi trường tự động lực cao",
+    ],
+    advice: [
+      "Thiết lập mục tiêu và kỳ vọng dù tự chủ",
+      "Check-in định kỳ nhẹ nhàng",
+      "Cung cấp phản hồi xây dựng khi cần",
+      "Chỉ áp dụng khi đội đủ trưởng thành",
+    ],
+  },
+  {
+    id: "transformational",
+    name: "Lãnh đạo Chuyển đổi",
+    tagline: "Truyền cảm hứng · Tầm nhìn · Đổi mới",
+    color: "#5fffaa",
+    description: [
+      "Bạn lãnh đạo bằng tầm nhìn và cảm hứng. Nhân viên không làm vì lương — họ làm vì tin vào điều bạn xây dựng. Phong cách này tạo ra những đội nhóm vượt kỳ vọng và những thế hệ lãnh đạo mới.",
+      "Cực kỳ phù hợp khi tổ chức đang chuyển đổi lớn (M&A, chuyển đổi số, tái cấu trúc), ngành công nghệ / y tế / giáo dục — nơi cần đổi mới liên tục.",
+      "Điểm yếu: dễ bị 'cult of personality', bỏ sót chi tiết vận hành. Cần kết hợp với phong cách giao dịch để đảm bảo thực thi.",
+    ],
+    strengths: [
+      "Tăng cam kết thay đổi mạnh mẽ",
+      "Nâng cao hiệu suất vượt kỳ vọng",
+      "Khuyến khích sáng tạo trong môi trường an toàn",
+      "Phát triển thế hệ lãnh đạo tương lai",
+    ],
+    weaknesses: [
+      "Phụ thuộc vào cá nhân lãnh đạo",
+      "Bỏ qua chi tiết vận hành thường nhật",
+      "Rủi ro 'cult of personality'",
+      "Khó đo lường hiệu quả ngắn hạn",
+    ],
+    context: [
+      "Tổ chức đang chuyển đổi / thay đổi lớn",
+      "Ngành công nghệ, y tế, giáo dục",
+      "Dự án dài hạn cần cam kết cao",
+      "Đội ngũ có tiềm năng phát triển",
+    ],
+    advice: [
+      "Kết hợp với phong cách giao dịch cho thực thi",
+      "Giao quyền quản lý chi tiết cho người giỏi vận hành",
+      "Phát triển nhiều người để giảm phụ thuộc",
+      "Đặt KPI cụ thể bên cạnh tầm nhìn",
+    ],
+  },
+  {
+    id: "transactional",
+    name: "Lãnh đạo Giao dịch",
+    tagline: "Hiệu quả · Đo lường · Thưởng phạt",
+    color: "#ffd479",
+    description: [
+      "Bạn làm việc bằng hệ thống minh bạch: mục tiêu rõ, KPI rõ, thưởng phạt công bằng. Nhân viên biết chính xác cần làm gì để được ghi nhận, và bạn ghi nhận xứng đáng.",
+      "Phong cách này hiệu quả ở đội ngũ kinh doanh, sản xuất, vận hành — nơi cần kỷ luật và đo lường được.",
+      "Điểm yếu: hạn chế sáng tạo, giảm tinh thần đội nhóm, tăng áp lực ngắn hạn. Cần kết hợp với chuyển đổi để giữ tầm nhìn dài hạn.",
+    ],
+    strengths: [
+      "Rõ ràng về vai trò và kỳ vọng",
+      "Quyết định nhanh cho mục tiêu ngắn hạn",
+      "Dễ đo lường hiệu suất khách quan",
+      "Thúc đẩy cạnh tranh tích cực",
+    ],
+    weaknesses: [
+      "Hạn chế sáng tạo và đổi mới",
+      "Giảm tinh thần đội nhóm, tăng cạnh tranh cá nhân",
+      "Tăng áp lực, mất cân bằng work-life",
+      "Tỷ lệ nghỉ việc cao trong dài hạn",
+    ],
+    context: [
+      "Đội ngũ kinh doanh, bán hàng (KPI rõ)",
+      "Sản xuất, vận hành (cần kỷ luật)",
+      "Tình huống khẩn cấp ngắn hạn",
+      "Môi trường ổn định cần duy trì hiệu suất",
+    ],
+    advice: [
+      "Kết hợp động lực nội tại, không chỉ thưởng phạt",
+      "Khuyến khích sáng kiến cải tiến từ nhân viên",
+      "Đầu tư phát triển dài hạn (đào tạo, lộ trình)",
+      "Cân bằng giữa thưởng cá nhân và thưởng nhóm",
+    ],
+  },
+  {
+    id: "servant",
+    name: "Lãnh đạo Phục vụ",
+    tagline: "Thấu cảm · Phát triển · Phục vụ đội",
+    color: "#7da9ff",
+    description: [
+      "Bạn đặt nhu cầu và sự phát triển của nhân viên lên hàng đầu. Lãnh đạo với bạn không phải là quyền lực mà là trách nhiệm phục vụ đội ngũ.",
+      "Phong cách này xây dựng văn hoá tin tưởng cao, phù hợp với tổ chức phi lợi nhuận, giáo dục, y tế, startup công nghệ — nơi giá trị con người là trung tâm.",
+      "Điểm yếu: quy trình chậm, dễ bị xem là thiếu quyết đoán. Trong môi trường cạnh tranh, cần biết kết hợp với phong cách quyết đoán hơn.",
+    ],
+    strengths: [
+      "Tăng gắn kết và trung thành sâu sắc",
+      "Xây dựng văn hoá tin tưởng, an toàn tâm lý",
+      "Phát triển thế hệ lãnh đạo tương lai",
+      "Nâng cao đạo đức và trách nhiệm xã hội",
+    ],
+    weaknesses: [
+      "Quy trình chậm, không hợp tình huống gấp",
+      "Dễ bị xem là yếu đuối khi cần quyết đoán",
+      "Giảm kiểm soát nếu phân quyền quá mức",
+      "Khó mở rộng quy mô khi tổ chức lớn",
+    ],
+    context: [
+      "Tổ chức phi lợi nhuận, giáo dục, y tế",
+      "Startup, công ty công nghệ coi trọng con người",
+      "Đội ngũ sáng tạo, tri thức",
+      "Tổ chức đa văn hoá",
+    ],
+    advice: [
+      "Quyết đoán khi cần, không quá mềm",
+      "Thiết lập ranh giới rõ ràng để không bị lợi dụng",
+      "Đặt mục tiêu kinh doanh bên cạnh phục vụ",
+      "Kết hợp với chuyển đổi để có tầm nhìn dài hạn",
+    ],
+  },
+];

@@ -35,6 +35,7 @@ const links: NavLink[] = [
   },
   { label: "Kết quả", href: "/#casestudies" },
   { label: "Blog", href: "/blog" },
+  { label: "Quiz", href: "/quiz" },
 ];
 
 export default function Navbar() {

@@ -72,6 +72,41 @@ export default defineConfig({
                   ])
               ),
 
+            // ─── QUIZ LEADS ────────────────────────────
+            S.listItem()
+              .title("🧠 Quiz Leads")
+              .id("quiz-leads-root")
+              .child(
+                S.list()
+                  .title("Quiz Leads")
+                  .items([
+                    S.listItem()
+                      .title("🆕 Mới nhất (tất cả)")
+                      .child(
+                        S.documentList()
+                          .title("Tất cả Quiz Leads")
+                          .filter(`_type == "quizLead"`)
+                          .defaultOrdering([{ field: "createdAt", direction: "desc" }])
+                      ),
+                    S.listItem()
+                      .title("🧠 MBTI")
+                      .child(
+                        S.documentList()
+                          .title("MBTI Leads")
+                          .filter(`_type == "quizLead" && quizSlug == "mbti"`)
+                          .defaultOrdering([{ field: "createdAt", direction: "desc" }])
+                      ),
+                    S.listItem()
+                      .title("🎯 Phong cách lãnh đạo")
+                      .child(
+                        S.documentList()
+                          .title("Leadership Leads")
+                          .filter(`_type == "quizLead" && quizSlug == "phong-cach-lanh-dao"`)
+                          .defaultOrdering([{ field: "createdAt", direction: "desc" }])
+                      ),
+                  ])
+              ),
+
             // ─── COMMENTS (moderation) ─────────────────
             S.listItem()
               .title("💬 Bình luận")

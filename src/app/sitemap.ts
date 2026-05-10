@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getPosts, getCaseStudies } from "@/lib/queries";
+import { QUIZZES } from "@/lib/quiz/compute";
 
 // Force ISR with hourly refresh — keeps sitemap fast and reliable for crawlers
 export const revalidate = 3600;
@@ -46,6 +47,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/tools/pnl-ecom`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.86 },
     { url: `${baseUrl}/tools`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.85 },
     { url: `${baseUrl}/blog`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.7 },
+    { url: `${baseUrl}/quiz`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.82 },
+    ...QUIZZES.map((q) => ({
+      url: `${baseUrl}/quiz/${q.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.78,
+    })),
     ...caseStudyUrls,
     ...postUrls,
   ];
