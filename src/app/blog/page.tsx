@@ -27,19 +27,25 @@ export const metadata = {
 
 export const revalidate = 60;
 
-type SearchParams = { page?: string; category?: string; q?: string };
+type SearchParams = { page?: string; category?: string; q?: string; tag?: string };
 
 export default async function BlogPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   const params = await searchParams;
   const page = Math.max(1, parseInt(params.page || "1", 10) || 1);
   const category = params.category || "all";
   const search = params.q || "";
+  const tag = params.tag || "";
 
-  const isFiltered = category !== "all" || search.length > 0;
+  const isFiltered = category !== "all" || search.length > 0 || tag.length > 0;
 
   // Fetch in parallel
   const [paginated, featuredPosts] = await Promise.all([
-    getPaginatedPosts({ page, perPage: 9, category: category === "all" ? undefined : category, search }).catch(() => ({
+    getPaginatedPosts({
+      page, perPage: 9,
+      category: category === "all" ? undefined : category,
+      search,
+      tag: tag || undefined,
+    }).catch(() => ({
       posts: [], total: 0, totalPages: 0, page: 1, perPage: 9, categoryCounts: {} as Record<string, number>,
     })),
     isFiltered || page > 1 ? Promise.resolve([] as any[]) : getFeaturedPosts().catch(() => [] as any[]),
@@ -60,6 +66,7 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
   const baseQS = new URLSearchParams();
   if (category !== "all") baseQS.set("category", category);
   if (search) baseQS.set("q", search);
+  if (tag) baseQS.set("tag", tag);
   const baseUrl = baseQS.toString() ? `/blog?${baseQS.toString()}` : "/blog";
 
   const blogLd = {
@@ -135,12 +142,19 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
               <div>
                 <div className="section-tag">{isFiltered ? "Kết quả" : "Tất cả bài viết"}</div>
                 <h2 className="t-h2 text-white">
-                  {search
-                    ? <>Tìm kiếm: <span className="grad-text">"{search}"</span></>
-                    : category !== "all"
-                      ? <>Chuyên mục: <span className="grad-text">{CATEGORY_LABELS[category] || category}</span></>
-                      : <>Bài viết <span className="grad-text">mới nhất.</span></>}
+                  {tag
+                    ? <>Tag: <span className="grad-text">#{tag}</span></>
+                    : search
+                      ? <>Tìm kiếm: <span className="grad-text">"{search}"</span></>
+                      : category !== "all"
+                        ? <>Chuyên mục: <span className="grad-text">{CATEGORY_LABELS[category] || category}</span></>
+                        : <>Bài viết <span className="grad-text">mới nhất.</span></>}
                 </h2>
+                {tag && (
+                  <Link href="/blog" className="inline-block mt-3 text-[0.85rem] font-semibold transition-colors hover:text-white" style={{ color: "#7da9ff" }}>
+                    ← Bỏ tag, xem tất cả
+                  </Link>
+                )}
                 {total > 0 && (
                   <p className="text-[0.88rem] mt-2" style={{ color: "var(--ink-mute)" }}>
                     {total} bài viết{totalPages > 1 ? ` · Trang ${page}/${totalPages}` : ""}

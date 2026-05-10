@@ -8,6 +8,9 @@ import { extractHeadings } from "@/lib/blog/headings";
 import BlogSidebar from "@/components/blog/BlogSidebar";
 import PortableTextWithIds from "@/components/blog/PortableTextWithIds";
 import CommentSection from "@/components/blog/CommentSection";
+import ReadingProgress from "@/components/blog/ReadingProgress";
+import ShareButtons from "@/components/blog/ShareButtons";
+import AuthorBio from "@/components/blog/AuthorBio";
 import { notFound } from "next/navigation";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://nguyenducquang.website";
@@ -91,10 +94,14 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   };
 
   const publishedDate = post.publishedAt ? new Date(post.publishedAt) : null;
+  const updatedDate = post.updatedAt ? new Date(post.updatedAt) : null;
+  const showUpdated = updatedDate && publishedDate && updatedDate.getTime() - publishedDate.getTime() > 86400000;
+  const pageUrl = `${SITE_URL}/blog/${slug}`;
 
   return (
     <>
       <Navbar />
+      <ReadingProgress targetSelector="article.prose-ndq" />
       <main>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
@@ -122,6 +129,11 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                   · {publishedDate.toLocaleDateString("vi-VN")}
                 </time>
               )}
+              {showUpdated && updatedDate && (
+                <time dateTime={post.updatedAt} className="text-[0.78rem]" style={{ color: "#7da9ff" }}>
+                  · Cập nhật {updatedDate.toLocaleDateString("vi-VN")}
+                </time>
+              )}
             </div>
             <h1 className="t-h1 leading-[1.1] text-white max-w-[920px] mb-5">{post.title}</h1>
             {post.excerpt && (
@@ -129,15 +141,37 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                 {post.excerpt}
               </p>
             )}
-            <div className="mt-6 flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-white text-[0.85rem]" style={{ background: "var(--grad-primary)" }}>
-                NQ
+            <div className="mt-6 flex items-center gap-3 flex-wrap">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-white text-[0.85rem]" style={{ background: "var(--grad-primary)" }}>
+                  NQ
+                </div>
+                <div>
+                  <div className="text-[0.88rem] font-semibold text-white">Nguyễn Đức Quảng</div>
+                  <div className="text-[0.72rem]" style={{ color: "var(--ink-mute)" }}>Ecom Growth Expert · 60+ project</div>
+                </div>
               </div>
-              <div>
-                <div className="text-[0.88rem] font-semibold text-white">Nguyễn Đức Quảng</div>
-                <div className="text-[0.72rem]" style={{ color: "var(--ink-mute)" }}>Ecom Growth Expert · 60+ project</div>
+              <div className="md:ml-auto">
+                <ShareButtons url={pageUrl} title={post.title} variant="compact" />
               </div>
             </div>
+
+            {/* Tags */}
+            {Array.isArray(post.tags) && post.tags.length > 0 && (
+              <div className="mt-5 flex items-center gap-2 flex-wrap">
+                <span className="text-[0.72rem] font-semibold uppercase tracking-[0.14em]" style={{ color: "rgba(255,255,255,0.45)" }}>Tags:</span>
+                {post.tags.map((t: string) => (
+                  <Link
+                    key={t}
+                    href={`/blog?tag=${encodeURIComponent(t)}`}
+                    className="text-[0.78rem] font-medium px-2.5 py-1 rounded-md transition-all hover:bg-white/10"
+                    style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.75)" }}
+                  >
+                    #{t}
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Cover image — full width banner */}
@@ -179,6 +213,10 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                     </Link>
                   </div>
 
+                  <div className="mt-8">
+                    <ShareButtons url={pageUrl} title={post.title} />
+                  </div>
+
                   <div className="mt-8 flex items-center justify-between flex-wrap gap-4">
                     <Link href="/blog" className="text-[0.88rem] font-semibold transition-colors hover:text-white" style={{ color: "var(--ink-soft)" }}>
                       ← Tất cả bài viết
@@ -188,6 +226,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                     </Link>
                   </div>
                 </div>
+
+                {/* Author bio card */}
+                <AuthorBio />
 
                 {/* Comments */}
                 <CommentSection postId={post._id} initialComments={comments} />

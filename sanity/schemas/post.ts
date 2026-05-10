@@ -21,7 +21,16 @@ export const postType = defineType({
     }),
     defineField({ name: "readTime", title: "Thời gian đọc (phút)", type: "number" }),
     defineField({ name: "publishedAt", title: "Ngày đăng", type: "datetime" }),
+    defineField({ name: "updatedAt", title: "Lần cập nhật cuối", type: "datetime" }),
     defineField({ name: "featured", title: "Bài viết nổi bật", type: "boolean", initialValue: false }),
+    defineField({
+      name: "tags",
+      title: "Tags (long-tail keywords)",
+      type: "array",
+      of: [{ type: "string" }],
+      options: { layout: "tags" },
+      description: "Mỗi tag là 1 từ khoá ngắn, viết thường, không dấu (vd: roas, mall-vs-non-mall). Click vào tag sẽ filter bài cùng tag.",
+    }),
     defineField({
       name: "body", title: "Nội dung",
       type: "array",

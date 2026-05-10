@@ -19,9 +19,11 @@ export async function getPaginatedPosts({
   perPage = 9,
   category,
   search,
-}: { page?: number; perPage?: number; category?: string; search?: string }) {
+  tag,
+}: { page?: number; perPage?: number; category?: string; search?: string; tag?: string }) {
   const filterParts = [`_type == "post"`];
   if (category && category !== "all") filterParts.push(`category == $category`);
+  if (tag) filterParts.push(`$tag in tags`);
   if (search && search.trim()) filterParts.push(`(title match $search || pt::text(body) match $search)`);
   const filter = filterParts.join(" && ");
 
@@ -31,11 +33,11 @@ export async function getPaginatedPosts({
   const [posts, total, categoryCounts] = await Promise.all([
     client.fetch(
       `*[${filter}] | order(publishedAt desc) [$start...$end] {
-        _id, title, slug, excerpt, coverImage, category, readTime, publishedAt, featured
+        _id, title, slug, excerpt, coverImage, category, readTime, publishedAt, featured, tags
       }`,
-      { category, search: search ? `${search}*` : undefined, start, end }
+      { category, search: search ? `${search}*` : undefined, tag, start, end }
     ),
-    client.fetch(`count(*[${filter}])`, { category, search: search ? `${search}*` : undefined }),
+    client.fetch(`count(*[${filter}])`, { category, search: search ? `${search}*` : undefined, tag }),
     client.fetch(`*[_type == "post" && defined(category)] {category}`),
   ]);
 
@@ -56,6 +58,24 @@ export async function getPaginatedPosts({
   };
 }
 
+export async function getPopularTags(limit = 12) {
+  const posts = await client.fetch(`*[_type == "post" && defined(tags)] { tags }`);
+  const counts: Record<string, number> = {};
+  for (const p of posts as any[]) {
+    if (!Array.isArray(p.tags)) continue;
+    for (const t of p.tags) {
+      if (typeof t === "string" && t.trim()) {
+        const norm = t.trim();
+        counts[norm] = (counts[norm] || 0) + 1;
+      }
+    }
+  }
+  return Object.entries(counts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, limit)
+    .map(([tag, count]) => ({ tag, count }));
+}
+
 export async function getFeaturedPosts() {
   return client.fetch(`
     *[_type == "post" && featured == true] | order(publishedAt desc) [0...3] {
@@ -67,8 +87,8 @@ export async function getFeaturedPosts() {
 export async function getPost(slug: string) {
   return client.fetch(`
     *[_type == "post" && slug.current == $slug][0] {
-      _id, title, slug, excerpt, coverImage, category, readTime, publishedAt, body,
-      seoTitle, seoDescription
+      _id, title, slug, excerpt, coverImage, category, readTime, publishedAt, updatedAt, body,
+      seoTitle, seoDescription, tags
     }
   `, { slug });
 }
