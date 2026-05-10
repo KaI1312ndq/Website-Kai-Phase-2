@@ -63,6 +63,15 @@ export async function getPaginatedPosts({
   };
 }
 
+export async function getPostsByCategories(categories: string[], limit = 30) {
+  if (!categories || categories.length === 0) return [];
+  return client.fetch(`
+    *[_type == "post" && category in $categories] | order(publishedAt desc) [0...$limit] {
+      _id, title, slug, excerpt, coverImage, category, readTime, publishedAt, featured, tags
+    }
+  `, { categories, limit });
+}
+
 export async function getPopularTags(limit = 12) {
   const posts = await client.fetch(`*[_type == "post" && defined(tags)] { tags }`);
   const counts: Record<string, number> = {};
