@@ -151,6 +151,25 @@ export function fmtVND(n: number): string {
   return n < 0 ? `-${formatted}` : formatted;
 }
 
+/** Compact format for headline cards: 266.000.000 → "266tr", 1.500.000.000 → "1,5 tỷ" */
+export function fmtVNDCompact(n: number): string {
+  const abs = Math.abs(n);
+  let str: string;
+  if (abs >= 1_000_000_000) {
+    const v = n / 1_000_000_000;
+    str = (Math.abs(v) >= 10 ? v.toFixed(1) : v.toFixed(2)).replace(".", ",").replace(/,?0+$/, "") + " tỷ";
+  } else if (abs >= 1_000_000) {
+    const v = Math.round(n / 1_000_000);
+    str = v.toLocaleString("vi-VN") + "tr";
+  } else if (abs >= 1_000) {
+    const v = Math.round(n / 1_000);
+    str = v.toLocaleString("vi-VN") + "k";
+  } else {
+    str = Math.round(n).toLocaleString("vi-VN");
+  }
+  return str;
+}
+
 export function fmtPct(n: number, decimals = 1): string {
   return n.toFixed(decimals) + "%";
 }

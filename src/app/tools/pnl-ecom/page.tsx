@@ -158,9 +158,11 @@ export default function PnLEcomPage() {
           <div className="blob blob-purple blob-anim" style={{ width: 600, height: 600, top: "-15%", left: "-10%" }} />
           <div className="blob blob-blue blob-anim" style={{ width: 500, height: 500, bottom: "-20%", right: "-10%", animationDelay: "3s" }} />
           <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 pt-32 md:pt-40 pb-16 md:pb-24">
-            <Link href="/tools" className="inline-flex items-center gap-1.5 text-[0.85rem] font-medium mb-6 transition-colors hover:text-white" style={{ color: "var(--ink-mute)" }}>
-              ← Tất cả Tools
-            </Link>
+            <div className="mb-6">
+              <Link href="/tools" className="inline-flex items-center gap-1.5 text-[0.85rem] font-medium transition-colors hover:text-white" style={{ color: "var(--ink-mute)" }}>
+                ← Tất cả Tools
+              </Link>
+            </div>
             <div className="section-tag">Tools · Miễn phí</div>
             <h1 className="t-h1 mb-4 leading-[1.1] text-white max-w-[860px]">
               Mẫu P&L Ecom — <span className="grad-text">Báo cáo lãi lỗ gian hàng.</span>

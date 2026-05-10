@@ -1,6 +1,6 @@
 "use client";
 import { useMemo, useState } from "react";
-import { computePnL, computeNetRevenue, fmtVND, fmtPct, type PnLInput } from "@/lib/pnl/compute";
+import { computePnL, computeNetRevenue, fmtVND, fmtVNDCompact, fmtPct, type PnLInput } from "@/lib/pnl/compute";
 
 const PLATFORM_PRESETS = [
   { label: "TikTok Non-Mall", commission: 12.5, transaction: 6, processing: 3000, hint: "HH 12.5% · GD 6% · CSHT 3.000đ" },
@@ -365,9 +365,9 @@ export default function PnLCalculator() {
       <div className="flex flex-col gap-6">
         {/* Headline metrics */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="glass p-5">
+          <div className="glass p-5 min-w-0">
             <div className="text-[0.68rem] font-bold uppercase tracking-[0.14em] mb-2" style={{ color: "rgba(255,255,255,0.5)" }}>Net Revenue</div>
-            <div className="text-[1.4rem] md:text-[1.6rem] font-extrabold leading-none text-white">{fmtVND(result.netRevenue)}<span className="text-[0.85rem] ml-1 font-semibold" style={{ color: "rgba(255,255,255,0.5)" }}>₫</span></div>
+            <div className="text-[1.5rem] md:text-[1.7rem] font-extrabold leading-none text-white whitespace-nowrap" title={fmtVND(result.netRevenue) + "đ"}>{fmtVNDCompact(result.netRevenue)}<span className="text-[0.78rem] ml-1 font-semibold" style={{ color: "rgba(255,255,255,0.5)" }}>₫</span></div>
           </div>
           <div className="glass p-5">
             <div className="text-[0.68rem] font-bold uppercase tracking-[0.14em] mb-2" style={{ color: "rgba(255,255,255,0.5)" }}>Gross Margin</div>
@@ -436,13 +436,13 @@ export default function PnLCalculator() {
         {/* Unit economics */}
         {state.orders > 0 && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="rounded-xl p-4" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid var(--line)" }}>
+            <div className="rounded-xl p-4 min-w-0" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid var(--line)" }}>
               <div className="text-[0.7rem] font-bold uppercase tracking-[0.13em] mb-1.5" style={{ color: "rgba(255,255,255,0.5)" }}>Profit/đơn</div>
-              <div className="text-[1.05rem] font-bold" style={{ color: profitColor }}>{fmtVND(result.profitPerOrder)}<span className="text-[0.78rem] ml-1 font-medium opacity-60">₫</span></div>
+              <div className="text-[1.05rem] font-bold whitespace-nowrap" style={{ color: profitColor }} title={fmtVND(result.profitPerOrder) + "đ"}>{fmtVNDCompact(result.profitPerOrder)}<span className="text-[0.72rem] ml-1 font-medium opacity-60">₫</span></div>
             </div>
-            <div className="rounded-xl p-4" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid var(--line)" }}>
+            <div className="rounded-xl p-4 min-w-0" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid var(--line)" }}>
               <div className="text-[0.7rem] font-bold uppercase tracking-[0.13em] mb-1.5" style={{ color: "rgba(255,255,255,0.5)" }}>CPA (ads/đơn)</div>
-              <div className="text-[1.05rem] font-bold text-white">{fmtVND(result.cpa)}<span className="text-[0.78rem] ml-1 font-medium opacity-60">₫</span></div>
+              <div className="text-[1.05rem] font-bold text-white whitespace-nowrap" title={fmtVND(result.cpa) + "đ"}>{fmtVNDCompact(result.cpa)}<span className="text-[0.72rem] ml-1 font-medium opacity-60">₫</span></div>
             </div>
             <div className="rounded-xl p-4" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid var(--line)" }}>
               <div className="text-[0.7rem] font-bold uppercase tracking-[0.13em] mb-1.5" style={{ color: "rgba(255,255,255,0.5)" }}>ROAS</div>
