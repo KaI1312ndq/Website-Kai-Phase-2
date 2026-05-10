@@ -31,17 +31,17 @@ const TOOLS = [
     available: true,
   },
   {
-    href: "#",
-    badge: "Sắp có",
+    href: "/tools/roas-calculator",
+    badge: "Mới · 2026",
     title: "ROAS Calculator",
-    desc: "Tính ROAS break-even cần đạt theo cost & target margin. Cho biết campaign target ROAS bao nhiêu là đủ.",
+    desc: "Tính ROAS break-even cần đạt theo cost & target margin. Cho biết campaign target ROAS bao nhiêu là đủ — có preset phí TikTok Shop & Shopee 2026.",
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7da9ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" />
       </svg>
     ),
-    keywords: ["ROAS", "Performance"],
-    available: false,
+    keywords: ["ROAS", "Break-even", "Target Margin", "Performance"],
+    available: true,
   },
   {
     href: "#",
