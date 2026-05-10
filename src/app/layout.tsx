@@ -149,7 +149,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           showSpinner={false}
           shadow="0 0 12px rgba(20,110,245,0.6),0 0 6px rgba(122,61,255,0.4)"
           easing="cubic-bezier(0.2, 0.8, 0.2, 1)"
-          speed={350}
+          speed={550}
         />
         <NoiseOverlay />
         <SmoothScroll>
