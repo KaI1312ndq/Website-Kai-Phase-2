@@ -3,6 +3,8 @@ import { LEADERSHIP_QUESTIONS, LEADERSHIP_STYLES } from "./data/leadership";
 import { MBTI_TYPES } from "./data/mbti-types";
 import { MBTI_QUESTIONS as MBTI_QS_DATA } from "./data/mbti-questions";
 import { CAREER_QUESTIONS, CAREER_ARCHETYPES } from "./data/career";
+import { AD_METRICS_QUESTIONS } from "./data/ad-metrics";
+import type { KnowledgeQuestion } from "./types";
 
 export const QUIZZES: QuizConfig[] = [
   {
@@ -40,6 +42,20 @@ export const QUIZZES: QuizConfig[] = [
     iconName: "rocket",
     gateResult: true,
     scoringType: "career",
+  },
+  {
+    slug: "chi-so-quang-cao",
+    name: "Test Kiến Thức Chỉ Số Quảng Cáo",
+    shortDescription: "30 câu — kiểm tra kiến thức về metrics digital ads: ROAS, CPC, CPM, CTR, CIR, AOV, RPR, Funnel...",
+    longDescription: "Bạn nắm vững các chỉ số quảng cáo digital? 30 câu trắc nghiệm — mỗi câu 30 giây — kiểm tra kiến thức về Ad Spend, GMV, ROAS, CPC, CPM, CTR, Add to Cart Rate, CIR, ROI, AOV, CPA, Purchase Rate, RPR và benchmark thực tế VN. Có giải thích từng câu sau khi chọn. Cuối bài có tier Vàng/Bạc/Đồng tuỳ điểm.",
+    estimatedMinutes: 15,
+    questionCount: 30,
+    color: "#22d3ee",
+    iconName: "trending-up",
+    gateResult: false,
+    scoringType: "knowledge",
+    format: "knowledge",
+    secondsPerQuestion: 30,
   },
 ];
 
@@ -150,5 +166,13 @@ export function computeCareerResult(answers: Record<number, string>): {
   return { topId, scores, ranked };
 }
 
+/**
+ * Get knowledge quiz questions by slug.
+ */
+export function getKnowledgeQuestions(slug: string): KnowledgeQuestion[] {
+  if (slug === "chi-so-quang-cao") return AD_METRICS_QUESTIONS;
+  return [];
+}
+
 // Re-export so seed can use them
-export { MBTI_TYPES, LEADERSHIP_STYLES, CAREER_ARCHETYPES };
+export { MBTI_TYPES, LEADERSHIP_STYLES, CAREER_ARCHETYPES, AD_METRICS_QUESTIONS };

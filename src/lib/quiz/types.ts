@@ -51,5 +51,19 @@ export type QuizConfig = {
   /** Whether result requires lead capture (email/phone) */
   gateResult: boolean;
   /** Internal: type for scoring */
-  scoringType: "leadership" | "mbti" | "career";
+  scoringType: "leadership" | "mbti" | "career" | "knowledge";
+  /** Format: 'personality' (archetype) hoặc 'knowledge' (right/wrong with timer) */
+  format?: "personality" | "knowledge";
+  /** Knowledge quiz: giây mỗi câu (default 30) */
+  secondsPerQuestion?: number;
+};
+
+/** Knowledge quiz question — single correct answer + explanation */
+export type KnowledgeQuestion = {
+  id: number;
+  q: string;
+  opts: string[];
+  /** Index 0..3 of correct answer */
+  ans: number;
+  explain: string;
 };

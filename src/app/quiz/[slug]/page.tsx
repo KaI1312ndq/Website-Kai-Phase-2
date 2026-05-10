@@ -4,8 +4,9 @@ import Footer from "@/components/Footer";
 import GradientBlobs from "@/components/GradientBlobs";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getQuiz, getQuizQuestions, getQuizArchetypes, QUIZZES } from "@/lib/quiz/compute";
+import { getQuiz, getQuizQuestions, getQuizArchetypes, getKnowledgeQuestions, QUIZZES } from "@/lib/quiz/compute";
 import QuizRunner from "@/components/quiz/QuizRunner";
+import KnowledgeQuizRunner from "@/components/quiz/KnowledgeQuizRunner";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://nguyenducquang.website";
 
@@ -36,8 +37,10 @@ export default async function QuizDetailPage({ params }: { params: Promise<{ slu
   const quiz = getQuiz(slug);
   if (!quiz) notFound();
 
-  const questions = getQuizQuestions(slug);
-  const archetypes = getQuizArchetypes(slug);
+  const isKnowledge = quiz.format === "knowledge";
+  const questions = isKnowledge ? [] : getQuizQuestions(slug);
+  const archetypes = isKnowledge ? [] : getQuizArchetypes(slug);
+  const knowledgeQs = isKnowledge ? getKnowledgeQuestions(slug) : [];
 
   const quizLd = {
     "@context": "https://schema.org",
@@ -86,7 +89,11 @@ export default async function QuizDetailPage({ params }: { params: Promise<{ slu
 
         <section className="relative">
           <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-12 md:py-16">
-            <QuizRunner config={quiz} questions={questions} archetypes={archetypes} />
+            {isKnowledge ? (
+              <KnowledgeQuizRunner config={quiz} questions={knowledgeQs} />
+            ) : (
+              <QuizRunner config={quiz} questions={questions} archetypes={archetypes} />
+            )}
           </div>
         </section>
       </main>

@@ -39,7 +39,13 @@ export type IconName =
   | "compass"
   | "layers"
   | "zap"
-  | "coins";
+  | "coins"
+  | "clock"
+  | "x-circle"
+  | "refresh"
+  | "info"
+  | "arrow-right"
+  | "arrow-left";
 
 export default function Icon({ name, size = 20, className, color, strokeWidth = 2 }: Props) {
   const common = {
@@ -271,6 +277,51 @@ export default function Icon({ name, size = 20, className, color, strokeWidth = 
           <path d="M18.09 10.37A6 6 0 1 1 10.34 18" />
           <path d="M7 6h1v4" />
           <path d="m16.71 13.88.7.71-2.82 2.82" />
+        </svg>
+      );
+    case "clock":
+      return (
+        <svg {...common}>
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 16 14" />
+        </svg>
+      );
+    case "x-circle":
+      return (
+        <svg {...common}>
+          <circle cx="12" cy="12" r="10" />
+          <line x1="15" y1="9" x2="9" y2="15" />
+          <line x1="9" y1="9" x2="15" y2="15" />
+        </svg>
+      );
+    case "refresh":
+      return (
+        <svg {...common}>
+          <polyline points="23 4 23 10 17 10" />
+          <polyline points="1 20 1 14 7 14" />
+          <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+        </svg>
+      );
+    case "info":
+      return (
+        <svg {...common}>
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="16" x2="12" y2="12" />
+          <line x1="12" y1="8" x2="12.01" y2="8" />
+        </svg>
+      );
+    case "arrow-right":
+      return (
+        <svg {...common}>
+          <line x1="5" y1="12" x2="19" y2="12" />
+          <polyline points="12 5 19 12 12 19" />
+        </svg>
+      );
+    case "arrow-left":
+      return (
+        <svg {...common}>
+          <line x1="19" y1="12" x2="5" y2="12" />
+          <polyline points="12 19 5 12 12 5" />
         </svg>
       );
     default:

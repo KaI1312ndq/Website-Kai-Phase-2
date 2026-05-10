@@ -61,6 +61,12 @@ const links: NavLink[] = [
         href: "/quiz/huong-nghiep-marketing",
         badge: "Mới",
       },
+      {
+        label: "Test Chỉ Số Quảng Cáo",
+        desc: "30 câu · ROAS, CPC, CPM, CIR · timer 30s/câu",
+        href: "/quiz/chi-so-quang-cao",
+        badge: "Mới",
+      },
     ],
   },
   { label: "Blog", href: "/blog" },
