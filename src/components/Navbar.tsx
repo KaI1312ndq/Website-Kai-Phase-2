@@ -2,9 +2,10 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import Icon, { type IconName } from "@/components/icons/Icon";
 
 type Submenu = { label: string; desc?: string; href: string; badge?: string };
-type NavLink = { label: string; href: string; submenu?: Submenu[] };
+type NavLink = { label: string; href: string; submenu?: Submenu[]; submenuIcon?: IconName; viewAllText?: string };
 
 const links: NavLink[] = [
   { label: "Về tôi", href: "/#about" },
@@ -13,6 +14,8 @@ const links: NavLink[] = [
   {
     label: "Tools",
     href: "/tools",
+    submenuIcon: "tool",
+    viewAllText: "Xem tất cả tools",
     submenu: [
       {
         label: "Tính phí sàn TikTok & Shopee",
@@ -37,6 +40,8 @@ const links: NavLink[] = [
   {
     label: "Test",
     href: "/quiz",
+    submenuIcon: "test-tube",
+    viewAllText: "Xem tất cả test",
     submenu: [
       {
         label: "Test Phong Cách Lãnh Đạo",
@@ -140,10 +145,8 @@ export default function Navbar() {
                             onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(20,110,245,0.10)"; }}
                             onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
                           >
-                            <span className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: "rgba(20,110,245,0.12)", border: "1px solid rgba(20,110,245,0.22)" }}>
-                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7da9ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <rect x="2" y="3" width="20" height="18" rx="2" /><line x1="2" y1="9" x2="22" y2="9" /><line x1="9" y1="3" x2="9" y2="21" />
-                              </svg>
+                            <span className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: "rgba(20,110,245,0.12)", border: "1px solid rgba(20,110,245,0.22)", color: "#7da9ff" }}>
+                              <Icon name={(l.submenuIcon || "tool") as IconName} size={16} />
                             </span>
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center gap-2">
@@ -155,12 +158,12 @@ export default function Navbar() {
                           </Link>
                         ))}
                         <div className="border-t mt-1 pt-1" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-                          <Link href="/tools" className="flex items-center justify-between px-3 py-2 rounded-lg transition-colors text-[0.78rem] font-semibold"
+                          <Link href={l.href} className="flex items-center justify-between px-3 py-2 rounded-lg transition-colors text-[0.78rem] font-semibold"
                             style={{ color: "rgba(255,255,255,0.6)" }}
                             onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.04)"; (e.currentTarget as HTMLElement).style.color = "white"; }}
                             onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)"; }}
                           >
-                            <span>Xem tất cả tools</span>
+                            <span>{l.viewAllText || `Xem tất cả ${l.label.toLowerCase()}`}</span>
                             <span>→</span>
                           </Link>
                         </div>
