@@ -31,6 +31,17 @@ export async function getPost(slug: string) {
   `, { slug });
 }
 
+export async function getRelatedPosts(category: string | undefined, currentSlug: string, limit = 4) {
+  // Prefer same category; fall back to recent posts if none.
+  return client.fetch(`
+    *[_type == "post" && slug.current != $currentSlug && (
+      ($category != null && category == $category) || $category == null
+    )] | order(publishedAt desc) [0...$limit] {
+      _id, title, slug, coverImage, category, readTime, publishedAt
+    }
+  `, { category: category || null, currentSlug, limit });
+}
+
 // ── Case Studies ──
 export async function getCaseStudies() {
   return client.fetch(`
