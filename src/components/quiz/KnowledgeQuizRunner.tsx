@@ -87,15 +87,62 @@ export default function KnowledgeQuizRunner({
     return () => clearTimeout(t);
   }, [timeLeft, pickedThisQ, phase]);
 
-  // beforeunload guard
+  // Exit guards (close tab, refresh, browser back button, in-app navigation)
   useEffect(() => {
     if (phase !== "running") return;
-    const handler = (e: BeforeUnloadEvent) => {
+
+    // Guard 1: Close tab / refresh / external navigation
+    const beforeUnload = (e: BeforeUnloadEvent) => {
       e.preventDefault();
       e.returnValue = "";
     };
-    window.addEventListener("beforeunload", handler);
-    return () => window.removeEventListener("beforeunload", handler);
+    window.addEventListener("beforeunload", beforeUnload);
+
+    // Guard 2: Browser back/forward button (popstate)
+    // Push a sentinel state — when user clicks back, popstate fires.
+    // Show confirm dialog. If they cancel, push state back to lock them in.
+    window.history.pushState({ quizGuard: true }, "", window.location.href);
+
+    const onPopState = () => {
+      const ok = window.confirm(
+        "Bạn đang làm dở bài test. Rời trang sẽ mất tiến độ câu hiện tại. Bạn có chắc muốn thoát?"
+      );
+      if (!ok) {
+        // Re-push to keep them on page
+        window.history.pushState({ quizGuard: true }, "", window.location.href);
+      } else {
+        // Allow exit — let next back navigation through
+        window.removeEventListener("popstate", onPopState);
+        window.history.back();
+      }
+    };
+    window.addEventListener("popstate", onPopState);
+
+    // Guard 3: Click on internal links — intercept and confirm
+    const onLinkClick = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement)?.closest("a") as HTMLAnchorElement | null;
+      if (!target) return;
+      const href = target.getAttribute("href");
+      if (!href) return;
+      // Only guard internal nav, allow same-anchor # links
+      if (href.startsWith("#") || target.target === "_blank") return;
+      // Allow if the href is the current path (no actual nav)
+      if (href === window.location.pathname) return;
+      const ok = window.confirm(
+        "Rời khỏi trang sẽ mất tiến độ bài test. Bạn có chắc?"
+      );
+      if (!ok) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    };
+    document.addEventListener("click", onLinkClick, true);
+
+    return () => {
+      window.removeEventListener("beforeunload", beforeUnload);
+      window.removeEventListener("popstate", onPopState);
+      document.removeEventListener("click", onLinkClick, true);
+    };
   }, [phase]);
 
   // Cleanup advance timer
