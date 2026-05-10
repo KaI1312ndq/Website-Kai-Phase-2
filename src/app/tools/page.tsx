@@ -44,17 +44,17 @@ const TOOLS = [
     available: true,
   },
   {
-    href: "#",
-    badge: "Sắp có",
-    title: "P&L Template Marketplace",
-    desc: "Sheet template tính P&L tháng/quý cho gian hàng TMĐT. Auto-fill từ data sàn, ra report ngay.",
+    href: "/tools/pnl-ecom",
+    badge: "Mới · 2026",
+    title: "Mẫu P&L Ecom — Báo cáo lãi lỗ",
+    desc: "Lập P&L gian hàng TMĐT 5 tầng (Net Revenue → Gross → Contribution → Marketing → EBITDA). Preset phí TikTok Shop & Shopee 2026, có chẩn đoán margin và in PDF.",
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a78bff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" /><polyline points="2 20 22 20" />
       </svg>
     ),
-    keywords: ["P&L", "Template", "Excel"],
-    available: false,
+    keywords: ["P&L", "EBITDA", "Contribution Margin", "Báo cáo"],
+    available: true,
   },
 ];
 

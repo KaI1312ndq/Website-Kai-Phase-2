@@ -49,7 +49,6 @@ export const settingsType = defineType({
   name: "settings",
   title: "Cài đặt trang",
   type: "document",
-  __experimental_actions: ["update", "publish"],
   fields: [
     defineField({ name: "name", title: "Tên hiển thị", type: "string", initialValue: "Nguyễn Đức Quảng" }),
     defineField({ name: "tagline", title: "Tagline", type: "string", initialValue: "Ecom Growth Expert & Team Builder" }),

@@ -18,9 +18,10 @@ export async function generateStaticParams() {
   } catch { return []; }
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
   try {
-    const post = await getPost(params.slug);
+    const post = await getPost(slug);
     if (!post) return { title: "Bài viết" };
     const title = post.seoTitle || post.title;
     const description = post.seoDescription || post.excerpt;
@@ -28,12 +29,12 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     return {
       title,
       description,
-      alternates: { canonical: `/blog/${params.slug}` },
+      alternates: { canonical: `/blog/${slug}` },
       openGraph: {
         type: "article",
         title,
         description,
-        url: `${SITE_URL}/blog/${params.slug}`,
+        url: `${SITE_URL}/blog/${slug}`,
         images: image ? [{ url: image, width: 1200, height: 630 }] : undefined,
         authors: ["Nguyễn Đức Quảng"],
         publishedTime: post.publishedAt,
@@ -43,9 +44,10 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   } catch { return {}; }
 }
 
-export default async function BlogPost({ params }: { params: { slug: string } }) {
+export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   let post: any;
-  try { post = await getPost(params.slug); } catch {}
+  try { post = await getPost(slug); } catch {}
   if (!post) notFound();
 
   const image = post.coverImage ? urlFor(post.coverImage).width(1200).height(630).url() : undefined;
@@ -60,7 +62,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
     dateModified: post.publishedAt,
     author: { "@type": "Person", name: "Nguyễn Đức Quảng", url: SITE_URL },
     publisher: { "@type": "Person", name: "Nguyễn Đức Quảng", logo: { "@type": "ImageObject", url: `${SITE_URL}/icon.png` } },
-    mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE_URL}/blog/${params.slug}` },
+    mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE_URL}/blog/${slug}` },
     inLanguage: "vi-VN",
     articleSection: post.category,
   };
@@ -71,7 +73,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Trang chủ", item: SITE_URL },
       { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` },
-      { "@type": "ListItem", position: 3, name: post.title, item: `${SITE_URL}/blog/${params.slug}` },
+      { "@type": "ListItem", position: 3, name: post.title, item: `${SITE_URL}/blog/${slug}` },
     ],
   };
 

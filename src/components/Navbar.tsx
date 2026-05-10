@@ -25,6 +25,12 @@ const links: NavLink[] = [
         href: "/tools/roas-calculator",
         badge: "Mới",
       },
+      {
+        label: "Mẫu P&L Ecom",
+        desc: "Báo cáo lãi lỗ gian hàng — Net Revenue → EBITDA, in PDF",
+        href: "/tools/pnl-ecom",
+        badge: "Mới",
+      },
     ],
   },
   { label: "Kết quả", href: "/#casestudies" },
