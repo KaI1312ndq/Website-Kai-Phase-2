@@ -12,6 +12,13 @@ type RelatedPost = {
   coverImage?: any;
 };
 
+type MostReadPost = {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  viewCount?: number;
+};
+
 const SIDEBAR_TOOLS = [
   { href: "/tools/tinh-phi-san", label: "Tính phí sàn TikTok & Shopee", color: "#4ad6ff" },
   { href: "/tools/roas-calculator", label: "ROAS Calculator", color: "#7da9ff" },
@@ -21,9 +28,11 @@ const SIDEBAR_TOOLS = [
 export default function BlogSidebar({
   headings,
   relatedPosts,
+  mostReadPosts = [],
 }: {
   headings: Heading[];
   relatedPosts: RelatedPost[];
+  mostReadPosts?: MostReadPost[];
 }) {
   return (
     <aside className="lg:sticky lg:top-24 flex flex-col gap-7 self-start">
@@ -73,6 +82,34 @@ export default function BlogSidebar({
           Xem khoá học →
         </Link>
       </div>
+
+      {/* Most read */}
+      {mostReadPosts.length > 0 && (
+        <div className="rounded-xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--line)" }}>
+          <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-3" style={{ color: "rgba(255,255,255,0.5)" }}>
+            🔥 Đọc nhiều nhất
+          </div>
+          <ol className="flex flex-col gap-3 list-none">
+            {mostReadPosts.slice(0, 5).map((p, i) => (
+              <li key={p._id}>
+                <Link href={`/blog/${p.slug.current}`} className="flex gap-3 items-start group">
+                  <span className="text-[1.05rem] font-extrabold leading-none flex-shrink-0 w-6 grad-text">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-[0.84rem] font-medium leading-snug text-white group-hover:text-[#7da9ff] transition-colors line-clamp-2">{p.title}</div>
+                    {typeof p.viewCount === "number" && p.viewCount > 0 && (
+                      <div className="text-[0.7rem] mt-0.5" style={{ color: "rgba(255,255,255,0.4)" }}>
+                        {p.viewCount.toLocaleString("vi-VN")} lượt xem
+                      </div>
+                    )}
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
 
       {/* Related posts */}
       {relatedPosts.length > 0 && (

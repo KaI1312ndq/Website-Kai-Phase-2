@@ -15,16 +15,97 @@ export default defineConfig({
         S.list()
           .title("Nội dung")
           .items([
+            // ─── BLOG (most-edited) ───────────────────
+            S.listItem()
+              .title("📝 Blog / Insights")
+              .id("posts-root")
+              .child(
+                S.list()
+                  .title("Blog / Insights")
+                  .items([
+                    S.listItem()
+                      .title("⭐ Bài Featured")
+                      .child(
+                        S.documentList()
+                          .title("Bài Featured")
+                          .filter(`_type == "post" && featured == true`)
+                          .defaultOrdering([{ field: "publishedAt", direction: "desc" }])
+                      ),
+                    S.listItem()
+                      .title("🆕 Mới nhất")
+                      .child(
+                        S.documentList()
+                          .title("Mới nhất")
+                          .filter(`_type == "post"`)
+                          .defaultOrdering([{ field: "publishedAt", direction: "desc" }])
+                      ),
+                    S.divider(),
+                    // Each category has its own list — fast filter
+                    ...[
+                      { value: "tiktok", title: "TikTok Shop" },
+                      { value: "shopee", title: "Shopee" },
+                      { value: "ecom", title: "Ecommerce" },
+                      { value: "performance", title: "Performance" },
+                      { value: "leadership", title: "Leadership" },
+                      { value: "mindset", title: "Mindset" },
+                    ].map((cat) =>
+                      S.listItem()
+                        .title(`📂 ${cat.title}`)
+                        .id(`posts-${cat.value}`)
+                        .child(
+                          S.documentList()
+                            .title(`Posts: ${cat.title}`)
+                            .filter(`_type == "post" && category == $cat`)
+                            .params({ cat: cat.value })
+                            .defaultOrdering([{ field: "publishedAt", direction: "desc" }])
+                        )
+                    ),
+                    S.divider(),
+                    S.listItem()
+                      .title("📚 Tất cả bài viết")
+                      .child(
+                        S.documentList()
+                          .title("Tất cả bài viết")
+                          .filter(`_type == "post"`)
+                          .defaultOrdering([{ field: "publishedAt", direction: "desc" }])
+                      ),
+                  ])
+              ),
+
+            // ─── COMMENTS (moderation) ─────────────────
+            S.listItem()
+              .title("💬 Bình luận")
+              .id("comments-root")
+              .child(
+                S.list()
+                  .title("Bình luận")
+                  .items([
+                    S.listItem()
+                      .title("🆕 Mới nhất (xoá nếu spam)")
+                      .child(
+                        S.documentList()
+                          .title("Tất cả bình luận")
+                          .filter(`_type == "comment"`)
+                          .defaultOrdering([{ field: "createdAt", direction: "desc" }])
+                      ),
+                  ])
+              ),
+
+            S.divider(),
+
+            // ─── OTHERS (less-edited) ──────────────────
+            S.documentTypeListItem("caseStudy").title("📊 Case Studies"),
+            S.documentTypeListItem("brand").title("🏢 Brands"),
+            S.documentTypeListItem("testimonial").title("⭐ Testimonials"),
+            S.documentTypeListItem("timeline").title("🗓️ Timeline"),
+
+            S.divider(),
+
+            // ─── SETTINGS (singleton) ───────────────────
             S.listItem()
               .title("⚙️ Cài đặt trang")
               .id("settings")
               .child(S.document().schemaType("settings").documentId("settings")),
-            S.divider(),
-            S.documentTypeListItem("post").title("📝 Blog / Insights"),
-            S.documentTypeListItem("caseStudy").title("📊 Case Studies"),
-            S.documentTypeListItem("brand").title("🏢 Brands"),
-            S.documentTypeListItem("testimonial").title("💬 Testimonials"),
-            S.documentTypeListItem("timeline").title("🗓️ Timeline"),
           ]),
     }),
     visionTool(),

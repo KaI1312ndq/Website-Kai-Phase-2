@@ -30,14 +30,19 @@ export async function getPaginatedPosts({
   const start = (page - 1) * perPage;
   const end = start + perPage;
 
+  const params: Record<string, any> = { start, end };
+  if (category && category !== "all") params.category = category;
+  if (tag) params.tag = tag;
+  if (search && search.trim()) params.search = `${search}*`;
+
   const [posts, total, categoryCounts] = await Promise.all([
     client.fetch(
       `*[${filter}] | order(publishedAt desc) [$start...$end] {
         _id, title, slug, excerpt, coverImage, category, readTime, publishedAt, featured, tags
       }`,
-      { category, search: search ? `${search}*` : undefined, tag, start, end }
+      params
     ),
-    client.fetch(`count(*[${filter}])`, { category, search: search ? `${search}*` : undefined, tag }),
+    client.fetch(`count(*[${filter}])`, params),
     client.fetch(`*[_type == "post" && defined(category)] {category}`),
   ]);
 
@@ -101,6 +106,14 @@ export async function getCommentsForPost(postId: string) {
       "parentId": parent._ref
     }
   `, { postId });
+}
+
+export async function getMostReadPosts(limit = 5) {
+  return client.fetch(`
+    *[_type == "post" && coalesce(viewCount, 0) > 0] | order(coalesce(viewCount, 0) desc) [0...$limit] {
+      _id, title, slug, category, readTime, viewCount
+    }
+  `, { limit });
 }
 
 export async function getRelatedPosts(category: string | undefined, currentSlug: string, limit = 4) {

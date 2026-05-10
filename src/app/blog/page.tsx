@@ -21,7 +21,10 @@ const CATEGORY_LABELS: Record<string, string> = {
 export const metadata = {
   title: "Blog & Insights — Nguyễn Đức Quảng",
   description: "Góc nhìn thực tế về Ecommerce, Performance Marketing và Leadership cho seller TMĐT Việt Nam.",
-  alternates: { canonical: "/blog" },
+  alternates: {
+    canonical: "/blog",
+    types: { "application/rss+xml": [{ url: "/blog/feed.xml", title: "Blog & Insights RSS" }] },
+  },
   openGraph: { type: "website", title: "Blog & Insights — Nguyễn Đức Quảng", description: "Góc nhìn thực tế về Ecommerce, Performance Marketing và Leadership." },
 };
 

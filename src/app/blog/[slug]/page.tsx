@@ -2,7 +2,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getPost, getPosts, getRelatedPosts, getCommentsForPost } from "@/lib/queries";
+import { getPost, getPosts, getRelatedPosts, getCommentsForPost, getMostReadPosts } from "@/lib/queries";
 import { urlFor } from "../../../../sanity/lib/image";
 import { extractHeadings } from "@/lib/blog/headings";
 import BlogSidebar from "@/components/blog/BlogSidebar";
@@ -11,6 +11,8 @@ import CommentSection from "@/components/blog/CommentSection";
 import ReadingProgress from "@/components/blog/ReadingProgress";
 import ShareButtons from "@/components/blog/ShareButtons";
 import AuthorBio from "@/components/blog/AuthorBio";
+import ViewTracker from "@/components/blog/ViewTracker";
+import EngagementBar from "@/components/blog/EngagementBar";
 import { notFound } from "next/navigation";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://nguyenducquang.website";
@@ -58,10 +60,12 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
   let relatedPosts: any[] = [];
   let comments: any[] = [];
+  let mostReadPosts: any[] = [];
   try {
-    [relatedPosts, comments] = await Promise.all([
+    [relatedPosts, comments, mostReadPosts] = await Promise.all([
       getRelatedPosts(post.category, slug, 4),
       getCommentsForPost(post._id),
+      getMostReadPosts(5),
     ]);
   } catch {}
 
@@ -102,6 +106,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     <>
       <Navbar />
       <ReadingProgress targetSelector="article.prose-ndq" />
+      <ViewTracker postId={post._id} />
       <main>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
@@ -188,54 +193,66 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         <section className="relative">
           <div className="max-w-[1300px] mx-auto px-6 md:px-10 py-14 md:py-20">
             <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_320px] gap-10 xl:gap-16">
-              {/* Article content */}
-              <article className="prose-ndq min-w-0">
-                {post.body ? (
-                  <PortableTextWithIds value={post.body} />
-                ) : (
-                  <p style={{ color: "var(--ink-mute)" }}>Nội dung đang được cập nhật...</p>
-                )}
+              {/* Article content + post-content blocks */}
+              <div className="min-w-0 flex flex-col">
+                <article className="prose-ndq">
+                  {post.body ? (
+                    <PortableTextWithIds value={post.body} />
+                  ) : (
+                    <p style={{ color: "var(--ink-mute)" }}>Nội dung đang được cập nhật...</p>
+                  )}
+                </article>
 
-                {/* In-article CTA after body */}
-                <div className="mt-14 pt-10 border-t" style={{ borderColor: "var(--line)" }}>
-                  <div className="rounded-2xl p-6 md:p-8" style={{ background: "linear-gradient(135deg, rgba(20,110,245,0.10) 0%, rgba(122,61,255,0.10) 100%)", border: "1px solid rgba(20,110,245,0.22)" }}>
-                    <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-2" style={{ color: "#7da9ff" }}>
-                      Khoá học · Đang mở apply Khoá 1
-                    </div>
-                    <div className="text-[1.4rem] md:text-[1.6rem] font-bold mb-3 leading-tight text-white">
-                      Muốn build P&L thực chiến + scale shop từ kinh nghiệm 60+ project?
-                    </div>
-                    <p className="text-[0.95rem] leading-[1.7] mb-5" style={{ color: "rgba(255,255,255,0.75)" }}>
-                      Khoá Ecom Foundation — 12 buổi từ cơ cấu chi phí, P&L gian hàng, đến tối ưu ROAS và build team.
-                    </p>
-                    <Link href="/ecom-foundation" className="btn btn-primary">
-                      Xem khoá học <span className="arrow">→</span>
-                    </Link>
-                  </div>
-
-                  <div className="mt-8">
-                    <ShareButtons url={pageUrl} title={post.title} />
-                  </div>
-
-                  <div className="mt-8 flex items-center justify-between flex-wrap gap-4">
-                    <Link href="/blog" className="text-[0.88rem] font-semibold transition-colors hover:text-white" style={{ color: "var(--ink-soft)" }}>
-                      ← Tất cả bài viết
-                    </Link>
-                    <Link href="/#contact" className="text-[0.88rem] font-semibold transition-colors hover:text-white" style={{ color: "var(--ink-soft)" }}>
-                      Liên hệ Quảng →
-                    </Link>
-                  </div>
+                {/* Engagement bar */}
+                <div className="mt-12 pt-8 border-t" style={{ borderColor: "var(--line)" }}>
+                  <EngagementBar
+                    postId={post._id}
+                    initialLikes={post.likeCount || 0}
+                    initialViews={post.viewCount || 0}
+                    commentCount={comments.length}
+                  />
                 </div>
 
-                {/* Author bio card */}
+                {/* In-article CTA */}
+                <div className="mt-10 rounded-2xl p-6 md:p-8" style={{ background: "linear-gradient(135deg, rgba(20,110,245,0.10) 0%, rgba(122,61,255,0.10) 100%)", border: "1px solid rgba(20,110,245,0.22)" }}>
+                  <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-2" style={{ color: "#7da9ff" }}>
+                    Khoá học · Đang mở apply Khoá 1
+                  </div>
+                  <div className="text-[1.4rem] md:text-[1.6rem] font-bold mb-3 leading-tight text-white">
+                    Muốn build P&L thực chiến + scale shop từ kinh nghiệm 60+ project?
+                  </div>
+                  <p className="text-[0.95rem] leading-[1.7] mb-5" style={{ color: "rgba(255,255,255,0.75)" }}>
+                    Khoá Ecom Foundation — 12 buổi từ cơ cấu chi phí, P&L gian hàng, đến tối ưu ROAS và build team.
+                  </p>
+                  <Link href="/ecom-foundation" className="btn btn-primary">
+                    Xem khoá học <span className="arrow">→</span>
+                  </Link>
+                </div>
+
+                {/* Share buttons */}
+                <div className="mt-10">
+                  <ShareButtons url={pageUrl} title={post.title} />
+                </div>
+
+                {/* Nav */}
+                <div className="mt-8 flex items-center justify-between flex-wrap gap-4">
+                  <Link href="/blog" className="text-[0.88rem] font-semibold transition-colors hover:text-white" style={{ color: "var(--ink-soft)" }}>
+                    ← Tất cả bài viết
+                  </Link>
+                  <Link href="/#contact" className="text-[0.88rem] font-semibold transition-colors hover:text-white" style={{ color: "var(--ink-soft)" }}>
+                    Liên hệ Quảng →
+                  </Link>
+                </div>
+
+                {/* Author bio */}
                 <AuthorBio />
 
                 {/* Comments */}
                 <CommentSection postId={post._id} initialComments={comments} />
-              </article>
+              </div>
 
               {/* Sidebar */}
-              <BlogSidebar headings={headings} relatedPosts={relatedPosts} />
+              <BlogSidebar headings={headings} relatedPosts={relatedPosts} mostReadPosts={mostReadPosts} />
             </div>
           </div>
         </section>
