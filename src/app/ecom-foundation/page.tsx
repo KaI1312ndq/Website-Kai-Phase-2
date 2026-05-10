@@ -5,7 +5,6 @@ import Footer from "@/components/Footer";
 import Reveal, { RevealText } from "@/components/Reveal";
 import CohortStatus from "@/components/CohortStatus";
 import ApplyForm from "@/components/ApplyForm";
-import BrandsCarousel from "@/components/BrandsCarousel";
 import { COURSE, MODULES, SESSIONS, FIT_FOR, NOT_FIT_FOR, OUTCOMES, AFTER_COURSE, FAQS, type Module } from "@/lib/course-data";
 import { motion } from "framer-motion";
 import { useState } from "react";
@@ -65,7 +64,6 @@ export default function CoursePage() {
         <FormatSection />
         <AfterCourseSection />
         <TrainerSection />
-        <BrandsCarousel />
         <PricingSection />
         <ApplyFlowSection />
         <FAQSection />
