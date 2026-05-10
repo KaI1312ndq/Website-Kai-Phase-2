@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import type { QuizConfig } from "@/lib/quiz/types";
+import Icon from "@/components/icons/Icon";
 
 type Props = {
   config: QuizConfig;
@@ -57,7 +58,12 @@ export default function LeadCaptureGate({ config, result, onComplete }: Props) {
   return (
     <div className="max-w-[640px] mx-auto rounded-2xl p-6 md:p-10" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
       <div className="text-center mb-8">
-        <div className="text-[3rem] mb-3">🎁</div>
+        <div
+          className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-4"
+          style={{ background: `${config.color}18`, border: `1px solid ${config.color}55`, color: config.color }}
+        >
+          <Icon name="gift" size={32} strokeWidth={1.8} />
+        </div>
         <h2 className="text-[1.5rem] md:text-[1.7rem] font-bold leading-tight text-white mb-3">
           Bài test đã hoàn thành!
         </h2>
@@ -114,7 +120,7 @@ export default function LeadCaptureGate({ config, result, onComplete }: Props) {
           </div>
         </div>
         <div className="text-[0.75rem]" style={{ color: "rgba(255,255,255,0.45)" }}>
-          ★ Cần ít nhất 1 trong 2: email hoặc số điện thoại.
+          Cần ít nhất 1 trong 2: email hoặc số điện thoại.
         </div>
 
         {error && (

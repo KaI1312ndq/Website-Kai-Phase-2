@@ -2,6 +2,7 @@
 import Link from "next/link";
 import type { QuizConfig, QuizArchetype } from "@/lib/quiz/types";
 import ShareButtons from "@/components/blog/ShareButtons";
+import Icon from "@/components/icons/Icon";
 
 type Props = {
   config: QuizConfig;
@@ -106,8 +107,9 @@ export default function QuizResult({ config, result, onRetake }: Props) {
       {/* Strengths + Weaknesses grid */}
       <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-5">
         <div className="rounded-2xl p-6" style={{ background: "rgba(95,255,170,0.05)", border: "1px solid rgba(95,255,170,0.2)" }}>
-          <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-3" style={{ color: "#5fffaa" }}>
-            ✓ Điểm mạnh
+          <div className="flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-3" style={{ color: "#5fffaa" }}>
+            <Icon name="check" size={14} strokeWidth={2.5} />
+            <span>Điểm mạnh</span>
           </div>
           <ul className="flex flex-col gap-2 list-none">
             {archetype.strengths.map((s) => (
@@ -119,8 +121,9 @@ export default function QuizResult({ config, result, onRetake }: Props) {
           </ul>
         </div>
         <div className="rounded-2xl p-6" style={{ background: "rgba(255,212,121,0.05)", border: "1px solid rgba(255,212,121,0.22)" }}>
-          <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-3" style={{ color: "#ffd479" }}>
-            ⚠ Cần lưu ý
+          <div className="flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-3" style={{ color: "#ffd479" }}>
+            <Icon name="alert-triangle" size={14} />
+            <span>Cần lưu ý</span>
           </div>
           <ul className="flex flex-col gap-2 list-none">
             {archetype.weaknesses.map((s) => (
@@ -150,7 +153,10 @@ export default function QuizResult({ config, result, onRetake }: Props) {
       {/* Advice */}
       {archetype.advice && archetype.advice.length > 0 && (
         <div className="mt-6 rounded-2xl p-6 md:p-8" style={{ background: `${archetype.color}10`, border: `1px solid ${archetype.color}33` }}>
-          <h2 className="text-[1.1rem] font-bold text-white mb-4">💡 Lời khuyên cân bằng</h2>
+          <h2 className="flex items-center gap-2 text-[1.1rem] font-bold text-white mb-4">
+            <Icon name="lightbulb" size={20} color={archetype.color} />
+            <span>Lời khuyên cân bằng</span>
+          </h2>
           <ul className="flex flex-col gap-2 list-none">
             {archetype.advice.map((a) => (
               <li key={a} className="text-[0.92rem] leading-[1.6] flex items-start gap-2.5" style={{ color: "var(--ink-soft)" }}>
@@ -164,8 +170,9 @@ export default function QuizResult({ config, result, onRetake }: Props) {
 
       {/* Share */}
       <div className="mt-8">
-        <div className="text-[0.78rem] mb-3" style={{ color: "rgba(255,255,255,0.5)" }}>
-          🔗 Trang chi tiết: <Link href={`/quiz/${config.slug}/result/${archetype.id}`} className="underline" style={{ color: archetype.color }}>{`/quiz/${config.slug}/result/${archetype.id}`}</Link>
+        <div className="text-[0.78rem] mb-3 inline-flex items-center gap-2" style={{ color: "rgba(255,255,255,0.5)" }}>
+          <Icon name="link" size={13} />
+          <span>Trang chi tiết: <Link href={`/quiz/${config.slug}/result/${archetype.id}`} className="underline" style={{ color: archetype.color }}>{`/quiz/${config.slug}/result/${archetype.id}`}</Link></span>
         </div>
         <ShareButtons url={shareUrl} title={shareTitle} />
       </div>

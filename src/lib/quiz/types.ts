@@ -46,8 +46,8 @@ export type QuizConfig = {
   questionCount: number;
   /** Color theme */
   color: string;
-  /** Icon (emoji) */
-  emoji: string;
+  /** Icon name from src/components/icons/Icon.tsx */
+  iconName: string;
   /** Whether result requires lead capture (email/phone) */
   gateResult: boolean;
   /** Internal: type for scoring */

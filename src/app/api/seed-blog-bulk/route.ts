@@ -3,6 +3,7 @@ import { createClient } from "@sanity/client";
 import { mdToBlocks } from "@/lib/blog/markdown";
 import { GROUP_A_POSTS } from "@/lib/blog/group-a-content";
 import { DRAFT_POSTS } from "@/lib/blog/groups-bcdef-drafts";
+import { PSYCHOLOGY_POSTS } from "@/lib/blog/psychology-content";
 
 /**
  * Bulk seed 50 blog posts vào Sanity:
@@ -46,6 +47,7 @@ export async function GET(req: NextRequest) {
   const allPosts = [
     ...GROUP_A_POSTS.map((p) => ({ ...p, group: "A" })),
     ...DRAFT_POSTS.map((p) => ({ ...p, group: "B-F" })),
+    ...PSYCHOLOGY_POSTS.map((p) => ({ ...p, group: "P" })),
   ];
 
   const results: { id: string; group: string; title: string; status: string }[] = [];

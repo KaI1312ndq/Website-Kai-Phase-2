@@ -16,6 +16,8 @@ const CATEGORY_LABELS: Record<string, string> = {
   tiktok: "TikTok Shop",
   shopee: "Shopee",
   mindset: "Mindset",
+  psychology: "Tâm lý & Phát triển bản thân",
+  career: "Hướng nghiệp",
 };
 
 export const metadata = {

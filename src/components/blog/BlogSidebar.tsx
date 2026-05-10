@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Heading } from "@/lib/blog/headings";
 import { urlFor } from "../../../sanity/lib/image";
 import BlogTOC from "./BlogTOC";
+import Icon from "@/components/icons/Icon";
 
 type RelatedPost = {
   _id: string;
@@ -86,8 +87,9 @@ export default function BlogSidebar({
       {/* Most read */}
       {mostReadPosts.length > 0 && (
         <div className="rounded-xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--line)" }}>
-          <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-3" style={{ color: "rgba(255,255,255,0.5)" }}>
-            🔥 Đọc nhiều nhất
+          <div className="flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-3" style={{ color: "rgba(255,255,255,0.5)" }}>
+            <Icon name="fire" size={13} />
+            <span>Đọc nhiều nhất</span>
           </div>
           <ol className="flex flex-col gap-3 list-none">
             {mostReadPosts.slice(0, 5).map((p, i) => (

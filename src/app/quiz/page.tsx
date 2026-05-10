@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import GradientBlobs from "@/components/GradientBlobs";
 import Link from "next/link";
 import { QUIZZES } from "@/lib/quiz/compute";
+import Icon, { type IconName } from "@/components/icons/Icon";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://nguyenducquang.website";
 
@@ -81,7 +82,12 @@ export default function QuizLandingPage() {
                     border: `1px solid ${q.color}33`,
                   }}
                 >
-                  <div className="text-[3rem] mb-4">{q.emoji}</div>
+                  <div
+                    className="inline-flex items-center justify-center w-14 h-14 rounded-xl mb-4"
+                    style={{ background: `${q.color}15`, border: `1px solid ${q.color}40`, color: q.color }}
+                  >
+                    <Icon name={q.iconName as IconName} size={28} strokeWidth={1.8} />
+                  </div>
                   <h2 className="text-[1.4rem] md:text-[1.5rem] font-bold leading-tight text-white mb-3 group-hover:text-[#7da9ff] transition-colors">
                     {q.name}
                   </h2>

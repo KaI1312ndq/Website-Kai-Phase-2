@@ -4,6 +4,7 @@ import type { QuizConfig, QuizQuestion, QuizArchetype } from "@/lib/quiz/types";
 import { computeLeadershipResult, computeMBTIResult, computeCareerResult } from "@/lib/quiz/compute";
 import QuizResult from "./QuizResult";
 import LeadCaptureGate from "./LeadCaptureGate";
+import Icon, { type IconName } from "@/components/icons/Icon";
 
 const STORAGE_KEY = (slug: string) => `quiz:progress:${slug}`;
 
@@ -243,9 +244,14 @@ function IntroScreen({ config, onStart, onResume }: { config: QuizConfig; onStar
       {/* Resume banner */}
       {onResume && (
         <div className="mb-6 rounded-2xl p-5 flex items-center justify-between gap-4 flex-wrap" style={{ background: "rgba(255,212,121,0.08)", border: "1px solid rgba(255,212,121,0.32)" }}>
-          <div>
-            <div className="text-[0.95rem] font-bold text-white mb-1">⏯ Bạn đang làm dở bài này</div>
-            <div className="text-[0.82rem]" style={{ color: "rgba(255,255,255,0.7)" }}>Tiếp tục từ chỗ đã dừng hay bắt đầu lại?</div>
+          <div className="flex items-start gap-3">
+            <div className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center" style={{ background: "rgba(255,212,121,0.15)", color: "#ffd479" }}>
+              <Icon name="hourglass" size={20} />
+            </div>
+            <div>
+              <div className="text-[0.95rem] font-bold text-white mb-1">Bạn đang làm dở bài này</div>
+              <div className="text-[0.82rem]" style={{ color: "rgba(255,255,255,0.7)" }}>Tiếp tục từ chỗ đã dừng hay bắt đầu lại?</div>
+            </div>
           </div>
           <div className="flex items-center gap-2 flex-wrap">
             <button
@@ -267,7 +273,12 @@ function IntroScreen({ config, onStart, onResume }: { config: QuizConfig; onStar
       )}
 
       <div className="rounded-2xl p-8 md:p-12 text-center" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
-        <div className="text-[3.5rem] mb-4">{config.emoji}</div>
+        <div
+          className="inline-flex items-center justify-center w-20 h-20 rounded-2xl mb-5"
+          style={{ background: `${config.color}18`, border: `1px solid ${config.color}55`, color: config.color }}
+        >
+          <Icon name={config.iconName as IconName} size={40} strokeWidth={1.8} />
+        </div>
         <h1 className="t-h2 leading-tight text-white mb-4">{config.name}</h1>
         <p className="text-[1rem] leading-[1.7] max-w-[680px] mx-auto mb-8" style={{ color: "var(--ink-soft)" }}>
           {config.longDescription}
@@ -298,7 +309,9 @@ function IntroScreen({ config, onStart, onResume }: { config: QuizConfig; onStar
             <ul className="flex flex-col gap-2.5 list-none">
               {benefits.map((b, i) => (
                 <li key={i} className="flex items-start gap-2.5 text-[0.9rem] leading-[1.55]" style={{ color: "rgba(255,255,255,0.85)" }}>
-                  <span className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-[0.7rem] font-bold mt-0.5" style={{ background: `${config.color}30`, color: config.color }}>✓</span>
+                  <span className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center mt-0.5" style={{ background: `${config.color}30`, color: config.color }}>
+                    <Icon name="check" size={12} strokeWidth={3} />
+                  </span>
                   <span>{b}</span>
                 </li>
               ))}
@@ -314,9 +327,13 @@ function IntroScreen({ config, onStart, onResume }: { config: QuizConfig; onStar
           Bắt đầu test ngay <span>→</span>
         </button>
 
-        <p className="text-[0.78rem] mt-6" style={{ color: "rgba(255,255,255,0.4)" }}>
-          Không cần đăng ký · Kết quả ngay sau khi hoàn thành{config.gateResult && " · Cần email/sđt"}<br />
-          ⚡ Tiến độ tự động lưu — refresh hay đóng tab cũng không mất bài
+        <p className="text-[0.78rem] mt-6 inline-flex items-center justify-center gap-1.5 flex-wrap" style={{ color: "rgba(255,255,255,0.4)" }}>
+          <span>Không cần đăng ký · Kết quả ngay sau khi hoàn thành{config.gateResult && " · Cần email/sđt"}</span>
+          <span className="hidden sm:inline">·</span>
+          <span className="inline-flex items-center gap-1">
+            <Icon name="zap" size={12} />
+            Tiến độ tự động lưu, refresh không mất bài
+          </span>
         </p>
       </div>
     </div>
