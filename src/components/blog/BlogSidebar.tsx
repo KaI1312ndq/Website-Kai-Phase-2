@@ -2,7 +2,8 @@ import Link from "next/link";
 import type { Heading } from "@/lib/blog/headings";
 import { urlFor } from "../../../sanity/lib/image";
 import BlogTOC from "./BlogTOC";
-import Icon from "@/components/icons/Icon";
+import Icon, { type IconName } from "@/components/icons/Icon";
+import type { LinkSuggestion } from "@/lib/blog/internal-links";
 
 type RelatedPost = {
   _id: string;
@@ -20,7 +21,7 @@ type MostReadPost = {
   viewCount?: number;
 };
 
-const SIDEBAR_TOOLS = [
+const ALL_TOOLS = [
   { href: "/tools/tinh-phi-san", label: "Tính phí sàn TikTok & Shopee", color: "#4ad6ff" },
   { href: "/tools/roas-calculator", label: "ROAS Calculator", color: "#7da9ff" },
   { href: "/tools/pnl-ecom", label: "Mẫu P&L Ecom", color: "#a78bff" },
@@ -30,10 +31,14 @@ export default function BlogSidebar({
   headings,
   relatedPosts,
   mostReadPosts = [],
+  relevantTools = [],
+  relevantQuiz = null,
 }: {
   headings: Heading[];
   relatedPosts: RelatedPost[];
   mostReadPosts?: MostReadPost[];
+  relevantTools?: LinkSuggestion[];
+  relevantQuiz?: LinkSuggestion | null;
 }) {
   return (
     <aside className="lg:sticky lg:top-24 flex flex-col gap-7 self-start">
@@ -44,13 +49,67 @@ export default function BlogSidebar({
         </div>
       )}
 
-      {/* Tools */}
+      {/* Relevant Tools (top 2 — context-aware) */}
+      {relevantTools.length > 0 && (
+        <div className="rounded-xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--line)" }}>
+          <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-3" style={{ color: "rgba(255,255,255,0.5)" }}>
+            Tools liên quan
+          </div>
+          <div className="flex flex-col gap-2">
+            {relevantTools.map((t) => (
+              <Link
+                key={t.href}
+                href={t.href}
+                className="flex items-start gap-3 p-3 rounded-lg transition-all hover:bg-white/5"
+                style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}
+              >
+                <span
+                  className="w-9 h-9 rounded-lg flex-shrink-0 flex items-center justify-center"
+                  style={{ background: `${t.color}20`, border: `1px solid ${t.color}40`, color: t.color }}
+                >
+                  <Icon name={t.iconName as IconName} size={16} />
+                </span>
+                <div className="flex-1 min-w-0">
+                  <div className="text-[0.86rem] font-semibold text-white leading-snug">{t.title}</div>
+                  <div className="text-[0.74rem] mt-0.5 line-clamp-2" style={{ color: "rgba(255,255,255,0.5)" }}>{t.description}</div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Relevant Quiz (single — context-aware) */}
+      {relevantQuiz && (
+        <div className="rounded-xl p-5" style={{ background: `${relevantQuiz.color}10`, border: `1px solid ${relevantQuiz.color}33` }}>
+          <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-3" style={{ color: relevantQuiz.color }}>
+            Test miễn phí
+          </div>
+          <div className="flex items-start gap-3">
+            <span
+              className="w-9 h-9 rounded-lg flex-shrink-0 flex items-center justify-center"
+              style={{ background: `${relevantQuiz.color}20`, border: `1px solid ${relevantQuiz.color}50`, color: relevantQuiz.color }}
+            >
+              <Icon name={relevantQuiz.iconName as IconName} size={16} />
+            </span>
+            <div className="flex-1 min-w-0">
+              <div className="text-[0.92rem] font-bold text-white leading-snug mb-1">{relevantQuiz.title}</div>
+              <div className="text-[0.78rem] mb-3" style={{ color: "rgba(255,255,255,0.65)" }}>{relevantQuiz.description}</div>
+              <Link href={relevantQuiz.href} className="text-[0.82rem] font-bold inline-flex items-center gap-1" style={{ color: relevantQuiz.color }}>
+                Làm test ngay <span>→</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* All tools fallback (always shown for discoverability) */}
       <div className="rounded-xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--line)" }}>
         <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-3" style={{ color: "rgba(255,255,255,0.5)" }}>
-          Tools miễn phí
+          Tất cả tools
         </div>
         <div className="flex flex-col gap-1.5">
-          {SIDEBAR_TOOLS.map((t) => (
+          {ALL_TOOLS.map((t) => (
             <Link
               key={t.href}
               href={t.href}

@@ -3,8 +3,10 @@ import Footer from "@/components/Footer";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getPost, getPosts, getRelatedPosts, getCommentsForPost, getMostReadPosts } from "@/lib/queries";
+import { getRelevantLinks } from "@/lib/blog/internal-links";
 import { urlFor } from "../../../../sanity/lib/image";
 import { extractHeadings } from "@/lib/blog/headings";
+import { extractFAQs, buildFAQPageSchema } from "@/lib/blog/faq-extractor";
 import BlogSidebar from "@/components/blog/BlogSidebar";
 import PortableTextWithIds from "@/components/blog/PortableTextWithIds";
 import CommentSection from "@/components/blog/CommentSection";
@@ -71,6 +73,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
   const image = post.coverImage ? urlFor(post.coverImage).width(1600).height(900).url() : undefined;
   const headings = extractHeadings(post.body || []);
+  const relevantLinks = getRelevantLinks(post.category, post.tags || [], post.title || "");
+  const faqs = extractFAQs(post.body || []);
+  const faqSchema = buildFAQPageSchema(faqs);
 
   const articleLd = {
     "@context": "https://schema.org",
@@ -110,6 +115,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
       <main>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
+        {faqSchema && (
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+        )}
 
         {/* HERO — full width with cover image background */}
         <section className="relative overflow-hidden border-b" style={{ borderColor: "var(--line)" }}>
@@ -252,7 +260,13 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
               </div>
 
               {/* Sidebar */}
-              <BlogSidebar headings={headings} relatedPosts={relatedPosts} mostReadPosts={mostReadPosts} />
+              <BlogSidebar
+                headings={headings}
+                relatedPosts={relatedPosts}
+                mostReadPosts={mostReadPosts}
+                relevantTools={relevantLinks.tools}
+                relevantQuiz={relevantLinks.quiz}
+              />
             </div>
           </div>
         </section>

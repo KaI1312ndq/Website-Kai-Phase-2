@@ -88,8 +88,28 @@ const personLd = {
   knowsAbout: [
     "Ecommerce", "Performance Marketing", "TikTok Shop", "Shopee", "Meta Ads", "Google Ads",
     "Team Building", "Ecommerce Strategy", "Marketplace Management",
+    "ROAS Optimization", "P&L Analysis", "Live Commerce", "Brand Building",
+    "Digital Marketing Vietnam", "Growth Marketing", "Affiliate Marketing",
+    "MBTI", "Leadership Development", "Career Coaching",
   ],
-  sameAs: ["https://www.linkedin.com/in/duc-quang-nguyen-b7495223a/"],
+  knowsLanguage: [
+    { "@type": "Language", name: "Vietnamese", alternateName: "vi" },
+    { "@type": "Language", name: "English", alternateName: "en" },
+  ],
+  award: [
+    "TikTok Awards 2024 — Best Commerce Campaign Gold",
+  ],
+  alumniOf: { "@type": "EducationalOrganization", name: "Marketing/Ecom Vietnam" },
+  hasOccupation: {
+    "@type": "Occupation",
+    name: "Digital Marketing Manager / Ecom Growth Expert",
+    occupationLocation: { "@type": "City", name: "Hà Nội" },
+    skills: "Performance Marketing, P&L gian hàng, Team Building, TikTok Shop, Shopee Mall",
+  },
+  sameAs: [
+    "https://www.linkedin.com/in/duc-quang-nguyen-b7495223a/",
+    "https://nguyenducquang.website",
+  ],
   email: "qforwork13@gmail.com",
   telephone: "+84868464658",
   address: { "@type": "PostalAddress", addressLocality: "Hà Nội", addressCountry: "VN" },
