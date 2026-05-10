@@ -1,35 +1,93 @@
 "use client";
 import { useMemo, useState } from "react";
-import { computePnL, fmtVND, fmtPct, type PnLInput } from "@/lib/pnl/compute";
+import { computePnL, computeNetRevenue, fmtVND, fmtPct, type PnLInput } from "@/lib/pnl/compute";
 
 const PLATFORM_PRESETS = [
-  { label: "TikTok Non-Mall", pct: 18.5, perOrder: 3000, hint: "12.5% HH + 6% GD" },
-  { label: "TikTok Mall", pct: 21.5, perOrder: 3000, hint: "15.5% HH + 6% GD" },
-  { label: "Shopee Non-Mall", pct: 18.0, perOrder: 0, hint: "12% HH + 6% GD" },
-  { label: "Shopee Mall", pct: 21.0, perOrder: 0, hint: "15% HH + 6% GD" },
+  { label: "TikTok Non-Mall", commission: 12.5, transaction: 6, processing: 3000, hint: "HH 12.5% · GD 6% · CSHT 3.000đ" },
+  { label: "TikTok Mall", commission: 15.5, transaction: 6, processing: 3000, hint: "HH 15.5% · GD 6% · CSHT 3.000đ" },
+  { label: "Shopee Non-Mall", commission: 12, transaction: 6, processing: 3000, hint: "HH 12% · GD 6% · CSHT 3.000đ" },
+  { label: "Shopee Mall", commission: 15, transaction: 6, processing: 3000, hint: "HH 15% · GD 6% · CSHT 3.000đ" },
 ];
 
-const SCENARIO_PRESETS: Array<{ label: string; values: Partial<PnLInput> }> = [
+type FixedCostMode = "vnd" | "pct";
+
+type State = PnLInput & {
+  // store mode + raw value for fixed costs to support % toggle
+  adsValue: number; adsMode: FixedCostMode;
+  staffValue: number; staffMode: FixedCostMode;
+  warehouseValue: number; warehouseMode: FixedCostMode;
+  marketingOtherValue: number; marketingOtherMode: FixedCostMode;
+  otherValue: number; otherMode: FixedCostMode;
+};
+
+const SCENARIOS: Array<{ label: string; platformIdx: number; values: Partial<State> }> = [
   {
     label: "Beauty Non-Mall · 1.000 đơn",
-    values: { orders: 1000, aov: 280000, returnRatePct: 5, cogs: 95000, platformFeePct: 18.5, voucherSellerPct: 3, perOrderProcessingFee: 3000, shippingPerOrder: 0, adsMonthly: 35000000, staffMonthly: 25000000, warehouseMonthly: 8000000, marketingOtherMonthly: 10000000, otherMonthly: 3000000 },
+    platformIdx: 0,
+    values: {
+      orders: 1000, aov: 280000, returnRatePct: 5, cogs: 95000,
+      voucherSellerPct: 3, buyerShippingPerOrder: 25000,
+      adsValue: 35000000, adsMode: "vnd",
+      staffValue: 25000000, staffMode: "vnd",
+      warehouseValue: 8000000, warehouseMode: "vnd",
+      marketingOtherValue: 10000000, marketingOtherMode: "vnd",
+      otherValue: 3000000, otherMode: "vnd",
+    },
   },
   {
     label: "Fashion Non-Mall · 2.000 đơn",
-    values: { orders: 2000, aov: 220000, returnRatePct: 12, cogs: 75000, platformFeePct: 18.5, voucherSellerPct: 5, perOrderProcessingFee: 3000, shippingPerOrder: 8000, adsMonthly: 60000000, staffMonthly: 35000000, warehouseMonthly: 12000000, marketingOtherMonthly: 15000000, otherMonthly: 5000000 },
+    platformIdx: 0,
+    values: {
+      orders: 2000, aov: 220000, returnRatePct: 12, cogs: 75000,
+      voucherSellerPct: 5, buyerShippingPerOrder: 22000,
+      adsValue: 60000000, adsMode: "vnd",
+      staffValue: 35000000, staffMode: "vnd",
+      warehouseValue: 12000000, warehouseMode: "vnd",
+      marketingOtherValue: 15000000, marketingOtherMode: "vnd",
+      otherValue: 5000000, otherMode: "vnd",
+    },
   },
   {
     label: "F&B Mall · 1.500 đơn",
-    values: { orders: 1500, aov: 180000, returnRatePct: 3, cogs: 105000, platformFeePct: 21.0, voucherSellerPct: 4, perOrderProcessingFee: 0, shippingPerOrder: 0, adsMonthly: 28000000, staffMonthly: 22000000, warehouseMonthly: 15000000, marketingOtherMonthly: 8000000, otherMonthly: 4000000 },
+    platformIdx: 1,
+    values: {
+      orders: 1500, aov: 180000, returnRatePct: 3, cogs: 105000,
+      voucherSellerPct: 4, buyerShippingPerOrder: 18000,
+      adsValue: 28000000, adsMode: "vnd",
+      staffValue: 22000000, staffMode: "vnd",
+      warehouseValue: 15000000, warehouseMode: "vnd",
+      marketingOtherValue: 8000000, marketingOtherMode: "vnd",
+      otherValue: 4000000, otherMode: "vnd",
+    },
   },
 ];
 
+const INITIAL_PLATFORM = 0;
+
+function makeInitial(scenarioIdx: number): State {
+  const s = SCENARIOS[scenarioIdx];
+  const p = PLATFORM_PRESETS[s.platformIdx];
+  return {
+    orders: 0, aov: 0, returnRatePct: 0, cogs: 0,
+    commissionPct: p.commission, transactionPct: p.transaction,
+    voucherSellerPct: 0, perOrderProcessingFee: p.processing, buyerShippingPerOrder: 0,
+    adsMonthly: 0, staffMonthly: 0, warehouseMonthly: 0, marketingOtherMonthly: 0, otherMonthly: 0,
+    adsValue: 0, adsMode: "vnd",
+    staffValue: 0, staffMode: "vnd",
+    warehouseValue: 0, warehouseMode: "vnd",
+    marketingOtherValue: 0, marketingOtherMode: "vnd",
+    otherValue: 0, otherMode: "vnd",
+    ...s.values,
+  } as State;
+}
+
+/* ─── Atoms ─── */
 function Field({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
   return (
-    <div>
-      <label className="block text-[0.78rem] font-semibold mb-1.5 text-white">
-        {label}
-        {hint && <span className="ml-1.5 font-normal" style={{ color: "rgba(255,255,255,0.45)" }}>{hint}</span>}
+    <div className="min-w-0">
+      <label className="block mb-1.5">
+        <span className="block text-[0.78rem] font-semibold text-white">{label}</span>
+        {hint && <span className="block text-[0.72rem] mt-0.5" style={{ color: "rgba(255,255,255,0.42)" }}>{hint}</span>}
       </label>
       {children}
     </div>
@@ -56,7 +114,7 @@ function VNDInput({ value, onChange, placeholder }: { value: number; onChange: (
   );
 }
 
-function NumInput({ value, onChange, suffix }: { value: number; onChange: (v: number) => void; suffix?: string }) {
+function NumInput({ value, onChange, suffix, step }: { value: number; onChange: (v: number) => void; suffix?: string; step?: string }) {
   return (
     <div className="relative">
       <input
@@ -66,6 +124,7 @@ function NumInput({ value, onChange, suffix }: { value: number; onChange: (v: nu
           const v = parseFloat(e.target.value);
           onChange(isNaN(v) ? 0 : v);
         }}
+        step={step || "1"}
         className="w-full px-4 py-2.5 pr-9 rounded-lg text-[0.95rem] outline-none transition-all"
         style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)", color: "white", fontFamily: "inherit" }}
       />
@@ -75,26 +134,102 @@ function NumInput({ value, onChange, suffix }: { value: number; onChange: (v: nu
 }
 
 function PctInput({ value, onChange }: { value: number; onChange: (v: number) => void }) {
-  return <NumInput value={value} onChange={(v) => onChange(Math.max(0, Math.min(100, v)))} suffix="%" />;
+  return <NumInput value={value} onChange={(v) => onChange(Math.max(0, Math.min(100, v)))} suffix="%" step="0.5" />;
 }
 
+/** Fixed cost field that supports VND / % toggle. % is computed against netRevenue. */
+function ToggledCost({
+  label, mode, value, onChange, onModeChange, baseRevenue,
+}: {
+  label: string;
+  mode: FixedCostMode;
+  value: number;
+  onChange: (v: number) => void;
+  onModeChange: (m: FixedCostMode) => void;
+  baseRevenue: number;
+}) {
+  const computed = mode === "pct" ? (baseRevenue * value) / 100 : value;
+  return (
+    <div className="min-w-0">
+      <div className="flex items-center justify-between mb-1.5 gap-2">
+        <span className="block text-[0.78rem] font-semibold text-white truncate">{label}</span>
+        <div className="flex items-center rounded-md p-0.5 flex-shrink-0" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)" }}>
+          {(["vnd", "pct"] as FixedCostMode[]).map((m) => (
+            <button
+              key={m}
+              type="button"
+              onClick={() => onModeChange(m)}
+              className="px-2 py-0.5 rounded text-[0.68rem] font-bold transition-all"
+              style={{
+                background: mode === m ? "rgba(20,110,245,0.5)" : "transparent",
+                color: mode === m ? "white" : "rgba(255,255,255,0.5)",
+              }}
+            >{m === "vnd" ? "₫" : "%"}</button>
+          ))}
+        </div>
+      </div>
+      {mode === "vnd" ? (
+        <VNDInput value={value} onChange={onChange} />
+      ) : (
+        <>
+          <PctInput value={value} onChange={onChange} />
+          <div className="text-[0.7rem] mt-1" style={{ color: "rgba(255,255,255,0.4)" }}>
+            ≈ {fmtVND(computed)}₫ / tháng
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+/* ─── Main ─── */
 export default function PnLCalculator() {
-  const [input, setInput] = useState<PnLInput>(SCENARIO_PRESETS[0].values as PnLInput);
-  const [activePlatform, setActivePlatform] = useState<number | null>(0);
+  const [state, setState] = useState<State>(makeInitial(0));
+  const [activePlatform, setActivePlatform] = useState<number | null>(SCENARIOS[0].platformIdx);
+  const [activeScenario, setActiveScenario] = useState<number | null>(0);
 
-  const set = <K extends keyof PnLInput>(k: K, v: PnLInput[K]) => setInput((s) => ({ ...s, [k]: v }));
+  const set = <K extends keyof State>(k: K, v: State[K]) => setState((s) => ({ ...s, [k]: v }));
 
-  const result = useMemo(() => computePnL(input), [input]);
+  // Compute net revenue for % toggle base
+  const netRevenue = useMemo(() => computeNetRevenue(state.orders, state.aov, state.returnRatePct), [state.orders, state.aov, state.returnRatePct]);
+
+  // Resolve fixed costs from mode/value
+  const resolvedInput: PnLInput = useMemo(() => {
+    const r = (mode: FixedCostMode, v: number) => mode === "pct" ? (netRevenue * v) / 100 : v;
+    return {
+      orders: state.orders, aov: state.aov, returnRatePct: state.returnRatePct,
+      cogs: state.cogs,
+      commissionPct: state.commissionPct,
+      transactionPct: state.transactionPct,
+      voucherSellerPct: state.voucherSellerPct,
+      perOrderProcessingFee: state.perOrderProcessingFee,
+      buyerShippingPerOrder: state.buyerShippingPerOrder,
+      adsMonthly: r(state.adsMode, state.adsValue),
+      staffMonthly: r(state.staffMode, state.staffValue),
+      warehouseMonthly: r(state.warehouseMode, state.warehouseValue),
+      marketingOtherMonthly: r(state.marketingOtherMode, state.marketingOtherValue),
+      otherMonthly: r(state.otherMode, state.otherValue),
+    };
+  }, [state, netRevenue]);
+
+  const result = useMemo(() => computePnL(resolvedInput), [resolvedInput]);
 
   function applyPlatform(idx: number) {
+    const p = PLATFORM_PRESETS[idx];
     setActivePlatform(idx);
-    setInput((s) => ({ ...s, platformFeePct: PLATFORM_PRESETS[idx].pct, perOrderProcessingFee: PLATFORM_PRESETS[idx].perOrder }));
+    setState((s) => ({ ...s, commissionPct: p.commission, transactionPct: p.transaction, perOrderProcessingFee: p.processing }));
   }
 
   function applyScenario(idx: number) {
-    setInput(SCENARIO_PRESETS[idx].values as PnLInput);
-    const platIdx = PLATFORM_PRESETS.findIndex((p) => p.pct === SCENARIO_PRESETS[idx].values.platformFeePct);
-    setActivePlatform(platIdx >= 0 ? platIdx : null);
+    const s = SCENARIOS[idx];
+    const p = PLATFORM_PRESETS[s.platformIdx];
+    setActiveScenario(idx);
+    setActivePlatform(s.platformIdx);
+    setState((prev) => ({
+      ...prev,
+      commissionPct: p.commission, transactionPct: p.transaction, perOrderProcessingFee: p.processing,
+      ...s.values,
+    } as State));
   }
 
   const profitColor = result.operatingProfit > 0 ? "#5fffaa" : result.operatingProfit === 0 ? "#ffd479" : "#ff5a72";
@@ -102,95 +237,126 @@ export default function PnLCalculator() {
   const marginLabel = margin >= 15 ? "Khoẻ" : margin >= 5 ? "Mỏng" : margin >= 0 ? "Hoà vốn" : "Lỗ";
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[440px_1fr] gap-8 items-start">
+    <div className="grid grid-cols-1 lg:grid-cols-[460px_1fr] gap-8 items-start">
       {/* ── Input Panel ── */}
       <div className="glass p-7 flex flex-col gap-6 print:hidden">
-        <div className="flex items-center justify-between gap-3">
-          <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] grad-text">Thông số đầu vào</div>
-        </div>
+        <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] grad-text">Thông số đầu vào</div>
 
-        {/* Scenario picker */}
+        {/* Scenarios */}
         <div>
           <div className="text-[0.7rem] font-semibold uppercase tracking-[0.12em] mb-2" style={{ color: "rgba(255,255,255,0.55)" }}>Kịch bản mẫu</div>
-          <div className="grid grid-cols-1 gap-1.5">
-            {SCENARIO_PRESETS.map((s, i) => (
-              <button
-                key={s.label}
-                onClick={() => applyScenario(i)}
-                className="px-3 py-2 rounded-lg text-[0.78rem] font-semibold text-left transition-all"
-                style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.7)" }}
-              >
-                {s.label}
-              </button>
-            ))}
+          <div className="flex flex-col gap-1.5">
+            {SCENARIOS.map((sc, i) => {
+              const active = activeScenario === i;
+              return (
+                <button
+                  key={sc.label}
+                  onClick={() => applyScenario(i)}
+                  className="px-3 py-2 rounded-lg text-[0.78rem] font-semibold text-left transition-all flex items-center justify-between gap-2"
+                  style={{
+                    background: active ? "rgba(20,110,245,0.18)" : "rgba(255,255,255,0.03)",
+                    border: `1px solid ${active ? "rgba(20,110,245,0.55)" : "rgba(255,255,255,0.08)"}`,
+                    color: active ? "white" : "rgba(255,255,255,0.7)",
+                  }}
+                >
+                  <span>{sc.label}</span>
+                  {active && <span className="text-[0.68rem] font-bold" style={{ color: "#7da9ff" }}>✓ Đã chọn</span>}
+                </button>
+              );
+            })}
           </div>
         </div>
 
         {/* Volume */}
         <div className="grid grid-cols-2 gap-3">
           <Field label="Số đơn / tháng" hint="đã loại huỷ trước giao">
-            <NumInput value={input.orders} onChange={(v) => set("orders", v)} />
+            <NumInput value={state.orders} onChange={(v) => { setActiveScenario(null); set("orders", v); }} />
           </Field>
-          <Field label="AOV" hint="giá trị TB/đơn">
-            <VNDInput value={input.aov} onChange={(v) => set("aov", v)} />
+          <Field label="AOV" hint="giá trị TB / đơn">
+            <VNDInput value={state.aov} onChange={(v) => { setActiveScenario(null); set("aov", v); }} />
           </Field>
         </div>
 
         <Field label="Tỷ lệ hoàn hàng" hint="đã giao nhưng buyer hoàn">
-          <PctInput value={input.returnRatePct} onChange={(v) => set("returnRatePct", v)} />
+          <PctInput value={state.returnRatePct} onChange={(v) => { setActiveScenario(null); set("returnRatePct", v); }} />
         </Field>
 
         <Field label="COGS / đơn" hint="xuất xưởng + bao bì + ship về kho">
-          <VNDInput value={input.cogs} onChange={(v) => set("cogs", v)} />
+          <VNDInput value={state.cogs} onChange={(v) => { setActiveScenario(null); set("cogs", v); }} />
         </Field>
 
         {/* Platform */}
         <div>
-          <label className="block text-[0.78rem] font-semibold mb-1.5 text-white">Phí sàn</label>
+          <label className="block text-[0.78rem] font-semibold mb-1.5 text-white">Phí sàn — chọn platform</label>
           <div className="grid grid-cols-2 gap-1.5 mb-2.5">
-            {PLATFORM_PRESETS.map((p, i) => (
-              <button
-                key={p.label}
-                onClick={() => applyPlatform(i)}
-                className="px-3 py-2 rounded-lg text-[0.72rem] font-semibold text-left transition-all"
-                style={{
-                  background: activePlatform === i ? "rgba(20,110,245,0.18)" : "rgba(255,255,255,0.04)",
-                  border: `1px solid ${activePlatform === i ? "rgba(20,110,245,0.5)" : "rgba(255,255,255,0.08)"}`,
-                  color: activePlatform === i ? "white" : "rgba(255,255,255,0.65)",
-                }}
-              >
-                <div>{p.label}</div>
-                <div className="text-[0.66rem] font-normal mt-0.5" style={{ color: activePlatform === i ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.35)" }}>{p.hint}</div>
-              </button>
-            ))}
+            {PLATFORM_PRESETS.map((p, i) => {
+              const active = activePlatform === i;
+              return (
+                <button
+                  key={p.label}
+                  onClick={() => applyPlatform(i)}
+                  className="px-3 py-2 rounded-lg text-[0.72rem] font-semibold text-left transition-all"
+                  style={{
+                    background: active ? "rgba(20,110,245,0.18)" : "rgba(255,255,255,0.04)",
+                    border: `1px solid ${active ? "rgba(20,110,245,0.55)" : "rgba(255,255,255,0.08)"}`,
+                    color: active ? "white" : "rgba(255,255,255,0.65)",
+                  }}
+                >
+                  <div className="flex items-center justify-between gap-1">
+                    <span>{p.label}</span>
+                    {active && <span style={{ color: "#7da9ff" }}>✓</span>}
+                  </div>
+                  <div className="text-[0.66rem] font-normal mt-0.5" style={{ color: active ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.35)" }}>{p.hint}</div>
+                </button>
+              );
+            })}
           </div>
-          <div className="grid grid-cols-2 gap-3">
-            <Field label="Tổng phí %">
-              <PctInput value={input.platformFeePct} onChange={(v) => { setActivePlatform(null); set("platformFeePct", v); }} />
+          <div className="grid grid-cols-3 gap-2.5">
+            <Field label="Hoa hồng">
+              <PctInput value={state.commissionPct} onChange={(v) => { setActivePlatform(null); set("commissionPct", v); }} />
             </Field>
-            <Field label="Phí xử lý/đơn">
-              <VNDInput value={input.perOrderProcessingFee} onChange={(v) => set("perOrderProcessingFee", v)} />
+            <Field label="Phí GD">
+              <PctInput value={state.transactionPct} onChange={(v) => { setActivePlatform(null); set("transactionPct", v); }} />
+            </Field>
+            <Field label="Phí CSHT/đơn">
+              <VNDInput value={state.perOrderProcessingFee} onChange={(v) => { setActivePlatform(null); set("perOrderProcessingFee", v); }} />
             </Field>
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-3">
-          <Field label="Voucher seller">
-            <PctInput value={input.voucherSellerPct} onChange={(v) => set("voucherSellerPct", v)} />
+          <Field label="Voucher seller" hint="% chi voucher trên Net Revenue">
+            <PctInput value={state.voucherSellerPct} onChange={(v) => { setActiveScenario(null); set("voucherSellerPct", v); }} />
           </Field>
-          <Field label="Ship seller chịu/đơn">
-            <VNDInput value={input.shippingPerOrder} onChange={(v) => set("shippingPerOrder", v)} />
+          <Field label="Phí ship buyer trả" hint="TB/đơn — tính phí GD chuẩn">
+            <VNDInput value={state.buyerShippingPerOrder} onChange={(v) => { setActiveScenario(null); set("buyerShippingPerOrder", v); }} />
           </Field>
         </div>
 
+        {/* Fixed costs with toggle */}
         <div className="pt-4 border-t" style={{ borderColor: "var(--line)" }}>
-          <div className="text-[0.7rem] font-semibold uppercase tracking-[0.12em] mb-3" style={{ color: "rgba(255,255,255,0.55)" }}>Chi phí cố định / tháng</div>
+          <div className="flex items-center justify-between mb-3">
+            <div className="text-[0.7rem] font-semibold uppercase tracking-[0.12em]" style={{ color: "rgba(255,255,255,0.55)" }}>
+              Chi phí cố định / tháng
+            </div>
+            <div className="text-[0.66rem]" style={{ color: "rgba(255,255,255,0.4)" }}>nhập ₫ hoặc % Net</div>
+          </div>
           <div className="flex flex-col gap-3">
-            <Field label="Ads spend"><VNDInput value={input.adsMonthly} onChange={(v) => set("adsMonthly", v)} /></Field>
-            <Field label="Nhân sự"><VNDInput value={input.staffMonthly} onChange={(v) => set("staffMonthly", v)} /></Field>
-            <Field label="Kho + logistics cố định"><VNDInput value={input.warehouseMonthly} onChange={(v) => set("warehouseMonthly", v)} /></Field>
-            <Field label="Marketing khác (KOC, content)"><VNDInput value={input.marketingOtherMonthly} onChange={(v) => set("marketingOtherMonthly", v)} /></Field>
-            <Field label="Chi khác"><VNDInput value={input.otherMonthly} onChange={(v) => set("otherMonthly", v)} /></Field>
+            <ToggledCost label="Ads spend" mode={state.adsMode} value={state.adsValue} baseRevenue={netRevenue}
+              onChange={(v) => { setActiveScenario(null); set("adsValue", v); }}
+              onModeChange={(m) => { setActiveScenario(null); set("adsMode", m); set("adsValue", 0); }} />
+            <ToggledCost label="Nhân sự" mode={state.staffMode} value={state.staffValue} baseRevenue={netRevenue}
+              onChange={(v) => { setActiveScenario(null); set("staffValue", v); }}
+              onModeChange={(m) => { setActiveScenario(null); set("staffMode", m); set("staffValue", 0); }} />
+            <ToggledCost label="Kho + logistics cố định" mode={state.warehouseMode} value={state.warehouseValue} baseRevenue={netRevenue}
+              onChange={(v) => { setActiveScenario(null); set("warehouseValue", v); }}
+              onModeChange={(m) => { setActiveScenario(null); set("warehouseMode", m); set("warehouseValue", 0); }} />
+            <ToggledCost label="Marketing khác (KOC, content)" mode={state.marketingOtherMode} value={state.marketingOtherValue} baseRevenue={netRevenue}
+              onChange={(v) => { setActiveScenario(null); set("marketingOtherValue", v); }}
+              onModeChange={(m) => { setActiveScenario(null); set("marketingOtherMode", m); set("marketingOtherValue", 0); }} />
+            <ToggledCost label="Chi khác" mode={state.otherMode} value={state.otherValue} baseRevenue={netRevenue}
+              onChange={(v) => { setActiveScenario(null); set("otherValue", v); }}
+              onModeChange={(m) => { setActiveScenario(null); set("otherMode", m); set("otherValue", 0); }} />
           </div>
         </div>
       </div>
@@ -222,7 +388,7 @@ export default function PnLCalculator() {
           <div className="px-6 py-4 border-b flex items-center justify-between flex-wrap gap-3" style={{ borderColor: "var(--line)" }}>
             <div>
               <div className="text-[0.7rem] font-bold uppercase tracking-[0.15em]" style={{ color: "rgba(255,255,255,0.5)" }}>Báo cáo P&L · 1 tháng</div>
-              <div className="text-[1rem] font-semibold text-white mt-0.5">Gian hàng TMĐT — {result.grossRevenue > 0 ? `${Math.round(input.orders).toLocaleString("vi-VN")} đơn` : "—"}</div>
+              <div className="text-[1rem] font-semibold text-white mt-0.5">Gian hàng TMĐT — {result.grossRevenue > 0 ? `${Math.round(state.orders).toLocaleString("vi-VN")} đơn` : "—"}</div>
             </div>
             <button
               onClick={() => window.print()}
@@ -268,7 +434,7 @@ export default function PnLCalculator() {
         </div>
 
         {/* Unit economics */}
-        {input.orders > 0 && (
+        {state.orders > 0 && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="rounded-xl p-4" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid var(--line)" }}>
               <div className="text-[0.7rem] font-bold uppercase tracking-[0.13em] mb-1.5" style={{ color: "rgba(255,255,255,0.5)" }}>Profit/đơn</div>
@@ -290,7 +456,7 @@ export default function PnLCalculator() {
         )}
 
         {/* Diagnosis */}
-        {input.orders > 0 && (
+        {state.orders > 0 && (
           <div className="rounded-xl px-5 py-4 text-[0.88rem] leading-[1.7]" style={{ background: result.operatingProfit < 0 ? "rgba(255,90,114,0.08)" : result.operatingMarginPct < 5 ? "rgba(255,212,121,0.08)" : "rgba(95,255,170,0.07)", border: `1px solid ${result.operatingProfit < 0 ? "rgba(255,90,114,0.25)" : result.operatingMarginPct < 5 ? "rgba(255,212,121,0.25)" : "rgba(95,255,170,0.25)"}`, color: "rgba(255,255,255,0.78)" }}>
             <strong className="text-white">Chẩn đoán nhanh: </strong>
             {result.operatingProfit < 0 ? (
@@ -306,7 +472,6 @@ export default function PnLCalculator() {
         )}
       </div>
 
-      {/* Print styles */}
       <style jsx global>{`
         @media print {
           body { background: white !important; color: black !important; }

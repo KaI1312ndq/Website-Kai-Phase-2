@@ -1,28 +1,29 @@
 export type PnLInput = {
   // Volume
-  orders: number;            // số đơn hoàn thành / tháng
-  aov: number;               // giá trị trung bình / đơn (VND)
-  returnRatePct: number;     // tỷ lệ hoàn hàng % (đơn đã giao nhưng buyer hoàn)
+  orders: number;
+  aov: number;
+  returnRatePct: number;
 
-  // Per-order costs
-  cogs: number;              // giá vốn / đơn
-  platformFeePct: number;    // tổng phí sàn % (commission + transaction)
-  voucherSellerPct: number;  // % voucher seller chi
-  perOrderProcessingFee: number; // phí xử lý đơn cố định (3.000đ TikTok)
-  shippingPerOrder: number;  // phí ship seller chịu / đơn (0 nếu buyer trả hết)
+  // Per-order
+  cogs: number;
+  commissionPct: number;        // hoa hồng % (theo ngành)
+  transactionPct: number;       // phí giao dịch % (TikTok/Shopee mặc định 6%)
+  voucherSellerPct: number;
+  perOrderProcessingFee: number; // phí cơ sở hạ tầng / đơn (TikTok & Shopee mặc định 3.000đ)
+  buyerShippingPerOrder: number; // phí ship buyer trả TB / đơn — dùng để tính phí giao dịch chuẩn hơn
 
-  // Monthly fixed costs
-  adsMonthly: number;        // ngân sách ads / tháng
-  staffMonthly: number;      // nhân sự / tháng
-  warehouseMonthly: number;  // kho + ops cố định / tháng
-  marketingOtherMonthly: number; // KOC, influencer, photoshoot, samples
-  otherMonthly: number;      // chi khác
+  // Monthly fixed
+  adsMonthly: number;
+  staffMonthly: number;
+  warehouseMonthly: number;
+  marketingOtherMonthly: number;
+  otherMonthly: number;
 };
 
 export type PnLLine = {
   label: string;
   amount: number;
-  pctOfNet: number;          // % so với net revenue
+  pctOfNet: number;
   isSubtotal?: boolean;
   isFinal?: boolean;
   hint?: string;
@@ -30,32 +31,32 @@ export type PnLLine = {
 
 export type PnLResult = {
   grossRevenue: number;
-  netRevenue: number;          // sau hoàn hàng
-  realizedRevenue: number;     // sau voucher seller (số tiền thực thu trước khi sàn trừ phí)
+  netRevenue: number;
+  realizedRevenue: number;
   cogsTotal: number;
   grossProfit: number;
   grossMarginPct: number;
+  commissionTotal: number;
+  transactionTotal: number;
+  processingFeeTotal: number;
   platformFeesTotal: number;
-  shippingTotal: number;
-  contributionMargin: number;  // sau phí sàn + ship
+  contributionMargin: number;
   contributionMarginPct: number;
   adsTotal: number;
-  marketingProfit: number;     // sau ads
-  opsTotal: number;            // staff + warehouse + marketing other + other
-  operatingProfit: number;     // EBITDA
+  marketingProfit: number;
+  opsTotal: number;
+  operatingProfit: number;
   operatingMarginPct: number;
-  // ROAS / unit economics
-  cpa: number;                 // ads spend / số đơn ròng (sau hoàn)
-  roas: number;                // doanh thu thực thu / ads
+  cpa: number;
+  roas: number;
   profitPerOrder: number;
-  // Lines for table
   lines: PnLLine[];
 };
 
 export function computePnL(input: PnLInput): PnLResult {
   const {
     orders, aov, returnRatePct,
-    cogs, platformFeePct, voucherSellerPct, perOrderProcessingFee, shippingPerOrder,
+    cogs, commissionPct, transactionPct, voucherSellerPct, perOrderProcessingFee, buyerShippingPerOrder,
     adsMonthly, staffMonthly, warehouseMonthly, marketingOtherMonthly, otherMonthly,
   } = input;
 
@@ -73,14 +74,18 @@ export function computePnL(input: PnLInput): PnLResult {
   const grossProfit = realizedRevenue - cogsTotal;
   const grossMarginPct = netRevenue > 0 ? (grossProfit / netRevenue) * 100 : 0;
 
-  // Platform fees apply on realized revenue base + per-order processing
-  const platformPctFee = realizedRevenue * (Math.max(0, platformFeePct) / 100);
+  // Commission applies to realized revenue (price - voucher) - based on category
+  const commissionTotal = realizedRevenue * (Math.max(0, commissionPct) / 100);
+
+  // Transaction fee 6% on (Net Revenue + Buyer Shipping - Voucher Seller) per TikTok/Shopee formula
+  const buyerShippingTotal = netOrders * Math.max(0, buyerShippingPerOrder);
+  const transactionBase = realizedRevenue + buyerShippingTotal;
+  const transactionTotal = transactionBase * (Math.max(0, transactionPct) / 100);
+
   const processingFeeTotal = netOrders * Math.max(0, perOrderProcessingFee);
-  const platformFeesTotal = platformPctFee + processingFeeTotal;
+  const platformFeesTotal = commissionTotal + transactionTotal + processingFeeTotal;
 
-  const shippingTotal = netOrders * Math.max(0, shippingPerOrder);
-
-  const contributionMargin = grossProfit - platformFeesTotal - shippingTotal;
+  const contributionMargin = grossProfit - platformFeesTotal;
   const contributionMarginPct = netRevenue > 0 ? (contributionMargin / netRevenue) * 100 : 0;
 
   const adsTotal = Math.max(0, adsMonthly);
@@ -100,6 +105,8 @@ export function computePnL(input: PnLInput): PnLResult {
 
   const pct = (n: number) => (netRevenue > 0 ? (n / netRevenue) * 100 : 0);
 
+  const totalPlatformPct = netRevenue > 0 ? (platformFeesTotal / netRevenue) * 100 : 0;
+
   const lines: PnLLine[] = [
     { label: "Doanh thu gross (GMV)", amount: grossRevenue, pctOfNet: pct(grossRevenue), hint: `${safeOrders.toLocaleString("vi-VN")} đơn × ${Math.round(safeAov).toLocaleString("vi-VN")}đ` },
     { label: "(-) Hoàn hàng / huỷ", amount: -returns, pctOfNet: -pct(returns), hint: `${returnRatePct}% GMV` },
@@ -107,9 +114,10 @@ export function computePnL(input: PnLInput): PnLResult {
     { label: "(-) Voucher seller", amount: -voucherSellerTotal, pctOfNet: -pct(voucherSellerTotal), hint: `${voucherSellerPct}% net` },
     { label: "(-) Giá vốn (COGS)", amount: -cogsTotal, pctOfNet: -pct(cogsTotal), hint: `${Math.round(cogs).toLocaleString("vi-VN")}đ × ${Math.round(netOrders).toLocaleString("vi-VN")} đơn` },
     { label: "= Gross Profit", amount: grossProfit, pctOfNet: grossMarginPct, isSubtotal: true },
-    { label: "(-) Phí sàn (HH + GD + xử lý)", amount: -platformFeesTotal, pctOfNet: -pct(platformFeesTotal), hint: `${platformFeePct}% + ${perOrderProcessingFee}đ/đơn` },
-    { label: "(-) Ship seller chịu", amount: -shippingTotal, pctOfNet: -pct(shippingTotal), hint: shippingPerOrder > 0 ? `${shippingPerOrder.toLocaleString("vi-VN")}đ/đơn` : "0đ/đơn" },
-    { label: "= Contribution Margin", amount: contributionMargin, pctOfNet: contributionMarginPct, isSubtotal: true },
+    { label: "(-) Hoa hồng sàn", amount: -commissionTotal, pctOfNet: -pct(commissionTotal), hint: `${commissionPct}% × Net Revenue (sau voucher)` },
+    { label: "(-) Phí giao dịch", amount: -transactionTotal, pctOfNet: -pct(transactionTotal), hint: buyerShippingPerOrder > 0 ? `${transactionPct}% × (Net + ship buyer trả ${buyerShippingPerOrder.toLocaleString("vi-VN")}đ/đơn)` : `${transactionPct}% × Net Revenue` },
+    { label: "(-) Phí cơ sở hạ tầng", amount: -processingFeeTotal, pctOfNet: -pct(processingFeeTotal), hint: `${perOrderProcessingFee.toLocaleString("vi-VN")}đ/đơn` },
+    { label: "= Contribution Margin", amount: contributionMargin, pctOfNet: contributionMarginPct, isSubtotal: true, hint: `Tổng phí sàn: ${totalPlatformPct.toFixed(1)}% Net Revenue` },
     { label: "(-) Ads spend", amount: -adsTotal, pctOfNet: -pct(adsTotal), hint: roas > 0 ? `ROAS ${roas.toFixed(1)}x` : undefined },
     { label: "= Marketing Profit", amount: marketingProfit, pctOfNet: pct(marketingProfit), isSubtotal: true },
     { label: "(-) Nhân sự", amount: -staffMonthly, pctOfNet: -pct(staffMonthly) },
@@ -122,13 +130,19 @@ export function computePnL(input: PnLInput): PnLResult {
   return {
     grossRevenue, netRevenue, realizedRevenue,
     cogsTotal, grossProfit, grossMarginPct,
-    platformFeesTotal, shippingTotal,
+    commissionTotal, transactionTotal, processingFeeTotal, platformFeesTotal,
     contributionMargin, contributionMarginPct,
     adsTotal, marketingProfit,
     opsTotal, operatingProfit, operatingMarginPct,
     cpa, roas, profitPerOrder,
     lines,
   };
+}
+
+// Helper: compute Net Revenue without running full P&L
+export function computeNetRevenue(orders: number, aov: number, returnRatePct: number): number {
+  const gross = Math.max(0, orders) * Math.max(0, aov);
+  return gross * (1 - Math.max(0, returnRatePct) / 100);
 }
 
 export function fmtVND(n: number): string {
