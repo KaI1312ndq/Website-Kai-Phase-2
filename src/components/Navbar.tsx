@@ -21,8 +21,9 @@ const links: NavLink[] = [
       },
       {
         label: "ROAS Calculator",
-        desc: "Tính ROAS break-even theo cost & margin (sắp có)",
-        href: "/tools",
+        desc: "Tính break-even ROAS & target ROAS theo phí sàn 2026",
+        href: "/tools/roas-calculator",
+        badge: "Mới",
       },
     ],
   },
