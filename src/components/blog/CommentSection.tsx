@@ -29,7 +29,7 @@ export default function CommentSection({
   postId: string;
   initialComments: Comment[];
 }) {
-  const [comments] = useState<Comment[]>(initialComments);
+  const [comments, setComments] = useState<Comment[]>(initialComments);
   const [replyTo, setReplyTo] = useState<{ id: string; name: string } | null>(null);
   const [authorName, setAuthorName] = useState("");
   const [authorEmail, setAuthorEmail] = useState("");
@@ -74,7 +74,16 @@ export default function CommentSection({
       if (!res.ok) {
         setError(data.error || "Có lỗi khi gửi bình luận. Vui lòng thử lại.");
       } else {
-        setSuccess(data.message || "Bình luận đã gửi, đợi duyệt.");
+        // Optimistic add — show comment immediately (since auto-approve)
+        const newComment: Comment = {
+          _id: `local-${Date.now()}`,
+          authorName: authorName.trim(),
+          content: content.trim(),
+          createdAt: new Date().toISOString(),
+          parentId: replyTo?.id,
+        };
+        setComments((prev) => [...prev, newComment]);
+        setSuccess("Bình luận đã được đăng. Cảm ơn bạn!");
         setAuthorName("");
         setAuthorEmail("");
         setContent("");
@@ -93,7 +102,7 @@ export default function CommentSection({
         {comments.length === 0 ? "Bình luận" : `${comments.length} bình luận`}
       </h2>
       <p className="text-[0.88rem] mb-8" style={{ color: "var(--ink-mute)" }}>
-        Chia sẻ ý kiến của bạn — bình luận sẽ hiện sau khi duyệt.
+        Chia sẻ ý kiến của bạn — bình luận hiện ngay sau khi gửi.
       </p>
 
       {/* Comment list */}
@@ -128,7 +137,7 @@ export default function CommentSection({
           </button>
         )}
         <p className="text-[0.78rem] mb-5" style={{ color: "var(--ink-mute)" }}>
-          Email không bắt buộc, không hiện công khai. Bình luận cần được duyệt trước khi hiển thị.
+          Email không bắt buộc, không hiện công khai. Bình luận đăng tức thì — hãy giữ tinh thần xây dựng.
         </p>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">

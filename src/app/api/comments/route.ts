@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
       post: { _type: "reference", _ref: postId },
       authorName: authorName.trim(),
       content: content.trim(),
-      approved: false,
+      approved: true, // auto-approve — Quảng moderate sau (xoá nếu cần) trong Sanity
       createdAt: new Date().toISOString(),
     };
     if (typeof authorEmail === "string" && authorEmail.includes("@")) doc.authorEmail = authorEmail.trim();
