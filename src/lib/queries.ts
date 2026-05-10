@@ -107,6 +107,52 @@ export async function getPost(slug: string) {
   `, { slug });
 }
 
+// ── Shop ──
+export async function getActiveProducts() {
+  return client.fetch(`
+    *[_type == "product" && active == true] | order(order asc) {
+      _id, title, slug, shortDescription, longDescription, bullets, price, category,
+      coverImage, mockupImages,
+      "previewFileUrl": previewFile.asset->url,
+      "hasMasterFile": defined(masterFile)
+    }
+  `);
+}
+
+export async function getProductBySlug(slug: string) {
+  return client.fetch(`
+    *[_type == "product" && slug.current == $slug && active == true][0] {
+      _id, title, slug, shortDescription, longDescription, bullets, price, category,
+      coverImage, mockupImages,
+      "previewFileUrl": previewFile.asset->url
+    }
+  `, { slug });
+}
+
+export async function getOrderByNumber(orderNumber: string) {
+  return client.fetch(`
+    *[_type == "order" && orderNumber == $orderNumber][0] {
+      _id, orderNumber, customer, items, subtotal, discount, total,
+      paymentStatus, deliveryStatus, downloadToken, downloadExpiresAt,
+      createdAt, paidAt, deliveredAt
+    }
+  `, { orderNumber });
+}
+
+export async function getOrderByDownloadToken(downloadToken: string) {
+  return client.fetch(`
+    *[_type == "order" && downloadToken == $downloadToken][0] {
+      _id, orderNumber, customer, items, paymentStatus, deliveryStatus,
+      downloadExpiresAt,
+      "files": items[]{
+        title,
+        "masterFileUrl": product->masterFile.asset->url,
+        "masterFileName": product->masterFile.asset->originalFilename
+      }
+    }
+  `, { downloadToken });
+}
+
 // ── Comments ──
 export async function getCommentsForPost(postId: string) {
   return client.fetch(`

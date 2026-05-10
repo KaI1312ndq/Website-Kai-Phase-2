@@ -70,6 +70,7 @@ const links: NavLink[] = [
     ],
   },
   { label: "Blog", href: "/blog" },
+  { label: "Shop", href: "/shop" },
 ];
 
 export default function Navbar() {

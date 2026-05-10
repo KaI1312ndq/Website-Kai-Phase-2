@@ -72,6 +72,58 @@ export default defineConfig({
                   ])
               ),
 
+            // ─── SHOP ──────────────────────────────────
+            S.listItem()
+              .title("🛍️ Shop")
+              .id("shop-root")
+              .child(
+                S.list()
+                  .title("Shop")
+                  .items([
+                    S.listItem()
+                      .title("📦 Tất cả Sản phẩm")
+                      .child(
+                        S.documentList()
+                          .title("Sản phẩm")
+                          .filter(`_type == "product"`)
+                          .defaultOrdering([{ field: "order", direction: "asc" }])
+                      ),
+                    S.divider(),
+                    S.listItem()
+                      .title("⏳ Đơn chờ thanh toán")
+                      .child(
+                        S.documentList()
+                          .title("Đơn chờ thanh toán")
+                          .filter(`_type == "order" && paymentStatus == "pending"`)
+                          .defaultOrdering([{ field: "createdAt", direction: "desc" }])
+                      ),
+                    S.listItem()
+                      .title("💰 Đơn đã trả tiền — chưa gửi file")
+                      .child(
+                        S.documentList()
+                          .title("Cần gửi file")
+                          .filter(`_type == "order" && paymentStatus == "paid" && deliveryStatus != "delivered"`)
+                          .defaultOrdering([{ field: "paidAt", direction: "desc" }])
+                      ),
+                    S.listItem()
+                      .title("✓ Đơn hoàn tất")
+                      .child(
+                        S.documentList()
+                          .title("Đơn đã giao")
+                          .filter(`_type == "order" && deliveryStatus == "delivered"`)
+                          .defaultOrdering([{ field: "deliveredAt", direction: "desc" }])
+                      ),
+                    S.listItem()
+                      .title("📋 Tất cả đơn (mới nhất)")
+                      .child(
+                        S.documentList()
+                          .title("Tất cả đơn")
+                          .filter(`_type == "order"`)
+                          .defaultOrdering([{ field: "createdAt", direction: "desc" }])
+                      ),
+                  ])
+              ),
+
             // ─── QUIZ LEADS ────────────────────────────
             S.listItem()
               .title("🧠 Quiz Leads")
