@@ -2,6 +2,7 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import type { QuizConfig, QuizQuestion, QuizArchetype } from "@/lib/quiz/types";
 import { computeLeadershipResult, computeMBTIResult, computeCareerResult } from "@/lib/quiz/compute";
+import { trackEvent } from "@/lib/track";
 import QuizResult from "./QuizResult";
 import LeadCaptureGate from "./LeadCaptureGate";
 import Icon, { type IconName } from "@/components/icons/Icon";
@@ -87,6 +88,7 @@ export default function QuizRunner({ config, questions, archetypes }: Props) {
     setAnswers({});
     setHasResumable(false);
     try { window.localStorage.removeItem(STORAGE_KEY(config.slug)); } catch {}
+    trackEvent("quiz_started", { quiz_slug: config.slug, quiz_name: config.name });
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -102,6 +104,7 @@ export default function QuizRunner({ config, questions, archetypes }: Props) {
         setCurrentIdx(data.currentIdx);
         setPhase("running");
         setHasResumable(false);
+        trackEvent("quiz_resumed", { quiz_slug: config.slug, from_question: data.currentIdx + 1 });
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
     } catch {}
@@ -123,6 +126,11 @@ export default function QuizRunner({ config, questions, archetypes }: Props) {
     } else {
       // Last question — clear progress, go to gate or result
       try { window.localStorage.removeItem(STORAGE_KEY(config.slug)); } catch {}
+      trackEvent("quiz_completed", {
+        quiz_slug: config.slug,
+        quiz_name: config.name,
+        gated: config.gateResult,
+      });
       setTimeout(() => {
         setPhase(config.gateResult ? "gate" : "result");
         if (typeof window !== "undefined") {
@@ -139,6 +147,11 @@ export default function QuizRunner({ config, questions, archetypes }: Props) {
   }
 
   function handleGateComplete() {
+    trackEvent("quiz_lead_captured", {
+      quiz_slug: config.slug,
+      quiz_name: config.name,
+      result_type: result?.archetype?.id,
+    });
     setPhase("result");
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, behavior: "smooth" });
