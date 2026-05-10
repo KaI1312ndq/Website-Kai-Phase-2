@@ -1,39 +1,79 @@
 "use client";
-import { motion, Variants, useReducedMotion } from "framer-motion";
-import { ReactNode } from "react";
+import { useEffect, useRef, useState, ReactNode, ElementType } from "react";
+
+/**
+ * Lightweight CSS-only Reveal — uses IntersectionObserver + CSS keyframes.
+ * No framer-motion dependency for simple fade-up — saves ~25KB gzipped on initial load.
+ *
+ * Use `instant` for above-the-fold content (LCP).
+ */
 
 type Props = {
   children: ReactNode;
-  delay?: number;
+  delay?: number; // seconds
   y?: number;
   className?: string;
-  as?: "div" | "section" | "span" | "h1" | "h2" | "h3" | "p" | "li";
+  as?: "div" | "section" | "span" | "h1" | "h2" | "h3" | "p" | "li" | "article";
   /** Skip animation entirely. Use for above-the-fold content so LCP isn't delayed. */
   instant?: boolean;
 };
 
-export default function Reveal({ children, delay = 0, y = 28, className = "", as = "div", instant = false }: Props) {
-  const reduce = useReducedMotion();
-  const Comp = motion[as] as any;
+function prefersReducedMotion(): boolean {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+}
 
-  if (instant || reduce) {
-    const Plain = as as keyof React.JSX.IntrinsicElements;
-    return <Plain className={className}>{children as any}</Plain>;
+export default function Reveal({ children, delay = 0, y = 28, className = "", as = "div", instant = false }: Props) {
+  const Comp = as as ElementType;
+  const ref = useRef<HTMLElement | null>(null);
+  const [revealed, setRevealed] = useState(false);
+
+  useEffect(() => {
+    if (instant) return;
+    if (prefersReducedMotion()) {
+      setRevealed(true);
+      return;
+    }
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setRevealed(true);
+            observer.disconnect();
+            break;
+          }
+        }
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -50px 0px" }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [instant]);
+
+  // For instant or reduce-motion, render plain
+  if (instant) {
+    return <Comp className={className}>{children as any}</Comp>;
   }
 
-  const variants: Variants = {
-    hidden: { opacity: 0, y, filter: "blur(8px)" },
-    show: {
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      transition: { duration: 0.7, delay, ease: [0.2, 0.8, 0.2, 1] },
-    },
-  };
+  const style: React.CSSProperties = revealed
+    ? {
+        opacity: 1,
+        transform: "translateY(0)",
+        transition: `opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) ${delay}s, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) ${delay}s`,
+      }
+    : {
+        opacity: 0,
+        transform: `translateY(${y}px)`,
+        transition: "none",
+      };
 
   return (
-    <Comp className={className} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={variants}>
-      {children}
+    <Comp ref={ref as any} className={className} style={style}>
+      {children as any}
     </Comp>
   );
 }
@@ -54,41 +94,70 @@ export function RevealText({
   stagger?: number;
   instant?: boolean;
 }) {
-  const reduce = useReducedMotion();
+  const ref = useRef<HTMLSpanElement | null>(null);
+  const [revealed, setRevealed] = useState(false);
 
-  if (instant || reduce) {
+  useEffect(() => {
+    if (instant) {
+      setRevealed(true);
+      return;
+    }
+    if (prefersReducedMotion()) {
+      setRevealed(true);
+      return;
+    }
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setRevealed(true);
+            observer.disconnect();
+            break;
+          }
+        }
+      },
+      { threshold: 0.4 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [instant]);
+
+  if (instant) {
     return <span className={`inline-flex flex-wrap ${className}`}>{text}</span>;
   }
 
   const parts = splitBy === "word" ? text.split(" ") : text.split("");
 
-  const container: Variants = {
-    hidden: {},
-    show: { transition: { staggerChildren: stagger, delayChildren: delay } },
-  };
-  const item: Variants = {
-    hidden: { y: "100%", opacity: 0 },
-    show: { y: 0, opacity: 1, transition: { duration: 0.6, ease: [0.2, 0.8, 0.2, 1] } },
-  };
-
   return (
-    <motion.span
-      className={`inline-flex flex-wrap ${className}`}
-      style={{ overflow: "hidden" }}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.4 }}
-      variants={container}
-      aria-label={text}
-    >
-      {parts.map((p, i) => (
-        <span key={i} style={{ display: "inline-block", overflow: "hidden", paddingBottom: "0.1em" }}>
-          <motion.span style={{ display: "inline-block" }} variants={item}>
-            {p}
-            {splitBy === "word" && i < parts.length - 1 ? " " : ""}
-          </motion.span>
-        </span>
-      ))}
-    </motion.span>
+    <span ref={ref} className={`inline-flex flex-wrap ${className}`} aria-label={text} style={{ overflow: "hidden" }}>
+      {parts.map((p, i) => {
+        const itemDelay = delay + i * stagger;
+        const itemStyle: React.CSSProperties = revealed
+          ? {
+              display: "inline-block",
+              transform: "translateY(0)",
+              opacity: 1,
+              transition: `transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) ${itemDelay}s, opacity 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) ${itemDelay}s`,
+            }
+          : {
+              display: "inline-block",
+              transform: "translateY(100%)",
+              opacity: 0,
+              transition: "none",
+            };
+        return (
+          <span key={i} style={{ display: "inline-block", overflow: "hidden", paddingBottom: "0.1em" }}>
+            <span style={itemStyle}>
+              {p}
+              {splitBy === "word" && i < parts.length - 1 ? " " : ""}
+            </span>
+          </span>
+        );
+      })}
+    </span>
   );
 }
