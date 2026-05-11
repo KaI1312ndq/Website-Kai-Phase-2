@@ -18,20 +18,13 @@ const links: NavLink[] = [
     submenuIcon: "graduation-cap",
     viewAllText: "Xem tất cả khoá học",
     submenu: [
-      // Offline / Hybrid — cohort + workshop premium
+      // Offline / Hybrid — flagship cohort
       {
         section: "Offline · Hybrid",
         label: "Khoá Ecom Foundation",
         desc: "Cohort 8 tuần · live + recording · Slack community · final project",
         href: "/ecom-foundation",
         badge: "Đang mở",
-      },
-      {
-        section: "Offline · Hybrid",
-        label: "Workshop Ecom 1 ngày — Hà Nội",
-        desc: "6h offline · max 30 người · networking + Quảng 1-1 mini",
-        href: "/courses#waitlist",
-        badge: "Sắp ra",
       },
       // Online self-paced mini courses
       {
@@ -439,7 +432,7 @@ function SubmenuItem({ s, icon }: { s: Submenu; icon: IconName }) {
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
           <span className="text-[0.88rem] font-semibold text-white">{s.label}</span>
-          {s.badge && <span className="text-[0.6rem] font-bold uppercase tracking-[0.14em] px-1.5 py-0.5 rounded-md" style={{ background: "rgba(0,215,34,0.15)", color: "#5fffaa", border: "1px solid rgba(0,215,34,0.3)" }}>{s.badge}</span>}
+          {s.badge && <span className="text-[0.6rem] font-bold uppercase tracking-[0.14em] px-1.5 py-0.5 rounded-md whitespace-nowrap flex-shrink-0" style={{ background: "rgba(0,215,34,0.15)", color: "#5fffaa", border: "1px solid rgba(0,215,34,0.3)" }}>{s.badge}</span>}
         </div>
         {s.desc && <div className="text-[0.75rem] mt-0.5 leading-snug" style={{ color: "rgba(255,255,255,0.55)" }}>{s.desc}</div>}
       </div>
@@ -458,7 +451,7 @@ function MobileSubmenuItem({ s, onClose }: { s: Submenu; onClose: () => void }) 
         <div className="flex items-center gap-2">
           <span className="text-[0.9rem] font-semibold text-white truncate">{s.label}</span>
           {s.badge && (
-            <span className="text-[0.55rem] font-bold uppercase tracking-[0.14em] px-1.5 py-0.5 rounded" style={{ background: "rgba(0,215,34,0.15)", color: "#5fffaa", border: "1px solid rgba(0,215,34,0.3)" }}>
+            <span className="text-[0.55rem] font-bold uppercase tracking-[0.14em] px-1.5 py-0.5 rounded whitespace-nowrap flex-shrink-0" style={{ background: "rgba(0,215,34,0.15)", color: "#5fffaa", border: "1px solid rgba(0,215,34,0.3)" }}>
               {s.badge}
             </span>
           )}

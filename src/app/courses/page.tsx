@@ -146,27 +146,6 @@ const COURSES: Course[] = [
     href: "#waitlist",
     cta: "Đăng ký waitlist",
   },
-  {
-    id: "workshop-hn",
-    title: "Workshop Offline — Ecom Foundation 1 ngày",
-    subtitle: "Lớp hybrid 6h tại Hà Nội cho sinh viên + chủ shop",
-    format: "Lớp offline",
-    category: "offline",
-    duration: "6 giờ · 1 ngày · max 30 người",
-    price: "990.000đ (early bird) — 1.500.000đ",
-    audience: "Sinh viên Hà Nội + chủ shop nhỏ muốn networking + học nhanh trong 1 ngày",
-    highlights: [
-      "9:00 — 12:00: Tư duy đa sàn + Setup gian hàng + Traffic flow",
-      "13:00 — 16:00: TikTok Ads + Shopee Ads + Live Q&A",
-      "Bộ tài liệu in + flash drive tài liệu mở rộng",
-      "Networking + chụp ảnh tập thể + Quảng 1-1 mini 15 phút mỗi người",
-    ],
-    color: "#ffd479",
-    icon: "users",
-    status: "soon",
-    href: "#waitlist",
-    cta: "Đăng ký waitlist",
-  },
 ];
 
 const FAQS = [
@@ -276,7 +255,7 @@ export default function CoursesPage() {
               </div>
             </Reveal>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 gap-5 max-w-[720px] mx-auto">
               {COURSES.filter((c) => c.category === "offline").map((c) => {
                 const status = STATUS_META[c.status];
                 const isAvailable = c.status === "available";
