@@ -27,7 +27,7 @@ function checkAuth(req: NextRequest): boolean {
   const secret = url.searchParams.get("secret");
   if (process.env.SEED_SECRET && secret === process.env.SEED_SECRET) return true;
 
-  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://nguyenducquang.website").replace(/\/$/, "");
+  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.nguyenducquang.website").replace(/\/$/, "");
   const origin = req.headers.get("origin")?.replace(/\/$/, "");
   const referer = req.headers.get("referer") || "";
   if (origin === siteUrl) return true;

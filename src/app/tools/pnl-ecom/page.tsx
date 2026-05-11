@@ -71,7 +71,7 @@ const FAQS = [
 ];
 
 export default function PnLEcomPage() {
-  const baseUrl = "https://nguyenducquang.website";
+  const baseUrl = "https://www.nguyenducquang.website";
   const pageUrl = `${baseUrl}/tools/pnl-ecom`;
 
   const appLd = {

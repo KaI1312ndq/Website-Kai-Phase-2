@@ -8,7 +8,7 @@ import { getQuiz, getQuizQuestions, getQuizArchetypes, getKnowledgeQuestions, QU
 import QuizRunner from "@/components/quiz/QuizRunner";
 import KnowledgeQuizRunner from "@/components/quiz/KnowledgeQuizRunner";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://nguyenducquang.website";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.nguyenducquang.website";
 
 export function generateStaticParams() {
   return QUIZZES.map((q) => ({ slug: q.slug }));

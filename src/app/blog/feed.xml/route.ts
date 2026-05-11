@@ -1,6 +1,6 @@
 import { getPosts } from "@/lib/queries";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://nguyenducquang.website";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.nguyenducquang.website";
 
 export const revalidate = 3600;
 

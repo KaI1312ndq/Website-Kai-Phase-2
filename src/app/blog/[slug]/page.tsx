@@ -17,7 +17,7 @@ import ViewTracker from "@/components/blog/ViewTracker";
 import EngagementBar from "@/components/blog/EngagementBar";
 import { notFound } from "next/navigation";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://nguyenducquang.website";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.nguyenducquang.website";
 
 export const revalidate = 60;
 

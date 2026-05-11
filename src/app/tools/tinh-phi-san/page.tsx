@@ -74,7 +74,7 @@ const FAQS = [
 ];
 
 export default function Page() {
-  const baseUrl = "https://nguyenducquang.website";
+  const baseUrl = "https://www.nguyenducquang.website";
   const pageUrl = `${baseUrl}/tools/tinh-phi-san`;
 
   // 1. WebApplication — main tool

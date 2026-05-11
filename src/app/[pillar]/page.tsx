@@ -10,7 +10,7 @@ import { getPostsByCategories } from "@/lib/queries";
 import { urlFor } from "../../../sanity/lib/image";
 import { QUIZZES } from "@/lib/quiz/compute";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://nguyenducquang.website";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.nguyenducquang.website";
 
 const TOOL_META: Record<string, { title: string; desc: string; color: string; icon: IconName }> = {
   "tinh-phi-san": {

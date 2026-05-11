@@ -18,7 +18,12 @@ export default async function AccountPage() {
   if (!userId) redirect("/sign-in");
 
   const user = await currentUser();
-  const name = user?.firstName || user?.username || user?.emailAddresses[0]?.emailAddress.split("@")[0] || "bạn";
+  const username = user?.username || null;
+  const fullName = [user?.firstName, user?.lastName].filter(Boolean).join(" ").trim() || null;
+  const email = user?.primaryEmailAddress?.emailAddress || user?.emailAddresses[0]?.emailAddress || null;
+  const phone = user?.primaryPhoneNumber?.phoneNumber || user?.phoneNumbers?.[0]?.phoneNumber || null;
+  // Display priority: username → first name → email local-part
+  const displayName = username || fullName || email?.split("@")[0] || "bạn";
 
   const cards = [
     { href: "/account/orders", icon: "shopping-cart" as const, title: "Đơn hàng của tôi", desc: "Xem lịch sử đơn + tải lại file đã mua" },
@@ -38,9 +43,33 @@ export default async function AccountPage() {
           ]} />
           <div className="relative max-w-[1100px] mx-auto px-6 md:px-10 pt-28 pb-16 md:pt-32 md:pb-20">
             <div className="section-tag">Tài khoản</div>
-            <h1 className="t-h1 leading-[1.1] text-white mb-3">
-              Chào <span className="grad-text">{name}.</span>
+            <h1 className="t-h1 leading-[1.1] text-white mb-4">
+              Chào <span className="grad-text">{displayName}.</span>
             </h1>
+
+            {/* User info chips — surface stored fields like phone for Quảng's records */}
+            <div className="flex flex-wrap items-center gap-2 mb-6">
+              {username && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[0.8rem]" style={{ background: "rgba(20,110,245,0.10)", border: "1px solid rgba(20,110,245,0.22)", color: "#7da9ff" }}>
+                  <Icon name="user" size={12} />
+                  <span className="font-semibold">@{username}</span>
+                </span>
+              )}
+              {fullName && username && (
+                <span className="text-[0.85rem]" style={{ color: "var(--ink-mute)" }}>{fullName}</span>
+              )}
+              {email && (
+                <span className="text-[0.82rem]" style={{ color: "var(--ink-mute)" }}>
+                  · {email}
+                </span>
+              )}
+              {phone && (
+                <span className="text-[0.82rem]" style={{ color: "var(--ink-mute)" }}>
+                  · {phone}
+                </span>
+              )}
+            </div>
+
             <p className="t-body-lg max-w-[600px] mb-10" style={{ color: "var(--ink-soft)" }}>
               Đây là khu vực cá nhân của bạn. Quản lý đơn hàng, tải lại file đã mua và xem lại lịch sử quiz.
             </p>

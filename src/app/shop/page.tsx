@@ -6,7 +6,7 @@ import GradientBlobs from "@/components/GradientBlobs";
 import { getActiveProducts } from "@/lib/queries";
 import ShopClient from "./ShopClient";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://nguyenducquang.website";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.nguyenducquang.website";
 
 export const metadata: Metadata = {
   title: "Shop — Templates Excel, Báo cáo PDF & Brief Marketing 2026",

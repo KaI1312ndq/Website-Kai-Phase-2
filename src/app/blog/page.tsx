@@ -7,7 +7,7 @@ import { urlFor } from "../../../sanity/lib/image";
 import BlogFilterBar from "@/components/blog/BlogFilterBar";
 import Pagination from "@/components/blog/Pagination";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://nguyenducquang.website";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.nguyenducquang.website";
 
 const CATEGORY_LABELS: Record<string, string> = {
   ecom: "Ecommerce",

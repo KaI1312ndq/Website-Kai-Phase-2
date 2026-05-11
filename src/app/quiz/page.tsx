@@ -6,7 +6,7 @@ import Link from "next/link";
 import { QUIZZES } from "@/lib/quiz/compute";
 import Icon, { type IconName } from "@/components/icons/Icon";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://nguyenducquang.website";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.nguyenducquang.website";
 
 export const metadata: Metadata = {
   title: "Quiz · Trắc nghiệm Tính cách & Lãnh đạo Miễn phí",

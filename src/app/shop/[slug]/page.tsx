@@ -11,7 +11,7 @@ import { PortableText } from "@portabletext/react";
 import ProductDetailClient from "./ProductDetailClient";
 import PublicVouchers from "@/components/voucher/PublicVouchers";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://nguyenducquang.website";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.nguyenducquang.website";
 
 export async function generateStaticParams() {
   try {

@@ -7,7 +7,7 @@ import { createHmac, timingSafeEqual } from "crypto";
  *
  * Setup ở Resend Dashboard:
  *   - Webhooks → Add Endpoint
- *   - URL: https://nguyenducquang.website/api/webhooks/resend
+ *   - URL: https://www.nguyenducquang.website/api/webhooks/resend
  *   - Events: email.delivered, email.opened, email.clicked, email.bounced
  *   - Copy "Signing Secret" (format whsec_...) → add Vercel env RESEND_WEBHOOK_SECRET
  *

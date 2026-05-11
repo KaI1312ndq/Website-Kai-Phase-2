@@ -31,8 +31,8 @@ export async function GET(req: Request) {
           "Content-Type": "application/json",
           Accept: "application/json",
           "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-          Origin: "https://nguyenducquang.website",
-          Referer: "https://nguyenducquang.website/",
+          Origin: "https://www.nguyenducquang.website",
+          Referer: "https://www.nguyenducquang.website/",
         },
         body: JSON.stringify({
           access_key: w,

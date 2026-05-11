@@ -89,7 +89,7 @@ const beVietnam = Be_Vietnam_Pro({
   preload: false,
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://nguyenducquang.website";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.nguyenducquang.website";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -172,7 +172,7 @@ const personLd = {
   },
   sameAs: [
     "https://www.linkedin.com/in/duc-quang-nguyen-b7495223a/",
-    "https://nguyenducquang.website",
+    "https://www.nguyenducquang.website",
   ],
   email: "qforwork13@gmail.com",
   telephone: "+84868464658",

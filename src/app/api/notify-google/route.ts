@@ -9,7 +9,7 @@ import { NextRequest, NextResponse } from "next/server";
  * 2. Create file `public/<INDEXNOW_KEY>.txt` with content = key (verify ownership)
  * 3. Call this endpoint when publishing new URL:
  *    POST /api/notify-google?secret=<SEED_SECRET>
- *    { urls: ["https://nguyenducquang.website/blog/abc"] }
+ *    { urls: ["https://www.nguyenducquang.website/blog/abc"] }
  *
  * Reference: https://www.indexnow.org/documentation
  *
@@ -18,7 +18,7 @@ import { NextRequest, NextResponse } from "next/server";
  * Submitting to Bing IndexNow ALSO speeds up Google indirectly via referral signals.
  */
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://nguyenducquang.website";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.nguyenducquang.website";
 
 export async function POST(req: NextRequest) {
   try {

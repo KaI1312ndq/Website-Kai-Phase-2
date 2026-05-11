@@ -7,7 +7,7 @@ import { PILLARS } from "@/lib/pillars/config";
 export const revalidate = 3600;
 export const dynamic = "force-static";
 
-const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://nguyenducquang.website").replace(/\/$/, "");
+const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.nguyenducquang.website").replace(/\/$/, "");
 
 async function safeFetch<T>(fn: () => Promise<T>, fallback: T): Promise<T> {
   try {

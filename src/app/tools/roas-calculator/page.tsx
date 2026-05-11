@@ -70,7 +70,7 @@ const FAQS = [
 ];
 
 export default function ROASCalculatorPage() {
-  const baseUrl = "https://nguyenducquang.website";
+  const baseUrl = "https://www.nguyenducquang.website";
   const pageUrl = `${baseUrl}/tools/roas-calculator`;
 
   const appLd = {

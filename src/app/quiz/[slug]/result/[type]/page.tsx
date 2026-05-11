@@ -8,7 +8,7 @@ import { getQuiz, getQuizArchetypes, QUIZZES } from "@/lib/quiz/compute";
 import ShareButtons from "@/components/blog/ShareButtons";
 import Icon from "@/components/icons/Icon";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://nguyenducquang.website";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.nguyenducquang.website";
 
 const DICH_LABELS: Record<string, string> = {
   E: "Hướng ngoại", I: "Hướng nội",

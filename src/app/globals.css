@@ -496,3 +496,44 @@ input:focus, textarea:focus { outline: none; }
   }
   .blob-anim { animation: none; }
 }
+
+/* ── Clerk dark theme overrides — force readable text everywhere ── */
+/* Clerk's internal CSS uses --cl-color-* vars that sometimes win over inline className overrides.
+   These rules use !important to guarantee crisp white text on our dark blue palette. */
+.cl-userButtonPopoverActionButton__text,
+.cl-userButtonPopoverActionButton,
+.cl-userPreviewMainIdentifier,
+.cl-formFieldLabel,
+.cl-profileSectionTitleText,
+.cl-profileSectionTitle,
+.cl-pageHeader,
+.cl-pageHeading,
+.cl-navbarButton,
+.cl-headerTitle,
+.cl-formButtonReset,
+.cl-menuButton {
+  color: #ffffff !important;
+}
+.cl-userPreviewSecondaryIdentifier,
+.cl-pageDescription,
+.cl-headerSubtitle,
+.cl-navbar p,
+.cl-navbarMobileMenuButton,
+.cl-formFieldHintText,
+.cl-formFieldSuccessText {
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+.cl-profileSectionPrimaryButton,
+.cl-formButtonReset[data-localization-key$="add"],
+.cl-formButtonReset[data-localization-key$="connect"] {
+  color: #7da9ff !important;
+}
+.cl-userButtonPopoverActionButtonIcon,
+.cl-navbarButtonIcon {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+.cl-badge {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
