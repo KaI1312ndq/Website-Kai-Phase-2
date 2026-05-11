@@ -2,7 +2,14 @@
 
 Personal brand site cho **Nguyễn Đức Quảng** (Ecom Growth Expert · 60+ project Marketing/Ecom).
 
-Site bao gồm: Homepage, Khoá học Ecom Foundation, 3 Tools (Tính phí sàn / ROAS Calculator / P&L Ecom), 3 Quiz (Lãnh đạo / MBTI / Hướng nghiệp), Blog 50+ bài, Case Studies, Comments, Quiz Lead Capture, RSS feed.
+Site bao gồm: Homepage, Khoá học Ecom Foundation, 3 Tools (Tính phí sàn / ROAS Calculator / P&L Ecom), 4 Quiz (Lãnh đạo / MBTI / Hướng nghiệp / Chỉ số Ads), 4 Pillar hub pages (Ecom / Index / Self-Discovery / Career), Blog 50+ bài với sidebar TOC + comments + RSS, Case Studies, **Shop bán sản phẩm số** (Bank transfer + Resend email auto-delivery + Studio action), Custom 404, SVG icons.
+
+## 📜 Conventions
+
+- **Không emoji trên user-facing UI** — bắt buộc SVG icons (`<Icon name="..." />`). Studio admin OK dùng emoji.
+- **Mỗi commit phải update README.md** — reflect changes (routes mới, env mới, schema mới, conventions mới).
+- Container widths: Tools 1400px, Blog/Quiz/Shop/Pillar 1100-1300px.
+- Dark theme palette: `#5fffaa` correct/green, `#ff5a72` wrong/red, `#ffd479` warn/yellow, `#7da9ff` info/blue.
 
 ---
 
@@ -12,13 +19,16 @@ Site bao gồm: Homepage, Khoá học Ecom Foundation, 3 Tools (Tính phí sàn 
 |---|---|
 | Framework | **Next.js 15** (App Router, Server Components, Static + ISR) |
 | Styling | **Tailwind CSS 4** + custom CSS vars cho theme dark blue gradient |
-| CMS | **Sanity v3** (embedded `/studio` + custom desk structure) |
-| Animations | **Framer Motion** |
+| CMS | **Sanity v3** (embedded `/studio` + custom desk structure + custom document actions) |
+| Animations | Native CSS + IntersectionObserver (lightweight Reveal) + Framer Motion legacy |
 | Forms | **Web3Forms** (contact + course apply) |
-| Analytics | **Vercel Analytics** + **GA4** |
-| Image | **Sanity CDN** + **Next/Image** |
+| Email | **Resend** (transactional + webhooks for tracking) |
+| Payment | **VietQR / Napas247** (Techcombank bank transfer + auto QR generation) |
+| Analytics | **Vercel Analytics** + **GA4** custom events |
+| Image | **Sanity CDN** + Next.js Image Optimization (AVIF/WebP) |
 | Hosting | **Vercel** (auto deploy on push) |
-| Domain | Tenten → DNS Vercel → `nguyenducquang.website` |
+| Domain | Tenten → DNS Vercel → `nguyenducquang.website` (non-www canonical) |
+| Search Console | IndexNow API for fast index notification |
 
 ---
 
@@ -171,27 +181,39 @@ Site bao gồm: Homepage, Khoá học Ecom Foundation, 3 Tools (Tính phí sàn 
 | `/tools/roas-calculator` | Static | Break-even ROAS calc |
 | `/tools/pnl-ecom` | Static | P&L 5-tier với in PDF |
 | `/quiz` | Static | Quiz grid |
-| `/quiz/phong-cach-lanh-dao` | Static | Test 6 phong cách (15 Q) |
-| `/quiz/mbti` | Static | Test MBTI (70 Q, gated) |
+| `/quiz/phong-cach-lanh-dao` | Static | Test 6 phong cách (15 Q personality) |
+| `/quiz/mbti` | Static | Test MBTI 16 kiểu (70 Q, gated email/SĐT) |
 | `/quiz/huong-nghiep-marketing` | Static | Test career Marketing (12 Q, gated) |
+| `/quiz/chi-so-quang-cao` | Static | Test kiến thức Chỉ số Ads (30 Q, timer 30s, knowledge format) |
 | `/quiz/[slug]/result/[type]` | Static (27 pages) | SEO landing cho từng archetype |
-| `/blog` | Dynamic (?page,?category,?q,?tag) | Blog list with filter + pagination |
-| `/blog/[slug]` | ISR (60s) | Blog detail với sidebar + comments |
+| `/ecom`, `/index`, `/self-discovery`, `/career` | Static, ISR 1h | 4 Pillar hub pages — auto pull cluster bài blog |
+| `/shop` | ISR 60s | Shop landing — list products + checkout cart |
+| `/shop/[slug]` | SSG (per product) | Product detail (gallery + reviews + USP + buy) |
+| `/shop/order/[orderNumber]` | Dynamic | Order status với VietQR + auto-poll 15s |
+| `/shop/download/[token]` | Dynamic | File download landing (verify token + expiry 30d) |
+| `/blog` | Dynamic (?page,?category,?q,?tag) | Blog list with filter + pagination + featured |
+| `/blog/[slug]` | ISR 60s | Blog detail với sidebar TOC + comments + share |
 | `/blog/feed.xml` | Cached 1h | RSS feed |
-| `/case-study/[slug]` | ISR (60s) | Case study detail |
+| `/case-study/[slug]` | ISR 60s | Case study detail |
 | `/studio/[[...tool]]` | Dynamic | Sanity Studio admin |
+| `/not-found` | Static | Custom 404 với popular links + pillar pills |
 
 ### API endpoints
-| Endpoint | Method | Description |
-|---|---|---|
-| `/api/contact` | POST | Contact form → Web3Forms |
-| `/api/course-apply` | POST | Course apply → Web3Forms + Sanity |
-| `/api/comments` | POST | Blog comment (auto-approve) |
-| `/api/blog-engagement` | POST | View/Like (debounce per IP) |
-| `/api/quiz-leads` | POST | Quiz lead capture (rate-limited) |
-| `/api/seed-blog-bulk?secret=...` | GET | Seed 54 blog posts |
-| `/api/seed-sanity?secret=...` | GET | Seed brands + testimonials |
-| `/api/diagnostic` | GET | Health check |
+| Endpoint | Method | Auth | Description |
+|---|---|---|---|
+| `/api/contact` | POST | rate-limit | Contact form → Web3Forms |
+| `/api/course-apply` | POST | rate-limit | Course apply → Web3Forms + Sanity |
+| `/api/comments` | POST | rate-limit | Blog comment (auto-approve) |
+| `/api/blog-engagement` | POST | per-IP debounce | View/Like/Bookmark |
+| `/api/quiz-leads` | POST | rate-limit | Quiz lead capture (MBTI/Career gated) |
+| `/api/orders/create` | POST | rate-limit | Create shop order with products |
+| `/api/orders/deliver` | POST | SEED_SECRET OR same-origin | Trigger Resend send file + update status |
+| `/api/webhooks/resend` | POST | Svix signature | Resend email events (delivered/opened/clicked/bounced) |
+| `/api/notify-google` | POST | SEED_SECRET | IndexNow submit URLs to Bing/Yandex |
+| `/api/seed-blog-bulk?secret=...` | GET | SEED_SECRET | Seed 54 blog posts (idempotent) |
+| `/api/seed-products?secret=...` | GET | SEED_SECRET | Seed 3 placeholder products |
+| `/api/seed-sanity?secret=...` | GET | SEED_SECRET | Seed brands + testimonials |
+| `/api/diagnostic` | GET | none | Health check |
 
 ---
 
@@ -206,22 +228,29 @@ npm install
 
 ### 2. Environment variables (`.env.local`)
 ```bash
-# Sanity (required)
+# ── Sanity (required) ──────────────────────────
 NEXT_PUBLIC_SANITY_PROJECT_ID=xxxxxxxx
 NEXT_PUBLIC_SANITY_DATASET=production
-SANITY_API_WRITE_TOKEN=sk...                # For write APIs (comments, quiz-leads, seed)
+SANITY_API_WRITE_TOKEN=sk...                # For write APIs (comments, quiz-leads, seed, orders)
 
-# Site (required)
+# ── Site (required) ────────────────────────────
 NEXT_PUBLIC_SITE_URL=https://nguyenducquang.website
 
-# Forms (required for contact + apply)
+# ── Forms (required for contact + apply) ───────
 NEXT_PUBLIC_WEB3FORMS_KEY=xxx               # https://web3forms.com
 
-# Analytics (optional)
+# ── Email (required for shop file delivery) ────
+RESEND_API_KEY=re_xxxxx                     # https://resend.com — domain verified
+RESEND_WEBHOOK_SECRET=whsec_xxxxx           # https://resend.com → Webhooks → Signing Secret
+
+# ── Analytics (optional) ───────────────────────
 NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 
-# Seed scripts (optional, only for admin)
-SEED_SECRET=any-random-string-you-pick
+# ── SEO / IndexNow (optional but recommended) ──
+INDEXNOW_KEY=04b89f6c-...-eb1d8df80bf6      # Match filename in public/<KEY>.txt
+
+# ── Admin / Seed (only for Quảng) ──────────────
+SEED_SECRET=any-random-string-you-pick      # Auth seed routes + admin APIs
 ```
 
 ### 3. Run dev
@@ -261,6 +290,23 @@ curl https://nguyenducquang.website/api/seed-blog-bulk?secret=<SEED_SECRET>
 ### Quiz Leads
 - Vào `/studio` → 🧠 Quiz Leads → filter theo MBTI / Phong cách lãnh đạo / tất cả
 - Mỗi record: tên, email, phone, kết quả type, scores JSON
+
+### Shop — quy trình bán sản phẩm số
+1. Khách vào `/shop` → chọn 1-3 sản phẩm (combo 99k / 169k / 199k) → checkout
+2. Order tạo trong Sanity với `paymentStatus=pending` + VietQR Techcombank auto-gen
+3. Khách scan QR Techcombank → chuyển khoản (nội dung CK = orderNumber)
+4. Quảng vào `/studio` → 🛍️ Shop → "⏳ Đơn chờ thanh toán" → mở order
+5. Click button **"📧 Confirm & Send file"** ở góc dưới phải Studio
+6. Action gọi `/api/orders/deliver` → Resend gửi email với link `/shop/download/[token]`
+7. Resend webhook update order khi khách mở/click email
+8. Khách click link → tải file (verify token + expiry 30 ngày)
+
+### Resend Webhook setup (1 lần)
+- [resend.com/webhooks](https://resend.com/webhooks) → Add Endpoint
+- URL: `https://nguyenducquang.website/api/webhooks/resend`
+- Events: `email.delivered`, `email.opened`, `email.clicked`, `email.bounced`
+- Copy Signing Secret (whsec_...) → Vercel env `RESEND_WEBHOOK_SECRET`
+- Redeploy
 
 ---
 
@@ -367,19 +413,28 @@ Auto-deploy via Vercel on push to `main`. Branch deploys for any other branch.
 ### Done
 - [x] Homepage + Course landing
 - [x] 3 Tools (Fee Calc + ROAS + P&L)
-- [x] 3 Quizzes (Leadership + MBTI + Career) with lead capture
-- [x] 27 Quiz result SEO pages with dynamic OG
-- [x] Blog with sidebar + comments + RSS
+- [x] 4 Quizzes (Leadership + MBTI + Career personality + **Chỉ số Ads knowledge** with 30s timer)
+- [x] 27 Quiz result SEO pages with dynamic OG image per archetype
+- [x] 4 Pillar hub pages (Ecom / Index / Self-Discovery / Career) — backbone SEO
+- [x] Blog with sidebar TOC + auto FAQ schema + internal linking + comments + RSS
 - [x] 54 blog posts seeded (10 full + 40 drafts + 4 psychology)
-- [x] Sanity Studio with custom desk structure
-- [x] SVG icon system (no emoji policy)
+- [x] Sanity Studio with custom desk structure + custom document actions
+- [x] SVG icon system (no emoji on user UI)
+- [x] **Shop** — bank transfer VietQR + auto email delivery (Resend) + Studio "Send file" action
+- [x] Product detail pages with gallery + reviews + USP + Schema.org Product
+- [x] Resend webhook for email event tracking (delivered/opened/clicked/bounced)
+- [x] IndexNow API for fast Bing/Yandex indexing
+- [x] Quiz event tracking GA4 (started/completed/lead_captured)
+- [x] Lightweight Reveal (native CSS + IntersectionObserver) — saved ~25KB bundle
+- [x] Custom 404 page with popular links + pillar pills
 
 ### Up next
+- [ ] Quiz #5 "Test Content Frameworks" (knowledge format, reuse infra)
+- [ ] Tool "Content Cheat Sheet" — interactive framework picker
 - [ ] Salary Calculator tool (using UpBase Salary Benchmark 2026)
-- [ ] Auto-reply email for quiz leads (needs Resend setup)
-- [ ] Quiz #4 idea (TBD)
-- [ ] Track quiz_started/completed analytics events
+- [ ] Auto-reply email for quiz leads (Resend nurture sequence)
 - [ ] Bookmarks page (`/bookmarks` — localStorage list)
+- [ ] AI Copy Generator (Anthropic API, premium feature)
 - [ ] Custom Admin Panel (alternative to Sanity Studio if speed becomes issue)
 
 ### Maybe
