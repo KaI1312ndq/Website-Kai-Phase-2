@@ -50,6 +50,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   const product = await getProductBySlug(slug).catch(() => null);
   if (!product) notFound();
 
+  const image = product.coverImage ? urlFor(product.coverImage).width(1200).height(630).url() : undefined;
   const reviews = product.reviews || [];
   const relatedProducts = product.relatedProducts || [];
   const avgRating =
