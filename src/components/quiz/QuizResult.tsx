@@ -8,6 +8,10 @@ type Props = {
   config: QuizConfig;
   result: {
     archetype: QuizArchetype;
+    /** Phong cách phụ — điểm cao nhì. Chỉ có cho leadership + career. */
+    secondary?: QuizArchetype;
+    secondaryScore?: number;
+    topScore?: number;
     scores: Record<string, number>;
     ranked?: Array<{ id: string; score: number }>;
     dichotomies?: Array<{ a: string; b: string; aScore: number; bScore: number; aPct: number }>;
@@ -28,10 +32,17 @@ const DICH_LABELS: Record<string, string> = {
 };
 
 export default function QuizResult({ config, result, onRetake }: Props) {
-  const { archetype } = result;
+  const { archetype, secondary, secondaryScore, topScore } = result;
   const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
   const shareUrl = baseUrl ? `${baseUrl}/quiz/${config.slug}/result/${archetype.id}` : "";
-  const shareTitle = `Tôi vừa làm "${config.name}" — kết quả: ${archetype.name}!`;
+  const shareTitle = secondary
+    ? `Tôi vừa làm "${config.name}" — chính: ${archetype.name}, phụ: ${secondary.name}!`
+    : `Tôi vừa làm "${config.name}" — kết quả: ${archetype.name}!`;
+
+  // % mix giữa chính + phụ (chỉ khi có secondary)
+  const mixTotal = (topScore || 0) + (secondaryScore || 0);
+  const primaryPct = mixTotal > 0 ? Math.round(((topScore || 0) / mixTotal) * 100) : 100;
+  const secondaryPct = mixTotal > 0 ? 100 - primaryPct : 0;
 
   return (
     <div className="max-w-[860px] mx-auto">
@@ -44,7 +55,7 @@ export default function QuizResult({ config, result, onRetake }: Props) {
         }}
       >
         <div className="text-[0.7rem] font-bold uppercase tracking-[0.18em] mb-3" style={{ color: archetype.color }}>
-          Kết quả của bạn
+          {secondary ? "Phong cách chính" : "Kết quả của bạn"}
         </div>
         <h1 className="text-[2rem] md:text-[2.6rem] font-extrabold leading-tight tracking-tight text-white mb-3">
           {archetype.name}
@@ -52,7 +63,55 @@ export default function QuizResult({ config, result, onRetake }: Props) {
         <p className="text-[0.95rem] md:text-[1.05rem] font-semibold mb-2" style={{ color: archetype.color }}>
           {archetype.tagline}
         </p>
+        {secondary && (
+          <div className="mt-5 inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[0.78rem]" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.85)" }}>
+            <span style={{ color: archetype.color }}>{primaryPct}%</span>
+            <span style={{ color: "rgba(255,255,255,0.4)" }}>·</span>
+            <span style={{ color: secondary.color }}>{secondaryPct}% {secondary.name}</span>
+          </div>
+        )}
       </div>
+
+      {/* Secondary style — phong cách phụ */}
+      {secondary && (
+        <div
+          className="mt-6 rounded-2xl p-6 md:p-7"
+          style={{
+            background: `linear-gradient(135deg, ${secondary.color}10 0%, rgba(255,255,255,0.02) 100%)`,
+            border: `1px solid ${secondary.color}33`,
+          }}
+        >
+          <div className="flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.18em] mb-3" style={{ color: secondary.color }}>
+            <Icon name="sparkles" size={14} />
+            <span>Phong cách phụ — bạn mix thêm</span>
+          </div>
+          <div className="flex items-baseline gap-3 mb-3 flex-wrap">
+            <h3 className="text-[1.4rem] md:text-[1.6rem] font-extrabold text-white">{secondary.name}</h3>
+            <span className="text-[0.85rem] font-semibold" style={{ color: secondary.color }}>{secondary.tagline}</span>
+          </div>
+          {secondary.description?.[0] && (
+            <p className="text-[0.92rem] leading-[1.7] mb-4" style={{ color: "var(--ink-soft)" }}>
+              {secondary.description[0]}
+            </p>
+          )}
+          {Array.isArray(secondary.strengths) && secondary.strengths.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-4">
+              {secondary.strengths.slice(0, 4).map((s) => (
+                <span key={s} className="text-[0.8rem] px-2.5 py-1 rounded-md" style={{ background: `${secondary.color}15`, border: `1px solid ${secondary.color}33`, color: "rgba(255,255,255,0.9)" }}>
+                  ✓ {s}
+                </span>
+              ))}
+            </div>
+          )}
+          <Link
+            href={`/quiz/${config.slug}/result/${secondary.id}`}
+            className="inline-flex items-center gap-1.5 text-[0.85rem] font-semibold"
+            style={{ color: secondary.color }}
+          >
+            Xem chi tiết phong cách phụ →
+          </Link>
+        </div>
+      )}
 
       {/* MBTI dichotomy bars */}
       {result.dichotomies && (
@@ -168,12 +227,46 @@ export default function QuizResult({ config, result, onRetake }: Props) {
         </div>
       )}
 
+      {/* Follow both styles */}
+      {secondary && (
+        <div className="mt-8 rounded-2xl p-6" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+          <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-3" style={{ color: "rgba(255,255,255,0.55)" }}>
+            Follow cả 2 phong cách
+          </div>
+          <p className="text-[0.9rem] mb-4 leading-[1.6]" style={{ color: "var(--ink-soft)" }}>
+            Bạn không thuần 1 phong cách — kết hợp <strong style={{ color: archetype.color }}>{archetype.name}</strong> ({primaryPct}%) với <strong style={{ color: secondary.color }}>{secondary.name}</strong> ({secondaryPct}%). Đọc kỹ cả 2 để hiểu hết điểm mạnh + điểm cần lưu ý:
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <Link
+              href={`/quiz/${config.slug}/result/${archetype.id}`}
+              className="rounded-xl p-4 flex flex-col gap-1 transition-transform hover:-translate-y-0.5"
+              style={{ background: `${archetype.color}12`, border: `1px solid ${archetype.color}40` }}
+            >
+              <span className="text-[0.65rem] font-bold uppercase tracking-[0.14em]" style={{ color: archetype.color }}>Chính · {primaryPct}%</span>
+              <span className="text-[1rem] font-bold text-white">{archetype.name}</span>
+              <span className="text-[0.78rem]" style={{ color: "var(--ink-mute)" }}>Xem chi tiết →</span>
+            </Link>
+            <Link
+              href={`/quiz/${config.slug}/result/${secondary.id}`}
+              className="rounded-xl p-4 flex flex-col gap-1 transition-transform hover:-translate-y-0.5"
+              style={{ background: `${secondary.color}12`, border: `1px solid ${secondary.color}40` }}
+            >
+              <span className="text-[0.65rem] font-bold uppercase tracking-[0.14em]" style={{ color: secondary.color }}>Phụ · {secondaryPct}%</span>
+              <span className="text-[1rem] font-bold text-white">{secondary.name}</span>
+              <span className="text-[0.78rem]" style={{ color: "var(--ink-mute)" }}>Xem chi tiết →</span>
+            </Link>
+          </div>
+        </div>
+      )}
+
       {/* Share */}
       <div className="mt-8">
-        <div className="text-[0.78rem] mb-3 inline-flex items-center gap-2" style={{ color: "rgba(255,255,255,0.5)" }}>
-          <Icon name="link" size={13} />
-          <span>Trang chi tiết: <Link href={`/quiz/${config.slug}/result/${archetype.id}`} className="underline" style={{ color: archetype.color }}>{`/quiz/${config.slug}/result/${archetype.id}`}</Link></span>
-        </div>
+        {!secondary && (
+          <div className="text-[0.78rem] mb-3 inline-flex items-center gap-2" style={{ color: "rgba(255,255,255,0.5)" }}>
+            <Icon name="link" size={13} />
+            <span>Trang chi tiết: <Link href={`/quiz/${config.slug}/result/${archetype.id}`} className="underline" style={{ color: archetype.color }}>{`/quiz/${config.slug}/result/${archetype.id}`}</Link></span>
+          </div>
+        )}
         <ShareButtons url={shareUrl} title={shareTitle} />
       </div>
 

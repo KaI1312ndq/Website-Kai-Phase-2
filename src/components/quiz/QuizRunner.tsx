@@ -70,11 +70,20 @@ export default function QuizRunner({ config, questions, archetypes }: Props) {
     if (config.scoringType === "leadership") {
       const r = computeLeadershipResult(answers);
       const archetype = archetypes.find((a) => a.id === r.topId);
-      return { archetype, scores: r.scores, ranked: r.ranked, type: r.topId };
+      // Secondary = next-highest archetype, only meaningful if it has score > 0 AND ≠ top
+      const secondaryEntry = r.ranked.find((x) => x.id !== r.topId && x.score > 0);
+      const secondary = secondaryEntry ? archetypes.find((a) => a.id === secondaryEntry.id) : undefined;
+      const secondaryScore = secondaryEntry?.score;
+      const topScore = r.ranked[0]?.score;
+      return { archetype, secondary, secondaryScore, topScore, scores: r.scores, ranked: r.ranked, type: r.topId };
     } else if (config.scoringType === "career") {
       const r = computeCareerResult(answers);
       const archetype = archetypes.find((a) => a.id === r.topId);
-      return { archetype, scores: r.scores, ranked: r.ranked, type: r.topId };
+      const secondaryEntry = r.ranked.find((x) => x.id !== r.topId && x.score > 0);
+      const secondary = secondaryEntry ? archetypes.find((a) => a.id === secondaryEntry.id) : undefined;
+      const secondaryScore = secondaryEntry?.score;
+      const topScore = r.ranked[0]?.score;
+      return { archetype, secondary, secondaryScore, topScore, scores: r.scores, ranked: r.ranked, type: r.topId };
     } else {
       const r = computeMBTIResult(answers);
       const archetype = archetypes.find((a) => a.id === r.type);
