@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Show, UserButton } from "@clerk/nextjs";
 import Icon, { type IconName } from "@/components/icons/Icon";
+import CartButton from "@/components/cart/CartButton";
 
 type Submenu = { label: string; desc?: string; href: string; badge?: string };
 type NavLink = { label: string; href: string; submenu?: Submenu[]; submenuIcon?: IconName; viewAllText?: string };
@@ -182,8 +183,9 @@ export default function Navbar() {
               ))}
             </ul>
 
-            {/* Auth — desktop only */}
+            {/* Cart + Auth — desktop */}
             <div className="hidden md:flex items-center gap-2 ml-2">
+              <CartButton />
               <Show when="signed-out">
                 <Link
                   href="/sign-in"
@@ -209,7 +211,10 @@ export default function Navbar() {
               </Show>
             </div>
 
-            {/* Mobile burger */}
+            {/* Mobile cart + burger */}
+            <div className="flex md:hidden items-center gap-2">
+              <CartButton />
+            </div>
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="md:hidden flex flex-col gap-[5px] p-2 bg-transparent border-none cursor-pointer"

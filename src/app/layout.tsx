@@ -8,6 +8,8 @@ import NoiseOverlay from "@/components/NoiseOverlay";
 import Analytics from "@/components/Analytics";
 import LeadPopup from "@/components/LeadPopup";
 import PageTransition from "@/components/PageTransition";
+import { CartProvider } from "@/components/cart/CartContext";
+import CartDrawer from "@/components/cart/CartDrawer";
 
 // Clerk dark theme customization — match site palette
 const clerkAppearance = {
@@ -199,9 +201,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             speed={550}
           />
           <NoiseOverlay />
-          <SmoothScroll>
-            <PageTransition>{children}</PageTransition>
-          </SmoothScroll>
+          <CartProvider>
+            <SmoothScroll>
+              <PageTransition>{children}</PageTransition>
+            </SmoothScroll>
+            <CartDrawer />
+          </CartProvider>
           <LeadPopup />
           <Analytics />
         </ClerkProvider>

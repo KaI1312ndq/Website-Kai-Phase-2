@@ -432,11 +432,12 @@ Auto-deploy via Vercel on push to `main`. Branch deploys for any other branch.
 - [x] Lightweight Reveal (native CSS + IntersectionObserver) — saved ~25KB bundle
 - [x] Custom 404 page with popular links + pillar pills
 - [x] **Auth foundation** — Clerk (Email + Google), sign-in/sign-up pages, `/account` dashboard, Navbar auth state
+- [x] **Cart system** — global Context (localStorage-backed), CartButton + badge in Navbar, slide-out CartDrawer, ShopClient refactored to share cart state, signed-in users get name/email/phone auto-prefilled at checkout
 
 ### Up next
-- [ ] Cart context provider (localStorage guest + Sanity sync when signed in)
-- [ ] Cart drawer + icon badge in Navbar
-- [ ] `/account/orders` page — re-download files for logged-in users
+- [ ] `/account/orders` page — re-download files for logged-in users (Sanity link by email/userId)
+- [ ] Sync cart to Sanity for signed-in users (cross-device persistence)
+- [ ] Custom Clerk fields: phone number + username (toggle on in Clerk dashboard)
 - [ ] Quiz #5 "Test Content Frameworks" (knowledge format, reuse infra)
 - [ ] Tool "Content Cheat Sheet" — interactive framework picker
 - [ ] Salary Calculator tool (using UpBase Salary Benchmark 2026)

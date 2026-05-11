@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import GradientBlobs from "@/components/GradientBlobs";
@@ -90,7 +91,9 @@ export default async function ShopPage() {
                 </p>
               </div>
             ) : (
-              <ShopClient products={products} />
+              <Suspense fallback={null}>
+                <ShopClient products={products} />
+              </Suspense>
             )}
           </div>
         </section>

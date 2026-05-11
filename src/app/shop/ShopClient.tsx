@@ -1,10 +1,11 @@
 "use client";
-import { useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { calculatePrice } from "@/lib/payment/config";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
 import { urlFor } from "../../../sanity/lib/image";
 import Icon from "@/components/icons/Icon";
+import { useCart } from "@/components/cart/CartContext";
 
 type Product = {
   _id: string;
@@ -22,7 +23,7 @@ type Product = {
 type Phase = "browse" | "checkout";
 
 export default function ShopClient({ products }: { products: Product[] }) {
-  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const { items, has, toggle, pricing } = useCart();
   const [phase, setPhase] = useState<Phase>("browse");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -30,22 +31,30 @@ export default function ShopClient({ products }: { products: Product[] }) {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const { user } = useUser();
 
-  const selected = useMemo(() => products.filter((p) => selectedIds.has(p._id)), [selectedIds, products]);
-  const pricing = useMemo(() => (selected.length > 0 ? calculatePrice(selected.length) : null), [selected]);
+  // Open checkout if landing with ?checkout=1 and cart has items (e.g. from drawer)
+  useEffect(() => {
+    if (searchParams.get("checkout") === "1" && items.length > 0) {
+      setPhase("checkout");
+    }
+  }, [searchParams, items.length]);
 
-  function toggleProduct(id: string) {
-    setSelectedIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  }
+  // Prefill name + email for signed-in users
+  useEffect(() => {
+    if (!user) return;
+    const fullName = [user.firstName, user.lastName].filter(Boolean).join(" ").trim();
+    if (fullName && !name) setName(fullName);
+    const primaryEmail = user.primaryEmailAddress?.emailAddress || user.emailAddresses[0]?.emailAddress;
+    if (primaryEmail && !email) setEmail(primaryEmail);
+    const primaryPhone = user.primaryPhoneNumber?.phoneNumber || user.phoneNumbers[0]?.phoneNumber;
+    if (primaryPhone && !phone) setPhone(primaryPhone);
+  }, [user, name, email, phone]);
 
   async function handleCheckout(e: React.FormEvent) {
     e.preventDefault();
-    if (!pricing || selected.length === 0) return;
+    if (!pricing || items.length === 0) return;
     if (!name.trim() || !email.includes("@") || phone.replace(/\D/g, "").length < 9) {
       setError("Vui lòng kiểm tra lại tên, email, số điện thoại");
       return;
@@ -57,7 +66,7 @@ export default function ShopClient({ products }: { products: Product[] }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          productIds: Array.from(selectedIds),
+          productIds: items.map((i) => i.id),
           customer: { name, email, phone },
         }),
       });
@@ -79,7 +88,8 @@ export default function ShopClient({ products }: { products: Product[] }) {
       {/* Product grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
         {products.map((p) => {
-          const isSelected = selectedIds.has(p._id);
+          const isSelected = has(p._id);
+          const coverUrl = p.coverImage ? urlFor(p.coverImage).width(800).height(600).url() : undefined;
           return (
             <div
               key={p._id}
@@ -91,8 +101,8 @@ export default function ShopClient({ products }: { products: Product[] }) {
               }}
             >
               <Link href={`/shop/${p.slug.current}`} className="block aspect-[4/3] relative overflow-hidden group/img" style={{ background: "var(--grad-primary-soft)" }}>
-                {p.coverImage ? (
-                  <img src={urlFor(p.coverImage).width(800).height(600).url()} alt={p.title} className="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105" />
+                {coverUrl ? (
+                  <img src={coverUrl} alt={p.title} className="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-[0.78rem] uppercase tracking-[0.2em] grad-text font-semibold">
                     {p.category || "Premium"}
@@ -130,7 +140,7 @@ export default function ShopClient({ products }: { products: Product[] }) {
                     <div className="text-[1.4rem] font-extrabold grad-text">{p.price.toLocaleString("vi-VN")}đ</div>
                   </div>
                   <button
-                    onClick={() => toggleProduct(p._id)}
+                    onClick={() => toggle({ id: p._id, slug: p.slug.current, title: p.title, price: p.price, image: coverUrl })}
                     className="text-[0.85rem] font-bold px-4 py-2.5 rounded-lg transition-all"
                     style={{
                       background: isSelected ? "rgba(255,90,114,0.12)" : "var(--grad-primary)",
@@ -138,7 +148,7 @@ export default function ShopClient({ products }: { products: Product[] }) {
                       color: isSelected ? "#ff5a72" : "white",
                     }}
                   >
-                    {isSelected ? "Bỏ chọn" : "+ Thêm vào đơn"}
+                    {isSelected ? "Bỏ khỏi giỏ" : "+ Thêm vào giỏ"}
                   </button>
                 </div>
 
@@ -160,29 +170,29 @@ export default function ShopClient({ products }: { products: Product[] }) {
           Combo giảm giá
         </div>
         <div className="grid grid-cols-3 gap-3 text-center">
-          <PriceTier count={1} price="99k" label="1 sản phẩm" current={selected.length === 1} />
-          <PriceTier count={2} price="169k" label="Combo 2 (-29k)" current={selected.length === 2} />
-          <PriceTier count={3} price="199k" label="Combo 3 (-98k)" current={selected.length === 3} />
+          <PriceTier count={1} price="99k" label="1 sản phẩm" current={items.length === 1} />
+          <PriceTier count={2} price="169k" label="Combo 2 (-29k)" current={items.length === 2} />
+          <PriceTier count={3} price="199k" label="Combo 3 (-98k)" current={items.length === 3} />
         </div>
       </div>
 
       {/* Sticky checkout bar */}
-      {selected.length > 0 && phase === "browse" && (
+      {items.length > 0 && phase === "browse" && pricing && (
         <div className="sticky bottom-4 z-30 rounded-2xl p-5 flex items-center justify-between gap-4 flex-wrap backdrop-blur-md"
           style={{ background: "rgba(8,16,43,0.85)", border: "1px solid rgba(20,110,245,0.32)", boxShadow: "0 12px 40px rgba(0,0,0,0.4)" }}>
           <div>
             <div className="text-[0.78rem]" style={{ color: "var(--ink-mute)" }}>
-              {selected.length} sản phẩm đã chọn
+              {items.length} sản phẩm trong giỏ
             </div>
             <div className="flex items-baseline gap-2">
-              <span className="text-[1.6rem] font-extrabold grad-text">{pricing!.total.toLocaleString("vi-VN")}đ</span>
-              {pricing!.discount > 0 && (
+              <span className="text-[1.6rem] font-extrabold grad-text">{pricing.total.toLocaleString("vi-VN")}đ</span>
+              {pricing.discount > 0 && (
                 <>
                   <span className="text-[0.85rem] line-through" style={{ color: "rgba(255,255,255,0.4)" }}>
-                    {pricing!.subtotal.toLocaleString("vi-VN")}đ
+                    {pricing.subtotal.toLocaleString("vi-VN")}đ
                   </span>
                   <span className="text-[0.78rem] font-bold px-2 py-0.5 rounded" style={{ background: "rgba(95,255,170,0.15)", color: "#5fffaa" }}>
-                    -{pricing!.discount.toLocaleString("vi-VN")}đ
+                    -{pricing.discount.toLocaleString("vi-VN")}đ
                   </span>
                 </>
               )}
@@ -199,7 +209,7 @@ export default function ShopClient({ products }: { products: Product[] }) {
       )}
 
       {/* Checkout form modal */}
-      {phase === "checkout" && pricing && (
+      {phase === "checkout" && pricing && items.length > 0 && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(5,10,31,0.85)", backdropFilter: "blur(8px)" }}>
           <div className="rounded-2xl max-w-[520px] w-full p-7 max-h-[90vh] overflow-y-auto" style={{ background: "rgba(8,16,43,0.98)", border: "1px solid var(--line)" }}>
             <div className="flex items-center justify-between mb-5">
@@ -218,9 +228,9 @@ export default function ShopClient({ products }: { products: Product[] }) {
               <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-2" style={{ color: "rgba(255,255,255,0.5)" }}>
                 Đơn hàng
               </div>
-              <ul className="flex flex-col gap-1 mb-3">
-                {selected.map((p) => (
-                  <li key={p._id} className="text-[0.88rem] flex items-center gap-2" style={{ color: "rgba(255,255,255,0.85)" }}>
+              <ul className="flex flex-col gap-1 mb-3 list-none">
+                {items.map((p) => (
+                  <li key={p.id} className="text-[0.88rem] flex items-center gap-2" style={{ color: "rgba(255,255,255,0.85)" }}>
                     <Icon name="check" size={12} color="#5fffaa" strokeWidth={3} />
                     {p.title}
                   </li>

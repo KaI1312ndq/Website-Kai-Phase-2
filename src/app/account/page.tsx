@@ -21,7 +21,7 @@ export default async function AccountPage() {
   const name = user?.firstName || user?.username || user?.emailAddresses[0]?.emailAddress.split("@")[0] || "bạn";
 
   const cards = [
-    { href: "/account/orders", icon: "cart" as const, title: "Đơn hàng của tôi", desc: "Xem lịch sử đơn + tải lại file đã mua" },
+    { href: "/account/orders", icon: "shopping-cart" as const, title: "Đơn hàng của tôi", desc: "Xem lịch sử đơn + tải lại file đã mua" },
     { href: "/quiz", icon: "test-tube" as const, title: "Lịch sử Test", desc: "Xem lại kết quả MBTI, Career, Leadership..." },
     { href: "/shop", icon: "tool" as const, title: "Tiếp tục mua sắm", desc: "Xem các template, bundle mới nhất tại Shop" },
   ];
