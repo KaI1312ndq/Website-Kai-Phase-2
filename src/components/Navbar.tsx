@@ -235,61 +235,123 @@ export default function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-6 md:hidden"
-            style={{ background: "rgba(5,10,31,0.96)", backdropFilter: "blur(20px)" }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-40 md:hidden overflow-y-auto"
+            style={{ background: "rgba(5,10,31,0.97)", backdropFilter: "blur(20px)" }}
           >
-            {links.map((l, i) => (
-              <motion.div
-                key={l.label}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 + i * 0.05 }}
-                className="text-center"
-              >
-                <Link
-                  href={l.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="text-[1.6rem] font-bold tracking-tight text-white"
-                >
-                  {l.label}
-                </Link>
-                {l.submenu && (
-                  <div className="mt-2 flex flex-col gap-1">
-                    {l.submenu.map((s) => (
-                      <Link key={s.href} href={s.href} onClick={() => setMobileOpen(false)}
-                        className="text-[0.85rem]" style={{ color: "rgba(255,255,255,0.6)" }}>
-                        ↳ {s.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </motion.div>
-            ))}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 + links.length * 0.05 }}
-              className="mt-4 flex items-center gap-3"
-            >
+            <div className="min-h-full flex flex-col pt-24 pb-10 px-5">
+              {/* Auth pill at top */}
               <Show when="signed-out">
-                <Link
-                  href="/sign-in"
-                  onClick={() => setMobileOpen(false)}
-                  className="px-5 py-2.5 text-[0.95rem] font-semibold rounded-full text-white"
-                  style={{ background: "var(--grad-primary)", boxShadow: "0 4px 14px rgba(20,110,245,0.35)" }}
+                <motion.div
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.05 }}
+                  className="mb-6"
                 >
-                  Đăng nhập
-                </Link>
+                  <Link
+                    href="/sign-in"
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center justify-center gap-2 w-full py-3.5 text-[0.95rem] font-bold rounded-2xl text-white"
+                    style={{ background: "var(--grad-primary)", boxShadow: "0 8px 24px rgba(20,110,245,0.35)" }}
+                  >
+                    <Icon name="user" size={16} />
+                    Đăng nhập / Đăng ký
+                  </Link>
+                </motion.div>
               </Show>
               <Show when="signed-in">
-                <UserButton
-                  appearance={{ elements: { avatarBox: "w-12 h-12 ring-2 ring-white/15" } }}
-                  userProfileMode="navigation"
-                  userProfileUrl="/account/profile"
-                />
+                <motion.div
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.05 }}
+                  className="mb-6 flex items-center justify-between p-3 rounded-2xl"
+                  style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.10)" }}
+                >
+                  <Link
+                    href="/account"
+                    onClick={() => setMobileOpen(false)}
+                    className="text-[0.9rem] font-semibold text-white pl-2"
+                  >
+                    Tài khoản của tôi →
+                  </Link>
+                  <UserButton
+                    appearance={{ elements: { avatarBox: "w-10 h-10 ring-2 ring-white/15" } }}
+                    userProfileMode="navigation"
+                    userProfileUrl="/account/profile"
+                  />
+                </motion.div>
               </Show>
-            </motion.div>
+
+              {/* Nav links */}
+              <ul className="flex flex-col gap-2 list-none">
+                {links.map((l, i) => (
+                  <motion.li
+                    key={l.label}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.08 + i * 0.03 }}
+                  >
+                    {l.submenu ? (
+                      <div
+                        className="rounded-2xl overflow-hidden"
+                        style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)" }}
+                      >
+                        <Link
+                          href={l.href}
+                          onClick={() => setMobileOpen(false)}
+                          className="flex items-center gap-3 px-4 py-3"
+                        >
+                          <span className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(20,110,245,0.12)", border: "1px solid rgba(20,110,245,0.22)", color: "#7da9ff" }}>
+                            <Icon name={(l.submenuIcon || "tool") as IconName} size={16} />
+                          </span>
+                          <span className="text-[1rem] font-bold text-white">{l.label}</span>
+                          <span className="ml-auto text-[0.7rem] uppercase tracking-[0.14em] font-semibold" style={{ color: "rgba(255,255,255,0.45)" }}>
+                            {l.submenu.length} mục
+                          </span>
+                        </Link>
+                        <div className="px-2 pb-2 flex flex-col gap-1" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+                          {l.submenu.map((s) => (
+                            <Link
+                              key={s.href}
+                              href={s.href}
+                              onClick={() => setMobileOpen(false)}
+                              className="flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg"
+                            >
+                              <div className="min-w-0">
+                                <div className="flex items-center gap-2">
+                                  <span className="text-[0.9rem] font-semibold text-white truncate">{s.label}</span>
+                                  {s.badge && (
+                                    <span className="text-[0.55rem] font-bold uppercase tracking-[0.14em] px-1.5 py-0.5 rounded" style={{ background: "rgba(0,215,34,0.15)", color: "#5fffaa", border: "1px solid rgba(0,215,34,0.3)" }}>
+                                      {s.badge}
+                                    </span>
+                                  )}
+                                </div>
+                                {s.desc && (
+                                  <div className="text-[0.72rem] mt-0.5 leading-snug truncate" style={{ color: "rgba(255,255,255,0.5)" }}>
+                                    {s.desc}
+                                  </div>
+                                )}
+                              </div>
+                              <Icon name="arrow-right" size={14} color="rgba(255,255,255,0.4)" />
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <Link
+                        href={l.href}
+                        onClick={() => setMobileOpen(false)}
+                        className="flex items-center justify-between px-4 py-3.5 rounded-2xl"
+                        style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)" }}
+                      >
+                        <span className="text-[1rem] font-bold text-white">{l.label}</span>
+                        <Icon name="arrow-right" size={14} color="rgba(255,255,255,0.4)" />
+                      </Link>
+                    )}
+                  </motion.li>
+                ))}
+              </ul>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

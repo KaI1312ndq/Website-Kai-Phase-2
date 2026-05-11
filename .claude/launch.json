@@ -1,0 +1,19 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Next.js dev (web app + embedded Sanity Studio at /studio)",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 3000,
+      "autoPort": true
+    },
+    {
+      "name": "Sanity Studio (standalone)",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "sanity"],
+      "port": 3333,
+      "autoPort": true
+    }
+  ]
+}

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, Be_Vietnam_Pro } from "next/font/google";
 import NextTopLoader from "nextjs-toploader";
 import { ClerkProvider } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import NoiseOverlay from "@/components/NoiseOverlay";
@@ -11,16 +12,16 @@ import PageTransition from "@/components/PageTransition";
 import { CartProvider } from "@/components/cart/CartContext";
 import CartDrawer from "@/components/cart/CartDrawer";
 
-// Clerk dark theme customization — match site palette
+// Clerk — use official dark baseTheme + site-palette overrides for proper contrast
 const clerkAppearance = {
+  baseTheme: dark,
   variables: {
     colorPrimary: "#146ef5",
     colorBackground: "#0a1438",
     colorText: "#ffffff",
-    colorTextSecondary: "rgba(255,255,255,0.6)",
-    colorInputBackground: "rgba(255,255,255,0.03)",
+    colorTextSecondary: "rgba(255,255,255,0.72)",
+    colorInputBackground: "rgba(255,255,255,0.04)",
     colorInputText: "#ffffff",
-    colorNeutral: "rgba(255,255,255,0.5)",
     colorDanger: "#ff5a72",
     colorSuccess: "#5fffaa",
     colorWarning: "#ffd479",
@@ -28,11 +29,21 @@ const clerkAppearance = {
     fontFamily: '"Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif',
   },
   elements: {
-    card: "shadow-2xl",
+    card: "shadow-2xl border border-white/10",
+    headerTitle: "text-white",
+    headerSubtitle: "text-white/70",
+    socialButtonsBlockButton: "border-white/15 hover:bg-white/5 text-white",
+    socialButtonsBlockButtonText: "text-white font-medium",
+    dividerLine: "bg-white/15",
+    dividerText: "text-white/55",
+    formFieldLabel: "text-white",
+    formFieldInput: "bg-white/[0.04] border-white/15 text-white placeholder:text-white/35",
     formButtonPrimary:
-      "bg-gradient-to-r from-[#146ef5] to-[#7a3dff] hover:scale-[1.02] transition-transform",
-    footerActionLink: "text-[#7da9ff] hover:text-white",
-    socialButtonsBlockButton: "border-white/10 hover:bg-white/5",
+      "bg-gradient-to-r from-[#146ef5] to-[#7a3dff] hover:opacity-95 transition-opacity shadow-lg shadow-[#146ef5]/30",
+    footerActionText: "text-white/65",
+    footerActionLink: "text-[#7da9ff] hover:text-white font-semibold",
+    identityPreviewText: "text-white",
+    identityPreviewEditButton: "text-[#7da9ff]",
   },
 };
 
