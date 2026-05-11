@@ -24,6 +24,7 @@ type CartContextType = {
   openDrawer: () => void;
   closeDrawer: () => void;
   syncing: boolean;
+  hydrated: boolean;
 };
 
 const CartContext = createContext<CartContextType | null>(null);
@@ -149,6 +150,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     openDrawer: () => setDrawerOpen(true),
     closeDrawer: () => setDrawerOpen(false),
     syncing,
+    hydrated,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

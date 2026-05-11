@@ -15,7 +15,7 @@ type AppliedVoucher = {
 };
 
 export default function CheckoutClient() {
-  const { items, pricing, remove, clear } = useCart();
+  const { items, pricing, remove, clear, hydrated: cartHydrated } = useCart();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -130,7 +130,7 @@ export default function CheckoutClient() {
   }
 
   // Empty cart state
-  if (hydrated && items.length === 0) {
+  if (cartHydrated && items.length === 0) {
     return (
       <div className="rounded-2xl p-10 text-center" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
         <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid var(--line)" }}>
@@ -151,7 +151,7 @@ export default function CheckoutClient() {
     );
   }
 
-  if (!hydrated || !pricing) return null;
+  if (!hydrated || !cartHydrated || !pricing) return null;
   const finalTotal = voucher ? voucher.finalTotal : pricing.total;
 
   return (
@@ -220,67 +220,6 @@ export default function CheckoutClient() {
           />
         </div>
 
-        {/* Voucher */}
-        <div>
-          <label className="block text-[0.78rem] font-semibold mb-1.5 text-white">
-            Mã voucher <span className="font-normal" style={{ color: "var(--ink-mute)" }}>(nếu có)</span>
-          </label>
-          {voucher ? (
-            <div className="flex items-center justify-between gap-3 rounded-lg px-3 py-3" style={{ background: "rgba(95,255,170,0.08)", border: "1px solid rgba(95,255,170,0.3)" }}>
-              <div className="flex items-center gap-2 min-w-0 flex-wrap">
-                <Icon name="check" size={14} color="#5fffaa" strokeWidth={3} />
-                <span className="text-[0.92rem] font-bold text-white font-mono">{voucher.code}</span>
-                {voucher.isFree && (
-                  <span className="text-[0.65rem] font-bold uppercase tracking-[0.14em] px-1.5 py-0.5 rounded" style={{ background: "rgba(95,255,170,0.2)", color: "#5fffaa" }}>
-                    MIỄN PHÍ
-                  </span>
-                )}
-                <span className="text-[0.82rem]" style={{ color: "#5fffaa" }}>
-                  −{voucher.discount.toLocaleString("vi-VN")}đ
-                </span>
-              </div>
-              <button
-                type="button"
-                onClick={clearVoucher}
-                className="text-[0.78rem] font-semibold flex-shrink-0"
-                style={{ color: "rgba(255,255,255,0.55)" }}
-              >
-                Bỏ
-              </button>
-            </div>
-          ) : (
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={voucherInput}
-                onChange={(e) => setVoucherInput(e.target.value.toUpperCase())}
-                placeholder="VD: BANBE100"
-                className="flex-1 px-4 py-3 rounded-lg outline-none uppercase font-mono text-[0.95rem]"
-                style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)", color: "white" }}
-              />
-              <button
-                type="button"
-                onClick={applyVoucher}
-                disabled={voucherChecking || !voucherInput.trim()}
-                className="px-4 py-3 rounded-lg text-[0.85rem] font-semibold transition-all"
-                style={{
-                  background: "rgba(20,110,245,0.18)",
-                  border: "1px solid rgba(20,110,245,0.4)",
-                  color: "#7da9ff",
-                  opacity: voucherChecking || !voucherInput.trim() ? 0.5 : 1,
-                }}
-              >
-                {voucherChecking ? "..." : "Áp dụng"}
-              </button>
-            </div>
-          )}
-          {voucherError && (
-            <div className="mt-2 text-[0.78rem]" style={{ color: "#ff5a72" }}>
-              {voucherError}
-            </div>
-          )}
-        </div>
-
         {error && (
           <div className="rounded-lg px-4 py-3 text-[0.85rem]" style={{ background: "rgba(255,90,114,0.10)", border: "1px solid rgba(255,90,114,0.3)", color: "#ff5a72" }}>
             {error}
@@ -297,11 +236,7 @@ export default function CheckoutClient() {
           className="text-white font-bold text-[1rem] px-6 py-4 rounded-xl transition-all hover:scale-[1.01]"
           style={{ background: "var(--grad-primary)", boxShadow: "0 8px 24px rgba(20,110,245,0.4)", opacity: submitting ? 0.6 : 1 }}
         >
-          {submitting
-            ? "Đang xử lý..."
-            : voucher?.isFree
-              ? "Nhận file miễn phí — không cần chuyển khoản"
-              : `Tạo đơn ${finalTotal.toLocaleString("vi-VN")}đ — Chuyển khoản`}
+          {submitting ? "Đang xử lý..." : voucher?.isFree ? "Nhận file miễn phí" : "Mua hàng"}
         </button>
       </form>
 
@@ -353,7 +288,66 @@ export default function CheckoutClient() {
               <span>−{voucher.discount.toLocaleString("vi-VN")}đ</span>
             </div>
           )}
-          <div className="flex items-baseline justify-between mt-2 pt-3 border-t" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+
+          {/* Voucher input — applies directly to total below */}
+          <div className="mt-3 pt-3" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+            <div className="text-[0.72rem] font-semibold uppercase tracking-[0.14em] mb-2" style={{ color: "rgba(255,255,255,0.5)" }}>
+              Mã voucher
+            </div>
+            {voucher ? (
+              <div className="flex items-center justify-between gap-2 rounded-lg px-3 py-2" style={{ background: "rgba(95,255,170,0.08)", border: "1px solid rgba(95,255,170,0.3)" }}>
+                <div className="flex items-center gap-1.5 min-w-0 flex-wrap">
+                  <Icon name="check" size={12} color="#5fffaa" strokeWidth={3} />
+                  <span className="text-[0.82rem] font-bold text-white font-mono">{voucher.code}</span>
+                  {voucher.isFree && (
+                    <span className="text-[0.6rem] font-bold uppercase tracking-[0.14em] px-1.5 py-0.5 rounded" style={{ background: "rgba(95,255,170,0.2)", color: "#5fffaa" }}>
+                      MIỄN PHÍ
+                    </span>
+                  )}
+                </div>
+                <button
+                  type="button"
+                  onClick={clearVoucher}
+                  className="text-[0.72rem] font-semibold flex-shrink-0"
+                  style={{ color: "rgba(255,255,255,0.55)" }}
+                >
+                  Bỏ
+                </button>
+              </div>
+            ) : (
+              <div className="flex gap-1.5">
+                <input
+                  type="text"
+                  value={voucherInput}
+                  onChange={(e) => setVoucherInput(e.target.value.toUpperCase())}
+                  placeholder="VD: BANBE100"
+                  className="flex-1 min-w-0 px-3 py-2 rounded-lg outline-none uppercase font-mono text-[0.85rem]"
+                  style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)", color: "white" }}
+                />
+                <button
+                  type="button"
+                  onClick={applyVoucher}
+                  disabled={voucherChecking || !voucherInput.trim()}
+                  className="px-3 py-2 rounded-lg text-[0.78rem] font-semibold transition-all"
+                  style={{
+                    background: "rgba(20,110,245,0.18)",
+                    border: "1px solid rgba(20,110,245,0.4)",
+                    color: "#7da9ff",
+                    opacity: voucherChecking || !voucherInput.trim() ? 0.5 : 1,
+                  }}
+                >
+                  {voucherChecking ? "..." : "Áp dụng"}
+                </button>
+              </div>
+            )}
+            {voucherError && (
+              <div className="mt-1.5 text-[0.74rem]" style={{ color: "#ff5a72" }}>
+                {voucherError}
+              </div>
+            )}
+          </div>
+
+          <div className="flex items-baseline justify-between mt-3 pt-3 border-t" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
             <span className="text-white font-semibold">Tổng</span>
             <span className="text-[1.4rem] font-extrabold grad-text">
               {finalTotal.toLocaleString("vi-VN")}đ
