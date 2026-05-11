@@ -16,6 +16,7 @@ import ShareButtons from "@/components/blog/ShareButtons";
 import AuthorBio from "@/components/blog/AuthorBio";
 import ViewTracker from "@/components/blog/ViewTracker";
 import EngagementBar from "@/components/blog/EngagementBar";
+import NewsletterCTA from "@/components/blog/NewsletterCTA";
 import { notFound } from "next/navigation";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.nguyenducquang.website";
@@ -248,6 +249,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                 <div className="mt-10">
                   <ShareButtons url={pageUrl} title={post.title} />
                 </div>
+
+                {/* Newsletter signup */}
+                <NewsletterCTA source={`/blog/${slug}`} />
 
                 {/* Nav */}
                 <div className="mt-8 flex items-center justify-between flex-wrap gap-4">

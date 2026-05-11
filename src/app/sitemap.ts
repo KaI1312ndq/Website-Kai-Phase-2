@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { getPosts, getCaseStudies } from "@/lib/queries";
 import { QUIZZES, getQuizArchetypes } from "@/lib/quiz/compute";
 import { PILLARS } from "@/lib/pillars/config";
+import { isPillarSlug } from "@/lib/blog/metadata";
 
 // Force ISR with hourly refresh - keeps sitemap fast and reliable for crawlers
 export const revalidate = 3600;
@@ -24,12 +25,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = await safeFetch(() => getPosts(100), [] as any[]);
   const caseStudies = await safeFetch(() => getCaseStudies(), [] as any[]);
 
-  const postUrls = (posts || []).map((p: any) => ({
-    url: `${baseUrl}/blog/${p.slug.current}`,
-    lastModified: p.publishedAt ? new Date(p.publishedAt) : new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
-  }));
+  const postUrls = (posts || []).map((p: any) => {
+    const slug = p.slug.current as string;
+    const pillar = isPillarSlug(slug);
+    return {
+      url: `${baseUrl}/blog/${slug}`,
+      lastModified: p.publishedAt ? new Date(p.publishedAt) : new Date(),
+      changeFrequency: (pillar ? "weekly" : "monthly") as "weekly" | "monthly",
+      priority: pillar ? 0.9 : 0.6,
+    };
+  });
 
   const caseStudyUrls = (caseStudies || [])
     .filter((cs: any) => cs?.slug?.current)

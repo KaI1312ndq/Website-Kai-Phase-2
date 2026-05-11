@@ -8,6 +8,7 @@ import { productReviewType } from "./productReview";
 import { userCartType } from "./userCart";
 import { voucherType } from "./voucher";
 import { testimonialType, brandType, timelineType, settingsType } from "./others";
+import { newsletterSubscriberType } from "./newsletterSubscriber";
 
 export const schemaTypes = [
   settingsType,
@@ -23,4 +24,5 @@ export const schemaTypes = [
   testimonialType,
   brandType,
   timelineType,
+  newsletterSubscriberType,
 ];

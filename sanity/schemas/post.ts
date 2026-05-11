@@ -1,6 +1,15 @@
 import { defineField, defineType } from "sanity";
 
 const CATEGORY_LABELS: Record<string, string> = {
+  "tmdt-co-ban": "TMĐT 101",
+  "ads-scaling": "Ads & Scaling",
+  "unit-economics": "Unit Economics",
+  "mua-vu-sale": "Mùa vụ & Sale",
+  "team-leadership": "Team & Leadership",
+  "case-study-data": "Case Study & Data",
+  "tam-ly-mindset": "Tâm lý & Mindset",
+  "thue-cong-cu": "Thuế & Công cụ",
+  // legacy values (giữ backward compat - post cũ vẫn render)
   ecom: "Ecommerce",
   performance: "Performance",
   leadership: "Leadership",

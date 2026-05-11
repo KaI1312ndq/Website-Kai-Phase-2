@@ -2,15 +2,25 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import GradientBlobs from "@/components/GradientBlobs";
 import Link from "next/link";
-import { getPaginatedPosts, getFeaturedPosts } from "@/lib/queries";
+import { getPaginatedPosts, getFeaturedPosts, getPopularTags } from "@/lib/queries";
 import { urlFor } from "../../../sanity/lib/image";
 import { buildCoverUrl } from "@/lib/blog/cover-url";
 import BlogFilterBar from "@/components/blog/BlogFilterBar";
+import TagCloud from "@/components/blog/TagCloud";
 import Pagination from "@/components/blog/Pagination";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.nguyenducquang.website";
 
 const CATEGORY_LABELS: Record<string, string> = {
+  "tmdt-co-ban": "TMĐT 101",
+  "ads-scaling": "Ads & Scaling",
+  "unit-economics": "Unit Economics",
+  "mua-vu-sale": "Mùa vụ & Sale",
+  "team-leadership": "Team & Leadership",
+  "case-study-data": "Case Study & Data",
+  "tam-ly-mindset": "Tâm lý & Mindset",
+  "thue-cong-cu": "Thuế & Công cụ",
+  // legacy
   ecom: "Ecommerce",
   performance: "Performance",
   leadership: "Leadership",
@@ -45,7 +55,7 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
   const isFiltered = category !== "all" || search.length > 0 || tag.length > 0;
 
   // Fetch in parallel
-  const [paginated, featuredPosts] = await Promise.all([
+  const [paginated, featuredPosts, popularTags] = await Promise.all([
     getPaginatedPosts({
       page, perPage: 9,
       category: category === "all" ? undefined : category,
@@ -55,6 +65,7 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
       posts: [], total: 0, totalPages: 0, page: 1, perPage: 9, categoryCounts: {} as Record<string, number>,
     })),
     isFiltered || page > 1 ? Promise.resolve([] as any[]) : getFeaturedPosts().catch(() => [] as any[]),
+    getPopularTags(20).catch(() => [] as { tag: string; count: number }[]),
   ]);
 
   const { posts, total, totalPages, categoryCounts } = paginated;
@@ -174,6 +185,12 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
               currentCategory={category}
               currentSearch={search}
             />
+
+            {popularTags.length > 0 && (
+              <div className="mb-12 -mt-6">
+                <TagCloud tags={popularTags} currentTag={tag} />
+              </div>
+            )}
 
             {posts.length === 0 ? (
               <div className="text-center py-20 max-w-[480px] mx-auto">
