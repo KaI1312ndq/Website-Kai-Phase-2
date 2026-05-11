@@ -32,6 +32,50 @@ export const postType = defineType({
       of: [
         { type: "block" },
         { type: "image", options: { hotspot: true } },
+        {
+          type: "object",
+          name: "externalImage",
+          title: "Ảnh URL (Unsplash / external)",
+          fields: [
+            { name: "url", title: "URL ảnh", type: "url", validation: (r: any) => r.required() },
+            { name: "alt", title: "Alt text (SEO)", type: "string", validation: (r: any) => r.required() },
+            { name: "caption", title: "Chú thích (optional)", type: "string" },
+            { name: "credit", title: "Credit (vd: Photo by X on Unsplash)", type: "string" },
+          ],
+          preview: {
+            select: { url: "url", alt: "alt", caption: "caption" },
+            prepare: ({ url, alt, caption }: any) => ({ title: caption || alt || "Ảnh URL", subtitle: url }),
+          },
+        },
+        {
+          type: "object",
+          name: "tableBlock",
+          title: "Bảng dữ liệu",
+          fields: [
+            { name: "headers", title: "Header (tiêu đề cột)", type: "array", of: [{ type: "string" }] },
+            {
+              name: "rows",
+              title: "Rows (mỗi row là mảng cells)",
+              type: "array",
+              of: [
+                {
+                  type: "object",
+                  name: "row",
+                  fields: [{ name: "cells", title: "Cells", type: "array", of: [{ type: "string" }] }],
+                  preview: {
+                    select: { cells: "cells" },
+                    prepare: ({ cells }: any) => ({ title: Array.isArray(cells) ? cells.join(" · ") : "Row" }),
+                  },
+                },
+              ],
+            },
+            { name: "caption", title: "Caption (optional)", type: "string" },
+          ],
+          preview: {
+            select: { caption: "caption", rows: "rows" },
+            prepare: ({ caption, rows }: any) => ({ title: caption || "Bảng", subtitle: `${Array.isArray(rows) ? rows.length : 0} row` }),
+          },
+        },
       ],
     }),
     defineField({ name: "coverImage", title: "Ảnh bìa", type: "image", group: "meta", options: { hotspot: true } }),

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Heading } from "@/lib/blog/headings";
 import { urlFor } from "../../../sanity/lib/image";
+import { buildCoverUrl } from "@/lib/blog/cover-url";
 import BlogTOC from "./BlogTOC";
 import Icon, { type IconName } from "@/components/icons/Icon";
 import type { LinkSuggestion } from "@/lib/blog/internal-links";
@@ -180,15 +181,12 @@ export default function BlogSidebar({
           </div>
           <div className="flex flex-col gap-3">
             {relatedPosts.slice(0, 4).map((p) => {
-              const img = p.coverImage ? urlFor(p.coverImage).width(120).height(80).url() : null;
+              const sanityImg = p.coverImage ? urlFor(p.coverImage).width(120).height(80).url() : undefined;
+              const img = buildCoverUrl({ sanityUrl: sanityImg, title: p.title, category: p.category, width: 128, height: 88 });
               return (
                 <Link key={p._id} href={`/blog/${p.slug.current}`} className="flex gap-3 items-start group">
                   <div className="w-[64px] h-[44px] flex-shrink-0 rounded-md overflow-hidden flex items-center justify-center" style={{ background: "var(--grad-primary-soft)" }}>
-                    {img ? (
-                      <img src={img} alt="" className="w-full h-full object-cover" />
-                    ) : (
-                      <span className="text-[0.55rem] font-bold uppercase tracking-[0.1em] grad-text">{p.category?.slice(0, 4) || "BLOG"}</span>
-                    )}
+                    <img src={img} alt="" className="w-full h-full object-cover" loading="lazy" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="text-[0.82rem] font-medium leading-snug text-white group-hover:text-[#7da9ff] transition-colors line-clamp-2">{p.title}</div>

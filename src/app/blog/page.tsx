@@ -4,6 +4,7 @@ import GradientBlobs from "@/components/GradientBlobs";
 import Link from "next/link";
 import { getPaginatedPosts, getFeaturedPosts } from "@/lib/queries";
 import { urlFor } from "../../../sanity/lib/image";
+import { buildCoverUrl } from "@/lib/blog/cover-url";
 import BlogFilterBar from "@/components/blog/BlogFilterBar";
 import Pagination from "@/components/blog/Pagination";
 
@@ -213,11 +214,18 @@ function FeaturedPostsGrid({ posts }: { posts: any[] }) {
       {/* Primary */}
       <Link href={`/blog/${primary.slug.current}`} className="group glass overflow-hidden flex flex-col">
         <div className="aspect-[16/10] overflow-hidden flex items-center justify-center" style={{ background: "var(--grad-primary-soft)" }}>
-          {primary.coverImage ? (
-            <img src={urlFor(primary.coverImage).width(900).height(560).url()} alt={primary.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-          ) : (
-            <span className="text-[0.85rem] font-semibold uppercase tracking-[0.16em] grad-text">{primary.category || "Insights"}</span>
-          )}
+          <img
+            src={buildCoverUrl({
+              sanityUrl: primary.coverImage ? urlFor(primary.coverImage).width(900).height(560).url() : undefined,
+              title: primary.title,
+              category: primary.category,
+              width: 900,
+              height: 560,
+            })}
+            alt={primary.title}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            loading="lazy"
+          />
         </div>
         <div className="p-7 flex flex-col flex-1">
           <div className="flex items-center gap-2 mb-3 flex-wrap">
@@ -238,11 +246,18 @@ function FeaturedPostsGrid({ posts }: { posts: any[] }) {
         {rest.slice(0, 2).map((p: any) => (
           <Link key={p._id} href={`/blog/${p.slug.current}`} className="group glass overflow-hidden flex flex-row flex-1">
             <div className="w-[40%] flex-shrink-0 flex items-center justify-center overflow-hidden" style={{ background: "var(--grad-primary-soft)" }}>
-              {p.coverImage ? (
-                <img src={urlFor(p.coverImage).width(400).height(360).url()} alt={p.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              ) : (
-                <span className="text-[0.65rem] font-semibold uppercase tracking-[0.14em] grad-text">{p.category || "Insights"}</span>
-              )}
+              <img
+                src={buildCoverUrl({
+                  sanityUrl: p.coverImage ? urlFor(p.coverImage).width(400).height(360).url() : undefined,
+                  title: p.title,
+                  category: p.category,
+                  width: 400,
+                  height: 360,
+                })}
+                alt={p.title}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
             </div>
             <div className="p-5 flex flex-col flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-2 flex-wrap">
@@ -263,11 +278,18 @@ function PostCard({ post }: { post: any }) {
   return (
     <Link href={`/blog/${post.slug.current}`} className="group glass overflow-hidden flex flex-col">
       <div className="aspect-[16/9] flex items-center justify-center overflow-hidden" style={{ background: "var(--grad-primary-soft)" }}>
-        {post.coverImage ? (
-          <img src={urlFor(post.coverImage).width(600).height(338).url()} alt={post.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-        ) : (
-          <span className="text-[0.72rem] font-semibold uppercase tracking-[0.16em] grad-text">{post.category || "Insights"}</span>
-        )}
+        <img
+          src={buildCoverUrl({
+            sanityUrl: post.coverImage ? urlFor(post.coverImage).width(600).height(338).url() : undefined,
+            title: post.title,
+            category: post.category,
+            width: 600,
+            height: 338,
+          })}
+          alt={post.title}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          loading="lazy"
+        />
       </div>
       <div className="p-6 flex flex-col flex-1">
         <div className="flex items-center gap-2 mb-3 flex-wrap">

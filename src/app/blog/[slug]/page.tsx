@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { getPost, getPosts, getRelatedPosts, getCommentsForPost, getMostReadPosts } from "@/lib/queries";
 import { getRelevantLinks } from "@/lib/blog/internal-links";
 import { urlFor } from "../../../../sanity/lib/image";
+import { buildCoverUrl } from "@/lib/blog/cover-url";
 import { extractHeadings } from "@/lib/blog/headings";
 import { extractFAQs, buildFAQPageSchema } from "@/lib/blog/faq-extractor";
 import BlogSidebar from "@/components/blog/BlogSidebar";
@@ -71,7 +72,13 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     ]);
   } catch {}
 
-  const image = post.coverImage ? urlFor(post.coverImage).width(1600).height(900).url() : undefined;
+  const image = buildCoverUrl({
+    sanityUrl: post.coverImage ? urlFor(post.coverImage).width(1600).height(900).url() : undefined,
+    title: post.title || "",
+    category: post.category,
+    width: 1600,
+    height: 900,
+  });
   const headings = extractHeadings(post.body || []);
   const relevantLinks = getRelevantLinks(post.category, post.tags || [], post.title || "");
   const faqs = extractFAQs(post.body || []);
@@ -281,11 +288,18 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                 {relatedPosts.slice(0, 3).map((p: any) => (
                   <Link key={p._id} href={`/blog/${p.slug.current}`} className="group glass overflow-hidden flex flex-col">
                     <div className="aspect-[16/9] flex items-center justify-center overflow-hidden" style={{ background: "var(--grad-primary-soft)" }}>
-                      {p.coverImage ? (
-                        <img src={urlFor(p.coverImage).width(600).height(338).url()} alt={p.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                      ) : (
-                        <span className="text-[0.72rem] font-semibold uppercase tracking-[0.16em] grad-text">{p.category || "Insights"}</span>
-                      )}
+                      <img
+                        src={buildCoverUrl({
+                          sanityUrl: p.coverImage ? urlFor(p.coverImage).width(600).height(338).url() : undefined,
+                          title: p.title,
+                          category: p.category,
+                          width: 600,
+                          height: 338,
+                        })}
+                        alt={p.title}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        loading="lazy"
+                      />
                     </div>
                     <div className="p-6 flex flex-col flex-1">
                       <div className="flex items-center gap-2 mb-3">

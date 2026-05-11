@@ -8,6 +8,7 @@ import Icon, { type IconName } from "@/components/icons/Icon";
 import { PILLARS, getPillar } from "@/lib/pillars/config";
 import { getPostsByCategories } from "@/lib/queries";
 import { urlFor } from "../../../sanity/lib/image";
+import { buildCoverUrl } from "@/lib/blog/cover-url";
 import { QUIZZES } from "@/lib/quiz/compute";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.nguyenducquang.website";
@@ -220,11 +221,18 @@ export default async function PillarPage({ params }: { params: Promise<{ pillar:
                       {cluster.posts.map((post: any) => (
                         <Link key={post._id} href={`/blog/${post.slug.current}`} className="group glass overflow-hidden flex flex-col">
                           <div className="aspect-[16/9] flex items-center justify-center overflow-hidden" style={{ background: "var(--grad-primary-soft)" }}>
-                            {post.coverImage ? (
-                              <img src={urlFor(post.coverImage).width(600).height(338).url()} alt={post.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                            ) : (
-                              <span className="text-[0.7rem] font-semibold uppercase tracking-[0.16em]" style={{ color: config.color }}>{post.category}</span>
-                            )}
+                            <img
+                              src={buildCoverUrl({
+                                sanityUrl: post.coverImage ? urlFor(post.coverImage).width(600).height(338).url() : undefined,
+                                title: post.title,
+                                category: post.category,
+                                width: 600,
+                                height: 338,
+                              })}
+                              alt={post.title}
+                              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                              loading="lazy"
+                            />
                           </div>
                           <div className="p-5 flex flex-col flex-1">
                             <div className="flex items-center gap-2 mb-2">
@@ -333,11 +341,18 @@ export default async function PillarPage({ params }: { params: Promise<{ pillar:
                 {otherPosts.map((p: any) => (
                   <Link key={p._id} href={`/blog/${p.slug.current}`} className="group glass overflow-hidden flex flex-col">
                     <div className="aspect-[16/9] flex items-center justify-center overflow-hidden" style={{ background: "var(--grad-primary-soft)" }}>
-                      {p.coverImage ? (
-                        <img src={urlFor(p.coverImage).width(600).height(338).url()} alt={p.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                      ) : (
-                        <span className="text-[0.72rem] font-semibold uppercase tracking-[0.16em]" style={{ color: config.color }}>{p.category}</span>
-                      )}
+                      <img
+                        src={buildCoverUrl({
+                          sanityUrl: p.coverImage ? urlFor(p.coverImage).width(600).height(338).url() : undefined,
+                          title: p.title,
+                          category: p.category,
+                          width: 600,
+                          height: 338,
+                        })}
+                        alt={p.title}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        loading="lazy"
+                      />
                     </div>
                     <div className="p-5">
                       <h4 className="text-[0.95rem] font-semibold leading-snug tracking-tight text-white group-hover:text-[#7da9ff] transition-colors line-clamp-3">{p.title}</h4>

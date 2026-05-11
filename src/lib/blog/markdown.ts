@@ -1,23 +1,44 @@
 /**
- * Convert lightweight markdown content into Sanity Portable Text blocks.
+ * Convert lightweight markdown into Sanity Portable Text blocks.
  * Supports:
- *   - "## " H2 heading
- *   - "### " H3 heading
+ *   - "## " H2 / "### " H3 headings
  *   - "> " blockquote
  *   - "**bold**" inline marks
- *   - Plain paragraphs separated by blank lines
- * Bullets: prefix with "• " — rendered as normal blocks (schema doesn't have list type).
+ *   - "![alt](url)" standalone-line images → externalImage block
+ *   - "[caption](!url)" — image with caption: `![alt|caption](url)`
+ *   - Markdown table: header row + `|---|...|` divider + body rows → tableBlock
+ *   - Plain paragraphs (separated by blank line)
+ * Bullets: prefix with "• " — paragraph block (schema doesn't have list type).
  */
 
 type Span = { _type: "span"; _key: string; text: string; marks: string[] };
 
-type Block = {
+type TextBlock = {
   _type: "block";
   _key: string;
   style: "normal" | "h2" | "h3" | "blockquote";
   markDefs: never[];
   children: Span[];
 };
+
+type ExternalImage = {
+  _type: "externalImage";
+  _key: string;
+  url: string;
+  alt: string;
+  caption?: string;
+  credit?: string;
+};
+
+type TableBlock = {
+  _type: "tableBlock";
+  _key: string;
+  headers: string[];
+  rows: Array<{ _type: "row"; _key: string; cells: string[] }>;
+  caption?: string;
+};
+
+export type BlogBlock = TextBlock | ExternalImage | TableBlock;
 
 function parseInline(text: string, keyPrefix: string): Span[] {
   const spans: Span[] = [];
@@ -41,7 +62,57 @@ function parseInline(text: string, keyPrefix: string): Span[] {
   return spans;
 }
 
-export function mdToBlocks(prefix: string, markdown: string): Block[] {
+/** Match standalone-line image syntax: ![alt](url) or ![alt|caption](url) or ![alt|caption|credit](url) */
+const IMAGE_RE = /^!\[([^\]]*)\]\(([^)]+)\)$/;
+
+/** Detect if a section is a markdown table — at least 2 lines, header + |--- divider */
+function parseTable(section: string, key: string): TableBlock | null {
+  const lines = section.split("\n").map((l) => l.trim()).filter(Boolean);
+  if (lines.length < 2) return null;
+  const headerLine = lines[0];
+  const dividerLine = lines[1];
+  // Header line must start + end with | and contain at least 1 pipe
+  if (!headerLine.startsWith("|") || !headerLine.endsWith("|")) return null;
+  // Divider line must be like |---|---|
+  if (!/^\|(?:\s*:?-+:?\s*\|)+$/.test(dividerLine)) return null;
+
+  const splitCells = (l: string) => l.replace(/^\||\|$/g, "").split("|").map((c) => c.trim());
+  const headers = splitCells(headerLine);
+  const bodyLines = lines.slice(2);
+  const rows = bodyLines
+    .filter((l) => l.startsWith("|") && l.endsWith("|"))
+    .map((l, i) => ({ _type: "row" as const, _key: `${key}r${i}`, cells: splitCells(l) }));
+
+  if (rows.length === 0) return null;
+
+  return {
+    _type: "tableBlock",
+    _key: key,
+    headers,
+    rows,
+  };
+}
+
+function parseImage(section: string, key: string): ExternalImage | null {
+  const trimmed = section.trim();
+  const m = trimmed.match(IMAGE_RE);
+  if (!m) return null;
+  const altRaw = m[1] || "";
+  const url = m[2] || "";
+  if (!url) return null;
+  // Allow "alt|caption|credit" inside [...]
+  const altParts = altRaw.split("|").map((s) => s.trim());
+  return {
+    _type: "externalImage",
+    _key: key,
+    url,
+    alt: altParts[0] || "",
+    ...(altParts[1] ? { caption: altParts[1] } : {}),
+    ...(altParts[2] ? { credit: altParts[2] } : {}),
+  };
+}
+
+export function mdToBlocks(prefix: string, markdown: string): BlogBlock[] {
   const sections = markdown
     .trim()
     .split(/\n\s*\n/)
@@ -50,7 +121,19 @@ export function mdToBlocks(prefix: string, markdown: string): Block[] {
 
   return sections.map((sec, i) => {
     const key = `${prefix}${i}`;
-    let style: Block["style"] = "normal";
+
+    // Image first (single line)
+    const img = parseImage(sec, key);
+    if (img) return img;
+
+    // Table next (multi-line)
+    if (sec.includes("|") && sec.includes("\n")) {
+      const tbl = parseTable(sec, key);
+      if (tbl) return tbl;
+    }
+
+    // Heading / blockquote / paragraph
+    let style: TextBlock["style"] = "normal";
     let text = sec;
     if (sec.startsWith("## ")) {
       style = "h2";
@@ -68,6 +151,6 @@ export function mdToBlocks(prefix: string, markdown: string): Block[] {
       style,
       markDefs: [],
       children: parseInline(text, key),
-    };
+    } satisfies TextBlock;
   });
 }
