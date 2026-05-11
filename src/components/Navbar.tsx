@@ -12,7 +12,8 @@ type NavLink = { label: string; href: string; submenu?: Submenu[]; submenuIcon?:
 const links: NavLink[] = [
   { label: "Về tôi", href: "/#about" },
   { label: "Case Study", href: "/#casestudies" },
-  { label: "Khoá học", href: "/ecom-foundation" },
+  { label: "Khoá học", href: "/courses" },
+  { label: "Tài liệu", href: "/resources" },
   {
     label: "Tools",
     href: "/tools",
