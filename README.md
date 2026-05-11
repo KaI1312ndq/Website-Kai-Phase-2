@@ -2,14 +2,17 @@
 
 Personal brand site cho **Nguyễn Đức Quảng** (Ecom Growth Expert · 60+ project Marketing/Ecom).
 
-Site bao gồm: Homepage, Khoá học Ecom Foundation, 3 Tools (Tính phí sàn / ROAS Calculator / P&L Ecom), 4 Quiz (Lãnh đạo / MBTI / Hướng nghiệp / Chỉ số Ads), 4 Pillar hub pages (Ecom / Index / Self-Discovery / Career), Blog 50+ bài với sidebar TOC + comments + RSS, Case Studies, **Shop bán sản phẩm số** (Bank transfer + Resend email auto-delivery + Studio action), Custom 404, SVG icons.
+**Phạm vi:** Homepage, Khoá học Ecom Foundation, 4 Tools (Phí sàn / ROAS / P&L / Thuế TNCN), **10 Quiz chia 4 nhóm** (Tính cách / Leadership / Hướng nghiệp / Kiến thức), 4 Pillar hub pages, **Blog 74 bài** (TMĐT 101 + Ads scaling + Unit Economics + Mùa vụ + Team + Case Study + Psychology + Tax + Quiz support) với TOC sidebar + comments + RSS + tag cloud + newsletter signup, Case Studies, **Shop** bán sản phẩm số (VietQR + Resend auto-delivery), Custom 404, SVG icons.
+
+---
 
 ## 📜 Conventions
 
 - **Không emoji trên user-facing UI** — bắt buộc SVG icons (`<Icon name="..." />`). Studio admin OK dùng emoji.
-- **Mỗi commit phải update README.md** — reflect changes (routes mới, env mới, schema mới, conventions mới).
+- **Không dùng em-dash `—` hoặc Unicode arrow `→`** trên site — feel AI-generated. Dùng `-` và `->`.
+- **Mỗi commit update README.md** — reflect changes (routes/env/schema/conventions mới).
 - Container widths: Tools 1400px, Blog/Quiz/Shop/Pillar 1100-1300px.
-- Dark theme palette: `#5fffaa` correct/green, `#ff5a72` wrong/red, `#ffd479` warn/yellow, `#7da9ff` info/blue.
+- Dark theme palette: `#5fffaa` green, `#ff5a72` red, `#ffd479` yellow, `#7da9ff` blue, `#a78bff` purple.
 
 ---
 
@@ -18,17 +21,16 @@ Site bao gồm: Homepage, Khoá học Ecom Foundation, 3 Tools (Tính phí sàn 
 | Layer | Tech |
 |---|---|
 | Framework | **Next.js 15** (App Router, Server Components, Static + ISR) |
-| Styling | **Tailwind CSS 4** + custom CSS vars cho theme dark blue gradient |
-| CMS | **Sanity v3** (embedded `/studio` + custom desk structure + custom document actions) |
-| Animations | Native CSS + IntersectionObserver (lightweight Reveal) + Framer Motion legacy |
+| Styling | **Tailwind CSS 4** + custom CSS vars dark blue gradient |
+| CMS | **Sanity v3** embedded `/studio` |
+| Auth | **Clerk** (Email + Google) |
 | Forms | **Web3Forms** (contact + course apply) |
-| Email | **Resend** (transactional + webhooks for tracking) |
-| Payment | **VietQR / Napas247** (Techcombank bank transfer + auto QR generation) |
+| Email | **Resend** (transactional + webhooks) + **Newsletter subscribers** |
+| Payment | **VietQR / Napas247** (Techcombank auto-gen QR) |
 | Analytics | **Vercel Analytics** + **GA4** custom events |
-| Image | **Sanity CDN** + Next.js Image Optimization (AVIF/WebP) |
+| Image | **Sanity CDN** + Unsplash inline + dynamic `/api/blog-cover` (Satori) |
 | Hosting | **Vercel** (auto deploy on push) |
-| Domain | Tenten → DNS Vercel → `nguyenducquang.website` (non-www canonical) |
-| Search Console | IndexNow API for fast index notification |
+| Domain | `nguyenducquang.website` (non-www canonical) |
 
 ---
 
@@ -36,281 +38,272 @@ Site bao gồm: Homepage, Khoá học Ecom Foundation, 3 Tools (Tính phí sàn 
 
 ```
 .
-├── README.md                          # File này
-├── package.json
-├── next.config.js
-├── tailwind.config.ts
-├── tsconfig.json
-├── sanity.config.ts                   # Sanity Studio config (desk structure)
+├── README.md                            # File này
+├── middleware.ts                        # Clerk middleware (auth routes)
+├── sanity.config.ts                     # Sanity Studio config
 │
-├── public/                            # Static assets (favicon, OG fallback)
-│
-├── sanity/
-│   ├── lib/
-│   │   ├── client.ts                  # Sanity read client (CDN)
-│   │   └── image.ts                   # urlFor() image builder
-│   └── schemas/                       # Document types
-│       ├── index.ts                   # Schema registry
-│       ├── post.ts                    # Blog posts (title, body, tags, viewCount...)
-│       ├── caseStudy.ts               # Portfolio case studies
-│       ├── comment.ts                 # Blog comments (auto-approved)
-│       ├── quizLead.ts                # Quiz leads (name, email, phone, result)
-│       └── others.ts                  # Settings, Brand, Testimonial, Timeline
+├── sanity/schemas/                      # 13 document types
+│   ├── post.ts                          # Blog (title, body, tags, viewCount, externalImage, tableBlock)
+│   ├── caseStudy.ts
+│   ├── comment.ts
+│   ├── quizLead.ts
+│   ├── product.ts + productReview.ts
+│   ├── order.ts + voucher.ts + userCart.ts
+│   ├── newsletterSubscriber.ts          # NEW - email signup
+│   └── others.ts                        # Settings, Brand, Testimonial, Timeline
 │
 └── src/
-    ├── app/                           # Next.js App Router
-    │   ├── layout.tsx                 # Root layout (Navbar, Footer, fonts, GA4, Pixel)
-    │   ├── page.tsx                   # Homepage (server) → HomeClient.tsx (client)
-    │   ├── HomeClient.tsx
-    │   ├── opengraph-image.tsx        # Default OG
-    │   ├── globals.css                # Theme, prose, utilities
-    │   ├── sitemap.ts                 # Auto sitemap (posts + case studies + quiz results)
-    │   ├── robots.ts
+    ├── app/                             # Next.js App Router
+    │   ├── layout.tsx                   # Root (Navbar, Footer, fonts, GA4)
+    │   ├── page.tsx + HomeClient.tsx    # Homepage
+    │   ├── sitemap.ts                   # Auto sitemap (posts + categories + quiz + tools)
     │   │
-    │   ├── ecom-foundation/           # Khoá học landing
-    │   │   ├── page.tsx
-    │   │   ├── Calculator.tsx         # Inline tool trong landing
-    │   │   └── opengraph-image.tsx
+    │   ├── ecom-foundation/             # Khoá học landing
+    │   ├── courses/ + resources/        # Khoá học hub + Tài nguyên hub
     │   │
     │   ├── tools/
-    │   │   ├── page.tsx               # /tools — tool grid
-    │   │   ├── tinh-phi-san/          # Tool tính phí sàn TikTok & Shopee
-    │   │   ├── roas-calculator/       # ROAS break-even calculator
-    │   │   └── pnl-ecom/              # P&L 5 tầng Net Revenue → EBITDA
+    │   │   ├── tinh-phi-san/            # Tool tính phí Shopee/TikTok
+    │   │   ├── roas-calculator/         # Break-even ROAS calc
+    │   │   ├── pnl-ecom/                # P&L 5 tầng + in PDF
+    │   │   └── tinh-thue-tncn/          # Thuế TNCN 2026 (5 bậc + so sánh 2025)
     │   │
     │   ├── quiz/
-    │   │   ├── page.tsx               # /quiz — quiz grid
-    │   │   └── [slug]/
-    │   │       ├── page.tsx           # Quiz runner page
-    │   │       └── result/
-    │   │           └── [type]/
-    │   │               ├── page.tsx           # SEO landing per archetype (27 pages)
-    │   │               └── opengraph-image.tsx# Dynamic OG per type
+    │   │   ├── page.tsx                 # /quiz - 4 sections grouped + quick-jump chips
+    │   │   ├── [slug]/page.tsx          # Quiz runner page
+    │   │   ├── [slug]/result/[type]/    # SEO landing per archetype
+    │   │   └── category/[slug]/         # NEW - 4 category landing pages
     │   │
     │   ├── blog/
-    │   │   ├── page.tsx               # /blog — list + featured + filter + pagination
-    │   │   ├── [slug]/page.tsx        # Blog detail (TOC sidebar + comments)
-    │   │   └── feed.xml/route.ts      # RSS feed
+    │   │   ├── page.tsx                 # List + filter + tag cloud + featured
+    │   │   ├── [slug]/page.tsx          # Detail (TOC + comments + share + newsletter CTA)
+    │   │   └── feed.xml/                # RSS feed
     │   │
-    │   ├── case-study/
-    │   │   └── [slug]/page.tsx        # Case study detail
+    │   ├── case-study/[slug]/
+    │   ├── shop/                        # Shop + cart + checkout + order tracking
+    │   ├── account/ + sign-in/ + sign-up/
+    │   ├── studio/[[...tool]]/          # Embedded Sanity Studio
     │   │
-    │   ├── studio/
-    │   │   └── [[...tool]]/page.tsx   # Embedded Sanity Studio at /studio
-    │   │
-    │   └── api/
-    │       ├── contact/route.ts             # Contact form (Web3Forms proxy)
-    │       ├── course-apply/route.ts        # Course apply form
-    │       ├── comments/route.ts            # POST blog comment (auto-approved)
-    │       ├── blog-engagement/route.ts     # View/Like/Unlike (debounce per IP)
-    │       ├── quiz-leads/route.ts          # POST quiz lead (gated MBTI/Career)
-    │       ├── seed-blog/route.ts           # (legacy) seed 2 initial blog posts
-    │       ├── seed-blog-bulk/route.ts      # Seed all 54 blog posts (Group A + B-F + Psychology)
-    │       ├── seed-sanity/route.ts         # Seed initial Sanity data (brands, testimonials)
-    │       └── diagnostic/route.ts          # Health check Resend/Web3Forms
+    │   └── api/                         # 20+ API routes
+    │       ├── contact, course-apply
+    │       ├── comments, blog-engagement (views/likes)
+    │       ├── quiz-leads, newsletter    # Lead capture
+    │       ├── orders/, cart, vouchers/
+    │       ├── webhooks/resend           # Email event tracking
+    │       ├── notify-google             # IndexNow Bing/Yandex
+    │       ├── blog-cover                # Dynamic OG image (Satori, category-based palettes)
+    │       └── seed-*                    # Seed blog/products/sanity (auth: SEED_SECRET)
     │
     ├── components/
-    │   ├── Navbar.tsx                       # Header với dropdown Tools + Test
+    │   ├── Navbar.tsx                   # Header với 4 dropdown menus
     │   ├── Footer.tsx
-    │   ├── ContactForm.tsx
-    │   ├── ApplyForm.tsx
-    │   ├── BrandsCarousel.tsx               # 5-row marquee 85 brands
-    │   ├── CohortStatus.tsx                 # Apply status block
-    │   ├── LeadPopup.tsx                    # Exit-intent popup
-    │   ├── Reveal.tsx                       # Scroll-triggered animation wrapper
-    │   ├── PageTransition.tsx               # Top loader + fade-in route change
-    │   ├── GradientBlobs.tsx                # Decorative blobs
-    │   ├── Analytics.tsx                    # GA4 + custom events
-    │   │
-    │   ├── icons/
-    │   │   └── Icon.tsx                     # 27 SVG icons (Lucide-style)
+    │   ├── icons/Icon.tsx               # 30+ SVG icons
     │   │
     │   ├── blog/
-    │   │   ├── BlogSidebar.tsx              # Sticky right sidebar (TOC + Tools + Course + Most Read)
-    │   │   ├── BlogTOC.tsx                  # Auto TOC with scroll-spy
-    │   │   ├── BlogFilterBar.tsx            # Search input + category chips
-    │   │   ├── Pagination.tsx               # Page numbers with ellipsis
-    │   │   ├── PortableTextWithIds.tsx      # PortableText with H2/H3 anchor IDs
-    │   │   ├── ShareButtons.tsx             # FB / X / Zalo / Copy
-    │   │   ├── ReadingProgress.tsx          # Sticky top progress bar
-    │   │   ├── EngagementBar.tsx            # Like + Bookmark + Comment count + Views
-    │   │   ├── ViewTracker.tsx              # Auto-increment view count
-    │   │   ├── AuthorBio.tsx                # Author card cuối bài
-    │   │   └── CommentSection.tsx           # Comments list + form (auto-approve)
+    │   │   ├── BlogSidebar.tsx + BlogTOC.tsx + Pagination.tsx
+    │   │   ├── BlogFilterBar.tsx + TagCloud.tsx
+    │   │   ├── PortableTextWithIds.tsx  # Render Sanity body (H2 anchor + link mark + table + image)
+    │   │   ├── ShareButtons.tsx + ReadingProgress.tsx
+    │   │   ├── EngagementBar.tsx + ViewTracker.tsx
+    │   │   ├── CommentSection.tsx + AuthorBio.tsx
+    │   │   └── NewsletterCTA.tsx        # NEW - subscribe form cuối bài
     │   │
     │   └── quiz/
-    │       ├── QuizRunner.tsx               # Stateful runner (intro/running/gate/result)
-    │       ├── QuizResult.tsx               # Result display
-    │       └── LeadCaptureGate.tsx          # Email/phone form before result
+    │       ├── QuizRunner.tsx           # Stateful (intro/running/gate/result), localStorage resume
+    │       ├── QuizResult.tsx           # Archetype + dimension bars (multi-score) + wing
+    │       ├── KnowledgeQuizRunner.tsx + KnowledgeQuizResult.tsx
+    │       └── LeadCaptureGate.tsx      # Email/phone form trước khi xem result
     │
     └── lib/
-        ├── queries.ts                       # All Sanity GROQ queries
+        ├── queries.ts                   # Sanity GROQ queries
         │
         ├── blog/
-        │   ├── markdown.ts                  # MD-lite → Sanity Portable Text
-        │   ├── headings.ts                  # Extract H2/H3 + Vietnamese-aware slugify
-        │   ├── group-a-content.ts           # 10 fully-written posts (TikTok/Shopee 2026)
-        │   ├── groups-bcdef-drafts.ts       # 40 draft posts (outline only)
-        │   └── psychology-content.ts        # 4 Psychology/Career posts (MBTI, Leadership)
+        │   ├── markdown.ts              # MD-lite → Portable Text (inline links + bold + tables + images)
+        │   ├── headings.ts + faq-extractor.ts
+        │   ├── internal-links.ts        # Auto-suggest tool/quiz/course by category + tag
+        │   ├── metadata.ts              # 74 blog ID → {category, tags} map + PILLAR_BLOG_IDS
+        │   ├── auto-image.ts            # Inject Unsplash inline cho post thiếu image
+        │   ├── cover-url.ts             # Fallback từ Sanity cover sang dynamic /api/blog-cover
+        │   ├── group-a-content.ts       # 10 bài TMĐT 101
+        │   ├── batch-2-3-content.ts     # 20 bài Ads + Team + Mùa vụ (Batch 2+3)
+        │   ├── batch-4-content.ts       # 20 bài Unit Economics + Case Study (Batch 4)
+        │   ├── quiz-tier-d-content.ts   # 15 bài support 5 quiz Tier D
+        │   ├── psychology-content.ts    # 4 bài MBTI/Leadership cũ
+        │   ├── tncn-cluster.ts          # 5 bài thuế TNCN
+        │   └── groups-bcdef-drafts.ts   # 40 outline drafts (legacy, đã override bởi Batch 2-3-4)
         │
         ├── quiz/
-        │   ├── types.ts                     # TS types (QuizConfig, QuizQuestion, QuizArchetype)
-        │   ├── compute.ts                   # Quiz registry + scoring logic
-        │   └── data/
-        │       ├── leadership.ts            # 15 Q + 6 styles (Goleman + Lewin)
-        │       ├── mbti-questions.ts        # 70 Q (auto-mapped position → dimension)
-        │       ├── mbti-types.ts            # 16 types descriptions
-        │       └── career.ts                # 12 Q + 5 archetypes (with real VN salary)
+        │   ├── types.ts                 # QuizConfig, QuizQuestion, QuizArchetype, MultiScoreResult
+        │   ├── compute.ts               # QUIZZES registry + QUIZ_CATEGORIES + scoring helpers
+        │   └── data/                    # 11 quiz data files (5 cũ + 5 mới + 1 knowledge)
+        │       ├── leadership.ts (15Q) + mbti-questions.ts (70Q) + career.ts (12Q)
+        │       ├── ad-metrics.ts (30Q) + content-frameworks.ts (30Q)
+        │       └── disc.ts (24Q) + eq.ts (35Q) + big-five.ts (50Q)
+        │           + enneagram.ts (45Q) + dark-triad.ts (27Q)
         │
-        ├── fees/                            # JSON data: TikTok 2039 rows, Shopee 1346/1348
-        ├── pnl/compute.ts                   # P&L 5-tier formula
-        └── roas/compute.ts                  # ROAS break-even formula
+        ├── fees/                        # TikTok 2039 rows, Shopee 1346/1348 rows
+        ├── pnl/compute.ts               # P&L 5-tier formula
+        ├── roas/compute.ts              # ROAS break-even
+        ├── tax/compute.ts               # TNCN 2026 5-tier
+        └── pillars/config.ts            # 4 pillar hub pages
 ```
 
 ---
 
-## 🌐 Routes & Page Map
+## 🌐 Routes Map (full)
 
 ### Public pages
 | Route | Type | Description |
 |---|---|---|
-| `/` | Static | Homepage (Hero + 11 sections + brands) |
-| `/ecom-foundation` | Static | Khoá học landing với apply form |
-| `/tools` | Static | Tool grid |
-| `/tools/tinh-phi-san` | Static | Tool tính phí Mall vs Non-Mall |
-| `/tools/roas-calculator` | Static | Break-even ROAS calc |
-| `/tools/pnl-ecom` | Static | P&L 5-tier với in PDF |
-| `/quiz` | Static | Quiz grid |
-| `/quiz/phong-cach-lanh-dao` | Static | Test 6 phong cách (15 Q personality) |
-| `/quiz/mbti` | Static | Test MBTI 16 kiểu (70 Q, gated email/SĐT) |
-| `/quiz/huong-nghiep-marketing` | Static | Test career Marketing (12 Q, gated) |
-| `/quiz/chi-so-quang-cao` | Static | Test kiến thức Chỉ số Ads (30 Q, timer 30s, knowledge format) |
-| `/quiz/[slug]/result/[type]` | Static (27 pages) | SEO landing cho từng archetype |
-| `/ecom`, `/index`, `/self-discovery`, `/career` | Static, ISR 1h | 4 Pillar hub pages — auto pull cluster bài blog |
-| `/shop` | ISR 60s | Shop landing — list products + checkout cart |
-| `/shop/[slug]` | SSG (per product) | Product detail (gallery + reviews + USP + buy) |
-| `/shop/order/[orderNumber]` | Dynamic | Order status với VietQR + auto-poll 15s |
-| `/shop/download/[token]` | Dynamic | File download landing (verify token + expiry 30d) |
-| `/blog` | Dynamic (?page,?category,?q,?tag) | Blog list with filter + pagination + featured |
-| `/blog/[slug]` | ISR 60s | Blog detail với sidebar TOC + comments + share |
+| `/` | Static | Homepage (Hero + 11 sections + 85 brands marquee) |
+| `/ecom-foundation` | Static | Khoá học landing |
+| `/courses`, `/resources` | Static | Hub khoá học + tài nguyên |
+| **`/tools`** + 4 tool pages | Static | Phí sàn, ROAS, P&L, TNCN 2026 |
+| **`/quiz`** | Static | Hub với 4 section grouped + quick-jump |
+| **`/quiz/category/[slug]`** | Static (4 pages) | Landing 4 nhóm: ban-than, leadership, huong-nghiep, kien-thuc |
+| `/quiz/[slug]` | Static (10 quiz) | Quiz runner |
+| `/quiz/[slug]/result/[type]` | Static | SEO landing per archetype (40+ pages) |
+| **4 Pillar hub** (`/ecom`, `/index`, `/self-discovery`, `/career`) | ISR 1h | Auto pull cluster bài blog |
+| **`/blog`** | Dynamic | List + featured + filter (category + tag) + pagination + tag cloud |
+| **`/blog/[slug]`** | ISR 60s | Detail với TOC sidebar + comments + share + newsletter signup |
 | `/blog/feed.xml` | Cached 1h | RSS feed |
 | `/case-study/[slug]` | ISR 60s | Case study detail |
-| `/studio/[[...tool]]` | Dynamic | Sanity Studio admin |
-| `/not-found` | Static | Custom 404 với popular links + pillar pills |
+| `/shop` + `/shop/[slug]` | ISR | Shop + product detail (gallery + reviews) |
+| `/shop/order/[orderNumber]` | Dynamic | Order status + VietQR + auto-poll |
+| `/shop/download/[token]` | Dynamic | File download (verify token + expiry 30d) |
+| `/account`, `/account/orders`, `/account/profile` | Dynamic | Clerk-protected user dashboard |
+| `/sign-in`, `/sign-up` | Dynamic | Clerk auth pages |
+| `/studio/[[...tool]]` | Dynamic | Sanity Studio embedded |
 
-### API endpoints
+### API endpoints (20+)
 | Endpoint | Method | Auth | Description |
 |---|---|---|---|
-| `/api/contact` | POST | rate-limit | Contact form → Web3Forms |
-| `/api/course-apply` | POST | rate-limit | Course apply → Web3Forms + Sanity |
+| `/api/contact` | POST | rate-limit | Contact form |
+| `/api/course-apply` | POST | rate-limit | Course apply |
 | `/api/comments` | POST | rate-limit | Blog comment (auto-approve) |
 | `/api/blog-engagement` | POST | per-IP debounce | View/Like/Bookmark |
-| `/api/quiz-leads` | POST | rate-limit | Quiz lead capture (MBTI/Career gated) |
-| `/api/orders/create` | POST | rate-limit | Create shop order with products |
-| `/api/orders/deliver` | POST | SEED_SECRET OR same-origin | Trigger Resend send file + update status |
-| `/api/webhooks/resend` | POST | Svix signature | Resend email events (delivered/opened/clicked/bounced) |
-| `/api/notify-google` | POST | SEED_SECRET | IndexNow submit URLs to Bing/Yandex |
-| `/api/seed-blog-bulk?secret=...` | GET | SEED_SECRET | Seed 54 blog posts (idempotent) |
-| `/api/seed-products?secret=...` | GET | SEED_SECRET | Seed 3 placeholder products |
-| `/api/seed-sanity?secret=...` | GET | SEED_SECRET | Seed brands + testimonials |
-| `/api/diagnostic` | GET | none | Health check |
+| `/api/quiz-leads` | POST | rate-limit | Quiz lead capture |
+| `/api/newsletter` | POST | none | **NEW** Email subscribe → Sanity newsletterSubscriber |
+| `/api/orders/*` | POST | rate-limit | Order create + deliver |
+| `/api/cart` | GET/POST | Clerk session | Cross-device cart sync |
+| `/api/vouchers/validate` | POST | rate-limit | Voucher validate preview |
+| `/api/webhooks/resend` | POST | Svix signature | Email events tracking |
+| `/api/notify-google` | POST | SEED_SECRET | IndexNow Bing/Yandex |
+| `/api/blog-cover` | GET | none | **NEW** Dynamic OG (Satori, category palette) |
+| `/api/seed-blog-bulk?secret=...` | GET | SEED_SECRET | Seed 74 blog posts (idempotent) |
+
+---
+
+## 📚 Content Inventory
+
+### Blog: 74 bài chia 8 categories
+
+| Category | Số bài | Nội dung |
+|---|---|---|
+| `tmdt-co-ban` | 10 | TMĐT 101: phí sàn, Mall, voucher, SLS, chính sách 2026 |
+| `ads-scaling` | 15 | Performance ads: CPC/CPM/CPO, A/B test, scale, ROAS target |
+| `unit-economics` | 8 | P&L 5 tầng, CM, EBITDA, LTV/CAC, gross margin |
+| `mua-vu-sale` | 7 | Seasonality: Tết, mega sale 11.11, post-sale, psychology trigger |
+| `team-leadership` | 5 | Build team, hire ads runner, outsource, founder mindset |
+| `case-study-data` | 5 | Case study Beauty 0-2 tỷ, Mall data 60+ shop, top 10 ngành |
+| `tam-ly-mindset` | 19 | Psychology cluster (4) + Quiz Tier D support (15: DISC/EQ/Big Five/Enneagram/Dark Triad) |
+| `thue-cong-cu` | 5 | Thuế TNCN 2026: hướng dẫn, 5 bậc vs 7 bậc, giảm trừ, BHXH |
+
+**Pillar articles** (sitemap priority 0.9): 10 bài top traffic - P&L 5 tầng, CM > ROAS, EBITDA, Mall data, Top 10 ngành ROAS, Case study Beauty, Founder mindset, TNCN 2026...
+
+### Quiz: 10 bài chia 4 nhóm
+
+| Nhóm | Số bài | Quiz |
+|---|---|---|
+| **Test bản thân** | 5 | MBTI (70Q), Big Five OCEAN (50Q), Enneagram (45Q + wing), EQ Goleman (35Q + 5 dim), Dark Triad (27Q SD3) |
+| **Test Leadership** | 2 | Phong cách lãnh đạo Goleman (15Q + 6 phong cách), DISC (24Q + 4 archetype) |
+| **Test hướng nghiệp** | 1 | Marketing & Ecom (12Q + 5 archetype với lương VN) |
+| **Test kiến thức** | 2 | Chỉ số quảng cáo (30Q timer 30s), Content frameworks (30Q timer 30s) |
+
+### Tools: 4 calculators
+
+1. **`/tools/tinh-phi-san`** - Phí Shopee/TikTok Mall vs Non-Mall, search ngành, 2039+1348 rows fee data
+2. **`/tools/roas-calculator`** - Break-even ROAS từ CM% + profit target
+3. **`/tools/pnl-ecom`** - P&L 5 tầng Net Revenue → EBITDA + in PDF
+4. **`/tools/tinh-thue-tncn`** - Thuế TNCN 2026 5 bậc + side-by-side với luật 2025
 
 ---
 
 ## 🔧 Setup local
 
-### 1. Clone + install
 ```bash
-git clone <repo-url>
+git clone <repo>
 cd Website-Kai-Phase-2-main
 npm install
+cp .env.example .env.local   # fill in các giá trị
+npm run dev                   # http://localhost:3000
 ```
 
-### 2. Environment variables (`.env.local`)
+### Environment variables (`.env.local`)
+
 ```bash
-# ── Sanity (required) ──────────────────────────
+# === Sanity (required) ===
 NEXT_PUBLIC_SANITY_PROJECT_ID=xxxxxxxx
 NEXT_PUBLIC_SANITY_DATASET=production
-SANITY_API_WRITE_TOKEN=sk...                # For write APIs (comments, quiz-leads, seed, orders)
+SANITY_API_WRITE_TOKEN=sk...
 
-# ── Site (required) ────────────────────────────
+# === Site ===
 NEXT_PUBLIC_SITE_URL=https://nguyenducquang.website
 
-# ── Forms (required for contact + apply) ───────
-NEXT_PUBLIC_WEB3FORMS_KEY=xxx               # https://web3forms.com
+# === Auth (Clerk) ===
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_...
+CLERK_SECRET_KEY=sk_...
 
-# ── Email (required for shop file delivery) ────
-RESEND_API_KEY=re_xxxxx                     # https://resend.com — domain verified
-RESEND_WEBHOOK_SECRET=whsec_xxxxx           # https://resend.com → Webhooks → Signing Secret
+# === Forms ===
+NEXT_PUBLIC_WEB3FORMS_KEY=xxx
 
-# ── Analytics (optional) ───────────────────────
+# === Email ===
+RESEND_API_KEY=re_xxxxx
+RESEND_WEBHOOK_SECRET=whsec_xxxxx
+
+# === Analytics ===
 NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 
-# ── SEO / IndexNow (optional but recommended) ──
-INDEXNOW_KEY=04b89f6c-...-eb1d8df80bf6      # Match filename in public/<KEY>.txt
+# === SEO ===
+INDEXNOW_KEY=04b89f6c-...
 
-# ── Admin / Seed (only for Quảng) ──────────────
-SEED_SECRET=any-random-string-you-pick      # Auth seed routes + admin APIs
+# === Admin / Seed ===
+SEED_SECRET=kai-seed-2026
 ```
 
-### 3. Run dev
+### Common commands
 ```bash
-npm run dev          # http://localhost:3000
-npm run build        # Production build
-npm run start        # Production preview
-```
-
-### 4. Lint + typecheck
-```bash
-npx tsc --noEmit
+npm run dev                # Dev server
+npm run build              # Production build
+npx tsc --noEmit           # Type-check
+curl "$SITE_URL/api/seed-blog-bulk?secret=$SEED_SECRET&force=1"   # Re-seed 74 blog
 ```
 
 ---
 
-## 📝 Content workflow
+## 📝 Content Workflow
 
-### Blog post mới
-1. Vào `/studio` → 📝 Blog / Insights → 🆕 Mới nhất → tạo doc mới
-2. Editor có 3 tabs: 📝 Nội dung / ⚙️ Metadata / 🔍 SEO
-3. Fill title, slug auto-generate, body, category, tags
-4. Tick `featured` nếu muốn lên hero
-5. `publishedAt` auto = now
-6. Click **Publish**
+### Blog post mới (via code)
+1. Add post object vào file phù hợp trong `src/lib/blog/` (group-a-content / batch-2-3-content / batch-4-content / quiz-tier-d-content / psychology-content / tncn-cluster)
+2. Add entry vào `src/lib/blog/metadata.ts` với category + tags
+3. Commit + push → Vercel deploy
+4. Curl seed: `curl "/api/seed-blog-bulk?secret=$SEED_SECRET&force=1"`
+5. Sanity sẽ overwrite doc với content mới
 
-### Bulk seed initial blog
-```bash
-curl https://nguyenducquang.website/api/seed-blog-bulk?secret=<SEED_SECRET>
-# Idempotent — gọi lại không tạo trùng
-```
+### Quiz mới
+1. Create `src/lib/quiz/data/quiz-name.ts` với QUESTIONS + ARCHETYPES
+2. Add scoring function vào `src/lib/quiz/compute.ts`
+3. Add entry vào `QUIZZES` array + `getQuizQuestions/getQuizArchetypes` switch
+4. Add benefit text vào `QUIZ_BENEFITS` trong `QuizRunner.tsx`
+5. Add navbar entry trong `src/components/Navbar.tsx`
+6. (Optional) Add metadata entry trong blog support if writing companion blog
 
-### Comments moderation
-- Comment auto-approved (transparency-first)
-- Vào `/studio` → 💬 Bình luận → xoá nếu spam
-
-### Quiz Leads
-- Vào `/studio` → 🧠 Quiz Leads → filter theo MBTI / Phong cách lãnh đạo / tất cả
-- Mỗi record: tên, email, phone, kết quả type, scores JSON
-
-### Shop — quy trình bán sản phẩm số
-1. Khách vào `/shop` → chọn 1-3 sản phẩm (combo 99k / 169k / 199k) → checkout
-2. Order tạo trong Sanity với `paymentStatus=pending` + VietQR Techcombank auto-gen
-3. Khách scan QR Techcombank → chuyển khoản (nội dung CK = orderNumber)
-4. Quảng vào `/studio` → 🛍️ Shop → "⏳ Đơn chờ thanh toán" → mở order
-5. Click button **"📧 Confirm & Send file"** ở góc dưới phải Studio
-6. Action gọi `/api/orders/deliver` → Resend gửi email với link `/shop/download/[token]`
-7. Resend webhook update order khi khách mở/click email
-8. Khách click link → tải file (verify token + expiry 30 ngày)
-
-### Resend Webhook setup (1 lần)
-- [resend.com/webhooks](https://resend.com/webhooks) → Add Endpoint
-- URL: `https://nguyenducquang.website/api/webhooks/resend`
-- Events: `email.delivered`, `email.opened`, `email.clicked`, `email.bounced`
-- Copy Signing Secret (whsec_...) → Vercel env `RESEND_WEBHOOK_SECRET`
-- Redeploy
+### Comments / Quiz Leads / Newsletter
+- Vào `/studio` → docs auto-approve cho comments + leads + newsletter subscribers
+- Filter theo type / date / source
 
 ---
 
-## 🎨 Design system
+## 🎨 Design System
 
 ### Colors (CSS vars trong `globals.css`)
 ```css
@@ -324,150 +317,189 @@ curl https://nguyenducquang.website/api/seed-blog-bulk?secret=<SEED_SECRET>
 ### Typography
 - Headings: **Plus Jakarta Sans** (700-800 weight)
 - Body: **Be Vietnam Pro** (400-500 weight)
-- Mono: SF Mono / Menlo
 
-### Components conventions
+### Conventions
 - Cards: `glass` class (rounded-2xl + bg rgba 0.025 + border line)
 - Buttons: `btn btn-primary` (gradient + shadow)
 - Section tags: `section-tag` (uppercase pill above heading)
-- All icons: SVG via `<Icon name="..." />`. **NO emoji on user-facing UI** (Studio admin OK).
+- Icons: SVG via `<Icon name="..." />` only
+- **NO emoji** trên user-facing UI (Studio admin OK)
+- **NO em-dash `—` hoặc arrow `→`** (use `-` và `->`)
 
 ### Container widths
-- Tools pages: `max-w-[1400px]` (calc tables cần rộng)
-- Blog/Quiz/Result: `max-w-[1300px]` (content reading)
+- Tools: `max-w-[1400px]`
+- Blog/Quiz/Pillar: `max-w-[1300px]`
 - Course: `max-w-[1400px]`
 
 ---
 
-## 🔍 SEO architecture
+## 🔍 SEO Architecture
 
 ### Schema.org per page type
 - Homepage: Person + WebSite + ProfessionalService
 - Course landing: Course + Person
 - Tool: WebApplication + HowTo + FAQPage + BreadcrumbList
 - Blog list: Blog + BreadcrumbList
-- Blog post: Article + BreadcrumbList
-- Case study: Article
-- Quiz landing: ItemList
+- Blog post: Article + BreadcrumbList + **FAQPage** (auto from "## FAQ" section)
+- Quiz list: ItemList
+- **Quiz category landing**: ItemList + BreadcrumbList (NEW)
 - Quiz: Quiz + BreadcrumbList
 - Quiz result: Article + BreadcrumbList
 
 ### OG images
-- Homepage, course, tools: static gradient with title
-- Blog post: cover image (Sanity)
+- Homepage, course, tools: static gradient với title
+- Blog post: Sanity cover OR dynamic `/api/blog-cover` (Satori, 8 category palettes)
 - Quiz result: dynamic per archetype (color + tagline + 3 strengths)
 
 ### Sitemap (`/sitemap.xml`)
-Auto-generated từ:
-- 8 static pages (homepage, ecom-foundation, 4 tools, blog, quiz)
-- 3 quiz landing + 27 quiz result archetype pages
-- Up to 100 blog posts (sorted publishedAt desc)
-- All case studies
+Auto-generated:
+- Static pages: homepage, ecom-foundation, courses, resources, tools, blog hub, quiz hub, shop
+- **4 quiz category landing pages** (priority 0.85, weekly)
+- 10 quiz pages (priority 0.78, monthly)
+- 40+ quiz result archetype pages (priority 0.70, monthly)
+- **4 pillar hub pages** (priority 0.92, weekly)
+- **10 pillar blog articles** (priority 0.90, weekly)
+- 64 non-pillar blog posts (priority 0.60, monthly)
+- All case studies + tools (priority 0.85-0.92)
 
-ISR refresh: hourly (`revalidate = 3600`).
+ISR refresh: hourly.
 
 ### RSS
-- `/blog/feed.xml` — top 50 posts
-- Linked in `<head>` via metadata.alternates
+- `/blog/feed.xml` - top 50 posts
+- Linked in `<head>` via `metadata.alternates`
+
+### Internal linking strategy
+- `src/lib/blog/internal-links.ts` auto-suggest tool/quiz/course by category + tag match
+- Each blog post ends với "Đọc tiếp" linking 3-5 related posts + 1-2 tools
+- Pillar hub pages auto-pull cluster posts
+- Quiz category landing → other categories cross-link
 
 ---
 
-## 📊 Analytics events
+## 📊 Analytics events (GA4 + Vercel)
 
-Custom events fired on:
-- `contact_form_submitted` — Homepage contact
-- `apply_form_submitted` — Course apply
-- (planned) `quiz_started`, `quiz_completed`, `lead_captured`
-
-GA4 dashboard: track at gtag.
+- `contact_form_submitted`
+- `apply_form_submitted`
+- `quiz_started`, `quiz_completed`, `quiz_lead_captured`, `quiz_resumed`
+- `newsletter_subscribed` (planned)
+- Blog: `view`, `like`, `share`, `comment_posted`
 
 ---
 
 ## 🚀 Deployment
 
-Auto-deploy via Vercel on push to `main`. Branch deploys for any other branch.
+Auto-deploy via **Vercel** on push to `main`. Branch deploys cho mọi other branch.
 
-**Environment vars required on Vercel** (Settings → Environment Variables):
-- All from `.env.local` above
+**Build output**:
+- Static: ~95% routes
+- ISR: blog/case-study detail (60s), sitemap (3600s)
+- Dynamic: API routes, Sanity studio, OG image generators
 
-**Build output** (run `npm run build`):
-- Static: ~95% of routes
-- ISR: blog/case-study detail (60s revalidate), sitemap (3600s)
-- Dynamic: API routes, sanity studio, OG image generators
+**Post-deploy checklist**:
+1. Curl seed nếu có blog/quiz changes: `/api/seed-blog-bulk?secret=...&force=1`
+2. (Optional) IndexNow ping: `/api/notify-google?secret=...&url=...`
+3. Verify sitemap.xml + robots.txt
+4. Check Vercel logs cho deploy errors
 
 ---
 
-## 🔐 Security notes
+## 🔐 Security
 
 - Comments: rate-limited 5/min per IP, max 3000 chars
-- Quiz leads: rate-limited 10/min per IP
+- Quiz leads + newsletter: rate-limited 10/min per IP
 - Blog engagement: view debounced 10min per IP per post
 - Seed routes: protected by `SEED_SECRET` env
-- Studio auth: handled by Sanity project login
-- User auth: **Clerk** (Email + Google) — middleware at repo root, ClerkProvider in root layout
-- Auth routes: `/sign-in/[[...sign-in]]`, `/sign-up/[[...sign-up]]`, `/account` (protected, server-side `auth()` check)
-- Required env: `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`
-- Navbar shows `<UserButton />` when signed in, "Đăng nhập" CTA when signed out (via Clerk `<Show when="...">`)
-- No client secrets in repo — all in `.env.local` / Vercel env
+- Studio auth: Sanity project login
+- User auth: **Clerk** (Email + Google) — middleware `./middleware.ts`, ClerkProvider in root layout
+- Auth routes: `/sign-in`, `/sign-up`, `/account/*` (protected via server-side `auth()`)
+- Resend webhook: Svix signature verification
+- No client secrets trong repo - all in `.env.local` / Vercel env
 
 ---
 
-## 🗺 Roadmap (in priority order)
+## 🗺 Roadmap
 
-### Done
-- [x] Homepage + Course landing
-- [x] 3 Tools (Fee Calc + ROAS + P&L)
-- [x] 4 Quizzes (Leadership + MBTI + Career personality + **Chỉ số Ads knowledge** with 30s timer)
-- [x] 27 Quiz result SEO pages with dynamic OG image per archetype
-- [x] 4 Pillar hub pages (Ecom / Index / Self-Discovery / Career) — backbone SEO
-- [x] Blog with sidebar TOC + auto FAQ schema + internal linking + comments + RSS
-- [x] 54 blog posts seeded (10 full + 40 drafts + 4 psychology)
-- [x] Sanity Studio with custom desk structure + custom document actions
-- [x] SVG icon system (no emoji on user UI)
-- [x] **Shop** — bank transfer VietQR + auto email delivery (Resend) + Studio "Send file" action
-- [x] Product detail pages with gallery + reviews + USP + Schema.org Product
-- [x] Resend webhook for email event tracking (delivered/opened/clicked/bounced)
-- [x] IndexNow API for fast Bing/Yandex indexing
-- [x] Quiz event tracking GA4 (started/completed/lead_captured)
-- [x] Lightweight Reveal (native CSS + IntersectionObserver) — saved ~25KB bundle
-- [x] Custom 404 page with popular links + pillar pills
-- [x] **Auth foundation** — Clerk (Email + Google), sign-in/sign-up pages, `/account` dashboard, Navbar auth state
-- [x] **Cart system** — global Context (localStorage-backed), CartButton + badge in Navbar, slide-out CartDrawer, ShopClient refactored to share cart state, signed-in users get name/email/phone auto-prefilled at checkout
-- [x] **Cross-device cart sync** — when signed in, cart syncs to Sanity `userCart` doc (debounced POST /api/cart, merge with localStorage on sign-in). Guests keep localStorage-only flow.
-- [x] **`/account/orders`** — lists user's orders (matched by clerkUserId OR email — catches guest orders made before sign-in), "Tải lại file" deep-link to existing download token, expired-token notice. Orders placed while signed in auto-attach `clerkUserId`.
-- [x] **`/account/profile`** — embedded Clerk `<UserProfile />` for name/avatar/email/phone/password edits. UserButton "Manage account" now navigates here (no modal).
-- [x] **Voucher system** — Sanity `voucher` schema (percent / fixed VND, public / hidden, expiry, max uses, min order value, used count tracking). `/api/vouchers/validate` for preview, server re-validates at `/api/orders/create`. Public vouchers render as cards on product detail pages (deep-link `?voucher=CODE&checkout=1`). **100% voucher → order auto-marked paid + delivery email sent immediately, QR/transfer skipped.**
+### Done (May 2026 session)
+- [x] **TNCN 2026 calculator** + 5 bài SEO cluster + dynamic OG
+- [x] **Wave 1 blog infra**: tables + externalImage + dynamic `/api/blog-cover` Satori
+- [x] **Em-dash + Unicode arrow sweep** toàn bộ 114 files (.ts + .tsx)
+- [x] **Blog hero 3 equal cards** với excerpt
+- [x] **Batch 2 + 3**: 20 bài blog full content (ads scaling + team + mùa vụ)
+- [x] **Batch 4**: 20 bài blog full content (unit economics + case study)
+- [x] **Blog SEO restructure**: 8 categories mới + tags populated 5-8/bài + tag cloud widget + newsletter signup
+- [x] **Inline markdown links** parser fix + auto-inject Unsplash images cho 19 bài thiếu
+- [x] **Category cover variety**: 8 palette riêng cho `/api/blog-cover` (cam-đỏ/xanh-tím/xanh-lá/vàng/hồng-tím/xanh-đậm/tím/đỏ)
+- [x] **Quiz Tier D**: 5 test mới (DISC + EQ + Big Five + Enneagram + Dark Triad) - 181 câu hỏi
+- [x] **15 bài blog support** quiz Tier D (~25k từ)
+- [x] **Quiz restructure**: 4 categories grouped + Navbar dropdown + 4 landing pages + SEO
+
+### Previous achievements
+- [x] Homepage + Course landing + 4 Tools
+- [x] 4 Pillar hub pages backbone SEO
+- [x] 5 quiz cũ (Leadership + MBTI + Career + 2 knowledge)
+- [x] **Shop** bank transfer VietQR + Resend auto-delivery + Studio action
+- [x] **Auth Clerk** (Email + Google) + `/account/*` dashboard
+- [x] **Cart system** localStorage + Sanity sync cho signed-in user
+- [x] **Voucher system** 100% auto-marked paid
+- [x] Sanity Studio custom desk structure + document actions
+- [x] SVG icon system (no emoji)
+- [x] IndexNow API Bing/Yandex
+- [x] Custom 404 với popular links + pillar pills
+- [x] Lightweight Reveal (saved ~25KB bundle)
+- [x] Resend webhook email event tracking
+- [x] Quiz event tracking GA4
 
 ### Up next
-- [ ] Optional Clerk profile fields: phone + username (for display + contact storage — toggle in Clerk dashboard, code already reads them)
-- [ ] Quiz #5 "Test Content Frameworks" (knowledge format, reuse infra)
-- [ ] Tool "Content Cheat Sheet" — interactive framework picker
-- [ ] Salary Calculator tool (using UpBase Salary Benchmark 2026)
-- [ ] Auto-reply email for quiz leads (Resend nurture sequence)
-- [ ] Bookmarks page (`/bookmarks` — localStorage list)
-- [ ] AI Copy Generator (Anthropic API, premium feature)
-- [ ] Custom Admin Panel (alternative to Sanity Studio if speed becomes issue)
+- [ ] Newsletter automation (Resend nurture sequence sau subscribe)
+- [ ] Category landing pages cho 8 blog categories (giống quiz)
+- [ ] **Lương Gross/Net VN 2026** tool (highest search volume potential)
+- [ ] **Chi phí mở shop TMĐT** calculator (lead magnet cho khoá Ecom Foundation)
+- [ ] **Tool xếp hạng ngành ROAS** interactive (reuse F48 data)
+- [ ] So sánh phí logistics (SPX vs J&T vs GHN vs GHTK)
+- [ ] AI Copy Generator (Anthropic API premium feature)
+- [ ] Multi-language EN cho top 10 bài traffic
+- [ ] Sentry error tracking
 
 ### Maybe
-- [ ] Multi-language EN
-- [ ] Newsletter (needs Resend or MailerLite)
-- [ ] Sentry error tracking
+- [ ] Custom Admin Panel (alternative Sanity Studio nếu speed issue)
 - [ ] A/B testing setup (Vercel)
+- [ ] Bookmark page `/bookmarks`
 
 ---
 
-## 🐛 Common issues
+## 🐛 Common Issues
 
-**Vercel build fails with "Sanity not configured"**: Check `NEXT_PUBLIC_SANITY_PROJECT_ID` is set, not "placeholder".
+**Vercel build fails với "Sanity not configured"**: Check `NEXT_PUBLIC_SANITY_PROJECT_ID` không phải "placeholder".
 
-**Sanity Studio chậm khi click navigate**: Đây là Sanity behavior — bundle 1.4MB. Mitigations:
-- Use custom desk structure (đã làm) → group docs theo category
-- Group fields thành tabs (đã làm) → editor load nhanh hơn
-- Phương án radical: build custom admin trên Next.js → backlog
+**Sanity Studio chậm**: Sanity bundle 1.4MB. Mitigations: custom desk structure + group fields thành tabs.
 
-**Sitemap không có post mới**: ISR refresh mỗi giờ, hoặc force redeploy.
+**Sitemap không có post mới**: ISR 1h. Force redeploy hoặc đợi.
 
-**Comments không hiện**: Check `approved=true` trong Sanity. (Hiện tại auto-approve, nếu không hiện thì check API logs)
+**Comments không hiện**: Check `approved=true` trong Sanity. (Auto-approve nhưng có thể fail rate-limit)
+
+**Blog category filter trống sau seed**: ISR cache 60s. Đợi hoặc query trực tiếp `/blog?category=X`.
+
+**Inline links `[text](/url)` render raw**: Đã fix trong markdown.ts parser (commit 736ab89). Re-seed cần thiết để re-parse body.
+
+**Dynamic OG image trắng**: Satori không support inline-flex hoặc filter:blur. Check `/api/blog-cover` route render.
+
+---
+
+## 📊 Production Stats (May 12, 2026)
+
+| Metric | Value |
+|---|---|
+| **Blog posts** | 74 (10 A + 20 Batch 2-3 + 20 Batch 4 + 15 Quiz Tier D + 4 Psychology + 5 TNCN) |
+| **Quiz tools** | 10 (chia 4 nhóm) |
+| **Calculator tools** | 4 |
+| **Pillar hub pages** | 4 |
+| **Shop products** | 3 |
+| **Categories blog** | 8 (mới) + legacy values |
+| **Blog tags** | 100+ unique tags |
+| **Pillar SEO articles** | 10 (priority 0.9 trong sitemap) |
+| **Quiz category landing** | 4 (priority 0.85) |
+| **Sanity schemas** | 13 documents |
+| **Total commits session này** | ~30 commits |
 
 ---
 
