@@ -55,6 +55,7 @@ export default function SignInPage() {
                     elements: {
                       rootBox: "w-full max-w-[420px]",
                       card: "bg-[rgba(255,255,255,0.025)] border border-[var(--line)] shadow-2xl",
+                      header: "hidden",
                     },
                   }}
                   signUpUrl="/sign-up"
