@@ -13,6 +13,7 @@ const links: NavLink[] = [
   { label: "Về tôi", href: "/#about" },
   { label: "Case Study", href: "/#casestudies" },
   { label: "Khoá học", href: "/ecom-foundation" },
+  { label: "Coaching", href: "/coaching" },
   {
     label: "Tools",
     href: "/tools",
