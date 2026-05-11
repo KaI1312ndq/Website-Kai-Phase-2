@@ -6,6 +6,7 @@ import { DRAFT_POSTS } from "@/lib/blog/groups-bcdef-drafts";
 import { PSYCHOLOGY_POSTS } from "@/lib/blog/psychology-content";
 import { TNCN_POSTS } from "@/lib/blog/tncn-cluster";
 import { BATCH_2_3_POSTS, BATCH_2_3_IDS } from "@/lib/blog/batch-2-3-content";
+import { BATCH_4_POSTS, BATCH_4_IDS } from "@/lib/blog/batch-4-content";
 
 /**
  * Bulk seed 50 blog posts vào Sanity:
@@ -46,12 +47,15 @@ export async function GET(req: NextRequest) {
     useCdn: false,
   });
 
-  const remainingDrafts = DRAFT_POSTS.filter((p) => !BATCH_2_3_IDS.has(p.id));
+  const remainingDrafts = DRAFT_POSTS.filter(
+    (p) => !BATCH_2_3_IDS.has(p.id) && !BATCH_4_IDS.has(p.id),
+  );
 
   const allPosts = [
     ...GROUP_A_POSTS.map((p) => ({ ...p, group: "A" })),
     ...remainingDrafts.map((p) => ({ ...p, group: "B-F" })),
     ...BATCH_2_3_POSTS.map((p) => ({ ...p, group: "Batch-2-3" })),
+    ...BATCH_4_POSTS.map((p) => ({ ...p, group: "Batch-4" })),
     ...PSYCHOLOGY_POSTS.map((p) => ({ ...p, group: "P" })),
     ...TNCN_POSTS.map((p) => ({ ...p, group: "T-TNCN" })),
   ];
