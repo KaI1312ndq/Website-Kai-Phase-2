@@ -42,7 +42,7 @@ export default async function OG({ params }: { params: { slug: string; type: str
             <div style={{ fontSize: "22px", fontWeight: 700, letterSpacing: "-0.02em" }}>Kai .</div>
           </div>
           <div style={{
-            display: "inline-flex",
+            display: "flex",
             padding: "10px 18px",
             borderRadius: "8px",
             background: `${accentColor}22`,

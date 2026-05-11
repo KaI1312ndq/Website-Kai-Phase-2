@@ -451,7 +451,7 @@ export default function Page() {
         <section className="relative border-t overflow-hidden" style={{ borderColor: "var(--line)" }}>
           <div className="blob blob-blue blob-anim" style={{ width: 500, height: 500, top: "-20%", right: "-10%" }} />
           <div className="relative max-w-[1100px] mx-auto px-6 md:px-10 py-24 md:py-32 text-center">
-            <div className="section-tag justify-center" style={{ display: "inline-flex" }}>Đào tạo</div>
+            <div className="section-tag justify-center" style={{ display: "flex" }}>Đào tạo</div>
             <h2 className="t-h2 mb-4 text-white">
               Muốn hiểu sâu về <span className="grad-text">P&L sàn TMĐT?</span>
             </h2>

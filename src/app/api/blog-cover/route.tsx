@@ -9,7 +9,10 @@ import type { NextRequest } from "next/server";
  * Cached cứng 1h by Vercel CDN.
  */
 
-export const runtime = "edge";
+// Note: Node runtime (default). Edge runtime trên Vercel Hobby plan có issue
+// silently trả empty body — Node runtime ImageResponse render đúng.
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 const CATEGORY_META: Record<string, { label: string; accent: string; gradient: string }> = {
   shopee: { label: "Shopee", accent: "#ee4d2d", gradient: "radial-gradient(circle, rgba(238,77,45,0.40), transparent 65%)" },
@@ -59,7 +62,7 @@ export async function GET(req: NextRequest) {
             <div style={{ width: "52px", height: "52px", borderRadius: "13px", background: "linear-gradient(135deg, #146ef5 0%, #4b5dff 50%, #7a3dff 100%)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "30px", fontWeight: 800, boxShadow: "0 6px 20px rgba(20,110,245,0.45)" }}>K</div>
             <div style={{ fontSize: "24px", fontWeight: 700, letterSpacing: "-0.02em" }}>Kai .</div>
           </div>
-          <div style={{ display: "inline-flex", padding: "12px 20px", borderRadius: "10px", background: `${meta.accent}1f`, border: `1px solid ${meta.accent}66`, fontSize: "18px", fontWeight: 700, color: meta.accent, letterSpacing: "0.14em", textTransform: "uppercase" }}>
+          <div style={{ display: "flex", padding: "12px 20px", borderRadius: "10px", background: `${meta.accent}1f`, border: `1px solid ${meta.accent}66`, fontSize: "18px", fontWeight: 700, color: meta.accent, letterSpacing: "0.14em", textTransform: "uppercase" }}>
             {meta.label}
           </div>
         </div>

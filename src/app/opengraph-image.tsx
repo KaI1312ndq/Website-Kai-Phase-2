@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 export const alt = "Nguyễn Đức Quảng — Ecom Growth Expert";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -53,7 +53,7 @@ export default async function OG() {
         <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
           <div
             style={{
-              display: "inline-flex",
+              display: "flex",
               alignSelf: "flex-start",
               padding: "10px 18px",
               borderRadius: "8px",

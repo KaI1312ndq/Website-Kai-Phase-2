@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 export const alt = "Tính phí sàn TikTok Shop & Shopee 2026 — Công cụ miễn phí";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -30,7 +30,7 @@ export default async function OG() {
             <div style={{ width: "48px", height: "48px", borderRadius: "12px", background: "linear-gradient(135deg, #146ef5 0%, #4b5dff 50%, #7a3dff 100%)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "28px", fontWeight: 800 }}>K</div>
             <div style={{ fontSize: "22px", fontWeight: 700, letterSpacing: "-0.02em" }}>Kai .</div>
           </div>
-          <div style={{ display: "inline-flex", padding: "10px 18px", borderRadius: "8px", background: "rgba(74,214,255,0.15)", border: "1px solid rgba(74,214,255,0.4)", fontSize: "16px", fontWeight: 700, color: "#7ee2ff", letterSpacing: "0.14em", textTransform: "uppercase" }}>
+          <div style={{ display: "flex", padding: "10px 18px", borderRadius: "8px", background: "rgba(74,214,255,0.15)", border: "1px solid rgba(74,214,255,0.4)", fontSize: "16px", fontWeight: 700, color: "#7ee2ff", letterSpacing: "0.14em", textTransform: "uppercase" }}>
             Tools · Miễn phí
           </div>
         </div>
