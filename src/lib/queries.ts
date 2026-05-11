@@ -149,6 +149,21 @@ export async function getOrderByNumber(orderNumber: string) {
   `, { orderNumber });
 }
 
+export async function getOrdersForUser({ clerkUserId, email }: { clerkUserId?: string | null; email?: string | null }) {
+  // Match by Clerk userId (preferred — set on orders placed while signed in)
+  // OR by lowercased email (catches orders placed as guest before signing in)
+  return client.fetch(`
+    *[_type == "order" && (
+      ($cuid != null && clerkUserId == $cuid) ||
+      ($em != null && customer.email == $em)
+    )] | order(createdAt desc) {
+      _id, orderNumber, customer, items, subtotal, discount, total,
+      paymentStatus, deliveryStatus, downloadToken, downloadExpiresAt,
+      createdAt, paidAt, deliveredAt
+    }
+  `, { cuid: clerkUserId || null, em: email ? email.toLowerCase() : null });
+}
+
 export async function getOrderByDownloadToken(downloadToken: string) {
   return client.fetch(`
     *[_type == "order" && downloadToken == $downloadToken][0] {

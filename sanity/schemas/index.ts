@@ -5,6 +5,7 @@ import { quizLeadType } from "./quizLead";
 import { productType } from "./product";
 import { orderType } from "./order";
 import { productReviewType } from "./productReview";
+import { userCartType } from "./userCart";
 import { testimonialType, brandType, timelineType, settingsType } from "./others";
 
 export const schemaTypes = [
@@ -16,6 +17,7 @@ export const schemaTypes = [
   productType,
   productReviewType,
   orderType,
+  userCartType,
   testimonialType,
   brandType,
   timelineType,

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@sanity/client";
+import { auth } from "@clerk/nextjs/server";
 import { calculatePrice, generateOrderNumber, generateDownloadToken } from "@/lib/payment/config";
 
 /**
@@ -89,9 +90,17 @@ export async function POST(req: NextRequest) {
     const downloadToken = generateDownloadToken();
     const now = new Date();
 
+    // Attach Clerk userId if signed in (best-effort — checkout still works for guests)
+    let clerkUserId: string | null = null;
+    try {
+      const { userId } = await auth();
+      clerkUserId = userId || null;
+    } catch {}
+
     const doc: any = {
       _type: "order",
       orderNumber,
+      ...(clerkUserId ? { clerkUserId } : {}),
       customer: {
         name: name.trim(),
         email: email.trim().toLowerCase(),

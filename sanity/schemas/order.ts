@@ -13,6 +13,13 @@ export const orderType = defineType({
       validation: (r) => r.required(),
     }),
     defineField({
+      name: "clerkUserId",
+      title: "Clerk User ID",
+      type: "string",
+      readOnly: true,
+      description: "ID Clerk của user (chỉ có nếu mua khi đang đăng nhập). Dùng để hiện đơn ở /account/orders.",
+    }),
+    defineField({
       name: "customer",
       title: "Khách hàng",
       type: "object",

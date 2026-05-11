@@ -5,7 +5,7 @@ import Icon from "@/components/icons/Icon";
 import { useCart } from "./CartContext";
 
 export default function CartDrawer() {
-  const { items, pricing, drawerOpen, closeDrawer, remove, clear } = useCart();
+  const { items, pricing, drawerOpen, closeDrawer, remove, clear, syncing } = useCart();
 
   // Lock body scroll when drawer is open
   useEffect(() => {
@@ -48,6 +48,9 @@ export default function CartDrawer() {
               <span className="text-[0.75rem] px-2 py-0.5 rounded-full font-semibold" style={{ background: "rgba(20,110,245,0.15)", color: "#7da9ff" }}>
                 {items.length}
               </span>
+            )}
+            {syncing && (
+              <span className="text-[0.7rem]" style={{ color: "rgba(255,255,255,0.4)" }}>đang đồng bộ…</span>
             )}
           </div>
           <button

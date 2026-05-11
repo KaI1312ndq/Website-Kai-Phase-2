@@ -433,11 +433,12 @@ Auto-deploy via Vercel on push to `main`. Branch deploys for any other branch.
 - [x] Custom 404 page with popular links + pillar pills
 - [x] **Auth foundation** — Clerk (Email + Google), sign-in/sign-up pages, `/account` dashboard, Navbar auth state
 - [x] **Cart system** — global Context (localStorage-backed), CartButton + badge in Navbar, slide-out CartDrawer, ShopClient refactored to share cart state, signed-in users get name/email/phone auto-prefilled at checkout
+- [x] **Cross-device cart sync** — when signed in, cart syncs to Sanity `userCart` doc (debounced POST /api/cart, merge with localStorage on sign-in). Guests keep localStorage-only flow.
+- [x] **`/account/orders`** — lists user's orders (matched by clerkUserId OR email — catches guest orders made before sign-in), "Tải lại file" deep-link to existing download token, expired-token notice. Orders placed while signed in auto-attach `clerkUserId`.
 
 ### Up next
-- [ ] `/account/orders` page — re-download files for logged-in users (Sanity link by email/userId)
-- [ ] Sync cart to Sanity for signed-in users (cross-device persistence)
-- [ ] Custom Clerk fields: phone number + username (toggle on in Clerk dashboard)
+- [ ] Optional Clerk profile fields: phone + username (for display + contact storage — toggle in Clerk dashboard, code already reads them)
+- [ ] `/account/profile` — edit name/phone/avatar (via Clerk `<UserProfile />` embedded)
 - [ ] Quiz #5 "Test Content Frameworks" (knowledge format, reuse infra)
 - [ ] Tool "Content Cheat Sheet" — interactive framework picker
 - [ ] Salary Calculator tool (using UpBase Salary Benchmark 2026)
