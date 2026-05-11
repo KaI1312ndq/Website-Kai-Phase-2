@@ -29,21 +29,46 @@ const clerkAppearance = {
     fontFamily: '"Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif',
   },
   elements: {
+    // Sign-in / Sign-up card
     card: "shadow-2xl border border-white/10",
     headerTitle: "text-white",
-    headerSubtitle: "text-white/70",
-    socialButtonsBlockButton: "border-white/15 hover:bg-white/5 text-white",
+    headerSubtitle: "text-white/75",
+    socialButtonsBlockButton: "border-white/15 hover:bg-white/[0.06] text-white",
     socialButtonsBlockButtonText: "text-white font-medium",
     dividerLine: "bg-white/15",
-    dividerText: "text-white/55",
+    dividerText: "text-white/60",
     formFieldLabel: "text-white",
     formFieldInput: "bg-white/[0.04] border-white/15 text-white placeholder:text-white/35",
     formButtonPrimary:
       "bg-gradient-to-r from-[#146ef5] to-[#7a3dff] hover:opacity-95 transition-opacity shadow-lg shadow-[#146ef5]/30",
-    footerActionText: "text-white/65",
+    footerActionText: "text-white/70",
     footerActionLink: "text-[#7da9ff] hover:text-white font-semibold",
     identityPreviewText: "text-white",
     identityPreviewEditButton: "text-[#7da9ff]",
+
+    // UserButton popover (avatar dropdown)
+    userButtonPopoverCard: "shadow-2xl border border-white/10",
+    userButtonPopoverActionButton: "hover:bg-white/[0.06]",
+    userButtonPopoverActionButtonText: "text-white",
+    userButtonPopoverActionButtonIcon: "text-white/70",
+    userPreviewMainIdentifier: "text-white font-semibold",
+    userPreviewSecondaryIdentifier: "text-white/65",
+
+    // UserProfile (embedded /account/profile page)
+    navbarButton: "text-white/75 hover:text-white",
+    navbarButton__active: "text-white bg-white/[0.06]",
+    navbarButtonText: "text-white",
+    pageHeader: "text-white",
+    pageScrollBox: "bg-transparent",
+    profileSectionTitle: "text-white",
+    profileSectionTitleText: "text-white",
+    profileSectionContent: "text-white",
+    profileSectionPrimaryButton: "text-[#7da9ff] hover:text-white",
+    accordionTriggerButton: "text-white hover:bg-white/[0.04]",
+    breadcrumbsItem: "text-white/65",
+    breadcrumbsItem__currentPage: "text-white",
+    badge: "bg-white/[0.08] text-white border border-white/15",
+    menuButton: "text-white/70 hover:text-white",
   },
 };
 

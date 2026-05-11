@@ -46,19 +46,18 @@ function CarouselRow({ items, reverse = false }: { items: DisplayBrand[]; revers
     <div className="overflow-hidden w-full" style={{ maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)" }}>
       <div ref={track} className="flex gap-6 w-max" style={{ willChange: "transform" }}>
         {doubled.map((brand, i) => (
-          <div key={i} className="flex items-center justify-center px-6 py-3 rounded-xl flex-shrink-0"
+          <div
+            key={i}
+            className="flex items-center justify-center px-6 py-3 rounded-xl flex-shrink-0"
             style={{
-              background: brand.img ? "white" : "rgba(255,255,255,0.04)",
-              border: brand.img ? "1px solid rgba(0,0,0,0.06)" : "1px solid rgba(255,255,255,0.10)",
+              background: "rgba(255,255,255,0.04)",
+              border: "1px solid rgba(255,255,255,0.10)",
               minWidth: "120px",
               height: "56px",
-              backdropFilter: brand.img ? "none" : "blur(10px)",
-            }}>
-            {brand.img ? (
-              <img src={brand.img} alt={brand.name} className="h-7 w-auto object-contain" style={{ maxWidth: "100px" }} />
-            ) : (
-              <span className="font-bold text-[0.92rem] whitespace-nowrap grad-text tracking-tight">{brand.name}</span>
-            )}
+              backdropFilter: "blur(10px)",
+            }}
+          >
+            <span className="font-bold text-[0.92rem] whitespace-nowrap grad-text tracking-tight">{brand.name}</span>
           </div>
         ))}
       </div>

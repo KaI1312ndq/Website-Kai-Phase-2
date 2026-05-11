@@ -1,6 +1,7 @@
-import Link from "next/link";
 import Icon from "@/components/icons/Icon";
 import { getPublicVouchers } from "@/lib/queries";
+import VoucherApplyButton from "./VoucherApplyButton";
+import type { CartItem } from "@/components/cart/CartContext";
 
 type V = {
   _id: string;
@@ -23,7 +24,7 @@ function expiresLabel(v: V) {
   return `Đến ${date.toLocaleDateString("vi-VN", { day: "2-digit", month: "2-digit" })}`;
 }
 
-export default async function PublicVouchers() {
+export default async function PublicVouchers({ product }: { product?: CartItem } = {}) {
   const vouchers = (await getPublicVouchers()) as V[] | null;
   const list = Array.isArray(vouchers) ? vouchers : [];
   if (list.length === 0) return null;
@@ -67,13 +68,7 @@ export default async function PublicVouchers() {
                 {expiresLabel(v) && <span>{expiresLabel(v)}</span>}
               </div>
             </div>
-            <Link
-              href={`/shop?voucher=${encodeURIComponent(v.code)}&checkout=1`}
-              className="text-[0.78rem] font-bold px-3 py-1.5 rounded-lg flex-shrink-0"
-              style={{ background: "rgba(20,110,245,0.18)", border: "1px solid rgba(20,110,245,0.4)", color: "#7da9ff" }}
-            >
-              Dùng ngay →
-            </Link>
+            <VoucherApplyButton code={v.code} product={product} />
           </li>
         ))}
       </ul>

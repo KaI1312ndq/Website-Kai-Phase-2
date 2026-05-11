@@ -165,10 +165,24 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                 </div>
 
                 {/* Public vouchers */}
-                <PublicVouchers />
+                <PublicVouchers
+                  product={{
+                    id: product._id,
+                    slug: product.slug.current,
+                    title: product.title,
+                    price: product.price,
+                    ...(image ? { image } : {}),
+                  }}
+                />
 
                 {/* Buy now */}
-                <ProductDetailClient productId={product._id} productTitle={product.title} price={product.price} />
+                <ProductDetailClient
+                  productId={product._id}
+                  productSlug={product.slug.current}
+                  productTitle={product.title}
+                  price={product.price}
+                  coverImageUrl={image}
+                />
 
                 {/* Preview link */}
                 {product.previewFileUrl && (

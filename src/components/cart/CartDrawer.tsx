@@ -156,7 +156,7 @@ export default function CartDrawer() {
               </div>
             )}
             <Link
-              href="/shop?checkout=1"
+              href="/checkout"
               onClick={closeDrawer}
               className="text-center px-6 py-3 rounded-xl text-[0.95rem] font-bold text-white transition-all hover:scale-[1.01]"
               style={{ background: "var(--grad-primary)", boxShadow: "0 8px 24px rgba(20,110,245,0.4)" }}
