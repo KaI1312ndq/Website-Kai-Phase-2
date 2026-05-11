@@ -15,6 +15,7 @@ const PRESETS = [
 
 export default function Calculator() {
   const [grossInput, setGrossInput] = useState("");
+  const [insuranceBaseInput, setInsuranceBaseInput] = useState("");
   const [dependents, setDependents] = useState("0");
   const [hasInsurance, setHasInsurance] = useState(true);
 
@@ -23,12 +24,22 @@ export default function Calculator() {
     return cleaned ? parseInt(cleaned, 10) : 0;
   }, [grossInput]);
 
+  const insuranceBaseNum = useMemo(() => {
+    const cleaned = insuranceBaseInput.replace(/[^\d]/g, "");
+    return cleaned ? parseInt(cleaned, 10) : 0;
+  }, [insuranceBaseInput]);
+
   const deps = parseInt(dependents || "0", 10) || 0;
 
   const result = useMemo(() => {
     if (gross <= 0) return null;
-    return compareYears({ gross, dependents: deps, hasInsurance });
-  }, [gross, deps, hasInsurance]);
+    return compareYears({
+      gross,
+      insuranceBase: insuranceBaseNum > 0 ? insuranceBaseNum : undefined,
+      dependents: deps,
+      hasInsurance,
+    });
+  }, [gross, insuranceBaseNum, deps, hasInsurance]);
 
   function applyPreset(p: typeof PRESETS[number]) {
     setGrossInput(p.gross.toLocaleString("vi-VN"));
@@ -37,6 +48,11 @@ export default function Calculator() {
   function onGrossChange(v: string) {
     const cleaned = v.replace(/[^\d]/g, "");
     setGrossInput(cleaned ? parseInt(cleaned, 10).toLocaleString("vi-VN") : "");
+  }
+
+  function onInsuranceBaseChange(v: string) {
+    const cleaned = v.replace(/[^\d]/g, "");
+    setInsuranceBaseInput(cleaned ? parseInt(cleaned, 10).toLocaleString("vi-VN") : "");
   }
 
   return (
@@ -99,7 +115,7 @@ export default function Calculator() {
           </div>
         </div>
 
-        <div className="mb-2">
+        <div className="mb-3">
           <label className="flex items-center justify-between gap-3 cursor-pointer p-3 rounded-lg" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
             <div>
               <div className="text-[0.88rem] font-semibold text-white">Đóng bảo hiểm bắt buộc</div>
@@ -115,6 +131,32 @@ export default function Calculator() {
             />
           </label>
         </div>
+
+        {/* Insurance base salary — optional. Most contracts đóng BH trên mức thấp hơn lương Gross */}
+        {hasInsurance && (
+          <div className="mb-2">
+            <label className="block text-[0.78rem] font-semibold mb-1.5 text-white">
+              Lương đóng bảo hiểm <span className="font-normal" style={{ color: "var(--ink-mute)" }}>(nếu khác Gross)</span>
+            </label>
+            <div className="relative">
+              <input
+                type="text"
+                inputMode="numeric"
+                value={insuranceBaseInput}
+                onChange={(e) => onInsuranceBaseChange(e.target.value)}
+                placeholder={gross > 0 ? `Mặc định = ${gross.toLocaleString("vi-VN")} (Gross)` : "VD: 10.000.000"}
+                className="w-full px-4 py-3 rounded-lg outline-none tabular-nums"
+                style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)", color: "white" }}
+              />
+              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[0.8rem] font-semibold pointer-events-none" style={{ color: "var(--ink-mute)" }}>
+                VND
+              </span>
+            </div>
+            <div className="text-[0.72rem] mt-1.5 leading-snug" style={{ color: "var(--ink-mute)" }}>
+              Hầu hết hợp đồng VN đóng BH trên 1 mức cố định (thường mức tối thiểu vùng hoặc thoả thuận) — KHÁC lương Gross. Nhìn bảng lương hằng tháng để biết chính xác. Để trống = đóng full Gross.
+            </div>
+          </div>
+        )}
 
         <div className="mt-5 text-[0.7rem] leading-relaxed" style={{ color: "var(--ink-mute)" }}>
           💡 Tool áp dụng cho thu nhập từ tiền lương / tiền công của cá nhân cư trú. Cap BHXH + BHYT tại 46.800.000 (20× lương cơ sở 2.340.000). Không áp dụng cho hợp đồng dưới 3 tháng, lao động tự do, freelancer ngoài hệ thống.

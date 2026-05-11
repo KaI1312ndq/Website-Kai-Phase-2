@@ -98,6 +98,8 @@ function formatInt(n: number): string {
 
 export function computeTax(params: {
   gross: number;
+  /** Lương đóng bảo hiểm — mặc định = gross. Set khi đóng BH trên 1 mức khác lương thực nhận. */
+  insuranceBase?: number;
   dependents?: number;
   hasInsurance?: boolean;
   year: TaxYear;
@@ -105,9 +107,10 @@ export function computeTax(params: {
   const gross = Math.max(0, params.gross);
   const dependents = Math.max(0, Math.floor(params.dependents ?? 0));
   const hasInsurance = params.hasInsurance ?? true;
+  const insuranceBase = Math.max(0, params.insuranceBase ?? gross);
   const cfg = TAX_CONFIG[params.year];
 
-  const insurance = hasInsurance ? computeInsurance(gross).total : 0;
+  const insurance = hasInsurance ? computeInsurance(insuranceBase).total : 0;
   const afterInsurance = Math.max(0, gross - insurance);
 
   const deductionPersonal = cfg.personalDeduction;
@@ -155,7 +158,7 @@ export function computeTax(params: {
 }
 
 /** So sánh 2 năm — return delta savings 2026 vs 2025 (positive = 2026 đỡ thuế hơn) */
-export function compareYears(input: { gross: number; dependents?: number; hasInsurance?: boolean }) {
+export function compareYears(input: { gross: number; insuranceBase?: number; dependents?: number; hasInsurance?: boolean }) {
   const r2025 = computeTax({ ...input, year: 2025 });
   const r2026 = computeTax({ ...input, year: 2026 });
   return {
