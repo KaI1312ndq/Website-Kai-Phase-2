@@ -3,7 +3,7 @@ import { createClient } from "@sanity/client";
 
 /**
  * Seed 2 blog posts vào Sanity.
- * Idempotent — gọi lại không tạo trùng (createIfNotExists).
+ * Idempotent - gọi lại không tạo trùng (createIfNotExists).
  *
  * Cách dùng:
  *   /api/seed-blog?secret=<SEED_SECRET>
@@ -57,7 +57,7 @@ function normalWithParts(key: string, parts: { text: string; bold?: boolean }[])
 const POST_PHI_TIKTOK: any = {
   _id: "blog-phi-tiktok-shop-2026",
   _type: "post",
-  title: "Phí TikTok Shop 2026 — Bảng đầy đủ từ 09/05/2026 + Cách tính",
+  title: "Phí TikTok Shop 2026 - Bảng đầy đủ từ 09/05/2026 + Cách tính",
   slug: { _type: "slug", current: "phi-tiktok-shop-2026" },
   excerpt:
     "TikTok Shop áp bảng phí mới từ 09/05/2026. Hoa hồng 11.5–18%, phí giao dịch 6%, Voucher Extra Plus 5.5%. Tổng hợp đầy đủ và ví dụ tính thực tế.",
@@ -65,7 +65,7 @@ const POST_PHI_TIKTOK: any = {
   readTime: 7,
   publishedAt: "2026-05-10T09:00:00.000Z",
   featured: true,
-  seoTitle: "Phí TikTok Shop 2026 — Bảng đầy đủ hoa hồng + giao dịch + Voucher Extra",
+  seoTitle: "Phí TikTok Shop 2026 - Bảng đầy đủ hoa hồng + giao dịch + Voucher Extra",
   seoDescription:
     "Cập nhật bảng phí TikTok Shop từ 09/05/2026: hoa hồng 11.5–18%, phí giao dịch 6%, Voucher Extra Plus 5.5%, SFR 1.620đ. Ví dụ tính phí thực tế theo ngành hàng.",
   body: [
@@ -78,46 +78,46 @@ const POST_PHI_TIKTOK: any = {
     block("b4", "normal",
       "• Phí hoa hồng Non-Mall tăng trung bình 0.5–2% so với bảng cũ, hiện dao động 11.5%–15% tùy ngành."),
     block("b5", "normal",
-      "• Phí hoa hồng Mall tăng mạnh hơn, lên đến 13%–18% — ngành Sức khoẻ Làm đẹp Mall chạm 18% (từ 16.5% trước đó)."),
+      "• Phí hoa hồng Mall tăng mạnh hơn, lên đến 13%–18% - ngành Sức khoẻ Làm đẹp Mall chạm 18% (từ 16.5% trước đó)."),
     block("b6", "normal",
       "• Phí giao dịch giữ nguyên 6% tính trên (Giá bán + Phí ship buyer trả - Voucher seller)."),
     block("b7", "normal",
       "• Voucher Extra Plus nâng cap từ 70.000đ lên 80.000đ (5.5% giá trị đơn hàng)."),
-    block("b8", "h2", "Bảng phí hoa hồng TikTok Shop 2026 — theo ngành hàng"),
+    block("b8", "h2", "Bảng phí hoa hồng TikTok Shop 2026 - theo ngành hàng"),
     block("b9", "normal",
       "Phí hoa hồng (commission) là % TikTok Shop thu trên Giá bán của sản phẩm. Dưới đây là các mức phổ biến nhất (xem bảng đầy đủ tại Tool tính phí sàn):"),
     normalWithParts("b10", [
       { text: "Beauty & Sức khoẻ Làm đẹp: " },
-      { text: "Non-Mall 14.5% — Mall 18%", bold: true },
+      { text: "Non-Mall 14.5% - Mall 18%", bold: true },
       { text: " (cao nhất toàn sàn)" },
     ]),
     normalWithParts("b11", [
       { text: "Fashion / Thời trang: " },
-      { text: "Non-Mall 12.5% — Mall 15.5%", bold: true },
+      { text: "Non-Mall 12.5% - Mall 15.5%", bold: true },
     ]),
     normalWithParts("b12", [
       { text: "F&B / Thực phẩm: " },
-      { text: "Non-Mall 11.5% — Mall 13%", bold: true },
+      { text: "Non-Mall 11.5% - Mall 13%", bold: true },
     ]),
     normalWithParts("b13", [
       { text: "Electronics / Điện tử: " },
-      { text: "Non-Mall 11.5% — Mall 13%", bold: true },
+      { text: "Non-Mall 11.5% - Mall 13%", bold: true },
     ]),
     normalWithParts("b14", [
       { text: "Home & Living / Đồ gia dụng: " },
-      { text: "Non-Mall 12% — Mall 15%", bold: true },
+      { text: "Non-Mall 12% - Mall 15%", bold: true },
     ]),
     block("b15", "blockquote",
-      "Lưu ý: Phí hoa hồng được tính theo ngành cấp 3 (leaf category) của sản phẩm — không phải ngành cấp 1. Đặt sai ngành có thể bị áp nhầm mức phí cao hơn."),
-    block("b16", "h2", "Phí giao dịch — 6% tính thế nào?"),
+      "Lưu ý: Phí hoa hồng được tính theo ngành cấp 3 (leaf category) của sản phẩm - không phải ngành cấp 1. Đặt sai ngành có thể bị áp nhầm mức phí cao hơn."),
+    block("b16", "h2", "Phí giao dịch - 6% tính thế nào?"),
     block("b17", "normal",
       "Phí giao dịch 6% không tính trên Giá bán đơn thuần mà theo công thức:"),
     normalWithParts("b18", [
       { text: "Phí giao dịch = (Giá bán + Phí ship buyer trả − Voucher seller) × 6%", bold: true },
     ]),
     block("b19", "normal",
-      "Điều này có nghĩa: nếu buyer trả thêm phí ship 30.000đ, TikTok tính phí 6% trên cả số đó. Ngoài ra có thêm phí xử lý đơn (phí đơn hàng) 3.000đ/đơn cố định — áp dụng cho mọi đơn hàng hoàn thành."),
-    block("b20", "h2", "Voucher Extra và Voucher Extra Plus — nên chọn cái nào?"),
+      "Điều này có nghĩa: nếu buyer trả thêm phí ship 30.000đ, TikTok tính phí 6% trên cả số đó. Ngoài ra có thêm phí xử lý đơn (phí đơn hàng) 3.000đ/đơn cố định - áp dụng cho mọi đơn hàng hoàn thành."),
+    block("b20", "h2", "Voucher Extra và Voucher Extra Plus - nên chọn cái nào?"),
     normalWithParts("b21", [
       { text: "Voucher Extra: " },
       { text: "4% giá trị đơn hàng, cap 50.000đ/đơn.", bold: true },
@@ -129,11 +129,11 @@ const POST_PHI_TIKTOK: any = {
       { text: " Thêm nhiều loại voucher độc quyền, ưu tiên hiển thị tìm kiếm. Phù hợp shop có volume > 500 đơn/tháng." },
     ]),
     block("b23", "normal",
-      "Chỉ được chọn 1 trong 2. Seller thường nhầm rằng Extra Plus 'đắt hơn nhiều' — thực ra chỉ hơn 1.5% nhưng cap cao hơn 30.000đ và có thêm nhiều ưu đãi. Với shop GMV ổn định, Plus gần như luôn tốt hơn."),
-    block("b24", "h2", "SFR (Bồi hoàn vận chuyển) — 1.620đ/đơn"),
+      "Chỉ được chọn 1 trong 2. Seller thường nhầm rằng Extra Plus 'đắt hơn nhiều' - thực ra chỉ hơn 1.5% nhưng cap cao hơn 30.000đ và có thêm nhiều ưu đãi. Với shop GMV ổn định, Plus gần như luôn tốt hơn."),
+    block("b24", "h2", "SFR (Bồi hoàn vận chuyển) - 1.620đ/đơn"),
     block("b25", "normal",
-      "SFR là phí TikTok Shop thu để xử lý bồi hoàn vận chuyển cho buyer khi có sự cố (hoàn hàng, giao sai địa chỉ). Mức phí: 1.620đ/đơn hoàn thành. Nếu không đăng ký SFR, seller tự xử lý bồi hoàn — tốn thời gian hơn nhưng không mất phí cố định. Shop có tỷ lệ hoàn hàng < 2% thường bỏ SFR để tiết kiệm."),
-    block("b26", "h2", "Ví dụ tính phí thực tế — sản phẩm 300.000đ ngành Fashion"),
+      "SFR là phí TikTok Shop thu để xử lý bồi hoàn vận chuyển cho buyer khi có sự cố (hoàn hàng, giao sai địa chỉ). Mức phí: 1.620đ/đơn hoàn thành. Nếu không đăng ký SFR, seller tự xử lý bồi hoàn - tốn thời gian hơn nhưng không mất phí cố định. Shop có tỷ lệ hoàn hàng < 2% thường bỏ SFR để tiết kiệm."),
+    block("b26", "h2", "Ví dụ tính phí thực tế - sản phẩm 300.000đ ngành Fashion"),
     block("b27", "normal", "Giả sử: Giá bán 300.000đ, phí ship buyer trả 30.000đ, không có Voucher seller, không đăng ký Voucher Extra hay SFR. Shop Non-Mall ngành Fashion:"),
     normalWithParts("b28", [
       { text: "• Phí hoa hồng: 300.000 × 12.5% = 37.500đ", bold: true },
@@ -151,14 +151,14 @@ const POST_PHI_TIKTOK: any = {
       "Seller nhận về: 300.000 − 60.300 = 239.700đ. Nếu COGS là 150.000đ và ops cost 8%, profit per đơn còn lại: 239.700 − 150.000 − 24.000 = 65.700đ (~21.9% margin). Dùng Tool tính phí sàn để tính nhanh theo ngành hàng cụ thể của bạn."),
     block("b33", "h2", "So sánh nhanh TikTok Shop vs Shopee 2026"),
     block("b34", "normal",
-      "Shopee áp bảng phí mới từ 08/05/2026 — gần như cùng thời điểm với TikTok. Phí hoa hồng Shopee Non-Mall thường thấp hơn TikTok Non-Mall 0.5–1% ở hầu hết ngành. Tuy nhiên TikTok có lợi thế về live commerce và content viral — ROAS tự nhiên thường cao hơn nếu vận hành tốt TikTok content."),
+      "Shopee áp bảng phí mới từ 08/05/2026 - gần như cùng thời điểm với TikTok. Phí hoa hồng Shopee Non-Mall thường thấp hơn TikTok Non-Mall 0.5–1% ở hầu hết ngành. Tuy nhiên TikTok có lợi thế về live commerce và content viral - ROAS tự nhiên thường cao hơn nếu vận hành tốt TikTok content."),
     block("b35", "h2", "Lời khuyên thực chiến từ kinh nghiệm 60+ project"),
     block("b36", "normal",
-      "1. Luôn build P&L với buffer 1–2% margin cho đợt tăng phí tiếp theo. TikTok và Shopee tăng phí 1–2 lần/năm — đây không phải rủi ro, đây là chi phí vận hành cần dự phòng."),
+      "1. Luôn build P&L với buffer 1–2% margin cho đợt tăng phí tiếp theo. TikTok và Shopee tăng phí 1–2 lần/năm - đây không phải rủi ro, đây là chi phí vận hành cần dự phòng."),
     block("b37", "normal",
-      "2. Kiểm tra ngành cấp 3 của sản phẩm trong Seller Center. Nhiều seller bị áp sai mức phí chỉ vì đặt ngành hàng ở cấp 1 hoặc sai ngành — có thể chênh 1–3% hoa hồng."),
+      "2. Kiểm tra ngành cấp 3 của sản phẩm trong Seller Center. Nhiều seller bị áp sai mức phí chỉ vì đặt ngành hàng ở cấp 1 hoặc sai ngành - có thể chênh 1–3% hoa hồng."),
     block("b38", "normal",
-      "3. So sánh cụ thể trước khi đăng ký Mall. Phí Mall cao hơn Non-Mall 3–5% nhưng bù lại bằng badge thương hiệu và ưu tiên hiển thị — chỉ nên upgrade khi GMV > 200tr/tháng và gross margin còn > 40%."),
+      "3. So sánh cụ thể trước khi đăng ký Mall. Phí Mall cao hơn Non-Mall 3–5% nhưng bù lại bằng badge thương hiệu và ưu tiên hiển thị - chỉ nên upgrade khi GMV > 200tr/tháng và gross margin còn > 40%."),
   ],
 };
 
@@ -181,7 +181,7 @@ const POST_ROAS_BENCHMARK: any = {
     "Break-even ROAS và target ROAS theo ngành hàng TMĐT 2026. Beauty 8–12x, Fashion 10–15x, F&B 12–18x. Công thức tính và 3 cách tăng ROAS không cần tăng ngân sách.",
   body: [
     block("r1", "normal",
-      "Một trong những câu hỏi phổ biến nhất của seller khi bắt đầu chạy ads: 'ROAS bao nhiêu là đủ?' Câu trả lời ngắn gọn là: không có con số chung — mỗi ngành hàng, mỗi platform, mỗi cấu trúc chi phí sẽ có break-even ROAS khác nhau. Bài viết này giúp bạn tính được con số đó cho sản phẩm cụ thể của mình."),
+      "Một trong những câu hỏi phổ biến nhất của seller khi bắt đầu chạy ads: 'ROAS bao nhiêu là đủ?' Câu trả lời ngắn gọn là: không có con số chung - mỗi ngành hàng, mỗi platform, mỗi cấu trúc chi phí sẽ có break-even ROAS khác nhau. Bài viết này giúp bạn tính được con số đó cho sản phẩm cụ thể của mình."),
     block("r2", "h2", "Tại sao không có con số ROAS chung?"),
     block("r3", "normal",
       "ROAS (Return on Ad Spend) = Doanh thu ÷ Chi phí ads. Con số này chỉ có ý nghĩa khi đặt trong bối cảnh gross margin và cấu trúc chi phí của từng sản phẩm."),
@@ -198,30 +198,30 @@ const POST_ROAS_BENCHMARK: any = {
     ]),
     block("r9", "blockquote",
       "Dùng ROAS Calculator miễn phí tại nguyenducquang.website/tools/roas-calculator để tính nhanh break-even và target ROAS theo số thực của sản phẩm bạn."),
-    block("r10", "h2", "Beauty & Health — Target ROAS 8–12x"),
+    block("r10", "h2", "Beauty & Health - Target ROAS 8–12x"),
     block("r11", "normal",
-      "Đây là ngành hàng có gross margin cao nhất trên sàn TMĐT Việt Nam, thường 55–70%. Tuy nhiên phí sàn cũng cao nhất — TikTok Mall Beauty lên đến 18% hoa hồng, cộng 6% giao dịch = 24% tổng phí."),
+      "Đây là ngành hàng có gross margin cao nhất trên sàn TMĐT Việt Nam, thường 55–70%. Tuy nhiên phí sàn cũng cao nhất - TikTok Mall Beauty lên đến 18% hoa hồng, cộng 6% giao dịch = 24% tổng phí."),
     block("r12", "normal",
-      "Với gross margin 60%, phí sàn Non-Mall 18.5%, ops 8%: Break-even ROAS = 1 ÷ (60% − 18.5% − 8%) = 1 ÷ 33.5% ≈ 3x. Nhưng đây chỉ là điểm hoà vốn — không có lãi. Để đạt margin 15%, target ROAS = 1 ÷ 18.5% ≈ 5.4x. Trên thực tế với ads overhead và sai số, seller Beauty nên target 8–12x để có buffer đủ an toàn."),
+      "Với gross margin 60%, phí sàn Non-Mall 18.5%, ops 8%: Break-even ROAS = 1 ÷ (60% − 18.5% − 8%) = 1 ÷ 33.5% ≈ 3x. Nhưng đây chỉ là điểm hoà vốn - không có lãi. Để đạt margin 15%, target ROAS = 1 ÷ 18.5% ≈ 5.4x. Trên thực tế với ads overhead và sai số, seller Beauty nên target 8–12x để có buffer đủ an toàn."),
     block("r13", "normal",
-      "Tin tốt cho Beauty: ngành này có lợi thế live commerce TikTok rất lớn — ROAS tự nhiên từ livestream thường cao hơn search ads 2–3x. Nhiều brand Beauty đạt ROAS 10–15x nhờ build được cộng đồng loyalist."),
-    block("r14", "h2", "Fashion & Apparel — Target ROAS 10–15x"),
+      "Tin tốt cho Beauty: ngành này có lợi thế live commerce TikTok rất lớn - ROAS tự nhiên từ livestream thường cao hơn search ads 2–3x. Nhiều brand Beauty đạt ROAS 10–15x nhờ build được cộng đồng loyalist."),
+    block("r14", "h2", "Fashion & Apparel - Target ROAS 10–15x"),
     block("r15", "normal",
       "Fashion có gross margin khá tốt (45–60%) nhưng tỷ lệ hoàn hàng cao (10–25%) làm giảm effective margin đáng kể. Đây là điểm thường bị bỏ sót: seller tính ROAS trên gross revenue nhưng quên tính effective revenue sau trừ hoàn hàng."),
     block("r16", "normal",
-      "Với hoàn hàng 15% và gross margin 55%, effective gross margin chỉ còn khoảng 47%. Cộng phí sàn 18.5% + ops 8% → available for ads & profit = 20.5%. Break-even ROAS ≈ 4.9x. Target 15% margin → target ROAS ≈ 12.2x."),
+      "Với hoàn hàng 15% và gross margin 55%, effective gross margin chỉ còn khoảng 47%. Cộng phí sàn 18.5% + ops 8% -> available for ads & profit = 20.5%. Break-even ROAS ≈ 4.9x. Target 15% margin -> target ROAS ≈ 12.2x."),
     block("r17", "normal",
       "Chiến lược thực chiến cho Fashion: tập trung tăng CVR (conversion rate) thay vì giảm CPM. Một trang sản phẩm tốt hơn = cùng budget ads nhưng nhiều đơn hơn = ROAS cao hơn mà không tốn thêm tiền."),
-    block("r18", "h2", "F&B / FMCG — Target ROAS 12–18x"),
+    block("r18", "h2", "F&B / FMCG - Target ROAS 12–18x"),
     block("r19", "normal",
-      "F&B và FMCG là ngành khó chạy ads TMĐT nhất về mặt margin. Gross margin thường chỉ 35–50% — sản phẩm càng phổ thông, margin càng mỏng. Cộng thêm chi phí bao bì, logistics lạnh (nếu có), phí sàn cao → available for ads rất hẹp."),
+      "F&B và FMCG là ngành khó chạy ads TMĐT nhất về mặt margin. Gross margin thường chỉ 35–50% - sản phẩm càng phổ thông, margin càng mỏng. Cộng thêm chi phí bao bì, logistics lạnh (nếu có), phí sàn cao -> available for ads rất hẹp."),
     block("r20", "normal",
-      "Với F&B gross margin 40%, phí sàn 18.5%, ops 10%: available = 11.5%. Break-even ROAS = 1 ÷ 11.5% ≈ 8.7x. Chỉ để không lỗ. Target 10% margin → target ROAS = 1 ÷ 1.5% ≈ 67x — không thực tế!"),
+      "Với F&B gross margin 40%, phí sàn 18.5%, ops 10%: available = 11.5%. Break-even ROAS = 1 ÷ 11.5% ≈ 8.7x. Chỉ để không lỗ. Target 10% margin -> target ROAS = 1 ÷ 1.5% ≈ 67x - không thực tế!"),
     block("r21", "normal",
       "Bài học: F&B không thể sống bằng ads paid đơn thuần. Model thành công trong ngành này thường build brand organic trước (TikTok content, influencer) để giảm dependency vào paid ads, hoặc tập trung bundle/upsell để tăng AOV."),
-    block("r22", "h2", "Electronics / Điện tử — Target ROAS 30–50x (và tại sao khó)"),
+    block("r22", "h2", "Electronics / Điện tử - Target ROAS 30–50x (và tại sao khó)"),
     block("r23", "normal",
-      "Electronics là ngành hàng mà paid ads trên TMĐT gần như không viable nếu chỉ tính profit per đơn đầu. Gross margin 15–25%, phí sàn ~18.5% → available for ads = âm số với nhiều SKU. Break-even ROAS = vô hạn trong nhiều trường hợp."),
+      "Electronics là ngành hàng mà paid ads trên TMĐT gần như không viable nếu chỉ tính profit per đơn đầu. Gross margin 15–25%, phí sàn ~18.5% -> available for ads = âm số với nhiều SKU. Break-even ROAS = vô hạn trong nhiều trường hợp."),
     block("r24", "normal",
       "Vậy tại sao seller Electronics vẫn chạy ads? Vì họ không tính ROAS theo đơn đơn lẻ mà theo lifetime value: đơn hàng phụ kiện, warranty, service, và repeat purchase. Một máy tính bảng bán hòa vốn có thể mang về 3–5 đơn phụ kiện với margin 40–60% trong 6 tháng tiếp theo."),
     block("r25", "normal",
@@ -229,7 +229,7 @@ const POST_ROAS_BENCHMARK: any = {
     block("r26", "h2", "3 cách tăng ROAS không cần tăng ngân sách ads"),
     normalWithParts("r27", [
       { text: "1. Tăng giá bán hoặc upsell/bundle: " },
-      { text: "tăng gross margin → giảm break-even ROAS. Bundle 2 sản phẩm tăng AOV 50% nhưng cost tăng ít hơn → ROAS tự nhiên tăng.", bold: false },
+      { text: "tăng gross margin -> giảm break-even ROAS. Bundle 2 sản phẩm tăng AOV 50% nhưng cost tăng ít hơn -> ROAS tự nhiên tăng.", bold: false },
     ]),
     normalWithParts("r28", [
       { text: "2. Tối ưu CVR landing page: " },
@@ -239,19 +239,19 @@ const POST_ROAS_BENCHMARK: any = {
       { text: "3. Tối ưu creative & targeting: " },
       { text: "giảm CPM/CPC bằng cách test nhiều creative angle. Nhiều seller cải thiện ROAS 30–50% chỉ bằng cách thay đổi hook đầu video TikTok.", bold: false },
     ]),
-    block("r30", "h2", "ROAS vs MER — Đo cái nào quan trọng hơn?"),
+    block("r30", "h2", "ROAS vs MER - Đo cái nào quan trọng hơn?"),
     normalWithParts("r31", [
       { text: "ROAS (per campaign/channel): " },
       { text: "đo hiệu quả của từng đồng ads chi ra trong một kênh cụ thể. Dùng để tối ưu campaign.", bold: false },
     ]),
     normalWithParts("r32", [
-      { text: "MER — Marketing Efficiency Ratio (toàn business): " },
+      { text: "MER - Marketing Efficiency Ratio (toàn business): " },
       { text: "Tổng doanh thu ÷ Tổng chi marketing (mọi kênh: paid, influencer, photoshoot, samples). Phản ánh sức khoẻ tổng thể.", bold: false },
     ]),
     block("r33", "normal",
-      "Câu trả lời thực tế: cần track cả 2. ROAS để tối ưu campaign hàng ngày. MER để đánh giá sustainability của business mỗi tháng. Một business có ROAS paid 8x nhưng MER chỉ 3x có nghĩa chi marketing organic + influencer đang kéo tổng hiệu quả xuống — cần review lại allocation."),
+      "Câu trả lời thực tế: cần track cả 2. ROAS để tối ưu campaign hàng ngày. MER để đánh giá sustainability của business mỗi tháng. Một business có ROAS paid 8x nhưng MER chỉ 3x có nghĩa chi marketing organic + influencer đang kéo tổng hiệu quả xuống - cần review lại allocation."),
     block("r34", "blockquote",
-      "Tính ngay break-even ROAS và target ROAS cho sản phẩm của bạn tại: nguyenducquang.website/tools/roas-calculator — miễn phí, không cần đăng ký."),
+      "Tính ngay break-even ROAS và target ROAS cho sản phẩm của bạn tại: nguyenducquang.website/tools/roas-calculator - miễn phí, không cần đăng ký."),
   ],
 };
 
@@ -260,7 +260,7 @@ export async function GET(req: NextRequest) {
   const secret = url.searchParams.get("secret");
 
   if (!process.env.SEED_SECRET || secret !== process.env.SEED_SECRET) {
-    return NextResponse.json({ error: "Unauthorized — pass ?secret=<SEED_SECRET>" }, { status: 401 });
+    return NextResponse.json({ error: "Unauthorized - pass ?secret=<SEED_SECRET>" }, { status: 401 });
   }
 
   const token = process.env.SANITY_API_WRITE_TOKEN;
@@ -294,6 +294,6 @@ export async function GET(req: NextRequest) {
   return NextResponse.json({
     success: results.every((r) => !r.status.startsWith("error")),
     results,
-    note: "Vào /studio → Blog / Insights để edit, thêm ảnh bìa và publish.",
+    note: "Vào /studio -> Blog / Insights để edit, thêm ảnh bìa và publish.",
   });
 }

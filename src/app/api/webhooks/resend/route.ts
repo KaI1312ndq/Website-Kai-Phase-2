@@ -3,13 +3,13 @@ import { createClient } from "@sanity/client";
 import { createHmac, timingSafeEqual } from "crypto";
 
 /**
- * Resend webhook endpoint — track email events (delivered / opened / clicked / bounced).
+ * Resend webhook endpoint - track email events (delivered / opened / clicked / bounced).
  *
  * Setup ở Resend Dashboard:
- *   - Webhooks → Add Endpoint
+ *   - Webhooks -> Add Endpoint
  *   - URL: https://www.nguyenducquang.website/api/webhooks/resend
  *   - Events: email.delivered, email.opened, email.clicked, email.bounced
- *   - Copy "Signing Secret" (format whsec_...) → add Vercel env RESEND_WEBHOOK_SECRET
+ *   - Copy "Signing Secret" (format whsec_...) -> add Vercel env RESEND_WEBHOOK_SECRET
  *
  * Verify signature theo chuẩn Svix:
  *   - Headers: svix-id, svix-timestamp, svix-signature
@@ -27,7 +27,7 @@ function verifySignature(body: string, headers: Headers): boolean {
   const signatureHeader = headers.get("svix-signature");
   if (!id || !timestamp || !signatureHeader) return false;
 
-  // Replay protection — reject events older than 5 min
+  // Replay protection - reject events older than 5 min
   const ts = parseInt(timestamp, 10);
   if (isNaN(ts) || Math.abs(Date.now() / 1000 - ts) > 5 * 60) return false;
 
@@ -91,7 +91,7 @@ export async function POST(req: NextRequest) {
     );
 
     if (!order) {
-      // Email not tied to any order — ignore (might be a different email sent via Resend)
+      // Email not tied to any order - ignore (might be a different email sent via Resend)
       return NextResponse.json({ ok: true, skipped: "order not found" });
     }
 

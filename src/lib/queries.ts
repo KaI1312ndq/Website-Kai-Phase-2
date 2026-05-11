@@ -173,7 +173,7 @@ export async function getPublicVouchers() {
 }
 
 export async function getOrdersForUser({ clerkUserId, email }: { clerkUserId?: string | null; email?: string | null }) {
-  // Match by Clerk userId (preferred — set on orders placed while signed in)
+  // Match by Clerk userId (preferred - set on orders placed while signed in)
   // OR by lowercased email (catches orders placed as guest before signing in)
   return client.fetch(`
     *[_type == "order" && (

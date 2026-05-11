@@ -1,8 +1,8 @@
 import type { KnowledgeQuestion } from "../types";
 
 /**
- * Test Chỉ số Quảng Cáo (Ad Metrics) — knowledge quiz 30 câu.
- * Mục đích: training nội bộ + quảng bá expertise — junior marketer / planner / sales
+ * Test Chỉ số Quảng Cáo (Ad Metrics) - knowledge quiz 30 câu.
+ * Mục đích: training nội bộ + quảng bá expertise - junior marketer / planner / sales
  * cần nắm vững khái niệm + công thức metrics digital ads.
  */
 
@@ -53,7 +53,7 @@ export const AD_METRICS_QUESTIONS: KnowledgeQuestion[] = [
       "Doanh thu tăng 5%",
     ],
     ans: 1,
-    explain: "ROAS = 5 → mỗi 1đ bỏ ra thu 5đ GMV.",
+    explain: "ROAS = 5 -> mỗi 1đ bỏ ra thu 5đ GMV.",
   },
   {
     id: 5,
@@ -96,7 +96,7 @@ export const AD_METRICS_QUESTIONS: KnowledgeQuestion[] = [
     q: "Frequency cao ảnh hưởng đến quảng cáo như thế nào?",
     opts: [
       "Luôn tốt vì tăng nhận diện",
-      "Gây ad fatigue — CTR giảm, CPC tăng",
+      "Gây ad fatigue - CTR giảm, CPC tăng",
       "Không ảnh hưởng đáng kể",
       "Chỉ ảnh hưởng remarketing",
     ],
@@ -192,7 +192,7 @@ export const AD_METRICS_QUESTIONS: KnowledgeQuestion[] = [
       "Budget không đủ",
     ],
     ans: 1,
-    explain: "Bottleneck giỏ→checkout: phí ship cao, thiếu payment method, UX phức tạp.",
+    explain: "Bottleneck giỏ->checkout: phí ship cao, thiếu payment method, UX phức tạp.",
   },
   {
     id: 17,
@@ -204,7 +204,7 @@ export const AD_METRICS_QUESTIONS: KnowledgeQuestion[] = [
       "CIR = CP ÷ Lợi nhuận × 100%",
     ],
     ans: 1,
-    explain: "CIR = Chi phí ÷ GMV × 100%. Nghịch đảo ROAS: ROAS = 7 → CIR ≈ 14.3%.",
+    explain: "CIR = Chi phí ÷ GMV × 100%. Nghịch đảo ROAS: ROAS = 7 -> CIR ≈ 14.3%.",
   },
   {
     id: 18,
@@ -271,19 +271,19 @@ export const AD_METRICS_QUESTIONS: KnowledgeQuestion[] = [
       "Shopee tính ROAS khác",
     ],
     ans: 1,
-    explain: "TikTok = demand creation. Shopee = intent capture: user đã muốn mua → CR cao.",
+    explain: "TikTok = demand creation. Shopee = intent capture: user đã muốn mua -> CR cao.",
   },
   {
     id: 24,
     q: "Drop-off lớn nhất trong funnel TikTok Shop thường ở đâu?",
     opts: [
-      "Impression → Click",
-      "Product View → Add to Cart",
-      "Add to Cart → Checkout",
-      "Checkout → Purchase",
+      "Impression -> Click",
+      "Product View -> Add to Cart",
+      "Add to Cart -> Checkout",
+      "Checkout -> Purchase",
     ],
     ans: 1,
-    explain: "Drop-off lớn nhất ở Product View → Add to Cart.",
+    explain: "Drop-off lớn nhất ở Product View -> Add to Cart.",
   },
   {
     id: 25,
@@ -295,7 +295,7 @@ export const AD_METRICS_QUESTIONS: KnowledgeQuestion[] = [
       "CPC tăng 60%",
     ],
     ans: 2,
-    explain: "CPC = CPM ÷ (CTR × 10). Tăng cùng tỷ lệ → CPC giữ nguyên.",
+    explain: "CPC = CPM ÷ (CTR × 10). Tăng cùng tỷ lệ -> CPC giữ nguyên.",
   },
   {
     id: 26,
@@ -331,7 +331,7 @@ export const AD_METRICS_QUESTIONS: KnowledgeQuestion[] = [
       "Creative hết hiệu quả",
     ],
     ans: 1,
-    explain: "CIR cao = chi phí ads chiếm tỷ trọng lớn trong GMV → biên lợi nhuận mỏng.",
+    explain: "CIR cao = chi phí ads chiếm tỷ trọng lớn trong GMV -> biên lợi nhuận mỏng.",
   },
   {
     id: 29,

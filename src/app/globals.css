@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* ─────────────────────────────────────────
-   DESIGN TOKENS — Dark blue gradient theme
+   DESIGN TOKENS - Dark blue gradient theme
    ───────────────────────────────────────── */
 :root {
   /* Brand */
@@ -29,7 +29,7 @@
   --ink-mute: rgba(255, 255, 255, 0.55);
   --ink-faint: rgba(255, 255, 255, 0.35);
 
-  /* Gradient G1 — Blue → Purple */
+  /* Gradient G1 - Blue -> Purple */
   --grad-primary: linear-gradient(135deg, #146ef5 0%, #4b5dff 50%, #7a3dff 100%);
   --grad-primary-soft: linear-gradient(135deg, rgba(20, 110, 245, 0.18) 0%, rgba(122, 61, 255, 0.18) 100%);
   --grad-text: linear-gradient(120deg, #4ad6ff 0%, #146ef5 50%, #7a3dff 100%);
@@ -246,7 +246,7 @@ body::before {
 }
 
 /* ─────────────────────────────────────────
-   CARDS — Glass on dark
+   CARDS - Glass on dark
    ───────────────────────────────────────── */
 .glass {
   background: rgba(255, 255, 255, 0.03);
@@ -452,7 +452,7 @@ details summary::-webkit-details-marker { display: none; }
 details[open] summary svg.chev { transform: rotate(180deg); }
 details summary svg.chev { transition: transform 0.25s; }
 
-/* Page transition — fades in main content on route change */
+/* Page transition - fades in main content on route change */
 @keyframes pageFadeIn {
   0% { opacity: 0; transform: translateY(8px); }
   100% { opacity: 1; transform: translateY(0); }
@@ -497,7 +497,7 @@ input:focus, textarea:focus { outline: none; }
   .blob-anim { animation: none; }
 }
 
-/* ── Clerk dark theme overrides — force readable text everywhere ──
+/* ── Clerk dark theme overrides - force readable text everywhere ──
    Clerk's internal --cl-color-* CSS vars beat appearance.elements className
    overrides in some sub-rows (email values, connected accounts, active sessions).
    Use !important + sweeping selectors scoped to .cl-rootBox to guarantee

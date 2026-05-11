@@ -1,5 +1,5 @@
 /**
- * Payment config — Bank transfer (VietQR / Napas247).
+ * Payment config - Bank transfer (VietQR / Napas247).
  * Quảng đổi info ở đây nếu muốn dùng tk khác.
  */
 
@@ -12,7 +12,7 @@ export const BANK_CONFIG = {
 };
 
 /**
- * Pricing rules — bundle discount.
+ * Pricing rules - bundle discount.
  * 1 sản phẩm: 99k mỗi
  * Bundle 2: 169k tổng (-29k)
  * Bundle 3: 199k tổng (-98k)
@@ -32,7 +32,7 @@ export function calculatePrice(itemCount: number): { subtotal: number; total: nu
 }
 
 /**
- * Generate VietQR image URL — auto-fill amount + memo, scan to pay.
+ * Generate VietQR image URL - auto-fill amount + memo, scan to pay.
  * Reference: https://vietqr.io/danh-sach-api
  */
 export function generateVietQRUrl({
@@ -53,7 +53,7 @@ export function generateVietQRUrl({
 }
 
 /**
- * Generate order number — random 6-char alphanumeric uppercase.
+ * Generate order number - random 6-char alphanumeric uppercase.
  * Format: MUA-XXXXXX (memo for bank transfer)
  */
 export function generateOrderNumber(): string {
@@ -64,7 +64,7 @@ export function generateOrderNumber(): string {
 }
 
 /**
- * Generate download token — random 32-char.
+ * Generate download token - random 32-char.
  */
 export function generateDownloadToken(): string {
   const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

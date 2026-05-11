@@ -10,7 +10,7 @@ export type PnLInput = {
   transactionPct: number;       // phí giao dịch % (TikTok/Shopee mặc định 6%)
   voucherSellerPct: number;
   perOrderProcessingFee: number; // phí cơ sở hạ tầng / đơn (TikTok & Shopee mặc định 3.000đ)
-  buyerShippingPerOrder: number; // phí ship buyer trả TB / đơn — dùng để tính phí giao dịch chuẩn hơn
+  buyerShippingPerOrder: number; // phí ship buyer trả TB / đơn - dùng để tính phí giao dịch chuẩn hơn
 
   // Monthly fixed
   adsMonthly: number;
@@ -151,7 +151,7 @@ export function fmtVND(n: number): string {
   return n < 0 ? `-${formatted}` : formatted;
 }
 
-/** Compact format for headline cards: 266.000.000 → "266tr", 1.500.000.000 → "1,5 tỷ" */
+/** Compact format for headline cards: 266.000.000 -> "266tr", 1.500.000.000 -> "1,5 tỷ" */
 export function fmtVNDCompact(n: number): string {
   const abs = Math.abs(n);
   let str: string;

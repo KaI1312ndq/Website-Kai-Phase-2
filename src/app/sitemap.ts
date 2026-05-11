@@ -3,7 +3,7 @@ import { getPosts, getCaseStudies } from "@/lib/queries";
 import { QUIZZES, getQuizArchetypes } from "@/lib/quiz/compute";
 import { PILLARS } from "@/lib/pillars/config";
 
-// Force ISR with hourly refresh — keeps sitemap fast and reliable for crawlers
+// Force ISR with hourly refresh - keeps sitemap fast and reliable for crawlers
 export const revalidate = 3600;
 export const dynamic = "force-static";
 
@@ -53,7 +53,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/blog`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.7 },
     { url: `${baseUrl}/quiz`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.82 },
     { url: `${baseUrl}/shop`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.85 },
-    // Pillar hub pages (high SEO priority — backbone of cluster strategy)
+    // Pillar hub pages (high SEO priority - backbone of cluster strategy)
     ...PILLARS.map((p) => ({
       url: `${baseUrl}/${p.slug}`,
       lastModified: new Date(),

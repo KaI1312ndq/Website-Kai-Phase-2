@@ -52,7 +52,7 @@ export function searchTiktok(q: string, limit = 30): TiktokMatch[] {
 export function searchShopee(q: string, limit = 30): ShopeeMatch[] {
   const ts = tokens(q);
   if (!ts.length) return [];
-  // Combine Mall + NonMall rows so search hits both — dedupe by path
+  // Combine Mall + NonMall rows so search hits both - dedupe by path
   const seen = new Set<string>();
   const all = [...SHOPEE_MALL_ROWS, ...SHOPEE_NONMALL_ROWS];
   const out: ShopeeMatch[] = [];
@@ -100,7 +100,7 @@ export function tiktokRate(group: string, l1: string, l2: string, l3: string): {
   return { std: TIKTOK_DEFAULT_STD, mall: TIKTOK_DEFAULT_MALL };
 }
 
-/* Shopee — Mall vs Non-Mall PDFs riêng → chỉ cần ngành cấp 1/2/3 thống nhất */
+/* Shopee - Mall vs Non-Mall PDFs riêng -> chỉ cần ngành cấp 1/2/3 thống nhất */
 export function shopeeLevel1(): string[] {
   return Array.from(new Set([...SHOPEE_MALL_ROWS, ...SHOPEE_NONMALL_ROWS].map((r) => r.l1))).sort();
 }
@@ -139,14 +139,14 @@ export type CalcInput = {
   price: number;
   cogs: number;
   sellerVoucherPct: number; // % seller giảm
-  shippingBuyer: number;    // VND — Phí vận chuyển buyer phải trả (tham gia base phí giao dịch)
+  shippingBuyer: number;    // VND - Phí vận chuyển buyer phải trả (tham gia base phí giao dịch)
   commissionRate: number;   // % phí hoa hồng nền tảng (theo platform/mall)
-  txnRate: number;          // % phí giao dịch — TikTok 6, Shopee 6
-  perOrderFee: number;      // VND — TikTok 3000 / Shopee 3000
+  txnRate: number;          // % phí giao dịch - TikTok 6, Shopee 6
+  perOrderFee: number;      // VND - TikTok 3000 / Shopee 3000
   voucherExtra?: { rate: number; cap?: number };
   voucherExtraPlus?: { rate: number; cap?: number };
-  piShip?: number;          // VND — Shopee 1.600đ
-  sfr?: number;             // VND — TikTok 1.620đ (bồi hoàn vận chuyển)
+  piShip?: number;          // VND - Shopee 1.600đ
+  sfr?: number;             // VND - TikTok 1.620đ (bồi hoàn vận chuyển)
   extraCosts: ExtraCost[];
 };
 
@@ -174,10 +174,10 @@ export function compute(i: CalcInput): CalcResult {
   const sellerVoucher = i.price * (i.sellerVoucherPct / 100);
   const netRevenue = i.price - sellerVoucher; // Doanh thu thực seller nhận được từ sàn
 
-  // Phí hoa hồng — tính trên giá sau seller voucher (theo CT chính thức TikTok)
+  // Phí hoa hồng - tính trên giá sau seller voucher (theo CT chính thức TikTok)
   const commission = netRevenue * (i.commissionRate / 100);
 
-  // Phí giao dịch — tính trên (giá gốc + ship buyer trả - seller voucher)
+  // Phí giao dịch - tính trên (giá gốc + ship buyer trả - seller voucher)
   // Theo CT chính thức Shopee/TikTok 2026
   const txnBase = Math.max(0, i.price + (i.shippingBuyer || 0) - sellerVoucher);
   const txn = txnBase * (i.txnRate / 100);

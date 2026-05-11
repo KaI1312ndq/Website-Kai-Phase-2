@@ -4,9 +4,9 @@ import { auth } from "@clerk/nextjs/server";
 
 /**
  * Per-user cart sync.
- *   GET  /api/cart  → { items: CartItem[] }   (empty if no doc)
- *   POST /api/cart  body: { items: CartItem[] }  → upsert
- * Requires Clerk auth — guests use localStorage only.
+ *   GET  /api/cart  -> { items: CartItem[] }   (empty if no doc)
+ *   POST /api/cart  body: { items: CartItem[] }  -> upsert
+ * Requires Clerk auth - guests use localStorage only.
  */
 
 const MAX_ITEMS = 10;
@@ -25,7 +25,7 @@ function getSanity() {
 }
 
 function docId(userId: string) {
-  // Stable, deterministic doc id per user — safe characters only
+  // Stable, deterministic doc id per user - safe characters only
   return `userCart.${userId.replace(/[^a-zA-Z0-9_-]/g, "_")}`;
 }
 

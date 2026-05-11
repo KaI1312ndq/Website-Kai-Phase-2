@@ -11,7 +11,7 @@ export const QUIZZES: QuizConfig[] = [
   {
     slug: "phong-cach-lanh-dao",
     name: "Test Phong Cách Lãnh Đạo",
-    shortDescription: "15 câu — biết bạn lãnh đạo theo phong cách nào trong 6 phong cách lãnh đạo kinh điển.",
+    shortDescription: "15 câu - biết bạn lãnh đạo theo phong cách nào trong 6 phong cách lãnh đạo kinh điển.",
     longDescription: "Bạn là kiểu lãnh đạo Độc đoán, Dân chủ, Tự do, Chuyển đổi, Giao dịch, hay Phục vụ? Bài test 15 câu dựa trên framework Goleman + Lewin giúp bạn hiểu phong cách tự nhiên của mình và cách phát triển nó hiệu quả.",
     estimatedMinutes: 5,
     questionCount: LEADERSHIP_QUESTIONS.length,
@@ -23,7 +23,7 @@ export const QUIZZES: QuizConfig[] = [
   {
     slug: "mbti",
     name: "Test Tính Cách MBTI 16 Kiểu",
-    shortDescription: "70 câu chuẩn quốc tế — xác định 1 trong 16 kiểu tính cách MBTI của bạn.",
+    shortDescription: "70 câu chuẩn quốc tế - xác định 1 trong 16 kiểu tính cách MBTI của bạn.",
     longDescription: "MBTI là bài test tính cách phổ biến nhất thế giới, dựa trên 4 cặp đối lập: Hướng ngoại/Hướng nội, Giác quan/Trực giác, Lý trí/Cảm xúc, Nguyên tắc/Linh hoạt. Bài test 70 câu giúp bạn hiểu sâu hơn về bản thân, công việc phù hợp, và cách tương tác với người khác.",
     estimatedMinutes: 15,
     questionCount: 70,
@@ -35,7 +35,7 @@ export const QUIZZES: QuizConfig[] = [
   {
     slug: "huong-nghiep-marketing",
     name: "Test Hướng Nghiệp Marketing & Ecom",
-    shortDescription: "12 câu — xác định bạn phù hợp role nào trong ngành Marketing/Ecom: Creator, Analyst, Communicator, Builder, hay Operator.",
+    shortDescription: "12 câu - xác định bạn phù hợp role nào trong ngành Marketing/Ecom: Creator, Analyst, Communicator, Builder, hay Operator.",
     longDescription: "Bạn đang phân vân giữa Performance Marketing, Brand, Content, Sales, hay Product? Bài test này dựa trên 5 archetype career trong ngành Marketing/Ecom, giúp bạn xác định role phù hợp với tính cách + skills của mình. Có gợi ý lương VN, kỹ năng cần học, và lộ trình 3 bước.",
     estimatedMinutes: 5,
     questionCount: 12,
@@ -47,8 +47,8 @@ export const QUIZZES: QuizConfig[] = [
   {
     slug: "chi-so-quang-cao",
     name: "Test Kiến Thức Chỉ Số Quảng Cáo",
-    shortDescription: "30 câu — kiểm tra kiến thức về metrics digital ads: ROAS, CPC, CPM, CTR, CIR, AOV, RPR, Funnel...",
-    longDescription: "Bạn nắm vững các chỉ số quảng cáo digital? 30 câu trắc nghiệm — mỗi câu 30 giây — kiểm tra kiến thức về Ad Spend, GMV, ROAS, CPC, CPM, CTR, Add to Cart Rate, CIR, ROI, AOV, CPA, Purchase Rate, RPR và benchmark thực tế VN. Có giải thích từng câu sau khi chọn. Cuối bài có tier Vàng/Bạc/Đồng tuỳ điểm.",
+    shortDescription: "30 câu - kiểm tra kiến thức về metrics digital ads: ROAS, CPC, CPM, CTR, CIR, AOV, RPR, Funnel...",
+    longDescription: "Bạn nắm vững các chỉ số quảng cáo digital? 30 câu trắc nghiệm - mỗi câu 30 giây - kiểm tra kiến thức về Ad Spend, GMV, ROAS, CPC, CPM, CTR, Add to Cart Rate, CIR, ROI, AOV, CPA, Purchase Rate, RPR và benchmark thực tế VN. Có giải thích từng câu sau khi chọn. Cuối bài có tier Vàng/Bạc/Đồng tuỳ điểm.",
     estimatedMinutes: 15,
     questionCount: 30,
     color: "#22d3ee",
@@ -61,8 +61,8 @@ export const QUIZZES: QuizConfig[] = [
   {
     slug: "content-frameworks",
     name: "Test Kiến Thức Content Frameworks",
-    shortDescription: "30 câu — AIDA, PAS, FAB, BAB, hook 3s TikTok, Cialdini, StoryBrand, JTBD, headline, CTA...",
-    longDescription: "Bạn nắm vững các framework copywriting + content marketing chưa? 30 câu trắc nghiệm — mỗi câu 30 giây — kiểm tra kiến thức về AIDA, PAS, FAB, BAB, Pattern Interrupt, Open Loop, Cialdini's 6 nguyên tắc, USP, Social Proof, Scarcity, Risk Reversal, StoryBrand SB7, Hero's Journey, Pixar Story Spine, TOFU/MOFU/BOFU, Pillar-Cluster, JTBD, headline 4Us, email subject line, CTA, distribution. Có giải thích từng câu sau khi chọn. Cuối bài có tier Vàng/Bạc/Đồng tuỳ điểm.",
+    shortDescription: "30 câu - AIDA, PAS, FAB, BAB, hook 3s TikTok, Cialdini, StoryBrand, JTBD, headline, CTA...",
+    longDescription: "Bạn nắm vững các framework copywriting + content marketing chưa? 30 câu trắc nghiệm - mỗi câu 30 giây - kiểm tra kiến thức về AIDA, PAS, FAB, BAB, Pattern Interrupt, Open Loop, Cialdini's 6 nguyên tắc, USP, Social Proof, Scarcity, Risk Reversal, StoryBrand SB7, Hero's Journey, Pixar Story Spine, TOFU/MOFU/BOFU, Pillar-Cluster, JTBD, headline 4Us, email subject line, CTA, distribution. Có giải thích từng câu sau khi chọn. Cuối bài có tier Vàng/Bạc/Đồng tuỳ điểm.",
     estimatedMinutes: 15,
     questionCount: 30,
     color: "#a78bff",

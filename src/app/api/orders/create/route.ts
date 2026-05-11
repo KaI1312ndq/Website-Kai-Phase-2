@@ -16,7 +16,7 @@ import { sendDeliveryEmail } from "@/lib/email/send-delivery";
  *   }
  * Returns: { orderNumber, total, redirectUrl, isFree }
  *
- * If voucher reduces total to 0 → mark paid + delivered immediately, send file email, skip QR.
+ * If voucher reduces total to 0 -> mark paid + delivered immediately, send file email, skip QR.
  */
 
 const RATE_LIMIT = new Map<string, { count: number; resetAt: number }>();
@@ -160,7 +160,7 @@ export async function POST(req: NextRequest) {
       } catch {}
     }
 
-    // Free order → auto-send delivery email immediately
+    // Free order -> auto-send delivery email immediately
     if (isFree) {
       try {
         const expiresAt = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);

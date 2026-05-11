@@ -1,5 +1,5 @@
 /**
- * Thuế TNCN Việt Nam — compute pure function.
+ * Thuế TNCN Việt Nam - compute pure function.
  * Áp dụng cho thu nhập từ tiền lương, tiền công.
  *
  * 2025: 7 bậc thuế (Luật cũ), giảm trừ bản thân 11M, người phụ thuộc 4.4M.
@@ -47,10 +47,10 @@ export const TAX_CONFIG: Record<TaxYear, TaxYearConfig> = {
   },
 };
 
-// Lương cơ sở 2026 (giữ 2.34M như 2025 — chưa có thay đổi chính thức)
+// Lương cơ sở 2026 (giữ 2.34M như 2025 - chưa có thay đổi chính thức)
 const BASE_SALARY = 2_340_000;
 const INSURANCE_CAP_BHXH_BHYT = BASE_SALARY * 20; // 46.8M
-// Lương tối thiểu vùng I 2025 — cap BHTN
+// Lương tối thiểu vùng I 2025 - cap BHTN
 const MIN_REGIONAL_WAGE = 4_960_000;
 const INSURANCE_CAP_BHTN = MIN_REGIONAL_WAGE * 20; // 99.2M
 
@@ -74,7 +74,7 @@ export type TaxBracketDetail = {
   amount: number;
   /** Thuế tính ở bậc */
   tax: number;
-  /** "0–10M" hoặc "Trên 100M" — UI label */
+  /** "0–10M" hoặc "Trên 100M" - UI label */
   rangeLabel: string;
 };
 
@@ -98,7 +98,7 @@ function formatInt(n: number): string {
 
 export function computeTax(params: {
   gross: number;
-  /** Lương đóng bảo hiểm — mặc định = gross. Set khi đóng BH trên 1 mức khác lương thực nhận. */
+  /** Lương đóng bảo hiểm - mặc định = gross. Set khi đóng BH trên 1 mức khác lương thực nhận. */
   insuranceBase?: number;
   dependents?: number;
   hasInsurance?: boolean;
@@ -157,7 +157,7 @@ export function computeTax(params: {
   };
 }
 
-/** So sánh 2 năm — return delta savings 2026 vs 2025 (positive = 2026 đỡ thuế hơn) */
+/** So sánh 2 năm - return delta savings 2026 vs 2025 (positive = 2026 đỡ thuế hơn) */
 export function compareYears(input: { gross: number; insuranceBase?: number; dependents?: number; hasInsurance?: boolean }) {
   const r2025 = computeTax({ ...input, year: 2025 });
   const r2026 = computeTax({ ...input, year: 2026 });

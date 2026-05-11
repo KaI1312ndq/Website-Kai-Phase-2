@@ -1,8 +1,8 @@
 import type { QuizArchetype, QuizQuestion } from "../types";
 
 /**
- * 6 phong cách lãnh đạo — based on Goleman + Lewin frameworks.
- * Mapping option key → archetype ID:
+ * 6 phong cách lãnh đạo - based on Goleman + Lewin frameworks.
+ * Mapping option key -> archetype ID:
  *   A = autocratic, B = democratic, C = laissez-faire,
  *   D = transformational, E = transactional, F = servant
  */
@@ -196,7 +196,7 @@ export const LEADERSHIP_STYLES: QuizArchetype[] = [
     color: "#ff6b9d",
     description: [
       "Bạn là người ra quyết định một chiều, không ngần ngại nhận trách nhiệm. Trong tình huống khẩn cấp, khi mọi người đang lúng túng, bạn là người đứng ra cầm lái và đưa cả đội qua khủng hoảng.",
-      "Phong cách này cực kỳ hiệu quả ở môi trường kỷ luật cao như quân đội, y tế cấp cứu, sản xuất công nghiệp — nơi mệnh lệnh rõ ràng quan trọng hơn thảo luận.",
+      "Phong cách này cực kỳ hiệu quả ở môi trường kỷ luật cao như quân đội, y tế cấp cứu, sản xuất công nghiệp - nơi mệnh lệnh rõ ràng quan trọng hơn thảo luận.",
       "Tuy nhiên, nếu lạm dụng, bạn dễ khiến nhân viên mất động lực sáng tạo và tăng tỷ lệ nghỉ việc. Hãy biết khi nào nên 'tắt chế độ độc đoán' để chuyển sang dân chủ.",
     ],
     strengths: [
@@ -230,8 +230,8 @@ export const LEADERSHIP_STYLES: QuizArchetype[] = [
     tagline: "Đồng thuận · Hợp tác · Trao quyền",
     color: "#4ad6ff",
     description: [
-      "Bạn tin vào sức mạnh tập thể — luôn lắng nghe, thảo luận và để đa dạng quan điểm dẫn đến quyết định tốt nhất. Nhân viên cảm thấy được tôn trọng, gắn kết và sáng tạo.",
-      "Phong cách này mạnh ở tổ chức sáng tạo, công nghệ, R&D, startup — nơi đổi mới đến từ trí tuệ tập thể.",
+      "Bạn tin vào sức mạnh tập thể - luôn lắng nghe, thảo luận và để đa dạng quan điểm dẫn đến quyết định tốt nhất. Nhân viên cảm thấy được tôn trọng, gắn kết và sáng tạo.",
+      "Phong cách này mạnh ở tổ chức sáng tạo, công nghệ, R&D, startup - nơi đổi mới đến từ trí tuệ tập thể.",
       "Điểm yếu: quy trình chậm, không phù hợp tình huống gấp. Cần biết khi nào 'tắt thảo luận' để quyết đoán.",
     ],
     strengths: [
@@ -265,7 +265,7 @@ export const LEADERSHIP_STYLES: QuizArchetype[] = [
     tagline: "Tin tưởng · Tự chủ · Sáng tạo",
     color: "#a78bff",
     description: [
-      "Bạn trao quyền tối đa, can thiệp tối thiểu. Nhân viên được tự do thử nghiệm, tự quyết — bạn chỉ cung cấp nguồn lực và hỗ trợ khi được yêu cầu.",
+      "Bạn trao quyền tối đa, can thiệp tối thiểu. Nhân viên được tự do thử nghiệm, tự quyết - bạn chỉ cung cấp nguồn lực và hỗ trợ khi được yêu cầu.",
       "Phong cách này phát huy tối đa với đội ngũ chuyên gia: nhà nghiên cứu, designer, lập trình viên senior, ngành sáng tạo.",
       "Cẩn trọng: với nhóm thiếu kinh nghiệm, phong cách này dễ tạo cảm giác 'sếp thờ ơ', năng suất thấp. Theo nghiên cứu Kurt Lewin, đây là phong cách kém hiệu quả nhất nếu áp sai bối cảnh.",
     ],
@@ -300,8 +300,8 @@ export const LEADERSHIP_STYLES: QuizArchetype[] = [
     tagline: "Truyền cảm hứng · Tầm nhìn · Đổi mới",
     color: "#5fffaa",
     description: [
-      "Bạn lãnh đạo bằng tầm nhìn và cảm hứng. Nhân viên không làm vì lương — họ làm vì tin vào điều bạn xây dựng. Phong cách này tạo ra những đội nhóm vượt kỳ vọng và những thế hệ lãnh đạo mới.",
-      "Cực kỳ phù hợp khi tổ chức đang chuyển đổi lớn (M&A, chuyển đổi số, tái cấu trúc), ngành công nghệ / y tế / giáo dục — nơi cần đổi mới liên tục.",
+      "Bạn lãnh đạo bằng tầm nhìn và cảm hứng. Nhân viên không làm vì lương - họ làm vì tin vào điều bạn xây dựng. Phong cách này tạo ra những đội nhóm vượt kỳ vọng và những thế hệ lãnh đạo mới.",
+      "Cực kỳ phù hợp khi tổ chức đang chuyển đổi lớn (M&A, chuyển đổi số, tái cấu trúc), ngành công nghệ / y tế / giáo dục - nơi cần đổi mới liên tục.",
       "Điểm yếu: dễ bị 'cult of personality', bỏ sót chi tiết vận hành. Cần kết hợp với phong cách giao dịch để đảm bảo thực thi.",
     ],
     strengths: [
@@ -336,7 +336,7 @@ export const LEADERSHIP_STYLES: QuizArchetype[] = [
     color: "#ffd479",
     description: [
       "Bạn làm việc bằng hệ thống minh bạch: mục tiêu rõ, KPI rõ, thưởng phạt công bằng. Nhân viên biết chính xác cần làm gì để được ghi nhận, và bạn ghi nhận xứng đáng.",
-      "Phong cách này hiệu quả ở đội ngũ kinh doanh, sản xuất, vận hành — nơi cần kỷ luật và đo lường được.",
+      "Phong cách này hiệu quả ở đội ngũ kinh doanh, sản xuất, vận hành - nơi cần kỷ luật và đo lường được.",
       "Điểm yếu: hạn chế sáng tạo, giảm tinh thần đội nhóm, tăng áp lực ngắn hạn. Cần kết hợp với chuyển đổi để giữ tầm nhìn dài hạn.",
     ],
     strengths: [
@@ -371,7 +371,7 @@ export const LEADERSHIP_STYLES: QuizArchetype[] = [
     color: "#7da9ff",
     description: [
       "Bạn đặt nhu cầu và sự phát triển của nhân viên lên hàng đầu. Lãnh đạo với bạn không phải là quyền lực mà là trách nhiệm phục vụ đội ngũ.",
-      "Phong cách này xây dựng văn hoá tin tưởng cao, phù hợp với tổ chức phi lợi nhuận, giáo dục, y tế, startup công nghệ — nơi giá trị con người là trung tâm.",
+      "Phong cách này xây dựng văn hoá tin tưởng cao, phù hợp với tổ chức phi lợi nhuận, giáo dục, y tế, startup công nghệ - nơi giá trị con người là trung tâm.",
       "Điểm yếu: quy trình chậm, dễ bị xem là thiếu quyết đoán. Trong môi trường cạnh tranh, cần biết kết hợp với phong cách quyết đoán hơn.",
     ],
     strengths: [

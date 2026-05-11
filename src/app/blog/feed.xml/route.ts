@@ -31,7 +31,7 @@ export async function GET() {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Blog &amp; Insights — Nguyễn Đức Quảng</title>
+    <title>Blog &amp; Insights - Nguyễn Đức Quảng</title>
     <link>${SITE_URL}/blog</link>
     <atom:link href="${SITE_URL}/blog/feed.xml" rel="self" type="application/rss+xml" />
     <description>Góc nhìn thực tế về Ecommerce, Performance Marketing và Leadership cho seller TMĐT Việt Nam.</description>

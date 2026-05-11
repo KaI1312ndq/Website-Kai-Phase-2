@@ -47,7 +47,7 @@ export const SESSIONS: {
     bullets: [
       "Tư duy về thương mại và TMĐT trong thị trường Việt Nam hiện nay",
       "Sharing kinh nghiệm 5+ năm thực chiến cả Agency lẫn Client",
-      "Lộ trình hành trình từ Junior → DM Manager — bài học rút ra",
+      "Lộ trình hành trình từ Junior -> DM Manager - bài học rút ra",
       "Cách định hình tư duy đúng từ đầu cho người mới",
     ],
   },
@@ -72,7 +72,7 @@ export const SESSIONS: {
     bullets: [
       "Phương pháp phân tích thị trường và đối thủ",
       "Cách build USP cho sản phẩm mới + định vị brand",
-      "SWOT thực dụng — không phải template trên slide",
+      "SWOT thực dụng - không phải template trên slide",
       "Case study định vị thực tế từ brand đã làm",
     ],
   },
@@ -80,9 +80,9 @@ export const SESSIONS: {
     no: 4,
     week: "Tuần 2 · Buổi 2",
     module: "M3",
-    title: "Setup gian hàng A→Z",
+    title: "Setup gian hàng A->Z",
     bullets: [
-      "Logo · Banner · Decor — chuẩn về visual identity trên sàn",
+      "Logo · Banner · Decor - chuẩn về visual identity trên sàn",
       "Cấu trúc danh mục sản phẩm tối ưu cho conversion",
       "Policy gian hàng: vận chuyển, đổi trả, bảo hành",
       "Setup gian hàng từ 0 trên TikTok Shop và Shopee",
@@ -94,10 +94,10 @@ export const SESSIONS: {
     module: "M3",
     title: "Tư duy giá · Tồn kho · Điểm gian hàng",
     bullets: [
-      "Tư duy về phí sàn — bóc tách từng loại phí, cost thực sự là gì",
+      "Tư duy về phí sàn - bóc tách từng loại phí, cost thực sự là gì",
       "Các mức giá: gốc, sale, A+, voucher · cách setup giá đúng nhịp sàn",
       "Forecast tồn kho + tiêu chuẩn vận chuyển của sàn (SLA)",
-      "Yếu tố ảnh hưởng điểm gian hàng — Mall vs non-Mall",
+      "Yếu tố ảnh hưởng điểm gian hàng - Mall vs non-Mall",
       "Tiêu chuẩn vận hành để giữ điểm gian hàng > 4.8",
     ],
     isPresentation: true,
@@ -110,8 +110,8 @@ export const SESSIONS: {
     bullets: [
       "Các nguồn traffic của 1 gian hàng: organic, ads, KOC, live",
       "Thuật toán phân phối TikTok Shop · Shopee Discovery",
-      "Yếu tố ảnh hưởng tới traffic — đào sâu logic",
-      "Cách tăng traffic cho gian hàng giai đoạn 0→1",
+      "Yếu tố ảnh hưởng tới traffic - đào sâu logic",
+      "Cách tăng traffic cho gian hàng giai đoạn 0->1",
     ],
   },
   {
@@ -120,9 +120,9 @@ export const SESSIONS: {
     module: "M4",
     title: "Bộ chỉ số Marketing + logic sử dụng chỉ số",
     bullets: [
-      "Bản đồ chỉ số — chỉ số nào key, chỉ số nào supporting",
+      "Bản đồ chỉ số - chỉ số nào key, chỉ số nào supporting",
       "Logic đọc chỉ số: tìm vấn đề từ chỉ số nào trước",
-      "Cách test chỉ số — A/B mindset thực tế",
+      "Cách test chỉ số - A/B mindset thực tế",
       "Đào sâu: từ 1 chỉ số bất thường ra được giải pháp",
     ],
   },
@@ -132,8 +132,8 @@ export const SESSIONS: {
     module: "M4",
     title: "Setup TikTok Ads + Shopee Ads + KOC/KOL chọn lọc",
     bullets: [
-      "TikTok Ads: VSA · LSA · Live Ads — chọn loại nào khi nào",
-      "Shopee Ads: Search · Discovery · Affiliate — combo tối ưu",
+      "TikTok Ads: VSA · LSA · Live Ads - chọn loại nào khi nào",
+      "Shopee Ads: Search · Discovery · Affiliate - combo tối ưu",
       "Pixel · Conversion tracking · Integrity",
       "KOC/KOL: chọn lọc, brief, đo hiệu quả thực tế",
     ],
@@ -147,7 +147,7 @@ export const SESSIONS: {
     bullets: [
       "Facebook Ads cho Ecom: CPAS · Catalogue · Lead Gen",
       "Bán hàng qua Website: stack tối thiểu, conversion funnel",
-      "Direct Sale + chatbot — mô hình + cách triển khai",
+      "Direct Sale + chatbot - mô hình + cách triển khai",
       "Khi nào nên đầu tư Web/Direct vs sàn",
     ],
   },
@@ -157,7 +157,7 @@ export const SESSIONS: {
     module: "M5",
     title: "Lập plan tháng/quý + IMC plan thực chiến",
     bullets: [
-      "Cấu trúc 1 plan tháng/quý cho gian hàng — template chuẩn",
+      "Cấu trúc 1 plan tháng/quý cho gian hàng - template chuẩn",
       "Cách lên IMC plan kết hợp performance + branding",
       "Phân bổ ngân sách theo mục tiêu growth",
       "Kết nối plan với KPI và checkpoint",
@@ -172,7 +172,7 @@ export const SESSIONS: {
       "Mỗi học viên trình bày Plan 1 năm cho brand mình chọn",
       "P&L chi tiết: doanh thu mục tiêu, chi phí, profit",
       "Trainer + lớp phản biện 1-1, đưa feedback cụ thể",
-      "Đây là sản phẩm cuối — dùng để pitch khi xin việc",
+      "Đây là sản phẩm cuối - dùng để pitch khi xin việc",
     ],
     isPresentation: true,
   },
@@ -180,11 +180,11 @@ export const SESSIONS: {
     no: 12,
     week: "Tuần 6 · Buổi 2",
     module: "M5",
-    title: "Phân tích data → giải pháp + P&L gian hàng",
+    title: "Phân tích data -> giải pháp + P&L gian hàng",
     bullets: [
       "Cách đọc data gian hàng theo nhịp ngày · tuần · tháng",
-      "Từ vấn đề data → đưa giải pháp triển khai cụ thể",
-      "P&L gian hàng nâng cao — biên lợi nhuận theo SKU",
+      "Từ vấn đề data -> đưa giải pháp triển khai cụ thể",
+      "P&L gian hàng nâng cao - biên lợi nhuận theo SKU",
       "Chuẩn bị tư duy cho 3 tháng mentoring sau khoá",
     ],
   },
@@ -200,7 +200,7 @@ export const FIT_FOR = [
 ];
 
 export const NOT_FIT_FOR = [
-  "Đã có hơn 3 năm Ecom expertise — quá cơ bản",
+  "Đã có hơn 3 năm Ecom expertise - quá cơ bản",
   "Học để \"biết thêm\" mà không thực hành",
   "Không cam kết được lịch học",
   "Cần khoá dạy tool lẻ thay vì tư duy",
@@ -218,7 +218,7 @@ export const OUTCOMES = [
   },
   {
     title: "Đọc và đánh giá performance",
-    sub: "Phân tích data → đưa được giải pháp cơ bản",
+    sub: "Phân tích data -> đưa được giải pháp cơ bản",
   },
   {
     title: "Setup + vận hành full module",
@@ -260,11 +260,11 @@ export const FAQS = [
   },
   {
     q: "Khoá này KHÔNG phù hợp với ai?",
-    a: "Người đã có hơn 3 năm Ecom expertise — nội dung sẽ quá cơ bản. Người tìm short-cut/mánh khoé. Người không cam kết được lịch 2 buổi/tuần × 6 tuần. Người muốn dạy tool lẻ thay vì tư duy.",
+    a: "Người đã có hơn 3 năm Ecom expertise - nội dung sẽ quá cơ bản. Người tìm short-cut/mánh khoé. Người không cam kết được lịch 2 buổi/tuần × 6 tuần. Người muốn dạy tool lẻ thay vì tư duy.",
   },
   {
     q: "Có hoàn tiền không nếu nghỉ giữa chừng?",
-    a: "Không. Đây là trách nhiệm của người học. Đó cũng là lý do mình có quick meet 15 phút trước khi nhận tiền — để chắc chắn 2 bên cùng phù hợp và cam kết.",
+    a: "Không. Đây là trách nhiệm của người học. Đó cũng là lý do mình có quick meet 15 phút trước khi nhận tiền - để chắc chắn 2 bên cùng phù hợp và cam kết.",
   },
   {
     q: "999.000đ Khoá 1 vs 2.999.000đ Early-bird khác gì?",
@@ -284,6 +284,6 @@ export const FAQS = [
   },
   {
     q: "Địa điểm cụ thể ở đâu?",
-    a: "Khu Thanh Xuân, Hà Nội. Chỗ cụ thể chốt sau khi đủ học viên — sẽ chọn không gian thoải mái cho lớp nhỏ 5–7 người.",
+    a: "Khu Thanh Xuân, Hà Nội. Chỗ cụ thể chốt sau khi đủ học viên - sẽ chọn không gian thoải mái cho lớp nhỏ 5–7 người.",
   },
 ];

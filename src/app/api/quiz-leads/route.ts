@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
     const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
     if (!token || !projectId || projectId === "placeholder") {
       // Fail soft: don't block user from seeing result
-      return NextResponse.json({ ok: true, warning: "Sanity chưa config — lead chưa lưu" });
+      return NextResponse.json({ ok: true, warning: "Sanity chưa config - lead chưa lưu" });
     }
 
     const sanity = createClient({

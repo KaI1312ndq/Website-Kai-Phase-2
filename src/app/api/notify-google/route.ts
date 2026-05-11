@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
- * Notify Google when a new URL is published — uses IndexNow protocol (free, no auth).
- * Bing/Yandex/Seznam fetch from IndexNow → faster crawl than waiting for sitemap re-fetch.
+ * Notify Google when a new URL is published - uses IndexNow protocol (free, no auth).
+ * Bing/Yandex/Seznam fetch from IndexNow -> faster crawl than waiting for sitemap re-fetch.
  *
  * Setup steps:
  * 1. Generate a key (any random string), set ENV `INDEXNOW_KEY`
@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
       submitted: urls.length,
       message: res.ok
         ? "URLs submitted to IndexNow (Bing/Yandex). Google will pick up via referral signals."
-        : `IndexNow returned ${res.status} — check key file at ${SITE_URL}/${key}.txt`,
+        : `IndexNow returned ${res.status} - check key file at ${SITE_URL}/${key}.txt`,
     });
   } catch (e) {
     return NextResponse.json({ error: e instanceof Error ? e.message : "Unknown error" }, { status: 500 });

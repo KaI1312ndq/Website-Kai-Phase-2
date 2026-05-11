@@ -9,14 +9,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Thiếu thông tin" }, { status: 400 });
     }
 
-    const subject = `[NĐQ] Liên hệ mới từ ${name}${type ? ` — ${type}` : ""}`;
+    const subject = `[NĐQ] Liên hệ mới từ ${name}${type ? ` - ${type}` : ""}`;
     const fields: Record<string, string> = {
       "Họ tên": name,
       Email: email,
-      "SĐT / Zalo": phone || "—",
-      "Quan tâm": type || "—",
-      "Đối tượng": who || "—",
-      "Lời nhắn": message || "—",
+      "SĐT / Zalo": phone || "-",
+      "Quan tâm": type || "-",
+      "Đối tượng": who || "-",
+      "Lời nhắn": message || "-",
     };
 
     let delivered = false;

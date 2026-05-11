@@ -1,9 +1,9 @@
 import type { KnowledgeQuestion } from "../types";
 
 /**
- * Test Kiến Thức Content Frameworks — knowledge quiz 30 câu.
+ * Test Kiến Thức Content Frameworks - knowledge quiz 30 câu.
  * Mục tiêu: tester nắm vững copywriting + content marketing frameworks
- * thường dùng cho Ecom/D2C/Performance Marketing — AIDA, PAS, FAB, hook formulas,
+ * thường dùng cho Ecom/D2C/Performance Marketing - AIDA, PAS, FAB, hook formulas,
  * storytelling, TOFU/MOFU/BOFU, Cialdini, hook 3s TikTok, email subject line, etc.
  */
 
@@ -18,7 +18,7 @@ export const CONTENT_FRAMEWORK_QUESTIONS: KnowledgeQuestion[] = [
       "Audience, Interaction, Decision, Acquisition",
     ],
     ans: 2,
-    explain: "AIDA = Attention → Interest → Desire → Action. Framework copywriting kinh điển nhất, Elias St. Elmo Lewis (1898).",
+    explain: "AIDA = Attention -> Interest -> Desire -> Action. Framework copywriting kinh điển nhất, Elias St. Elmo Lewis (1898).",
   },
   {
     id: 2,
@@ -30,7 +30,7 @@ export const CONTENT_FRAMEWORK_QUESTIONS: KnowledgeQuestion[] = [
       "Position - Action - Sale: viết landing page",
     ],
     ans: 1,
-    explain: "PAS = Problem → Agitate → Solve. Cực hợp content pain-point: tả đúng nỗi đau khách hàng, đẩy lên cao trào, kết bằng sản phẩm là solution.",
+    explain: "PAS = Problem -> Agitate -> Solve. Cực hợp content pain-point: tả đúng nỗi đau khách hàng, đẩy lên cao trào, kết bằng sản phẩm là solution.",
   },
   {
     id: 3,
@@ -42,7 +42,7 @@ export const CONTENT_FRAMEWORK_QUESTIONS: KnowledgeQuestion[] = [
       "Feature - Application - Buy",
     ],
     ans: 1,
-    explain: "FAB = Feature (tính năng) → Advantage (ưu thế hơn đối thủ) → Benefit (lợi ích khách thấy được). Quan trọng nhất là CHUYỂN từ feature → benefit.",
+    explain: "FAB = Feature (tính năng) -> Advantage (ưu thế hơn đối thủ) -> Benefit (lợi ích khách thấy được). Quan trọng nhất là CHUYỂN từ feature -> benefit.",
   },
   {
     id: 4,
@@ -66,19 +66,19 @@ export const CONTENT_FRAMEWORK_QUESTIONS: KnowledgeQuestion[] = [
       "Đảo ngữ pháp câu để gây tò mò",
     ],
     ans: 1,
-    explain: "Pattern Interrupt = đột ngột phá vỡ flow mà não đang predict — VD giật ngược âm thanh, zoom in mặt, câu nói bất ngờ. Não tự động chú ý.",
+    explain: "Pattern Interrupt = đột ngột phá vỡ flow mà não đang predict - VD giật ngược âm thanh, zoom in mặt, câu nói bất ngờ. Não tự động chú ý.",
   },
   {
     id: 6,
     q: "Open Loop / Curiosity Gap là gì?",
     opts: [
-      "Đặt câu hỏi rồi không trả lời ngay — bắt buộc khán giả phải xem hết để biết đáp án",
+      "Đặt câu hỏi rồi không trả lời ngay - bắt buộc khán giả phải xem hết để biết đáp án",
       "Vòng lặp marketing funnel mở luôn không đóng",
       "Kỹ thuật A/B test 2 phiên bản đồng thời",
       "Cấu trúc kể chuyện vòng tròn",
     ],
     ans: 0,
-    explain: "Open Loop = tạo khoảng trống thông tin trong não. VD: 'Có 3 sai lầm khiến shop bạn mãi không lên đơn — sai lầm số 2 hầu hết seller đều mắc...'. Tâm trí KHÔNG chịu được info gap.",
+    explain: "Open Loop = tạo khoảng trống thông tin trong não. VD: 'Có 3 sai lầm khiến shop bạn mãi không lên đơn - sai lầm số 2 hầu hết seller đều mắc...'. Tâm trí KHÔNG chịu được info gap.",
   },
   {
     id: 7,
@@ -90,7 +90,7 @@ export const CONTENT_FRAMEWORK_QUESTIONS: KnowledgeQuestion[] = [
       "Theo độ dài content (short / medium / long)",
     ],
     ans: 2,
-    explain: "TOFU (Awareness — chưa biết brand), MOFU (Consideration — đang cân nhắc), BOFU (Decision — sẵn sàng mua). Content mỗi tầng phải phù hợp ý định khác nhau.",
+    explain: "TOFU (Awareness - chưa biết brand), MOFU (Consideration - đang cân nhắc), BOFU (Decision - sẵn sàng mua). Content mỗi tầng phải phù hợp ý định khác nhau.",
   },
   {
     id: 8,
@@ -102,7 +102,7 @@ export const CONTENT_FRAMEWORK_QUESTIONS: KnowledgeQuestion[] = [
       "Awareness, Interest, Desire, Trust, Action, Loyalty",
     ],
     ans: 1,
-    explain: "Robert Cialdini (1984) — 6 principles of persuasion: Có qua có lại / Cam kết-Nhất quán / Social Proof / Authority / Thiện cảm / Khan hiếm.",
+    explain: "Robert Cialdini (1984) - 6 principles of persuasion: Có qua có lại / Cam kết-Nhất quán / Social Proof / Authority / Thiện cảm / Khan hiếm.",
   },
   {
     id: 9,
@@ -114,7 +114,7 @@ export const CONTENT_FRAMEWORK_QUESTIONS: KnowledgeQuestion[] = [
       "Khẩu hiệu (slogan) của brand",
     ],
     ans: 1,
-    explain: "USP có 3 điều kiện: (1) Cụ thể về lợi ích, (2) Đối thủ KHÔNG có/không claim được, (3) Đủ thuyết phục khiến khách chọn. 'Chất lượng tốt' KHÔNG phải USP — ai cũng claim được.",
+    explain: "USP có 3 điều kiện: (1) Cụ thể về lợi ích, (2) Đối thủ KHÔNG có/không claim được, (3) Đủ thuyết phục khiến khách chọn. 'Chất lượng tốt' KHÔNG phải USP - ai cũng claim được.",
   },
   {
     id: 10,
@@ -126,7 +126,7 @@ export const CONTENT_FRAMEWORK_QUESTIONS: KnowledgeQuestion[] = [
       "Cam kết hoàn tiền 100% nếu không hài lòng",
     ],
     ans: 3,
-    explain: "Hoàn tiền là Risk Reversal (đảo ngược rủi ro), không phải Social Proof. Social Proof là 'người khác cũng làm/tin/dùng' → review, số liệu, testimonials, logo brand.",
+    explain: "Hoàn tiền là Risk Reversal (đảo ngược rủi ro), không phải Social Proof. Social Proof là 'người khác cũng làm/tin/dùng' -> review, số liệu, testimonials, logo brand.",
   },
   {
     id: 11,
@@ -138,7 +138,7 @@ export const CONTENT_FRAMEWORK_QUESTIONS: KnowledgeQuestion[] = [
       "Buy - Apply - Benefit",
     ],
     ans: 1,
-    explain: "BAB = Before (tình trạng hiện tại tệ) → After (tình trạng tương lai tốt đẹp khi đã có sản phẩm) → Bridge (sản phẩm chính là cây cầu). Cực hợp transformation stories.",
+    explain: "BAB = Before (tình trạng hiện tại tệ) -> After (tình trạng tương lai tốt đẹp khi đã có sản phẩm) -> Bridge (sản phẩm chính là cây cầu). Cực hợp transformation stories.",
   },
   {
     id: 12,
@@ -150,7 +150,7 @@ export const CONTENT_FRAMEWORK_QUESTIONS: KnowledgeQuestion[] = [
       "The Witness (người chứng kiến)",
     ],
     ans: 0,
-    explain: "SB7: KHÁCH HÀNG là HERO, BRAND là GUIDE (như Yoda với Luke). Đừng tự positioning brand là anh hùng — khách mới là người đi qua hành trình.",
+    explain: "SB7: KHÁCH HÀNG là HERO, BRAND là GUIDE (như Yoda với Luke). Đừng tự positioning brand là anh hùng - khách mới là người đi qua hành trình.",
   },
   {
     id: 13,
@@ -186,11 +186,11 @@ export const CONTENT_FRAMEWORK_QUESTIONS: KnowledgeQuestion[] = [
       "Lặp đi lặp lại 'sắp hết hàng' liên tục",
     ],
     ans: 1,
-    explain: "Scarcity giả = giết trust. Scarcity hiệu quả khi CÓ THẬT: 'Khoá học cohort chỉ nhận 30 học viên', 'Sale 48h từ 20-22/4'. Khán giả Việt Nam nhạy với hành vi tăng giá fake — phản tác dụng.",
+    explain: "Scarcity giả = giết trust. Scarcity hiệu quả khi CÓ THẬT: 'Khoá học cohort chỉ nhận 30 học viên', 'Sale 48h từ 20-22/4'. Khán giả Việt Nam nhạy với hành vi tăng giá fake - phản tác dụng.",
   },
   {
     id: 16,
-    q: "Hook 'Tôi đã bán 10 tỷ trên TikTok Shop trong 30 ngày — và 90% người làm sai bước đầu tiên' kết hợp framework nào?",
+    q: "Hook 'Tôi đã bán 10 tỷ trên TikTok Shop trong 30 ngày - và 90% người làm sai bước đầu tiên' kết hợp framework nào?",
     opts: [
       "Số liệu cụ thể + Authority + Open Loop",
       "AIDA",
@@ -198,7 +198,7 @@ export const CONTENT_FRAMEWORK_QUESTIONS: KnowledgeQuestion[] = [
       "BAB",
     ],
     ans: 0,
-    explain: "(1) Số liệu cụ thể '10 tỷ / 30 ngày' (credibility), (2) Authority ngầm (chứng tỏ expert), (3) Open Loop '90% người làm SAI bước đầu' → não buộc phải biết bước đó là gì.",
+    explain: "(1) Số liệu cụ thể '10 tỷ / 30 ngày' (credibility), (2) Authority ngầm (chứng tỏ expert), (3) Open Loop '90% người làm SAI bước đầu' -> não buộc phải biết bước đó là gì.",
   },
   {
     id: 17,
@@ -210,7 +210,7 @@ export const CONTENT_FRAMEWORK_QUESTIONS: KnowledgeQuestion[] = [
       "Phương pháp brainstorm idea bằng mind map",
     ],
     ans: 1,
-    explain: "Pillar = bài long-form 3000+ từ bao quát toàn bộ chủ đề. Cluster = các bài chi tiết hơn về từng sub-topic, link về pillar. Cực mạnh SEO — Google hiểu site bạn là authority topic đó.",
+    explain: "Pillar = bài long-form 3000+ từ bao quát toàn bộ chủ đề. Cluster = các bài chi tiết hơn về từng sub-topic, link về pillar. Cực mạnh SEO - Google hiểu site bạn là authority topic đó.",
   },
   {
     id: 18,
@@ -234,7 +234,7 @@ export const CONTENT_FRAMEWORK_QUESTIONS: KnowledgeQuestion[] = [
       "User, USP, Urgency, Update",
     ],
     ans: 0,
-    explain: "4Us (Michael Masterson) — checklist cho headline mạnh: Useful (lợi ích), Urgent (gấp), Unique (riêng), Ultra-specific (cụ thể). Headline pass đủ 4 = winner.",
+    explain: "4Us (Michael Masterson) - checklist cho headline mạnh: Useful (lợi ích), Urgent (gấp), Unique (riêng), Ultra-specific (cụ thể). Headline pass đủ 4 = winner.",
   },
   {
     id: 20,
@@ -270,19 +270,19 @@ export const CONTENT_FRAMEWORK_QUESTIONS: KnowledgeQuestion[] = [
       "Hero / Villain / Quest / Reward",
     ],
     ans: 0,
-    explain: "Pixar 5-step story spine: Bối cảnh quen thuộc → Hàng ngày → Một ngày bất ngờ → Vì thế → Cuối cùng. Cực ngắn gọn, dùng cho mọi case study, hành trình thương hiệu.",
+    explain: "Pixar 5-step story spine: Bối cảnh quen thuộc -> Hàng ngày -> Một ngày bất ngờ -> Vì thế -> Cuối cùng. Cực ngắn gọn, dùng cho mọi case study, hành trình thương hiệu.",
   },
   {
     id: 23,
     q: "Risk Reversal trong marketing là gì?",
     opts: [
       "Bảo hiểm cho sản phẩm",
-      "Chuyển rủi ro mua hàng từ khách sang brand — cam kết hoàn tiền / đổi trả / dùng thử miễn phí",
+      "Chuyển rủi ro mua hàng từ khách sang brand - cam kết hoàn tiền / đổi trả / dùng thử miễn phí",
       "Phân tán rủi ro qua nhiều kênh marketing",
       "Test trước khi launch large-scale",
     ],
     ans: 1,
-    explain: "Khách ngại mua vì sợ mất tiền nếu sản phẩm không như kỳ vọng. Risk Reversal đảo chiều: 'Không hài lòng hoàn 100% trong 30 ngày' — khách không còn lý do từ chối.",
+    explain: "Khách ngại mua vì sợ mất tiền nếu sản phẩm không như kỳ vọng. Risk Reversal đảo chiều: 'Không hài lòng hoàn 100% trong 30 ngày' - khách không còn lý do từ chối.",
   },
   {
     id: 24,
@@ -294,19 +294,19 @@ export const CONTENT_FRAMEWORK_QUESTIONS: KnowledgeQuestion[] = [
       "Plan - Apply - Stop - Test - Order - Resolve",
     ],
     ans: 0,
-    explain: "PASTOR mở rộng PAS: Problem → Amplify (= Agitate) → Story+Solution → Testimony (social proof) → Offer → Response (CTA). Cấu trúc full sales letter / VSL hiện đại.",
+    explain: "PASTOR mở rộng PAS: Problem -> Amplify (= Agitate) -> Story+Solution -> Testimony (social proof) -> Offer -> Response (CTA). Cấu trúc full sales letter / VSL hiện đại.",
   },
   {
     id: 25,
     q: "Trong content marketing, 'Jobs To Be Done' (JTBD) framework giúp gì?",
     opts: [
       "Lập kế hoạch JD cho team content",
-      "Hiểu khách hàng KHÔNG mua sản phẩm — họ thuê sản phẩm để hoàn thành 1 công việc cụ thể trong đời",
+      "Hiểu khách hàng KHÔNG mua sản phẩm - họ thuê sản phẩm để hoàn thành 1 công việc cụ thể trong đời",
       "Phân chia task cho freelancer",
       "Phân loại sản phẩm theo category",
     ],
     ans: 1,
-    explain: "JTBD (Clayton Christensen) — 'Người ta không muốn 1 cái khoan; họ muốn 1 cái lỗ trên tường'. Hiểu JOB khách muốn hoàn thành → positioning content quanh JOB, không quanh feature.",
+    explain: "JTBD (Clayton Christensen) - 'Người ta không muốn 1 cái khoan; họ muốn 1 cái lỗ trên tường'. Hiểu JOB khách muốn hoàn thành -> positioning content quanh JOB, không quanh feature.",
   },
   {
     id: 26,
@@ -325,7 +325,7 @@ export const CONTENT_FRAMEWORK_QUESTIONS: KnowledgeQuestion[] = [
     q: "Email Welcome Sequence chuẩn nên có bao nhiêu email và mục tiêu?",
     opts: [
       "1 email cảm ơn",
-      "3-5 emails: Welcome → Value → Story → Soft pitch → Hard offer",
+      "3-5 emails: Welcome -> Value -> Story -> Soft pitch -> Hard offer",
       "10+ emails càng nhiều càng tốt",
       "Không cần welcome sequence",
     ],
@@ -349,16 +349,16 @@ export const CONTENT_FRAMEWORK_QUESTIONS: KnowledgeQuestion[] = [
     q: "Reciprocity (có qua có lại) áp dụng tốt nhất trong content như thế nào?",
     opts: [
       "Yêu cầu khách share trước rồi mới cho info",
-      "Cho free value trước (template, ebook, mini course) → khách cảm thấy 'nợ' và phản hồi lại bằng cách mua hoặc share",
+      "Cho free value trước (template, ebook, mini course) -> khách cảm thấy 'nợ' và phản hồi lại bằng cách mua hoặc share",
       "Cho discount khi khách đăng ký",
-      "Trao đổi 1:1 — bạn share của bạn, brand share của brand",
+      "Trao đổi 1:1 - bạn share của bạn, brand share của brand",
     ],
     ans: 1,
-    explain: "Cialdini's Reciprocity — não bộ có cơ chế cân bằng. Khi nhận free value trước (lead magnet, free training), khách hàng tâm lý 'mắc nợ' brand và phản hồi bằng action khác (mua, share, recommend).",
+    explain: "Cialdini's Reciprocity - não bộ có cơ chế cân bằng. Khi nhận free value trước (lead magnet, free training), khách hàng tâm lý 'mắc nợ' brand và phản hồi bằng action khác (mua, share, recommend).",
   },
   {
     id: 30,
-    q: "'Content is king, but ___ is queen' — câu nổi tiếng trong content marketing nói tiếp gì?",
+    q: "'Content is king, but ___ is queen' - câu nổi tiếng trong content marketing nói tiếp gì?",
     opts: [
       "Strategy",
       "Distribution",
@@ -366,6 +366,6 @@ export const CONTENT_FRAMEWORK_QUESTIONS: KnowledgeQuestion[] = [
       "Brand",
     ],
     ans: 1,
-    explain: "'Content is king, but distribution is queen, and she wears the pants' — Jonathan Perelman (BuzzFeed). Content hay nhưng không phân phối thì không ai biết. ~80% effort nên dành cho distribution, 20% cho creation.",
+    explain: "'Content is king, but distribution is queen, and she wears the pants' - Jonathan Perelman (BuzzFeed). Content hay nhưng không phân phối thì không ai biết. ~80% effort nên dành cho distribution, 20% cho creation.",
   },
 ];

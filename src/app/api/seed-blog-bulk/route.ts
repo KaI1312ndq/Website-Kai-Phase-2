@@ -11,7 +11,7 @@ import { TNCN_POSTS } from "@/lib/blog/tncn-cluster";
  *   - 10 bài Group A: nội dung viết hoàn thiện (ready to publish)
  *   - 40 bài Group B-F: title + excerpt + outline (Quảng viết tiếp trong studio)
  *
- * Idempotent — gọi lại không tạo trùng (createIfNotExists).
+ * Idempotent - gọi lại không tạo trùng (createIfNotExists).
  *
  * Cách dùng:
  *   GET /api/seed-blog-bulk?secret=<SEED_SECRET>
@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
   const secret = url.searchParams.get("secret");
 
   if (!process.env.SEED_SECRET || secret !== process.env.SEED_SECRET) {
-    return NextResponse.json({ error: "Unauthorized — pass ?secret=<SEED_SECRET>" }, { status: 401 });
+    return NextResponse.json({ error: "Unauthorized - pass ?secret=<SEED_SECRET>" }, { status: 401 });
   }
 
   const token = process.env.SANITY_API_WRITE_TOKEN;
@@ -96,6 +96,6 @@ export async function GET(req: NextRequest) {
       groupBCDEF: results.filter((r) => r.group === "B-F").length,
     },
     results,
-    note: "Vào /studio → Blog/Insights để upload ảnh bìa cho Group A và viết tiếp Group B-F.",
+    note: "Vào /studio -> Blog/Insights để upload ảnh bìa cho Group A và viết tiếp Group B-F.",
   });
 }

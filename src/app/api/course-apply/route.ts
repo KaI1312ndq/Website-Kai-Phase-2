@@ -26,22 +26,22 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Thiếu thông tin bắt buộc" }, { status: 400 });
     }
 
-    const subject = `[Ecom Foundation · K1] Application — ${name}`;
+    const subject = `[Ecom Foundation · K1] Application - ${name}`;
     const fields = {
       "Họ tên": name,
       Email: email,
       "Zalo / SĐT": phone,
-      "Giai đoạn": STAGE[stage] || stage || "—",
-      "Mục tiêu": goal || "—",
-      "Laptop + Excel": hasLaptop === "yes" ? "Có" : hasLaptop === "no" ? "Chưa" : "—",
-      "Cam kết tham dự": COMMIT[commit] || "—",
-      "Slot quick meet": SLOT[slot] || slot || "—",
+      "Giai đoạn": STAGE[stage] || stage || "-",
+      "Mục tiêu": goal || "-",
+      "Laptop + Excel": hasLaptop === "yes" ? "Có" : hasLaptop === "no" ? "Chưa" : "-",
+      "Cam kết tham dự": COMMIT[commit] || "-",
+      "Slot quick meet": SLOT[slot] || slot || "-",
     };
 
     let delivered = false;
     let providerError: string | null = null;
 
-    // Provider 1 — Web3Forms (free, no domain verification needed)
+    // Provider 1 - Web3Forms (free, no domain verification needed)
     if (process.env.WEB3FORMS_KEY) {
       try {
         const res = await fetch("https://api.web3forms.com/submit", {
@@ -78,10 +78,10 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Provider 2 — Resend (requires verified domain)
+    // Provider 2 - Resend (requires verified domain)
     if (!delivered && process.env.RESEND_API_KEY) {
       const html = `
-        <h2>Application mới — Foundation Ecommerce</h2>
+        <h2>Application mới - Foundation Ecommerce</h2>
         <table style="border-collapse:collapse">
           ${Object.entries(fields)
             .map(([k, v]) => `<tr><td style="padding:6px 12px"><strong>${k}</strong></td><td style="padding:6px 12px">${String(v).replace(/\n/g, "<br/>")}</td></tr>`)

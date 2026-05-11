@@ -1,11 +1,11 @@
 /**
- * Internal linking matrix — auto-suggest tools/quizzes/case studies
+ * Internal linking matrix - auto-suggest tools/quizzes/case studies
  * relevant to a blog post based on its category + tags.
  *
  * Goals:
  *  - Mỗi blog post tự động có 1-2 tool callouts (CTR cao)
  *  - Mỗi blog post tự động có 1 quiz callout
- *  - SEO: dày internal links → tăng PageRank distribution
+ *  - SEO: dày internal links -> tăng PageRank distribution
  */
 
 export type LinkSuggestion = {
@@ -22,7 +22,7 @@ const TOOLS: Array<LinkSuggestion & { categories: string[]; tagKeywords: string[
     type: "tool",
     href: "/tools/tinh-phi-san",
     title: "Tool tính phí sàn TikTok & Shopee 2026",
-    description: "Tính chính xác phí Mall vs Non-Mall — preset 4 platform, có search ngành.",
+    description: "Tính chính xác phí Mall vs Non-Mall - preset 4 platform, có search ngành.",
     iconName: "tool",
     color: "#4ad6ff",
     categories: ["tiktok", "shopee", "ecom"],
@@ -31,7 +31,7 @@ const TOOLS: Array<LinkSuggestion & { categories: string[]; tagKeywords: string[
   {
     type: "tool",
     href: "/tools/roas-calculator",
-    title: "ROAS Calculator — Break-even ROAS",
+    title: "ROAS Calculator - Break-even ROAS",
     description: "Tính ROAS tối thiểu cần đạt để không lỗ + target ROAS theo margin.",
     iconName: "trending-up",
     color: "#7da9ff",
@@ -41,8 +41,8 @@ const TOOLS: Array<LinkSuggestion & { categories: string[]; tagKeywords: string[
   {
     type: "tool",
     href: "/tools/pnl-ecom",
-    title: "Mẫu P&L Ecom — 5 tầng chuẩn",
-    description: "Báo cáo lãi lỗ gian hàng từ Net Revenue → EBITDA, có in PDF.",
+    title: "Mẫu P&L Ecom - 5 tầng chuẩn",
+    description: "Báo cáo lãi lỗ gian hàng từ Net Revenue -> EBITDA, có in PDF.",
     iconName: "layers",
     color: "#a78bff",
     categories: ["ecom", "shopee", "tiktok", "performance"],
@@ -55,7 +55,7 @@ const QUIZZES: Array<LinkSuggestion & { categories: string[]; tagKeywords: strin
     type: "quiz",
     href: "/quiz/phong-cach-lanh-dao",
     title: "Test Phong Cách Lãnh Đạo",
-    description: "15 câu — biết bạn lãnh đạo theo phong cách nào trong 6 phong cách kinh điển.",
+    description: "15 câu - biết bạn lãnh đạo theo phong cách nào trong 6 phong cách kinh điển.",
     iconName: "target",
     color: "#7da9ff",
     categories: ["leadership", "mindset", "psychology"],
@@ -65,7 +65,7 @@ const QUIZZES: Array<LinkSuggestion & { categories: string[]; tagKeywords: strin
     type: "quiz",
     href: "/quiz/mbti",
     title: "Test Tính Cách MBTI 16 Kiểu",
-    description: "70 câu chuẩn quốc tế — xác định 1 trong 16 kiểu tính cách MBTI.",
+    description: "70 câu chuẩn quốc tế - xác định 1 trong 16 kiểu tính cách MBTI.",
     iconName: "brain",
     color: "#a78bff",
     categories: ["psychology", "mindset", "career"],
@@ -75,7 +75,7 @@ const QUIZZES: Array<LinkSuggestion & { categories: string[]; tagKeywords: strin
     type: "quiz",
     href: "/quiz/huong-nghiep-marketing",
     title: "Test Hướng Nghiệp Marketing & Ecom",
-    description: "12 câu — bạn thuộc archetype Creator / Analyst / Communicator / Builder / Operator?",
+    description: "12 câu - bạn thuộc archetype Creator / Analyst / Communicator / Builder / Operator?",
     iconName: "rocket",
     color: "#5fffaa",
     categories: ["career", "performance", "ecom", "mindset"],
@@ -86,7 +86,7 @@ const QUIZZES: Array<LinkSuggestion & { categories: string[]; tagKeywords: strin
 const COURSE: LinkSuggestion = {
   type: "course",
   href: "/ecom-foundation",
-  title: "Khoá Ecom Foundation — 12 buổi",
+  title: "Khoá Ecom Foundation - 12 buổi",
   description: "Build P&L thực chiến + scale shop từ kinh nghiệm 60+ project Ecom.",
   iconName: "graduation-cap",
   color: "#7da9ff",
@@ -135,7 +135,7 @@ export function getRelevantLinks(
     ({ _score, categories, tagKeywords, ...rest }) => rest
   );
 
-  // Take top 1 quiz (if score > 0, otherwise null — don't force irrelevant quiz)
+  // Take top 1 quiz (if score > 0, otherwise null - don't force irrelevant quiz)
   const topQuiz = scoredQuizzes[0]?._score > 0 ? scoredQuizzes[0] : null;
   const quiz = topQuiz
     ? (() => {

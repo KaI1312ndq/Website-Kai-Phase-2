@@ -4,11 +4,11 @@
  *   - "## " H2 / "### " H3 headings
  *   - "> " blockquote
  *   - "**bold**" inline marks
- *   - "![alt](url)" standalone-line images → externalImage block
- *   - "[caption](!url)" — image with caption: `![alt|caption](url)`
- *   - Markdown table: header row + `|---|...|` divider + body rows → tableBlock
+ *   - "![alt](url)" standalone-line images -> externalImage block
+ *   - "[caption](!url)" - image with caption: `![alt|caption](url)`
+ *   - Markdown table: header row + `|---|...|` divider + body rows -> tableBlock
  *   - Plain paragraphs (separated by blank line)
- * Bullets: prefix with "• " — paragraph block (schema doesn't have list type).
+ * Bullets: prefix with "• " - paragraph block (schema doesn't have list type).
  */
 
 type Span = { _type: "span"; _key: string; text: string; marks: string[] };
@@ -65,7 +65,7 @@ function parseInline(text: string, keyPrefix: string): Span[] {
 /** Match standalone-line image syntax: ![alt](url) or ![alt|caption](url) or ![alt|caption|credit](url) */
 const IMAGE_RE = /^!\[([^\]]*)\]\(([^)]+)\)$/;
 
-/** Detect if a section is a markdown table — at least 2 lines, header + |--- divider */
+/** Detect if a section is a markdown table - at least 2 lines, header + |--- divider */
 function parseTable(section: string, key: string): TableBlock | null {
   const lines = section.split("\n").map((l) => l.trim()).filter(Boolean);
   if (lines.length < 2) return null;

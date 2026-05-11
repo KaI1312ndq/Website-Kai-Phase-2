@@ -2,7 +2,7 @@
  * Build cover image URL for a blog post.
  * Prefer Sanity coverImage if present; otherwise use dynamic /api/blog-cover route.
  *
- * Width/height args control desired size — dynamic route honors them with bounds.
+ * Width/height args control desired size - dynamic route honors them with bounds.
  */
 
 export type CoverArgs = {
@@ -18,7 +18,7 @@ export function buildCoverUrl({ sanityUrl, title, category, width: _w, height: _
   if (sanityUrl) return sanityUrl;
   // Always render at 16:9 (1200x675) regardless of card display size.
   // CSS object-cover handles cropping per card aspect ratio.
-  // Single PNG cached and reused for all card sizes → fewer Vercel function invocations.
+  // Single PNG cached and reused for all card sizes -> fewer Vercel function invocations.
   const params = new URLSearchParams({
     title: title.slice(0, 140),
     category: (category || "default").toLowerCase(),

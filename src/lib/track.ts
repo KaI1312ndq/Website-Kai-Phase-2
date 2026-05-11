@@ -1,5 +1,5 @@
 /**
- * Cross-platform event tracking — gửi tới GA4 (gtag) + Vercel Analytics + Hotjar.
+ * Cross-platform event tracking - gửi tới GA4 (gtag) + Vercel Analytics + Hotjar.
  * Skip im lặng nếu trên server hoặc tracker chưa load.
  */
 declare global {

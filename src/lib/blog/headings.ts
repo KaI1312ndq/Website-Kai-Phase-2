@@ -9,7 +9,7 @@ export type Heading = {
   level: 2 | 3;
 };
 
-/** Vietnamese-aware slug — lowercase, strip diacritics, hyphenate. */
+/** Vietnamese-aware slug - lowercase, strip diacritics, hyphenate. */
 export function slugify(text: string, fallback = "section"): string {
   const cleaned = text
     .toLowerCase()

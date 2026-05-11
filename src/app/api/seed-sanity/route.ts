@@ -4,10 +4,10 @@ import { DEFAULT_BRANDS } from "@/lib/brand-data";
 
 /**
  * Seed Sanity với content mặc định đang hiển thị trên homepage.
- * Idempotent — dùng deterministic _id, gọi lại không tạo trùng (createIfNotExists).
+ * Idempotent - dùng deterministic _id, gọi lại không tạo trùng (createIfNotExists).
  *
  * Setup:
- *   1) Sanity → Manage → API → Tokens → Add token (write permission)
+ *   1) Sanity -> Manage -> API -> Tokens -> Add token (write permission)
  *   2) Vercel env:
  *        SANITY_API_WRITE_TOKEN = <token>
  *        SEED_SECRET            = <chuỗi tự đặt, vd "kai-seed-2026">
@@ -24,8 +24,8 @@ const CASE_STUDIES = [
     role: "Lead Media + Content Strategy",
     headline: "11B",
     headlineLabel: "VNĐ",
-    description: "Doanh thu 3 ngày Super Brand Day — Top 1 TikTok Shop ngành Fashion.",
-    award: "Best Commerce Campaign Gold — TikTok Awards 2024",
+    description: "Doanh thu 3 ngày Super Brand Day - Top 1 TikTok Shop ngành Fashion.",
+    award: "Best Commerce Campaign Gold - TikTok Awards 2024",
     tags: ["TikTok Shop", "Media", "KOC/KOL"],
     order: 1,
     featured: true,
@@ -113,8 +113,8 @@ const TESTIMONIALS = [
     _id: "tm-placeholder-1",
     name: "Sắp cập nhật",
     role: "Client",
-    company: "—",
-    content: "Sắp cập nhật — nhận xét từ client hoặc đồng nghiệp đã làm việc cùng.",
+    company: "-",
+    content: "Sắp cập nhật - nhận xét từ client hoặc đồng nghiệp đã làm việc cùng.",
     rating: 5,
     order: 1,
   },
@@ -122,8 +122,8 @@ const TESTIMONIALS = [
     _id: "tm-placeholder-2",
     name: "Sắp cập nhật",
     role: "Mentee",
-    company: "—",
-    content: "Sắp cập nhật — feedback từ mentee đã tham gia chương trình.",
+    company: "-",
+    content: "Sắp cập nhật - feedback từ mentee đã tham gia chương trình.",
     rating: 5,
     order: 2,
   },
@@ -132,7 +132,7 @@ const TESTIMONIALS = [
     name: "Sắp cập nhật",
     role: "Đồng nghiệp",
     company: "UpBase",
-    content: "Sắp cập nhật — nhận xét từ đồng nghiệp UpBase.",
+    content: "Sắp cập nhật - nhận xét từ đồng nghiệp UpBase.",
     rating: 5,
     order: 3,
   },
@@ -143,7 +143,7 @@ export async function GET(req: NextRequest) {
   const secret = url.searchParams.get("secret");
 
   if (!process.env.SEED_SECRET || secret !== process.env.SEED_SECRET) {
-    return NextResponse.json({ error: "Unauthorized — set SEED_SECRET env var and pass ?secret=..." }, { status: 401 });
+    return NextResponse.json({ error: "Unauthorized - set SEED_SECRET env var and pass ?secret=..." }, { status: 401 });
   }
 
   const token = process.env.SANITY_API_WRITE_TOKEN;
@@ -187,7 +187,7 @@ export async function GET(req: NextRequest) {
   await upsert("timeline", TIMELINE);
   await upsert("testimonial", TESTIMONIALS);
 
-  // Brands — upload base64 logos as Sanity assets, then create brand docs
+  // Brands - upload base64 logos as Sanity assets, then create brand docs
   const brandResults: { id: string; status: string }[] = [];
   for (let i = 0; i < DEFAULT_BRANDS.length; i++) {
     const b = DEFAULT_BRANDS[i];
@@ -233,6 +233,6 @@ export async function GET(req: NextRequest) {
     created,
     errors,
     brands: brandResults,
-    note: "Idempotent — gọi lại nhiều lần OK, không tạo trùng. Vào /studio để edit.",
+    note: "Idempotent - gọi lại nhiều lần OK, không tạo trùng. Vào /studio để edit.",
   });
 }

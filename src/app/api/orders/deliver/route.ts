@@ -4,7 +4,7 @@ import { sendDeliveryEmail } from "@/lib/email/send-delivery";
 
 /**
  * Confirm payment + send file delivery email.
- * Quảng tick "đã thanh toán" trong Sanity Studio → API này trigger gửi email.
+ * Quảng tick "đã thanh toán" trong Sanity Studio -> API này trigger gửi email.
  *
  * POST /api/orders/deliver?secret=<SEED_SECRET>
  *   body: { orderId: string }
@@ -20,7 +20,7 @@ import { sendDeliveryEmail } from "@/lib/email/send-delivery";
  * Auth: accept either
  *   1. ?secret=<SEED_SECRET> (for cURL / external admin)
  *   2. Origin or Referer matches NEXT_PUBLIC_SITE_URL (for Sanity Studio actions)
- *      — Studio is protected by Sanity login so this is acceptable.
+ *      - Studio is protected by Sanity login so this is acceptable.
  */
 function checkAuth(req: NextRequest): boolean {
   const url = new URL(req.url);
@@ -79,7 +79,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: true, alreadyDelivered: true, message: "Already delivered" });
     }
 
-    // Calculate expiry — 30 days from now
+    // Calculate expiry - 30 days from now
     const now = new Date();
     const expiresAt = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
 

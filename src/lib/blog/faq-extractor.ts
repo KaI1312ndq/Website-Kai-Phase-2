@@ -2,8 +2,8 @@
  * Extract Q&A pairs from Sanity Portable Text body for FAQPage schema.org markup.
  *
  * Heuristics:
- *   - H2/H3 ending with "?" → Question
- *   - Following 1-3 paragraphs → Answer (joined)
+ *   - H2/H3 ending with "?" -> Question
+ *   - Following 1-3 paragraphs -> Answer (joined)
  *   - Min 2 Q&A pairs to emit FAQPage schema (Google requirement)
  */
 

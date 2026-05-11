@@ -2,7 +2,7 @@ export type QuizOption = {
   /** A, B, C, D, E, F */
   key: string;
   text: string;
-  /** Mapping ID(s) — for leadership: 1 archetype; for MBTI: 1 dimension letter */
+  /** Mapping ID(s) - for leadership: 1 archetype; for MBTI: 1 dimension letter */
   scores: string[];
 };
 
@@ -21,7 +21,7 @@ export type QuizArchetype = {
   tagline: string;
   /** Color accent (hex) */
   color: string;
-  /** Long description — paragraphs */
+  /** Long description - paragraphs */
   description: string[];
   /** Strengths (bullet list) */
   strengths: string[];
@@ -58,7 +58,7 @@ export type QuizConfig = {
   secondsPerQuestion?: number;
 };
 
-/** Knowledge quiz question — single correct answer + explanation */
+/** Knowledge quiz question - single correct answer + explanation */
 export type KnowledgeQuestion = {
   id: number;
   q: string;

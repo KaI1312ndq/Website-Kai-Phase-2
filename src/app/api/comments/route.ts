@@ -6,12 +6,12 @@ import { createClient } from "@sanity/client";
  *   POST /api/comments
  *   { postId: string, authorName: string, authorEmail?: string, content: string, parentId?: string }
  *
- * Comment is created with approved=false — Quảng review trong Sanity Studio rồi mới hiện.
+ * Comment is created with approved=false - Quảng review trong Sanity Studio rồi mới hiện.
  *
  * Anti-abuse:
  *   - Min 1 char, max 3000 chars content
  *   - Min 1 char, max 80 chars name
- *   - Simple rate-limit by IP (in-memory, naive — for serious anti-spam dùng upstash)
+ *   - Simple rate-limit by IP (in-memory, naive - for serious anti-spam dùng upstash)
  */
 
 const RATE_LIMIT = new Map<string, { count: number; resetAt: number }>();
@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
       post: { _type: "reference", _ref: postId },
       authorName: authorName.trim(),
       content: content.trim(),
-      approved: true, // auto-approve — Quảng moderate sau (xoá nếu cần) trong Sanity
+      approved: true, // auto-approve - Quảng moderate sau (xoá nếu cần) trong Sanity
       createdAt: new Date().toISOString(),
     };
     if (typeof authorEmail === "string" && authorEmail.includes("@")) doc.authorEmail = authorEmail.trim();

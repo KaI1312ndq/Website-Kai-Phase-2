@@ -40,7 +40,7 @@ export async function sendDeliveryEmail(params: DeliveryEmailParams): Promise<{ 
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Đơn hàng ${escapeHtml(params.orderNumber)} — File đã sẵn sàng</title>
+<title>Đơn hàng ${escapeHtml(params.orderNumber)} - File đã sẵn sàng</title>
 </head>
 <body style="margin: 0; padding: 0; background: #f5f7fb; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background: #f5f7fb;">
@@ -74,7 +74,7 @@ export async function sendDeliveryEmail(params: DeliveryEmailParams): Promise<{ 
               <tr>
                 <td align="center" style="border-radius: 10px; background: linear-gradient(135deg, #146ef5 0%, #7a3dff 100%);">
                   <a href="${downloadUrl}" style="display: inline-block; padding: 14px 32px; color: white; text-decoration: none; font-weight: 700; font-size: 16px; border-radius: 10px;">
-                    Tải file ngay →
+                    Tải file ngay ->
                   </a>
                 </td>
               </tr>
@@ -97,13 +97,13 @@ export async function sendDeliveryEmail(params: DeliveryEmailParams): Promise<{ 
               <strong>Cần hỗ trợ?</strong> Reply email này hoặc liên hệ Quảng qua Zalo <a href="https://zalo.me/0868464658" style="color: #146ef5;">0868464658</a>.
             </p>
             <p style="margin: 12px 0 0; font-size: 11px; color: #aaa;">
-              Email tự động — không reply spam. Quảng đọc mọi reply hợp lệ.
+              Email tự động - không reply spam. Quảng đọc mọi reply hợp lệ.
             </p>
           </td>
         </tr>
       </table>
       <p style="margin: 24px 0 0; font-size: 11px; color: #aaa;">
-        © ${new Date().getFullYear()} Nguyễn Đức Quảng — Ecom Growth Expert · 60+ project
+        © ${new Date().getFullYear()} Nguyễn Đức Quảng - Ecom Growth Expert · 60+ project
       </p>
     </td>
   </tr>
@@ -115,7 +115,7 @@ export async function sendDeliveryEmail(params: DeliveryEmailParams): Promise<{ 
     const { data, error } = await resend.emails.send({
       from: "Nguyễn Đức Quảng <noreply@nguyenducquang.website>",
       to: [params.to],
-      subject: `[${params.orderNumber}] File đã sẵn sàng — tải về tại đây`,
+      subject: `[${params.orderNumber}] File đã sẵn sàng - tải về tại đây`,
       html,
       replyTo: "qforwork13@gmail.com",
     });

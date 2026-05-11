@@ -7,7 +7,7 @@ import { createClient } from "@sanity/client";
  *     { postId: string, action: 'view' | 'like' | 'unlike' }
  *
  * View tracking:
- *   - Per-IP debounced (10 phút) — không double-count cùng người reload
+ *   - Per-IP debounced (10 phút) - không double-count cùng người reload
  *
  * Like tracking:
  *   - Increment / decrement counter

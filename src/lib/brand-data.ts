@@ -23,7 +23,7 @@ export const DEFAULT_BRANDS: BrandEntry[] = [
   { name: "Ecovacs", logoBase64: ECOVACS, seedId: "brand-ecovacs" },
   { name: "Tefal", logoBase64: TEFAL, seedId: "brand-tefal" },
 
-  // 20 text-only brands originally seeded — keep old seedIds
+  // 20 text-only brands originally seeded - keep old seedIds
   { name: "L'Occitane", seedId: "brand-loccitane" },
   { name: "Vitabiotics", seedId: "brand-vitabiotics" },
   { name: "Pregnacare", seedId: "brand-pregnacare" },
@@ -45,7 +45,7 @@ export const DEFAULT_BRANDS: BrandEntry[] = [
   { name: "Nature's Way", seedId: "brand-naturesway" },
   { name: "Pigeon", seedId: "brand-pigeon" },
 
-  // New brands — added per Quảng's list (deduped against above)
+  // New brands - added per Quảng's list (deduped against above)
   { name: "82X", seedId: "brand-82x" },
   { name: "Babe", seedId: "brand-babe" },
   { name: "Baniphar", seedId: "brand-baniphar" },

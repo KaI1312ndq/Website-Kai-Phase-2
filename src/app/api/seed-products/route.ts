@@ -14,7 +14,7 @@ const PRODUCTS = [
     _type: "product",
     title: "Mẫu P&L Excel cho gian hàng TMĐT",
     slug: { _type: "slug", current: "pl-excel-template" },
-    shortDescription: "File Excel tính P&L gian hàng theo 5 tầng — Net Revenue → Gross → Contribution → Marketing → EBITDA. Áp dụng được cho TikTok Shop + Shopee.",
+    shortDescription: "File Excel tính P&L gian hàng theo 5 tầng - Net Revenue -> Gross -> Contribution -> Marketing -> EBITDA. Áp dụng được cho TikTok Shop + Shopee.",
     bullets: [
       "12 tab Excel theo dõi P&L 12 tháng",
       "Auto-calc gross margin, contribution margin, EBITDA",
@@ -34,11 +34,11 @@ const PRODUCTS = [
     slug: { _type: "slug", current: "salary-benchmark-2026" },
     shortDescription: "Báo cáo lương thực tế Performance Marketing & Media Buyer Việt Nam 2025-2026. Data từ TopCV, Navigos, LinkedIn, MISA AMIS + 60+ project Quảng quản lý.",
     bullets: [
-      "Lương 6 level từ Intern → Director (range cụ thể)",
+      "Lương 6 level từ Intern -> Director (range cụ thể)",
       "So sánh 4 model: Enabler, Agency, Brand In-house, MNC",
       "Skill premium: Performance + Data = +20-30%, Full-stack = +35-50%",
       "10 nguồn tham khảo (TopCV, Navigos, AON, LinkedIn...)",
-      "Update theo năm — bonus mỗi version mới miễn phí",
+      "Update theo năm - bonus mỗi version mới miễn phí",
     ],
     price: 99000,
     order: 2,
@@ -48,13 +48,13 @@ const PRODUCTS = [
   {
     _id: "product-brief-templates-pack",
     _type: "product",
-    title: "Brief Templates Pack — Marketing Manager Toolkit",
+    title: "Brief Templates Pack - Marketing Manager Toolkit",
     slug: { _type: "slug", current: "brief-templates-pack" },
     shortDescription: "Bộ 7 templates Word/Notion cho Marketing Manager: Campaign Brief, KPI Doc, Performance Review, Content Brief, Media Plan, Hiring JD, Onboarding Plan.",
     bullets: [
       "7 templates Word/Notion sẵn dùng",
-      "Campaign Brief — structure 4P+STP đầy đủ",
-      "KPI Doc — Performance Marketing + Brand metrics",
+      "Campaign Brief - structure 4P+STP đầy đủ",
+      "KPI Doc - Performance Marketing + Brand metrics",
       "Hiring JD + Interview Scoring Rubric",
       "Onboarding Plan 30-60-90 cho new hire",
     ],
@@ -98,7 +98,7 @@ export async function GET(req: NextRequest) {
 
   return NextResponse.json({
     ok: true,
-    note: "Vào /studio → 🛍️ Shop → upload masterFile + previewFile + ảnh cho từng sản phẩm.",
+    note: "Vào /studio -> 🛍️ Shop -> upload masterFile + previewFile + ảnh cho từng sản phẩm.",
     results,
   });
 }

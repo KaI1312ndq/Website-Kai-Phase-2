@@ -3,10 +3,10 @@ import type { QuizQuestion } from "../types";
 /**
  * MBTI 70-question test.
  * Mapping based on position-in-row-of-7 (rows of the scoring grid):
- *   pos 1 → A=E, B=I
- *   pos 2,3 → A=S, B=N
- *   pos 4,5 → A=T, B=F
- *   pos 6,7 → A=J, B=P
+ *   pos 1 -> A=E, B=I
+ *   pos 2,3 -> A=S, B=N
+ *   pos 4,5 -> A=T, B=F
+ *   pos 6,7 -> A=J, B=P
  *
  * Each question gets [scoreA, scoreB] derived from this rule.
  */

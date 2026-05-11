@@ -1,7 +1,7 @@
 import type { QuizArchetype } from "../types";
 
 /**
- * 16 MBTI types — Vietnamese descriptions.
+ * 16 MBTI types - Vietnamese descriptions.
  * Color theme: 4 groups (Analyst purple, Diplomat green, Sentinel blue, Explorer orange).
  */
 
@@ -9,7 +9,7 @@ export const MBTI_TYPES: QuizArchetype[] = [
   // ─────── ANALYSTS (Nhà Phân tích) ───────
   {
     id: "INTJ",
-    name: "INTJ — Nhà Khoa Học",
+    name: "INTJ - Nhà Khoa Học",
     tagline: "Chiến lược · Độc lập · Tầm nhìn dài hạn",
     color: "#a78bff",
     description: [
@@ -23,7 +23,7 @@ export const MBTI_TYPES: QuizArchetype[] = [
   },
   {
     id: "INTP",
-    name: "INTP — Nhà Tư Duy",
+    name: "INTP - Nhà Tư Duy",
     tagline: "Lý thuyết · Tò mò · Phát minh",
     color: "#a78bff",
     description: [
@@ -37,11 +37,11 @@ export const MBTI_TYPES: QuizArchetype[] = [
   },
   {
     id: "ENTJ",
-    name: "ENTJ — Nhà Lãnh Đạo",
+    name: "ENTJ - Nhà Lãnh Đạo",
     tagline: "Quyết đoán · Tổ chức · Định hướng kết quả",
     color: "#a78bff",
     description: [
-      "ENTJ là natural leader — bạn nhìn thấy mục tiêu và biết cách build hệ thống để đạt được nó. Quyết đoán, tự tin, không ngại đối mặt với thử thách lớn.",
+      "ENTJ là natural leader - bạn nhìn thấy mục tiêu và biết cách build hệ thống để đạt được nó. Quyết đoán, tự tin, không ngại đối mặt với thử thách lớn.",
       "Bạn vận hành ở tốc độ cao, đòi hỏi kết quả cụ thể và không có nhiều kiên nhẫn với những người 'lề mề'. Trong môi trường phù hợp, bạn dẫn dắt cả tổ chức tăng trưởng vượt bậc.",
     ],
     strengths: ["Lãnh đạo tự nhiên, quyết đoán", "Strategic thinking + execution", "Tự tin trước áp lực", "Năng lượng cao, drive mạnh"],
@@ -51,11 +51,11 @@ export const MBTI_TYPES: QuizArchetype[] = [
   },
   {
     id: "ENTP",
-    name: "ENTP — Nhà Phát Minh",
+    name: "ENTP - Nhà Phát Minh",
     tagline: "Tranh luận · Sáng tạo · Đa tài",
     color: "#a78bff",
     description: [
-      "ENTP là tuýp visionary entrepreneur — đầu óc luôn xoay quanh những ý tưởng mới, có khả năng kết nối các điểm tưởng chừng không liên quan. Bạn thích tranh luận, thử thách giả định và tìm cách 'phá vỡ' rồi xây lại.",
+      "ENTP là tuýp visionary entrepreneur - đầu óc luôn xoay quanh những ý tưởng mới, có khả năng kết nối các điểm tưởng chừng không liên quan. Bạn thích tranh luận, thử thách giả định và tìm cách 'phá vỡ' rồi xây lại.",
       "Bạn năng lượng cao, đa tài, nhưng đôi khi khó tập trung vào một thứ đủ lâu để hoàn thành. Là người khởi xướng tuyệt vời, cần đối tác giỏi thực thi.",
     ],
     strengths: ["Sáng tạo, ideation mạnh", "Tranh luận sắc bén", "Năng lượng và charisma cao", "Khả năng pivot nhanh"],
@@ -67,11 +67,11 @@ export const MBTI_TYPES: QuizArchetype[] = [
   // ─────── DIPLOMATS (Nhà Ngoại giao) ───────
   {
     id: "INFJ",
-    name: "INFJ — Người Cố Vấn",
+    name: "INFJ - Người Cố Vấn",
     tagline: "Sâu sắc · Thấu cảm · Lý tưởng",
     color: "#5fffaa",
     description: [
-      "INFJ là tuýp hiếm nhất (~1.5% dân số) — bạn kết hợp trực giác sâu sắc với lý tưởng cao và mong muốn giúp đỡ người khác. Bạn nhìn thấu suy nghĩ và cảm xúc của người đối diện một cách tự nhiên.",
+      "INFJ là tuýp hiếm nhất (~1.5% dân số) - bạn kết hợp trực giác sâu sắc với lý tưởng cao và mong muốn giúp đỡ người khác. Bạn nhìn thấu suy nghĩ và cảm xúc của người đối diện một cách tự nhiên.",
       "Bạn thường có 1-2 mục đích lớn trong đời và sẵn sàng hy sinh nhiều thứ để theo đuổi. Cẩn trọng với burnout vì bạn dễ overgive cho người khác.",
     ],
     strengths: ["Trực giác về con người sâu sắc", "Cam kết với lý tưởng", "Lắng nghe và empathy mạnh", "Khả năng truyền cảm hứng"],
@@ -81,11 +81,11 @@ export const MBTI_TYPES: QuizArchetype[] = [
   },
   {
     id: "INFP",
-    name: "INFP — Người Lý Tưởng Hoá",
+    name: "INFP - Người Lý Tưởng Hoá",
     tagline: "Sáng tạo · Chân thành · Giá trị nội tâm",
     color: "#5fffaa",
     description: [
-      "INFP sống với giá trị cốt lõi sâu sắc — bạn tin vào sự chân thành, sáng tạo và làm điều đúng đắn. Có thế giới nội tâm phong phú, thường thể hiện qua nghệ thuật, viết lách hoặc các hoạt động ý nghĩa.",
+      "INFP sống với giá trị cốt lõi sâu sắc - bạn tin vào sự chân thành, sáng tạo và làm điều đúng đắn. Có thế giới nội tâm phong phú, thường thể hiện qua nghệ thuật, viết lách hoặc các hoạt động ý nghĩa.",
       "Bạn nhạy cảm cao với sự bất công và cảm xúc của người khác. Mặc dù trông có vẻ nhẹ nhàng, bạn rất kiên định khi liên quan đến giá trị bạn tin tưởng.",
     ],
     strengths: ["Sáng tạo, có thế giới nội tâm phong phú", "Chân thành, sống đúng giá trị", "Empathy mạnh", "Kiên định với điều quan trọng"],
@@ -95,11 +95,11 @@ export const MBTI_TYPES: QuizArchetype[] = [
   },
   {
     id: "ENFJ",
-    name: "ENFJ — Người Truyền Cảm Hứng",
+    name: "ENFJ - Người Truyền Cảm Hứng",
     tagline: "Truyền lửa · Kết nối · Mentor",
     color: "#5fffaa",
     description: [
-      "ENFJ là natural mentor và people leader — bạn có khả năng đặc biệt trong việc nhìn thấy tiềm năng người khác và giúp họ phát triển. Charisma cao, biết cách kết nối tập thể quanh mục tiêu chung.",
+      "ENFJ là natural mentor và people leader - bạn có khả năng đặc biệt trong việc nhìn thấy tiềm năng người khác và giúp họ phát triển. Charisma cao, biết cách kết nối tập thể quanh mục tiêu chung.",
       "Bạn quan tâm sâu sắc đến người khác và thường đặt nhu cầu của họ trước nhu cầu của mình. Cẩn trọng để không quên chăm sóc bản thân.",
     ],
     strengths: ["Khả năng truyền cảm hứng cao", "Empathy + leadership combo", "Kết nối tập thể tự nhiên", "Phát triển con người tốt"],
@@ -109,11 +109,11 @@ export const MBTI_TYPES: QuizArchetype[] = [
   },
   {
     id: "ENFP",
-    name: "ENFP — Người Truyền Lửa",
+    name: "ENFP - Người Truyền Lửa",
     tagline: "Nhiệt huyết · Sáng tạo · Tự do",
     color: "#5fffaa",
     description: [
-      "ENFP năng lượng tỏa ra rạng rỡ — bạn yêu cuộc sống, yêu con người, yêu khám phá. Có khả năng kết nối với mọi người dễ dàng và tạo cảm hứng cho cả phòng khi bước vào.",
+      "ENFP năng lượng tỏa ra rạng rỡ - bạn yêu cuộc sống, yêu con người, yêu khám phá. Có khả năng kết nối với mọi người dễ dàng và tạo cảm hứng cho cả phòng khi bước vào.",
       "Bạn theo đuổi đam mê và ý nghĩa hơn là tiền bạc. Đa tài, nhưng đôi khi khó focus vào một hướng đủ lâu vì có quá nhiều ý tưởng hấp dẫn.",
     ],
     strengths: ["Nhiệt huyết, lan toả năng lượng", "Sáng tạo và kết nối ý tưởng", "People skills xuất sắc", "Linh hoạt, thích nghi nhanh"],
@@ -125,11 +125,11 @@ export const MBTI_TYPES: QuizArchetype[] = [
   // ─────── SENTINELS (Người Bảo Vệ) ───────
   {
     id: "ISTJ",
-    name: "ISTJ — Người Trách Nhiệm",
+    name: "ISTJ - Người Trách Nhiệm",
     tagline: "Đáng tin · Có hệ thống · Trung thành",
     color: "#7da9ff",
     description: [
-      "ISTJ là backbone của mọi tổ chức — bạn đáng tin cậy, có trách nhiệm và làm việc theo hệ thống. Khi bạn nhận một nhiệm vụ, người khác yên tâm rằng nó sẽ được hoàn thành đúng hạn, đúng chuẩn.",
+      "ISTJ là backbone của mọi tổ chức - bạn đáng tin cậy, có trách nhiệm và làm việc theo hệ thống. Khi bạn nhận một nhiệm vụ, người khác yên tâm rằng nó sẽ được hoàn thành đúng hạn, đúng chuẩn.",
       "Bạn coi trọng truyền thống, kỷ luật và làm theo cách đã được kiểm chứng. Trong môi trường ổn định, bạn xuất sắc; trong chaos thì hơi vất vả.",
     ],
     strengths: ["Đáng tin cậy, làm đúng cam kết", "Tổ chức có hệ thống", "Detail-oriented, ít sai sót", "Trung thành, kiên định"],
@@ -139,11 +139,11 @@ export const MBTI_TYPES: QuizArchetype[] = [
   },
   {
     id: "ISFJ",
-    name: "ISFJ — Người Bảo Vệ",
+    name: "ISFJ - Người Bảo Vệ",
     tagline: "Tận tâm · Chu đáo · Phục vụ",
     color: "#7da9ff",
     description: [
-      "ISFJ là người chăm sóc tận tâm — bạn thầm lặng quan sát, ghi nhớ chi tiết về người khác và làm những điều nhỏ để cuộc sống của họ tốt hơn. Trung thành, khiêm tốn, không cần được chú ý.",
+      "ISFJ là người chăm sóc tận tâm - bạn thầm lặng quan sát, ghi nhớ chi tiết về người khác và làm những điều nhỏ để cuộc sống của họ tốt hơn. Trung thành, khiêm tốn, không cần được chú ý.",
       "Bạn có trí nhớ tuyệt vời về sự kiện và cảm xúc, là người mà bạn bè và gia đình luôn dựa vào. Đôi khi bạn quá hy sinh và quên chăm sóc bản thân.",
     ],
     strengths: ["Tận tâm, chăm sóc người khác", "Detail và memory tốt", "Trung thành, đáng tin", "Khiêm tốn, không tranh giành"],
@@ -153,11 +153,11 @@ export const MBTI_TYPES: QuizArchetype[] = [
   },
   {
     id: "ESTJ",
-    name: "ESTJ — Người Quản Trị",
+    name: "ESTJ - Người Quản Trị",
     tagline: "Tổ chức · Quyết đoán · Hiệu quả",
     color: "#7da9ff",
     description: [
-      "ESTJ là natural manager — bạn biết cách tổ chức người và việc để mọi thứ chạy đúng kế hoạch. Quyết đoán, có nguyên tắc, và không ngại đối đầu khi cần.",
+      "ESTJ là natural manager - bạn biết cách tổ chức người và việc để mọi thứ chạy đúng kế hoạch. Quyết đoán, có nguyên tắc, và không ngại đối đầu khi cần.",
       "Bạn vận hành dựa trên facts và experience, ít chấp nhận lý thuyết suông. Trong môi trường có cấu trúc và mục tiêu rõ, bạn xuất sắc; trong chaos sáng tạo thì hơi vất.",
     ],
     strengths: ["Tổ chức và lãnh đạo tự nhiên", "Quyết đoán, hiệu quả", "Trách nhiệm cao", "Dependable, đáng tin"],
@@ -167,11 +167,11 @@ export const MBTI_TYPES: QuizArchetype[] = [
   },
   {
     id: "ESFJ",
-    name: "ESFJ — Người Hỗ Trợ",
+    name: "ESFJ - Người Hỗ Trợ",
     tagline: "Hài hoà · Nhiệt tình · Quan tâm",
     color: "#7da9ff",
     description: [
-      "ESFJ là người gắn kết cộng đồng — bạn quan tâm chân thành đến mọi người, biết cách tổ chức sự kiện, và làm cho người khác cảm thấy được chăm sóc. Là 'mom/dad' của cả group.",
+      "ESFJ là người gắn kết cộng đồng - bạn quan tâm chân thành đến mọi người, biết cách tổ chức sự kiện, và làm cho người khác cảm thấy được chăm sóc. Là 'mom/dad' của cả group.",
       "Bạn coi trọng harmony và tránh xung đột. Cảm thấy hài lòng nhất khi giúp người khác và được người khác ghi nhận. Nhạy cảm với phê bình.",
     ],
     strengths: ["Kỹ năng xã hội xuất sắc", "Quan tâm chân thành", "Tổ chức sự kiện và hợp tác", "Trung thành, hỗ trợ"],
@@ -183,11 +183,11 @@ export const MBTI_TYPES: QuizArchetype[] = [
   // ─────── EXPLORERS (Nhà Thám Hiểm) ───────
   {
     id: "ISTP",
-    name: "ISTP — Nhà Thực Hành",
+    name: "ISTP - Nhà Thực Hành",
     tagline: "Thực tế · Linh hoạt · Hành động",
     color: "#ffd479",
     description: [
-      "ISTP là tuýp 'người làm' bẩm sinh — bạn học bằng cách thực hành, không phải lý thuyết. Bình tĩnh trong khủng hoảng, giải quyết vấn đề thực tế hiệu quả.",
+      "ISTP là tuýp 'người làm' bẩm sinh - bạn học bằng cách thực hành, không phải lý thuyết. Bình tĩnh trong khủng hoảng, giải quyết vấn đề thực tế hiệu quả.",
       "Bạn yêu freedom, không thích bị bó buộc bởi quy tắc cứng nhắc. Khá kín đáo và độc lập, nhưng khi cần là người đáng tin cậy nhất.",
     ],
     strengths: ["Thực hành, tay nghề cao", "Bình tĩnh trong khủng hoảng", "Linh hoạt, thích nghi nhanh", "Logic + thực tế"],
@@ -197,7 +197,7 @@ export const MBTI_TYPES: QuizArchetype[] = [
   },
   {
     id: "ISFP",
-    name: "ISFP — Nhà Nghệ Sĩ",
+    name: "ISFP - Nhà Nghệ Sĩ",
     tagline: "Tinh tế · Cảm xúc · Sáng tạo",
     color: "#ffd479",
     description: [
@@ -211,11 +211,11 @@ export const MBTI_TYPES: QuizArchetype[] = [
   },
   {
     id: "ESTP",
-    name: "ESTP — Người Hành Động",
+    name: "ESTP - Người Hành Động",
     tagline: "Năng động · Thực dụng · Adventure",
     color: "#ffd479",
     description: [
-      "ESTP là tuýp 'live in the moment' — năng lượng cao, thực dụng, không sợ rủi ro. Bạn phát huy tốt nhất trong môi trường action và áp lực, nơi quyết định nhanh quan trọng hơn lý thuyết.",
+      "ESTP là tuýp 'live in the moment' - năng lượng cao, thực dụng, không sợ rủi ro. Bạn phát huy tốt nhất trong môi trường action và áp lực, nơi quyết định nhanh quan trọng hơn lý thuyết.",
       "Bạn có khả năng đọc tình huống và người tốt, là negotiator giỏi. Đôi khi quá impulsive và bored với plan dài hạn.",
     ],
     strengths: ["Quyết đoán dưới áp lực", "Negotiate, sales tự nhiên", "Practical, hands-on", "Năng lượng và charisma cao"],
@@ -225,11 +225,11 @@ export const MBTI_TYPES: QuizArchetype[] = [
   },
   {
     id: "ESFP",
-    name: "ESFP — Người Trình Diễn",
+    name: "ESFP - Người Trình Diễn",
     tagline: "Vui vẻ · Tỏa sáng · Spontaneous",
     color: "#ffd479",
     description: [
-      "ESFP là natural entertainer — bạn yêu cuộc sống, yêu people, biết cách làm cho mọi không gian trở nên vui vẻ. Spontaneous, hào phóng, sống với passion.",
+      "ESFP là natural entertainer - bạn yêu cuộc sống, yêu people, biết cách làm cho mọi không gian trở nên vui vẻ. Spontaneous, hào phóng, sống với passion.",
       "Bạn học tốt nhất qua trải nghiệm thực tế, không phải sách vở. Có thể hơi né tránh việc khó hoặc plan dài hạn vì 'cuộc đời ngắn lắm, sống cho hôm nay'.",
     ],
     strengths: ["Charisma, kỹ năng xã hội", "Lan toả năng lượng tích cực", "Practical, sensory awareness", "Linh hoạt, thích nghi nhanh"],

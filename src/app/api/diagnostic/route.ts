@@ -19,10 +19,10 @@ export async function GET(req: Request) {
     },
     contact_email: c || "fallback: qforwork13@gmail.com",
     delivery_will_use:
-      w ? "Web3Forms (primary)" : r ? "Resend (fallback)" : "NONE — emails won't be sent",
+      w ? "Web3Forms (primary)" : r ? "Resend (fallback)" : "NONE - emails won't be sent",
   };
 
-  // ?test=1 → actually fire a test submission to Web3Forms
+  // ?test=1 -> actually fire a test submission to Web3Forms
   if (test && w) {
     try {
       const res = await fetch("https://api.web3forms.com/submit", {
@@ -49,7 +49,7 @@ export async function GET(req: Request) {
       result.web3forms_test = {
         http_status: res.status,
         body: data,
-        verdict: res.ok && data?.success ? "✅ Sent — check inbox + spam" : `❌ Failed: ${data?.message || `HTTP ${res.status}`}`,
+        verdict: res.ok && data?.success ? "✅ Sent - check inbox + spam" : `❌ Failed: ${data?.message || `HTTP ${res.status}`}`,
       };
     } catch (e) {
       result.web3forms_test = {
