@@ -4,6 +4,7 @@ import { MBTI_TYPES } from "./data/mbti-types";
 import { MBTI_QUESTIONS as MBTI_QS_DATA } from "./data/mbti-questions";
 import { CAREER_QUESTIONS, CAREER_ARCHETYPES } from "./data/career";
 import { AD_METRICS_QUESTIONS } from "./data/ad-metrics";
+import { CONTENT_FRAMEWORK_QUESTIONS } from "./data/content-frameworks";
 import type { KnowledgeQuestion } from "./types";
 
 export const QUIZZES: QuizConfig[] = [
@@ -52,6 +53,20 @@ export const QUIZZES: QuizConfig[] = [
     questionCount: 30,
     color: "#22d3ee",
     iconName: "trending-up",
+    gateResult: false,
+    scoringType: "knowledge",
+    format: "knowledge",
+    secondsPerQuestion: 30,
+  },
+  {
+    slug: "content-frameworks",
+    name: "Test Kiến Thức Content Frameworks",
+    shortDescription: "30 câu — AIDA, PAS, FAB, BAB, hook 3s TikTok, Cialdini, StoryBrand, JTBD, headline, CTA...",
+    longDescription: "Bạn nắm vững các framework copywriting + content marketing chưa? 30 câu trắc nghiệm — mỗi câu 30 giây — kiểm tra kiến thức về AIDA, PAS, FAB, BAB, Pattern Interrupt, Open Loop, Cialdini's 6 nguyên tắc, USP, Social Proof, Scarcity, Risk Reversal, StoryBrand SB7, Hero's Journey, Pixar Story Spine, TOFU/MOFU/BOFU, Pillar-Cluster, JTBD, headline 4Us, email subject line, CTA, distribution. Có giải thích từng câu sau khi chọn. Cuối bài có tier Vàng/Bạc/Đồng tuỳ điểm.",
+    estimatedMinutes: 15,
+    questionCount: 30,
+    color: "#a78bff",
+    iconName: "book-open",
     gateResult: false,
     scoringType: "knowledge",
     format: "knowledge",
@@ -171,6 +186,7 @@ export function computeCareerResult(answers: Record<number, string>): {
  */
 export function getKnowledgeQuestions(slug: string): KnowledgeQuestion[] {
   if (slug === "chi-so-quang-cao") return AD_METRICS_QUESTIONS;
+  if (slug === "content-frameworks") return CONTENT_FRAMEWORK_QUESTIONS;
   return [];
 }
 

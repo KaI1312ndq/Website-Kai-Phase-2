@@ -69,6 +69,12 @@ const links: NavLink[] = [
         href: "/quiz/chi-so-quang-cao",
         badge: "Mới",
       },
+      {
+        label: "Test Content Frameworks",
+        desc: "30 câu · AIDA, PAS, hook 3s, Cialdini, StoryBrand · timer 30s/câu",
+        href: "/quiz/content-frameworks",
+        badge: "Mới",
+      },
     ],
   },
   { label: "Blog", href: "/blog" },
