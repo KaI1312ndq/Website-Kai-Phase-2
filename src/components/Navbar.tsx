@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { Show, UserButton } from "@clerk/nextjs";
 import Icon, { type IconName } from "@/components/icons/Icon";
 
 type Submenu = { label: string; desc?: string; href: string; badge?: string };
@@ -181,6 +182,33 @@ export default function Navbar() {
               ))}
             </ul>
 
+            {/* Auth — desktop only */}
+            <div className="hidden md:flex items-center gap-2 ml-2">
+              <Show when="signed-out">
+                <Link
+                  href="/sign-in"
+                  className="px-4 py-1.5 text-[0.84rem] font-semibold rounded-full transition-all"
+                  style={{
+                    color: "white",
+                    background: "var(--grad-primary)",
+                    boxShadow: "0 4px 14px rgba(20,110,245,0.35)",
+                  }}
+                >
+                  Đăng nhập
+                </Link>
+              </Show>
+              <Show when="signed-in">
+                <UserButton
+                  appearance={{
+                    elements: {
+                      avatarBox: "w-9 h-9 ring-2 ring-white/10 hover:ring-white/25 transition-all",
+                    },
+                  }}
+                  userProfileUrl="/account"
+                />
+              </Show>
+            </div>
+
             {/* Mobile burger */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
@@ -232,6 +260,29 @@ export default function Navbar() {
                 )}
               </motion.div>
             ))}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 + links.length * 0.05 }}
+              className="mt-4 flex items-center gap-3"
+            >
+              <Show when="signed-out">
+                <Link
+                  href="/sign-in"
+                  onClick={() => setMobileOpen(false)}
+                  className="px-5 py-2.5 text-[0.95rem] font-semibold rounded-full text-white"
+                  style={{ background: "var(--grad-primary)", boxShadow: "0 4px 14px rgba(20,110,245,0.35)" }}
+                >
+                  Đăng nhập
+                </Link>
+              </Show>
+              <Show when="signed-in">
+                <UserButton
+                  appearance={{ elements: { avatarBox: "w-12 h-12 ring-2 ring-white/15" } }}
+                  userProfileUrl="/account"
+                />
+              </Show>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

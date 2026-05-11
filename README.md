@@ -404,6 +404,10 @@ Auto-deploy via Vercel on push to `main`. Branch deploys for any other branch.
 - Blog engagement: view debounced 10min per IP per post
 - Seed routes: protected by `SEED_SECRET` env
 - Studio auth: handled by Sanity project login
+- User auth: **Clerk** (Email + Google) — middleware at repo root, ClerkProvider in root layout
+- Auth routes: `/sign-in/[[...sign-in]]`, `/sign-up/[[...sign-up]]`, `/account` (protected, server-side `auth()` check)
+- Required env: `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`
+- Navbar shows `<UserButton />` when signed in, "Đăng nhập" CTA when signed out (via Clerk `<Show when="...">`)
 - No client secrets in repo — all in `.env.local` / Vercel env
 
 ---
@@ -427,8 +431,12 @@ Auto-deploy via Vercel on push to `main`. Branch deploys for any other branch.
 - [x] Quiz event tracking GA4 (started/completed/lead_captured)
 - [x] Lightweight Reveal (native CSS + IntersectionObserver) — saved ~25KB bundle
 - [x] Custom 404 page with popular links + pillar pills
+- [x] **Auth foundation** — Clerk (Email + Google), sign-in/sign-up pages, `/account` dashboard, Navbar auth state
 
 ### Up next
+- [ ] Cart context provider (localStorage guest + Sanity sync when signed in)
+- [ ] Cart drawer + icon badge in Navbar
+- [ ] `/account/orders` page — re-download files for logged-in users
 - [ ] Quiz #5 "Test Content Frameworks" (knowledge format, reuse infra)
 - [ ] Tool "Content Cheat Sheet" — interactive framework picker
 - [ ] Salary Calculator tool (using UpBase Salary Benchmark 2026)

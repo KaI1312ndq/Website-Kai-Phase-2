@@ -1,12 +1,38 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, Be_Vietnam_Pro } from "next/font/google";
 import NextTopLoader from "nextjs-toploader";
+import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import NoiseOverlay from "@/components/NoiseOverlay";
 import Analytics from "@/components/Analytics";
 import LeadPopup from "@/components/LeadPopup";
 import PageTransition from "@/components/PageTransition";
+
+// Clerk dark theme customization — match site palette
+const clerkAppearance = {
+  variables: {
+    colorPrimary: "#146ef5",
+    colorBackground: "#0a1438",
+    colorText: "#ffffff",
+    colorTextSecondary: "rgba(255,255,255,0.6)",
+    colorInputBackground: "rgba(255,255,255,0.03)",
+    colorInputText: "#ffffff",
+    colorNeutral: "rgba(255,255,255,0.5)",
+    colorDanger: "#ff5a72",
+    colorSuccess: "#5fffaa",
+    colorWarning: "#ffd479",
+    borderRadius: "0.75rem",
+    fontFamily: '"Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif',
+  },
+  elements: {
+    card: "shadow-2xl",
+    formButtonPrimary:
+      "bg-gradient-to-r from-[#146ef5] to-[#7a3dff] hover:scale-[1.02] transition-transform",
+    footerActionLink: "text-[#7da9ff] hover:text-white",
+    socialButtonsBlockButton: "border-white/10 hover:bg-white/5",
+  },
+};
 
 // Reduced weights to cut critical font requests in half (was 5+4 = 9 weights → 3+2 = 5)
 const jakarta = Plus_Jakarta_Sans({
@@ -163,20 +189,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }} />
       </head>
       <body className="font-sans antialiased">
-        <NextTopLoader
-          color="#7da9ff"
-          height={2.5}
-          showSpinner={false}
-          shadow="0 0 12px rgba(20,110,245,0.6),0 0 6px rgba(122,61,255,0.4)"
-          easing="cubic-bezier(0.2, 0.8, 0.2, 1)"
-          speed={550}
-        />
-        <NoiseOverlay />
-        <SmoothScroll>
-          <PageTransition>{children}</PageTransition>
-        </SmoothScroll>
-        <LeadPopup />
-        <Analytics />
+        <ClerkProvider appearance={clerkAppearance}>
+          <NextTopLoader
+            color="#7da9ff"
+            height={2.5}
+            showSpinner={false}
+            shadow="0 0 12px rgba(20,110,245,0.6),0 0 6px rgba(122,61,255,0.4)"
+            easing="cubic-bezier(0.2, 0.8, 0.2, 1)"
+            speed={550}
+          />
+          <NoiseOverlay />
+          <SmoothScroll>
+            <PageTransition>{children}</PageTransition>
+          </SmoothScroll>
+          <LeadPopup />
+          <Analytics />
+        </ClerkProvider>
       </body>
     </html>
   );
