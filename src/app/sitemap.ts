@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getPosts, getCaseStudies } from "@/lib/queries";
-import { QUIZZES, getQuizArchetypes } from "@/lib/quiz/compute";
+import { QUIZZES, QUIZ_CATEGORIES, getQuizArchetypes, getQuizzesByCategory } from "@/lib/quiz/compute";
 import { PILLARS } from "@/lib/pillars/config";
 import { isPillarSlug } from "@/lib/blog/metadata";
 
@@ -70,6 +70,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.78,
+    })),
+    // Quiz category landing pages - hub SEO priority cao
+    ...QUIZ_CATEGORIES.filter((c) => getQuizzesByCategory(c.slug).length > 0).map((c) => ({
+      url: `${baseUrl}/quiz/category/${c.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.85,
     })),
     // Each archetype result page is its own SEO landing
     ...QUIZZES.flatMap((q) =>

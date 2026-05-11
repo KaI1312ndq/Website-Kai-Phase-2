@@ -65,6 +65,8 @@ export type QuizConfig = {
   format?: "personality" | "knowledge";
   /** Knowledge quiz: giây mỗi câu (default 30) */
   secondsPerQuestion?: number;
+  /** Top-level category để group quiz trên /quiz + Navbar */
+  quizCategory?: "ban-than" | "leadership" | "huong-nghiep" | "kien-thuc";
   /** Show dimension scores chart on result page (multi-score quizzes EQ/BigFive/DarkTriad) */
   showDimensions?: boolean;
   /** Dimension labels for chart - key match với scoring code */

@@ -18,17 +18,24 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const quiz = getQuiz(slug);
   if (!quiz) return { title: "Quiz" };
+  // SEO title with question count + time + Vietnamese flag
+  const seoTitle = `${quiz.name} - ${quiz.questionCount} câu Free Tiếng Việt 2026`;
+  // Description với strong call-to-action
+  const seoDesc = `${quiz.shortDescription} Miễn phí 100% tiếng Việt + kết quả ngay. ~${quiz.estimatedMinutes} phút.`;
   return {
-    title: `${quiz.name} - Trắc nghiệm miễn phí`,
-    description: quiz.longDescription,
+    title: seoTitle,
+    description: seoDesc.slice(0, 160),
+    keywords: [quiz.name, "test tính cách", "trắc nghiệm tiếng việt", "free quiz vietnam", "personality test"].join(", "),
     alternates: { canonical: `/quiz/${slug}` },
     openGraph: {
       type: "website",
-      title: `${quiz.name} - Trắc nghiệm miễn phí`,
+      title: seoTitle,
       description: quiz.shortDescription,
       url: `${SITE_URL}/quiz/${slug}`,
+      siteName: "Nguyễn Đức Quảng",
+      locale: "vi_VN",
     },
-    twitter: { card: "summary_large_image", title: quiz.name, description: quiz.shortDescription },
+    twitter: { card: "summary_large_image", title: seoTitle, description: quiz.shortDescription },
   };
 }
 

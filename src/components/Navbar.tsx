@@ -94,38 +94,25 @@ const links: NavLink[] = [
     label: "Test",
     href: "/quiz",
     submenuIcon: "test-tube",
-    viewAllText: "Xem tất cả test",
+    viewAllText: "Xem tất cả 10 test",
     submenu: [
-      {
-        label: "Test Phong Cách Lãnh Đạo",
-        desc: "15 câu · 6 phong cách kinh điển · ~5 phút",
-        href: "/quiz/phong-cach-lanh-dao",
-        badge: "Mới",
-      },
-      {
-        label: "Test Tính Cách MBTI",
-        desc: "70 câu chuẩn quốc tế · 16 kiểu · ~15 phút",
-        href: "/quiz/mbti",
-        badge: "Mới",
-      },
-      {
-        label: "Test Hướng Nghiệp Marketing",
-        desc: "12 câu · 5 archetype career · ~5 phút",
-        href: "/quiz/huong-nghiep-marketing",
-        badge: "Mới",
-      },
-      {
-        label: "Test Chỉ Số Quảng Cáo",
-        desc: "30 câu · ROAS, CPC, CPM, CIR · timer 30s/câu",
-        href: "/quiz/chi-so-quang-cao",
-        badge: "Mới",
-      },
-      {
-        label: "Test Content Frameworks",
-        desc: "30 câu · AIDA, PAS, hook 3s, Cialdini, StoryBrand · timer 30s/câu",
-        href: "/quiz/content-frameworks",
-        badge: "Mới",
-      },
+      // === Test bản thân (5 bài) ===
+      { section: "Test bản thân", label: "MBTI - 16 kiểu tính cách", desc: "70 câu · 16 type · ~15 phút", href: "/quiz/mbti", badge: "Hot" },
+      { section: "Test bản thân", label: "Big Five (OCEAN)", desc: "50 câu · 5 chiều khoa học · ~12 phút", href: "/quiz/test-big-five", badge: "Mới" },
+      { section: "Test bản thân", label: "Enneagram 9 kiểu", desc: "45 câu · 9 type + wing · ~10 phút", href: "/quiz/test-enneagram", badge: "Mới" },
+      { section: "Test bản thân", label: "EQ - Trí tuệ cảm xúc", desc: "35 câu · 5 chiều Goleman · ~10 phút", href: "/quiz/test-eq", badge: "Mới" },
+      { section: "Test bản thân", label: "Dark Triad - 3 trait tối", desc: "27 câu · giải trí · ~5 phút", href: "/quiz/test-dark-triad", badge: "Mới" },
+
+      // === Test Leadership (2 bài) ===
+      { section: "Test Leadership", label: "DISC - Phong cách hành xử", desc: "24 câu · D/I/S/C · ~6 phút", href: "/quiz/test-disc", badge: "Mới" },
+      { section: "Test Leadership", label: "Phong Cách Lãnh Đạo", desc: "15 câu · 6 phong cách · ~5 phút", href: "/quiz/phong-cach-lanh-dao" },
+
+      // === Test hướng nghiệp (1 bài) ===
+      { section: "Test hướng nghiệp", label: "Hướng Nghiệp Marketing & Ecom", desc: "12 câu · 5 archetype · ~5 phút", href: "/quiz/huong-nghiep-marketing" },
+
+      // === Test kiến thức (2 bài) ===
+      { section: "Test kiến thức", label: "Chỉ Số Quảng Cáo", desc: "30 câu · ROAS, CPC, CPM, CIR · timer 30s", href: "/quiz/chi-so-quang-cao" },
+      { section: "Test kiến thức", label: "Content Frameworks", desc: "30 câu · AIDA, PAS, Cialdini · timer 30s", href: "/quiz/content-frameworks" },
     ],
   },
   { label: "Blog", href: "/blog" },

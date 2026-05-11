@@ -24,6 +24,7 @@ export const QUIZZES: QuizConfig[] = [
     iconName: "target",
     gateResult: false,
     scoringType: "leadership",
+    quizCategory: "leadership",
   },
   {
     slug: "mbti",
@@ -36,6 +37,7 @@ export const QUIZZES: QuizConfig[] = [
     iconName: "brain",
     gateResult: true,
     scoringType: "mbti",
+    quizCategory: "ban-than",
   },
   {
     slug: "huong-nghiep-marketing",
@@ -48,6 +50,7 @@ export const QUIZZES: QuizConfig[] = [
     iconName: "rocket",
     gateResult: true,
     scoringType: "career",
+    quizCategory: "huong-nghiep",
   },
   {
     slug: "chi-so-quang-cao",
@@ -62,6 +65,7 @@ export const QUIZZES: QuizConfig[] = [
     scoringType: "knowledge",
     format: "knowledge",
     secondsPerQuestion: 30,
+    quizCategory: "kien-thuc",
   },
   {
     slug: "content-frameworks",
@@ -76,6 +80,7 @@ export const QUIZZES: QuizConfig[] = [
     scoringType: "knowledge",
     format: "knowledge",
     secondsPerQuestion: 30,
+    quizCategory: "kien-thuc",
   },
   {
     slug: "test-disc",
@@ -88,6 +93,7 @@ export const QUIZZES: QuizConfig[] = [
     iconName: "target",
     gateResult: true,
     scoringType: "disc",
+    quizCategory: "leadership",
   },
   {
     slug: "test-eq",
@@ -100,6 +106,7 @@ export const QUIZZES: QuizConfig[] = [
     iconName: "brain",
     gateResult: true,
     scoringType: "eq",
+    quizCategory: "ban-than",
     showDimensions: true,
     dimensionLabels: {
       SA: "Tự nhận thức",
@@ -120,6 +127,7 @@ export const QUIZZES: QuizConfig[] = [
     iconName: "brain",
     gateResult: true,
     scoringType: "big-five",
+    quizCategory: "ban-than",
     likertScale: true,
     showDimensions: true,
     dimensionLabels: {
@@ -141,6 +149,7 @@ export const QUIZZES: QuizConfig[] = [
     iconName: "target",
     gateResult: true,
     scoringType: "enneagram",
+    quizCategory: "ban-than",
   },
   {
     slug: "test-dark-triad",
@@ -153,6 +162,7 @@ export const QUIZZES: QuizConfig[] = [
     iconName: "brain",
     gateResult: true,
     scoringType: "dark-triad",
+    quizCategory: "ban-than",
     likertScale: true,
     showDimensions: true,
     dimensionLabels: {
@@ -162,6 +172,70 @@ export const QUIZZES: QuizConfig[] = [
     },
   },
 ];
+
+export type QuizCategoryKey = "ban-than" | "leadership" | "huong-nghiep" | "kien-thuc";
+
+export type QuizCategory = {
+  slug: QuizCategoryKey;
+  label: string;
+  shortDescription: string;
+  longDescription: string;
+  seoTitle: string;
+  seoDescription: string;
+  color: string;
+  iconName: string;
+};
+
+export const QUIZ_CATEGORIES: QuizCategory[] = [
+  {
+    slug: "ban-than",
+    label: "Test bản thân",
+    shortDescription: "Khám phá tính cách - MBTI, Big Five, Enneagram, EQ, Dark Triad",
+    longDescription: "Bộ test tính cách + EQ giúp bạn hiểu sâu bản thân: MBTI 16 kiểu, Big Five (OCEAN) khoa học, Enneagram 9 type, EQ 5 chiều Goleman, Dark Triad 3 trait. Free 100%, kết quả ngay.",
+    seoTitle: "Test tính cách miễn phí - MBTI, Big Five, Enneagram, EQ, Dark Triad",
+    seoDescription: "5 test tính cách hot nhất 2026 tiếng Việt: MBTI 16 kiểu, Big Five (OCEAN) khoa học, Enneagram 9 type, EQ Goleman 5 chiều, Dark Triad. Free + kết quả chi tiết.",
+    color: "#a78bff",
+    iconName: "brain",
+  },
+  {
+    slug: "leadership",
+    label: "Test Leadership",
+    shortDescription: "Phong cách lãnh đạo + hành vi công sở - 6 phong cách + DISC",
+    longDescription: "Test phong cách lãnh đạo + DISC giúp bạn hiểu cách lead team + hành xử nơi công sở. Áp dụng cho HR, manager, founder, team lead. Có gợi ý career path + management style.",
+    seoTitle: "Test Leadership - 6 phong cách lãnh đạo + DISC tiếng Việt",
+    seoDescription: "Test phong cách lãnh đạo Goleman 6 phong cách + DISC 4 trait hành vi công sở. Cho HR, manager, founder, team lead. Free 100% + career fit.",
+    color: "#7da9ff",
+    iconName: "target",
+  },
+  {
+    slug: "huong-nghiep",
+    label: "Test hướng nghiệp",
+    shortDescription: "Career path - Marketing & Ecom archetype + role phù hợp",
+    longDescription: "Test hướng nghiệp dành cho người mới + chuyển ngành. Identify archetype career trong Marketing & Ecom - Creator, Analyst, Communicator, Builder, Operator. Có range lương VN + lộ trình junior → senior.",
+    seoTitle: "Test hướng nghiệp Marketing & Ecom - 5 archetype career VN",
+    seoDescription: "Test hướng nghiệp ngành Marketing & Ecom 2026: 5 archetype Creator/Analyst/Communicator/Builder/Operator. Có lương VN + skills cần học + lộ trình.",
+    color: "#5fffaa",
+    iconName: "rocket",
+  },
+  {
+    slug: "kien-thuc",
+    label: "Test kiến thức",
+    shortDescription: "Knowledge quiz - Chỉ số quảng cáo, Content frameworks",
+    longDescription: "Test kiến thức chuyên môn cho Marketer + Ecom seller: chỉ số quảng cáo (ROAS, CPC, CPM, CIR), content frameworks (AIDA, PAS, Cialdini, StoryBrand). Có timer + giải thích sau mỗi câu.",
+    seoTitle: "Test kiến thức Marketing - ROAS, CPC, AIDA, Cialdini, StoryBrand",
+    seoDescription: "Test kiến thức Marketing & Ads cho seller TMĐT: 30 câu chỉ số quảng cáo (ROAS, CPM, CPC, CIR) + 30 câu content frameworks (AIDA, Cialdini, StoryBrand). Có timer.",
+    color: "#ffd479",
+    iconName: "book-open",
+  },
+];
+
+export function getQuizCategory(slug: string): QuizCategory | undefined {
+  return QUIZ_CATEGORIES.find((c) => c.slug === slug);
+}
+
+export function getQuizzesByCategory(categorySlug: string): QuizConfig[] {
+  return QUIZZES.filter((q) => q.quizCategory === categorySlug);
+}
 
 export function getQuiz(slug: string): QuizConfig | undefined {
   return QUIZZES.find((q) => q.slug === slug);
