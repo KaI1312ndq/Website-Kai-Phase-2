@@ -1,5 +1,5 @@
 /**
- * Group A — 10 bài Phí sàn TikTok Shop & Shopee 2026.
+ * Group A - 10 bài Phí sàn TikTok Shop & Shopee 2026.
  * Nội dung viết hoàn thiện, sẵn sàng publish (đã qua mắt SEO + structure).
  * Nguồn data: bảng phí mới TikTok 09/05/2026, Shopee 08/05/2026, kinh nghiệm 60+ project.
  */
@@ -15,7 +15,7 @@ export type FullPost = {
   featured: boolean;
   seoTitle: string;
   seoDescription: string;
-  /** Markdown content — convert to portable text in seed route */
+  /** Markdown content - convert to portable text in seed route */
   content: string;
 };
 
@@ -23,7 +23,7 @@ export const GROUP_A_POSTS: FullPost[] = [
   /* ───────────── Bài 1 ───────────── */
   {
     id: "blog-A1-phi-shopee-2026",
-    title: "Phí Shopee 2026 — Bảng đầy đủ + So sánh chi tiết với TikTok Shop",
+    title: "Phí Shopee 2026 - Bảng đầy đủ + So sánh chi tiết với TikTok Shop",
     slug: "phi-shopee-2026-vs-tiktok",
     excerpt:
       "Shopee áp bảng phí mới từ 08/05/2026. Hoa hồng 11–18%, phí giao dịch 6%, phí cơ sở hạ tầng 3.000đ/đơn. So sánh chi tiết từng ngành với TikTok Shop và ví dụ tính thực tế.",
@@ -31,11 +31,11 @@ export const GROUP_A_POSTS: FullPost[] = [
     readTime: 8,
     publishedAt: "2026-05-10T11:00:00.000Z",
     featured: true,
-    seoTitle: "Phí Shopee 2026 — Bảng phí đầy đủ + So sánh TikTok Shop",
+    seoTitle: "Phí Shopee 2026 - Bảng phí đầy đủ + So sánh TikTok Shop",
     seoDescription:
       "Cập nhật bảng phí Shopee 2026 hiệu lực 08/05/2026: hoa hồng 11–18% theo ngành, phí giao dịch 6%, CSHT 3.000đ/đơn. So sánh trực tiếp với TikTok Shop và ví dụ tính từng ngành.",
     content: `
-Từ 08/05/2026, Shopee Việt Nam áp dụng bảng phí mới — gần như cùng thời điểm với đợt điều chỉnh phí của TikTok Shop ngày 09/05/2026. Bài viết này tổng hợp đầy đủ bảng phí Shopee 2026, so sánh chi tiết với TikTok Shop ở từng ngành hàng, và ví dụ tính phí thực tế giúp seller ra quyết định ưu tiên platform nào.
+Từ 08/05/2026, Shopee Việt Nam áp dụng bảng phí mới - gần như cùng thời điểm với đợt điều chỉnh phí của TikTok Shop ngày 09/05/2026. Bài viết này tổng hợp đầy đủ bảng phí Shopee 2026, so sánh chi tiết với TikTok Shop ở từng ngành hàng, và ví dụ tính phí thực tế giúp seller ra quyết định ưu tiên platform nào.
 
 ## Tóm tắt thay đổi phí Shopee từ 08/05/2026
 
@@ -43,7 +43,7 @@ Từ 08/05/2026, Shopee Việt Nam áp dụng bảng phí mới — gần như c
 
 • **Hoa hồng Non-Mall** tăng trung bình 0.5–1% so với bảng cũ, hiện dao động **11%–15%** tuỳ ngành.
 
-• **Hoa hồng Mall** tăng mạnh hơn, lên **13%–18%** — ngành Sức khoẻ Làm đẹp Mall chạm 18%.
+• **Hoa hồng Mall** tăng mạnh hơn, lên **13%–18%** - ngành Sức khoẻ Làm đẹp Mall chạm 18%.
 
 • **Phí giao dịch giữ nguyên 6%** trên (Giá bán + Phí ship buyer trả − Voucher seller).
 
@@ -51,39 +51,39 @@ Từ 08/05/2026, Shopee Việt Nam áp dụng bảng phí mới — gần như c
 
 > Lưu ý quan trọng: Phí được tính theo **ngành cấp 3** (leaf category), không phải ngành cấp 1. Sản phẩm đặt sai ngành có thể bị áp nhầm mức phí cao hơn 1–3%.
 
-## Bảng phí Shopee 2026 — theo ngành hàng
+## Bảng phí Shopee 2026 - theo ngành hàng
 
 Dưới đây là bảng phí hoa hồng Shopee 2026 cho các ngành phổ biến nhất:
 
-**Beauty & Sức khoẻ Làm đẹp:** Non-Mall 14% — Mall 18% (cao nhất toàn sàn)
+**Beauty & Sức khoẻ Làm đẹp:** Non-Mall 14% - Mall 18% (cao nhất toàn sàn)
 
-**Fashion / Thời trang:** Non-Mall 12% — Mall 15%
+**Fashion / Thời trang:** Non-Mall 12% - Mall 15%
 
-**F&B / Thực phẩm khô:** Non-Mall 11% — Mall 13%
+**F&B / Thực phẩm khô:** Non-Mall 11% - Mall 13%
 
-**Electronics / Điện tử & Phụ kiện:** Non-Mall 11% — Mall 13%
+**Electronics / Điện tử & Phụ kiện:** Non-Mall 11% - Mall 13%
 
-**Home & Living:** Non-Mall 12% — Mall 15%
+**Home & Living:** Non-Mall 12% - Mall 15%
 
-**Mother & Baby:** Non-Mall 13% — Mall 16%
+**Mother & Baby:** Non-Mall 13% - Mall 16%
 
-Cộng thêm phí giao dịch 6% và phí CSHT 3.000đ/đơn → **tổng phí Shopee** dao động 17.5%–24% tuỳ ngành và phân khúc.
+Cộng thêm phí giao dịch 6% và phí CSHT 3.000đ/đơn -> **tổng phí Shopee** dao động 17.5%–24% tuỳ ngành và phân khúc.
 
 ## So sánh trực tiếp Shopee vs TikTok Shop 2026
 
 Đây là so sánh tổng phí (hoa hồng + giao dịch + CSHT) cho sản phẩm 300.000đ, ship buyer trả 25.000đ, không voucher seller:
 
-**Beauty Non-Mall:** Shopee ~21.4% — TikTok ~21.8%. Chênh lệch không đáng kể, ưu thế thuộc về platform có ROAS cao hơn.
+**Beauty Non-Mall:** Shopee ~21.4% - TikTok ~21.8%. Chênh lệch không đáng kể, ưu thế thuộc về platform có ROAS cao hơn.
 
-**Fashion Non-Mall:** Shopee ~19.5% — TikTok ~20%. Chênh 0.5%.
+**Fashion Non-Mall:** Shopee ~19.5% - TikTok ~20%. Chênh 0.5%.
 
-**F&B Non-Mall:** Shopee ~18.3% — TikTok ~18.8%. Shopee hơn 0.5%.
+**F&B Non-Mall:** Shopee ~18.3% - TikTok ~18.8%. Shopee hơn 0.5%.
 
 **Mall (mọi ngành):** Shopee thấp hơn TikTok khoảng 0.3–0.5% nhờ phí CSHT đôi khi không tính cho Mall lớn.
 
 **Kết luận**: Phí Shopee và TikTok 2026 chênh lệch rất nhỏ (<1%). Quyết định chọn platform không nên dựa vào phí mà nên dựa vào: ROAS tự nhiên, đặc tính ngành hàng, năng lực vận hành của shop.
 
-## Phí giao dịch 6% — Tại sao cao hơn bạn nghĩ?
+## Phí giao dịch 6% - Tại sao cao hơn bạn nghĩ?
 
 Nhiều seller hiểu lầm phí giao dịch tính trên Giá bán đơn thuần. Thực tế công thức cả Shopee và TikTok đều là:
 
@@ -92,21 +92,21 @@ Nhiều seller hiểu lầm phí giao dịch tính trên Giá bán đơn thuần
 Ví dụ: Sản phẩm 300.000đ, buyer trả phí ship 25.000đ, seller giảm voucher 30.000đ:
 Phí giao dịch = (300.000 + 25.000 − 30.000) × 6% = **17.700đ**
 
-Nếu chỉ tính trên giá bán: 300.000 × 6% = 18.000đ — gần bằng nhưng không chính xác.
+Nếu chỉ tính trên giá bán: 300.000 × 6% = 18.000đ - gần bằng nhưng không chính xác.
 
-Lưu ý: Voucher Shopee Mall (do Shopee tài trợ) **không được trừ** khỏi base tính phí giao dịch — chỉ voucher seller tự chi mới được trừ.
+Lưu ý: Voucher Shopee Mall (do Shopee tài trợ) **không được trừ** khỏi base tính phí giao dịch - chỉ voucher seller tự chi mới được trừ.
 
-## Phí cơ sở hạ tầng (CSHT) — 3.000đ/đơn
+## Phí cơ sở hạ tầng (CSHT) - 3.000đ/đơn
 
 Phí CSHT (còn gọi là phí xử lý đơn hoặc service fee) là khoản 3.000đ/đơn hoàn thành mà cả Shopee và TikTok đều thu để duy trì hệ thống. Đặc điểm:
 
-• **Cố định 3.000đ** — không tỷ lệ % với giá bán
+• **Cố định 3.000đ** - không tỷ lệ % với giá bán
 • Áp dụng cho mọi đơn hoàn thành thành công
 • Không áp dụng nếu đơn bị huỷ trước khi giao
 
-Đây là lý do shop có AOV thấp (sản phẩm <50.000đ) bị ảnh hưởng phí % cao hơn — 3.000đ trên đơn 50.000đ tương đương 6% phí cố định.
+Đây là lý do shop có AOV thấp (sản phẩm <50.000đ) bị ảnh hưởng phí % cao hơn - 3.000đ trên đơn 50.000đ tương đương 6% phí cố định.
 
-## Ví dụ tính phí thực tế — Sản phẩm Beauty Non-Mall 280.000đ
+## Ví dụ tính phí thực tế - Sản phẩm Beauty Non-Mall 280.000đ
 
 Giả sử bán sản phẩm Beauty 280.000đ trên Shopee Non-Mall, buyer trả ship 25.000đ, seller chi voucher 3% = 8.400đ:
 
@@ -127,13 +127,13 @@ Chênh lệch giữa 2 sàn chỉ ~1.400đ/đơn cho sản phẩm 280.000đ.
 
 ## Lời khuyên thực chiến từ 60+ project
 
-**1. Đừng chọn platform vì phí — chọn vì ROAS tự nhiên.** Chênh lệch 0.5–1% phí không đáng kể so với ROAS chênh lệch 2–5x giữa 2 nền tảng tuỳ ngành.
+**1. Đừng chọn platform vì phí - chọn vì ROAS tự nhiên.** Chênh lệch 0.5–1% phí không đáng kể so với ROAS chênh lệch 2–5x giữa 2 nền tảng tuỳ ngành.
 
-**2. Beauty và Mother&Baby — TikTok có ưu thế live commerce.** ROAS organic từ live thường gấp 1.5–2x Shopee.
+**2. Beauty và Mother&Baby - TikTok có ưu thế live commerce.** ROAS organic từ live thường gấp 1.5–2x Shopee.
 
-**3. Electronics, Home & Living — Shopee thường ổn định hơn.** Buyer Shopee có thói quen mua đồ "thực dụng" tốt hơn buyer TikTok.
+**3. Electronics, Home & Living - Shopee thường ổn định hơn.** Buyer Shopee có thói quen mua đồ "thực dụng" tốt hơn buyer TikTok.
 
-**4. Mall hay Non-Mall — quyết định theo gross margin.** Gross margin > 45% mới nên cân nhắc Mall (chênh phí 3–5% phải bù bằng badge thương hiệu và ưu tiên hiển thị).
+**4. Mall hay Non-Mall - quyết định theo gross margin.** Gross margin > 45% mới nên cân nhắc Mall (chênh phí 3–5% phải bù bằng badge thương hiệu và ưu tiên hiển thị).
 
 **5. Build P&L với buffer 1–2% margin** cho đợt tăng phí tiếp theo. Shopee và TikTok thường tăng phí 1–2 lần/năm.
 
@@ -144,28 +144,28 @@ Lấy số phí chính xác cho ngành cụ thể của bạn tại [Tool tính 
   /* ───────────── Bài 2 ───────────── */
   {
     id: "blog-A2-mall-vs-non-mall",
-    title: "Mall vs Non-Mall — Khi nào nên upgrade lên Shopee/TikTok Mall?",
+    title: "Mall vs Non-Mall - Khi nào nên upgrade lên Shopee/TikTok Mall?",
     slug: "mall-vs-non-mall-khi-nao-upgrade",
     excerpt:
-      "Shopee Mall và TikTok Shop Mall có phí cao hơn Non-Mall 3–5% — đổi lại được badge thương hiệu và ưu tiên hiển thị. Phân tích 6 tiêu chí quyết định khi nào nên upgrade.",
+      "Shopee Mall và TikTok Shop Mall có phí cao hơn Non-Mall 3–5% - đổi lại được badge thương hiệu và ưu tiên hiển thị. Phân tích 6 tiêu chí quyết định khi nào nên upgrade.",
     category: "ecom",
     readTime: 7,
     publishedAt: "2026-05-10T11:30:00.000Z",
     featured: true,
-    seoTitle: "Mall vs Non-Mall — Khi nào nên upgrade Shopee/TikTok Mall?",
+    seoTitle: "Mall vs Non-Mall - Khi nào nên upgrade Shopee/TikTok Mall?",
     seoDescription:
       "Phân tích chi tiết Mall vs Non-Mall: chênh phí 3–5%, lợi ích badge và hiển thị, 6 tiêu chí quyết định upgrade. Số liệu thực từ 60+ project ecom.",
     content: `
-"Có nên đăng ký Mall hay không?" là câu hỏi tôi nhận từ ít nhất 5 client mỗi tháng. Quyết định Mall vs Non-Mall không chỉ là vấn đề phí — nó liên quan trực tiếp tới chiến lược thương hiệu, gross margin, và năng lực vận hành. Bài viết này phân tích 6 tiêu chí quan trọng nhất giúp bạn ra quyết định đúng.
+"Có nên đăng ký Mall hay không?" là câu hỏi tôi nhận từ ít nhất 5 client mỗi tháng. Quyết định Mall vs Non-Mall không chỉ là vấn đề phí - nó liên quan trực tiếp tới chiến lược thương hiệu, gross margin, và năng lực vận hành. Bài viết này phân tích 6 tiêu chí quan trọng nhất giúp bạn ra quyết định đúng.
 
-## Mall vs Non-Mall — Khác biệt cốt lõi
+## Mall vs Non-Mall - Khác biệt cốt lõi
 
 **Phí sàn cao hơn 3–5%:**
 • Shopee Mall vs Non-Mall: chênh 2–4% hoa hồng (tuỳ ngành)
 • TikTok Mall vs Non-Mall: chênh 2.5–3.5% hoa hồng
 
 **Lợi ích Mall:**
-• Badge "Shopee Mall" / "TikTok Shop Mall" — buyer tin tưởng hơn
+• Badge "Shopee Mall" / "TikTok Shop Mall" - buyer tin tưởng hơn
 • Ưu tiên hiển thị trong search và recommendation
 • Cam kết đổi trả 7 ngày, freeship voucher do sàn tài trợ
 • Tham gia campaign Mall riêng (megasale Mall)
@@ -175,9 +175,9 @@ Lấy số phí chính xác cho ngành cụ thể của bạn tại [Tool tính 
 • Đủ doanh thu tối thiểu (Shopee Mall thường yêu cầu GMV ≥ 200tr/tháng trong 3 tháng liên tục)
 • Cam kết SLA giao hàng và CSKH cao hơn
 
-## Tiêu chí 1 — Gross Margin của sản phẩm
+## Tiêu chí 1 - Gross Margin của sản phẩm
 
-Đây là yếu tố quan trọng nhất. Mall thêm 3–5% phí — bạn cần gross margin đủ cao để hấp thụ.
+Đây là yếu tố quan trọng nhất. Mall thêm 3–5% phí - bạn cần gross margin đủ cao để hấp thụ.
 
 **Gross margin > 50%:** Upgrade Mall ngay khi đủ điều kiện. Phí thêm 3–5% chỉ ăn 6–10% gross margin, vẫn còn rất nhiều buffer cho ads và profit.
 
@@ -185,13 +185,13 @@ Lấy số phí chính xác cho ngành cụ thể của bạn tại [Tool tính 
 
 **Gross margin < 40%:** Đừng vội. Phí thêm sẽ ăn gần hết operating profit. Nên fix gross margin trước (giảm COGS, tăng AOV bằng bundle) rồi mới Mall.
 
-## Tiêu chí 2 — Brand awareness hiện tại
+## Tiêu chí 2 - Brand awareness hiện tại
 
 Mall mang lại lợi ích lớn nhất khi shop **chưa có brand awareness**. Buyer mới biết shop sẽ tin badge Mall hơn shop "lạ".
 
-Ngược lại, shop đã có lượng follower lớn (>100k) và repeat buyer cao có thể không cần Mall — buyer đã quen brand rồi. Một số shop large brand lại cố tình ở Non-Mall để giữ giá cạnh tranh.
+Ngược lại, shop đã có lượng follower lớn (>100k) và repeat buyer cao có thể không cần Mall - buyer đã quen brand rồi. Một số shop large brand lại cố tình ở Non-Mall để giữ giá cạnh tranh.
 
-## Tiêu chí 3 — Ngành hàng và buyer behavior
+## Tiêu chí 3 - Ngành hàng và buyer behavior
 
 **Beauty, Health, Mother & Baby:** Mall rất quan trọng. Buyer các ngành này quan tâm chính hãng/giả, badge Mall là trust signal lớn. Conversion rate Mall thường cao hơn Non-Mall 15–30%.
 
@@ -199,11 +199,11 @@ Ngược lại, shop đã có lượng follower lớn (>100k) và repeat buyer c
 
 **F&B:** Mall không bắt buộc nếu là sản phẩm thông dụng. Quan trọng hơn là review và rating.
 
-**Electronics:** Mall gần như bắt buộc. Buyer rất sợ hàng giả/fake — không có Mall thì khó scale.
+**Electronics:** Mall gần như bắt buộc. Buyer rất sợ hàng giả/fake - không có Mall thì khó scale.
 
 **Home & Living:** Mall có lợi nhưng không critical. Sản phẩm to (>500k) cần Mall, sản phẩm nhỏ thì không.
 
-## Tiêu chí 4 — GMV hiện tại và growth stage
+## Tiêu chí 4 - GMV hiện tại và growth stage
 
 **< 100tr GMV/tháng:** Quá sớm cho Mall. Tập trung scale Non-Mall, build review base, học vận hành.
 
@@ -211,16 +211,16 @@ Ngược lại, shop đã có lượng follower lớn (>100k) và repeat buyer c
 
 **> 500tr GMV/tháng:** Nên đã ở Mall. Nếu chưa, đang miss revenue đáng kể.
 
-## Tiêu chí 5 — Năng lực vận hành (SLA + CSKH)
+## Tiêu chí 5 - Năng lực vận hành (SLA + CSKH)
 
 Mall yêu cầu SLA cao hơn:
 • Tỷ lệ giao đúng hạn ≥ 95%
 • Tỷ lệ phản hồi chat trong 1h ≥ 80%
 • Tỷ lệ đánh giá 5 sao ≥ 4.7
 
-Không đáp ứng nổi → Mall cấm hoặc downgrade. Tốn công upgrade rồi bị cấm là tệ hơn không Mall ngay từ đầu.
+Không đáp ứng nổi -> Mall cấm hoặc downgrade. Tốn công upgrade rồi bị cấm là tệ hơn không Mall ngay từ đầu.
 
-## Tiêu chí 6 — Cạnh tranh trong ngành
+## Tiêu chí 6 - Cạnh tranh trong ngành
 
 Check trực tiếp: tìm 5 keyword chính của ngành bạn trên Shopee/TikTok, đếm tỷ lệ Mall ở top 10 search results.
 
@@ -230,27 +230,27 @@ Check trực tiếp: tìm 5 keyword chính của ngành bạn trên Shopee/TikTo
 
 **< 40% Mall:** Có thể skip Mall, tập trung sức mạnh khác.
 
-## Decision Tree — Có nên Mall không?
+## Decision Tree - Có nên Mall không?
 
-**Step 1**: Gross margin có > 45%? Nếu KHÔNG → Fix gross margin trước, đừng Mall.
+**Step 1**: Gross margin có > 45%? Nếu KHÔNG -> Fix gross margin trước, đừng Mall.
 
-**Step 2**: GMV có > 200tr/tháng (Shopee) hoặc > 150tr/tháng (TikTok)? Nếu KHÔNG → Scale Non-Mall trước.
+**Step 2**: GMV có > 200tr/tháng (Shopee) hoặc > 150tr/tháng (TikTok)? Nếu KHÔNG -> Scale Non-Mall trước.
 
-**Step 3**: Ngành có thuộc Beauty/Health/Mother&Baby/Electronics? Nếu CÓ → Ưu tiên Mall, weight cao.
+**Step 3**: Ngành có thuộc Beauty/Health/Mother&Baby/Electronics? Nếu CÓ -> Ưu tiên Mall, weight cao.
 
-**Step 4**: Năng lực vận hành đủ SLA Mall? Nếu KHÔNG → Build team trước.
+**Step 4**: Năng lực vận hành đủ SLA Mall? Nếu KHÔNG -> Build team trước.
 
-**Step 5**: Top 10 search ngành có > 50% là Mall? Nếu CÓ → Mall = bắt buộc để cạnh tranh.
+**Step 5**: Top 10 search ngành có > 50% là Mall? Nếu CÓ -> Mall = bắt buộc để cạnh tranh.
 
-3+ điều kiện CÓ → Đăng ký Mall. < 3 điều kiện → Hold lại.
+3+ điều kiện CÓ -> Đăng ký Mall. < 3 điều kiện -> Hold lại.
 
 ## Sai lầm phổ biến khi upgrade Mall
 
-**1. Upgrade quá sớm** — chưa đủ GMV, chưa đủ team SLA. Kết quả: phí cao hơn nhưng không có revenue boost tương xứng.
+**1. Upgrade quá sớm** - chưa đủ GMV, chưa đủ team SLA. Kết quả: phí cao hơn nhưng không có revenue boost tương xứng.
 
-**2. Đợi quá lâu** — đã mất 6+ tháng revenue tiềm năng. Mall mở khoá visibility và trust mà Non-Mall không bao giờ có.
+**2. Đợi quá lâu** - đã mất 6+ tháng revenue tiềm năng. Mall mở khoá visibility và trust mà Non-Mall không bao giờ có.
 
-**3. Upgrade Mall xong không invest creative đẹp hơn.** Mall là badge thương hiệu — phải có creative xứng tầm. Hình sản phẩm xấu = Mall mất ý nghĩa.
+**3. Upgrade Mall xong không invest creative đẹp hơn.** Mall là badge thương hiệu - phải có creative xứng tầm. Hình sản phẩm xấu = Mall mất ý nghĩa.
 
 **4. Không track ROI Mall riêng.** Sau 3 tháng Mall, phải đo: revenue tăng bao nhiêu %, conversion rate có lift không, SKU nào hưởng lợi nhiều nhất.
 
@@ -267,7 +267,7 @@ Tính chi phí Mall vs Non-Mall cho sản phẩm cụ thể tại [Tool tính ph
   /* ───────────── Bài 3 ───────────── */
   {
     id: "blog-A3-voucher-extra-vs-plus",
-    title: "Voucher Extra vs Voucher Extra Plus — Chọn cái nào để có ROI cao nhất?",
+    title: "Voucher Extra vs Voucher Extra Plus - Chọn cái nào để có ROI cao nhất?",
     slug: "voucher-extra-vs-extra-plus",
     excerpt:
       "Voucher Extra (4%, cap 50k) hay Voucher Extra Plus (5.5%, cap 80k)? Phân tích chi tiết khi nào Plus break-even, scenario shop nhỏ vs lớn, và bảng quyết định cụ thể.",
@@ -275,9 +275,9 @@ Tính chi phí Mall vs Non-Mall cho sản phẩm cụ thể tại [Tool tính ph
     readTime: 6,
     publishedAt: "2026-05-10T12:00:00.000Z",
     featured: false,
-    seoTitle: "Voucher Extra vs Plus — Chọn cái nào trên TikTok Shop & Shopee?",
+    seoTitle: "Voucher Extra vs Plus - Chọn cái nào trên TikTok Shop & Shopee?",
     seoDescription:
-      "So sánh chi tiết Voucher Extra (4%, cap 50k) và Plus (5.5%, cap 80k). Break-even volume, AOV optimal, scenario shop nhỏ vs lớn — quyết định đúng cho từng giai đoạn.",
+      "So sánh chi tiết Voucher Extra (4%, cap 50k) và Plus (5.5%, cap 80k). Break-even volume, AOV optimal, scenario shop nhỏ vs lớn - quyết định đúng cho từng giai đoạn.",
     content: `
 Voucher Extra và Voucher Extra Plus là 2 chương trình ưu đãi seller có thể chọn 1 trong 2 trên TikTok Shop và Shopee. Quyết định sai có thể tốn 5–10tr chi phí voucher mỗi tháng mà không tạo ra incremental revenue tương xứng.
 
@@ -310,16 +310,16 @@ Plus đắt hơn Extra 1.5%. Nó chỉ có lý nếu:
 
 Đơn giản hoá: nếu Plus đem về **incremental volume > 25%** so với Extra, gần như luôn worth nó.
 
-## Scenario 1 — Shop nhỏ, GMV < 100tr/tháng
+## Scenario 1 - Shop nhỏ, GMV < 100tr/tháng
 
 Shop nhỏ thường có AOV thấp (<200k) và chưa có brand awareness. Vì vậy:
 
-• AOV thấp = không chạm cap voucher → không khai thác hết advantage cap 80k của Plus
+• AOV thấp = không chạm cap voucher -> không khai thác hết advantage cap 80k của Plus
 • Visibility boost của Plus chưa nhiều ý nghĩa khi traffic shop chính từ ads
 
 **Khuyến nghị: Voucher Extra.** Tiết kiệm 1.5% phí, dùng số tiền đó cho ads hoặc creative. Nâng lên Plus khi GMV > 200tr/tháng và bắt đầu thấy traffic organic.
 
-## Scenario 2 — Shop trung, GMV 100–500tr/tháng
+## Scenario 2 - Shop trung, GMV 100–500tr/tháng
 
 Vùng quyết định khó nhất. Phụ thuộc vào AOV và growth rate.
 
@@ -327,14 +327,14 @@ Vùng quyết định khó nhất. Phụ thuộc vào AOV và growth rate.
 
 **AOV < 200k hoặc plateauing:** Extra vẫn ổn. Tập trung optimize ROAS trước.
 
-## Scenario 3 — Shop lớn, GMV > 500tr/tháng
+## Scenario 3 - Shop lớn, GMV > 500tr/tháng
 
 Plus gần như luôn đúng. Lý do:
-• AOV thường > 300k → cap 80k bắt đầu matter
+• AOV thường > 300k -> cap 80k bắt đầu matter
 • Ưu tiên hiển thị Plus đem về organic traffic đáng kể
 • Tham gia mega campaign Plus = lift 2-3x trong ngày sale
 
-Exception: shop bán sản phẩm cực giá thấp (<100k) — Plus vẫn không tận dụng được cap.
+Exception: shop bán sản phẩm cực giá thấp (<100k) - Plus vẫn không tận dụng được cap.
 
 ## Sai lầm phổ biến khi chọn voucher
 
@@ -360,7 +360,7 @@ Pick **Extra** nếu:
 • Đã plateau, đang focus optimize chứ không expand
 
 Không chọn voucher (skip cả Extra và Plus):
-• Gross margin < 35% — không có buffer để cho voucher
+• Gross margin < 35% - không có buffer để cho voucher
 • Shop chuyên B2B hoặc bán sản phẩm chuyên biệt không cần voucher để convert
 
 ## Kết hợp Voucher Extra/Plus với Voucher Seller
@@ -370,7 +370,7 @@ Nguyên tắc tối ưu:
 • Voucher Seller dùng để target buyer cụ thể (new customer, repeat buyer, cart abandon)
 • Voucher Extra/Plus dùng để cover broad visibility
 
-Tránh chồng voucher quá dày — buyer cảm thấy "shop này lúc nào cũng giảm" và đợi giảm sâu hơn để mua.
+Tránh chồng voucher quá dày - buyer cảm thấy "shop này lúc nào cũng giảm" và đợi giảm sâu hơn để mua.
 
 ## Đo lường hiệu quả voucher hàng tháng
 
@@ -380,7 +380,7 @@ Mỗi cuối tháng, check 3 KPI:
 
 **2. Voucher ROI:** Doanh thu đơn dùng voucher / Chi phí voucher. Healthy > 8x.
 
-**3. Repeat Rate buyer dùng voucher vs không voucher:** Voucher tốt khi buyer dùng voucher có repeat rate ≥ buyer thường. Nếu thấp hơn → voucher đang attract chỉ "deal hunter" chứ không phải buyer chất lượng.
+**3. Repeat Rate buyer dùng voucher vs không voucher:** Voucher tốt khi buyer dùng voucher có repeat rate ≥ buyer thường. Nếu thấp hơn -> voucher đang attract chỉ "deal hunter" chứ không phải buyer chất lượng.
 
 Tính chi phí voucher chính xác cho shop tại [Tool tính phí sàn](/tools/tinh-phi-san), và xem ảnh hưởng voucher tới P&L tại [Mẫu P&L Ecom](/tools/pnl-ecom).
 `,
@@ -389,7 +389,7 @@ Tính chi phí voucher chính xác cho shop tại [Tool tính phí sàn](/tools/
   /* ───────────── Bài 4 ───────────── */
   {
     id: "blog-A4-sfr-boi-hoan-van-chuyen",
-    title: "SFR (Bồi hoàn vận chuyển) — Có nên đăng ký? Phân tích break-even chi tiết",
+    title: "SFR (Bồi hoàn vận chuyển) - Có nên đăng ký? Phân tích break-even chi tiết",
     slug: "sfr-boi-hoan-van-chuyen-co-nen-dang-ky",
     excerpt:
       "SFR thu 1.620đ/đơn để TikTok Shop xử lý bồi hoàn vận chuyển khi có sự cố. Phân tích shop nào nên bật, ngưỡng tỷ lệ hoàn hàng break-even, và scenario thực tế.",
@@ -397,11 +397,11 @@ Tính chi phí voucher chính xác cho shop tại [Tool tính phí sàn](/tools/
     readTime: 5,
     publishedAt: "2026-05-10T12:30:00.000Z",
     featured: false,
-    seoTitle: "SFR TikTok Shop — Có nên đăng ký? Break-even và scenario thực tế",
+    seoTitle: "SFR TikTok Shop - Có nên đăng ký? Break-even và scenario thực tế",
     seoDescription:
       "SFR (Seller Freight Reimbursement) thu 1.620đ/đơn. Phân tích khi nào nên bật, ngưỡng hoàn hàng break-even, và 3 scenario shop nhỏ/trung/lớn.",
     content: `
-SFR (Seller Freight Reimbursement — Bồi hoàn Vận chuyển) là dịch vụ TikTok Shop ra mắt giúp seller xử lý bồi hoàn vận chuyển tự động khi có sự cố giao hàng (hoàn hàng do lỗi vận chuyển, giao sai địa chỉ, hư hỏng). Phí: 1.620đ/đơn hoàn thành.
+SFR (Seller Freight Reimbursement - Bồi hoàn Vận chuyển) là dịch vụ TikTok Shop ra mắt giúp seller xử lý bồi hoàn vận chuyển tự động khi có sự cố giao hàng (hoàn hàng do lỗi vận chuyển, giao sai địa chỉ, hư hỏng). Phí: 1.620đ/đơn hoàn thành.
 
 ## SFR làm gì cho seller?
 
@@ -421,7 +421,7 @@ Khi có sự cố giao hàng:
 
 Đổi lại: 1.620đ × 100% đơn hoàn thành (kể cả đơn không có vấn đề).
 
-## Ngưỡng break-even — Khi nào SFR có lãi?
+## Ngưỡng break-even - Khi nào SFR có lãi?
 
 Phép tính đơn giản:
 
@@ -446,7 +446,7 @@ Phép tính đơn giản:
 
 **2. Shop volume cao + team CSKH nhỏ.** Khi 2.000+ đơn/tháng mà chỉ có 1 CSKH, dùng SFR để giảm tải xử lý hoàn.
 
-**3. Shop bán hàng vùng xa.** Đơn giao tỉnh xa có tỷ lệ sự cố cao hơn 2-3x — SFR giúp giảm rủi ro tài chính.
+**3. Shop bán hàng vùng xa.** Đơn giao tỉnh xa có tỷ lệ sự cố cao hơn 2-3x - SFR giúp giảm rủi ro tài chính.
 
 **4. Shop mới chưa quen process hoàn.** SFR mua thời gian để team build process, sau đó đánh giá lại.
 
@@ -456,33 +456,33 @@ Phép tính đơn giản:
 
 **2. Shop có team CSKH chuyên nghiệp.** Tự xử lý nhanh và rẻ hơn nếu volume sự cố thấp.
 
-**3. Shop AOV thấp (<100k).** Phí 1.620đ chiếm 1.6% giá bán — quá cao so với benefit.
+**3. Shop AOV thấp (<100k).** Phí 1.620đ chiếm 1.6% giá bán - quá cao so với benefit.
 
 **4. Shop bán sản phẩm khó hoàn (perishable, custom).** Buyer không dễ hoàn nên SFR ít activate.
 
-## Scenario 1 — Shop nhỏ, 500 đơn/tháng, return rate 2%
+## Scenario 1 - Shop nhỏ, 500 đơn/tháng, return rate 2%
 
 • Đơn sự cố: 500 × 2% = 10 đơn/tháng
 • Cost không SFR: 10 × 80.000 = 800.000đ
 • Cost với SFR: 500 × 1.620 = 810.000đ + 10 × 2.500 = 835.000đ
 
-→ SFR đắt hơn 35.000đ/tháng. Không nên bật.
+-> SFR đắt hơn 35.000đ/tháng. Không nên bật.
 
-## Scenario 2 — Shop trung, 2.000 đơn/tháng, return rate 5%
+## Scenario 2 - Shop trung, 2.000 đơn/tháng, return rate 5%
 
 • Đơn sự cố: 2.000 × 5% = 100 đơn/tháng
 • Cost không SFR: 100 × 80.000 = 8.000.000đ
 • Cost với SFR: 2.000 × 1.620 = 3.240.000đ + 100 × 2.500 = 3.490.000đ
 
-→ SFR tiết kiệm 4.510.000đ/tháng. **Nên bật ngay.**
+-> SFR tiết kiệm 4.510.000đ/tháng. **Nên bật ngay.**
 
-## Scenario 3 — Shop Fashion lớn, 5.000 đơn/tháng, return rate 15%
+## Scenario 3 - Shop Fashion lớn, 5.000 đơn/tháng, return rate 15%
 
 • Đơn sự cố: 5.000 × 15% = 750 đơn/tháng
 • Cost không SFR: 750 × 80.000 = 60.000.000đ
 • Cost với SFR: 5.000 × 1.620 = 8.100.000đ + 750 × 2.500 = 9.975.000đ
 
-→ SFR tiết kiệm 50.025.000đ/tháng. **Bắt buộc bật.**
+-> SFR tiết kiệm 50.025.000đ/tháng. **Bắt buộc bật.**
 
 ## Cách xử lý nếu return rate biến động
 
@@ -490,7 +490,7 @@ Tỷ lệ hoàn không cố định. Mùa sale lớn (11.11, 12.12) thường c�
 
 **Strategy:**
 • **Tháng thường:** đo return rate, nếu < 2% thì có thể tắt SFR
-• **Tháng sale:** bật SFR ngay cả khi return rate trung bình thấp — buffer cho spike
+• **Tháng sale:** bật SFR ngay cả khi return rate trung bình thấp - buffer cho spike
 
 Chú ý: TikTok Shop có cooldown 30 ngày giữa lần bật/tắt SFR.
 
@@ -498,13 +498,13 @@ Chú ý: TikTok Shop có cooldown 30 ngày giữa lần bật/tắt SFR.
 
 **1. Bật SFR rồi không track ROI hàng tháng.** SFR worth ban đầu nhưng không phải mãi. Phải đo và adjust.
 
-**2. Dùng SFR như "bảo hiểm tâm lý" thay vì fix root cause.** Nếu return rate > 10% liên tục, vấn đề ở packaging, shipping partner, hoặc product description — không phải bật SFR là xong.
+**2. Dùng SFR như "bảo hiểm tâm lý" thay vì fix root cause.** Nếu return rate > 10% liên tục, vấn đề ở packaging, shipping partner, hoặc product description - không phải bật SFR là xong.
 
-**3. Tính SFR vào giá bán mà không thông báo.** Một số shop tăng giá 1.620đ để bù SFR — buyer comparison thấy đắt hơn shop khác. Tốt hơn là absorb vào COGS hoặc giảm gross margin.
+**3. Tính SFR vào giá bán mà không thông báo.** Một số shop tăng giá 1.620đ để bù SFR - buyer comparison thấy đắt hơn shop khác. Tốt hơn là absorb vào COGS hoặc giảm gross margin.
 
 ## Lời khuyên thực chiến
 
-SFR là "scale tool" — nó giúp shop volume cao tiết kiệm cost xử lý mà không làm gì pha lê hơn. Nhưng nếu return rate cao do chính sản phẩm hoặc vận hành, SFR không fix root cause.
+SFR là "scale tool" - nó giúp shop volume cao tiết kiệm cost xử lý mà không làm gì pha lê hơn. Nhưng nếu return rate cao do chính sản phẩm hoặc vận hành, SFR không fix root cause.
 
 **Quy trình tôi khuyên client:**
 1. Track return rate 30 ngày liên tục
@@ -513,22 +513,22 @@ SFR là "scale tool" — nó giúp shop volume cao tiết kiệm cost xử lý m
 4. Quyết định bật hay không
 5. Sau 60 ngày SFR, đo ROI và quyết định giữ hay bỏ
 
-Tính tác động SFR tới P&L tại [Mẫu P&L Ecom](/tools/pnl-ecom) — input phí 1.620đ vào field "Phí cơ sở hạ tầng" để mô phỏng.
+Tính tác động SFR tới P&L tại [Mẫu P&L Ecom](/tools/pnl-ecom) - input phí 1.620đ vào field "Phí cơ sở hạ tầng" để mô phỏng.
 `,
   },
 
   /* ───────────── Bài 5 ───────────── */
   {
     id: "blog-A5-phi-giao-dich-6-percent",
-    title: "Phí giao dịch 6% — Tại sao cao hơn bạn tưởng và cách tính chuẩn",
+    title: "Phí giao dịch 6% - Tại sao cao hơn bạn tưởng và cách tính chuẩn",
     slug: "phi-giao-dich-6-cong-thuc-chuan",
     excerpt:
-      "Phí giao dịch 6% không tính trên Giá bán đơn thuần — base = (Giá bán + Ship buyer trả − Voucher seller). Phân tích chi tiết và 3 sai lầm thường gặp khi build P&L.",
+      "Phí giao dịch 6% không tính trên Giá bán đơn thuần - base = (Giá bán + Ship buyer trả − Voucher seller). Phân tích chi tiết và 3 sai lầm thường gặp khi build P&L.",
     category: "tiktok",
     readTime: 5,
     publishedAt: "2026-05-10T13:00:00.000Z",
     featured: false,
-    seoTitle: "Phí giao dịch 6% TikTok & Shopee — Công thức chuẩn 2026",
+    seoTitle: "Phí giao dịch 6% TikTok & Shopee - Công thức chuẩn 2026",
     seoDescription:
       "Phí giao dịch 6% tính trên (Giá bán + Ship buyer trả − Voucher seller). Phân tích base, 3 sai lầm khi tính, và cách build P&L chính xác cho seller TMĐT.",
     content: `
@@ -545,27 +545,27 @@ Trong đó:
 
 ## Tại sao base tính bao gồm phí ship?
 
-Logic của TikTok và Shopee: 6% là phí xử lý giao dịch — bao gồm cả thanh toán ship. Buyer trả tổng (giá + ship) cho sàn, sàn xử lý cả 2 luồng tiền. Vì vậy base = tổng buyer thanh toán.
+Logic của TikTok và Shopee: 6% là phí xử lý giao dịch - bao gồm cả thanh toán ship. Buyer trả tổng (giá + ship) cho sàn, sàn xử lý cả 2 luồng tiền. Vì vậy base = tổng buyer thanh toán.
 
 Điều này khác biệt quan trọng:
-• Sản phẩm 100k, ship buyer trả 25k → phí GD = 125k × 6% = 7.500đ (không phải 6.000đ)
-• Sản phẩm 500k, ship buyer trả 30k → phí GD = 530k × 6% = 31.800đ (không phải 30.000đ)
+• Sản phẩm 100k, ship buyer trả 25k -> phí GD = 125k × 6% = 7.500đ (không phải 6.000đ)
+• Sản phẩm 500k, ship buyer trả 30k -> phí GD = 530k × 6% = 31.800đ (không phải 30.000đ)
 
 Mỗi đơn chênh ~1.500–2.000đ. Shop 1.000 đơn/tháng = chênh 1.5–2tr/tháng nếu tính sai.
 
 ## Tại sao chỉ trừ Voucher Seller mà không trừ Voucher Mall?
 
-Voucher Mall do **sàn tài trợ** — sàn chi tiền, sàn vẫn thu 6% trên full giá để cover cost của họ.
+Voucher Mall do **sàn tài trợ** - sàn chi tiền, sàn vẫn thu 6% trên full giá để cover cost của họ.
 
-Voucher Seller do **shop tài trợ** — shop đã giảm giá thực, sàn chỉ thu 6% trên số buyer thực thanh toán.
+Voucher Seller do **shop tài trợ** - shop đã giảm giá thực, sàn chỉ thu 6% trên số buyer thực thanh toán.
 
 Ví dụ sản phẩm 300k, ship 25k:
 • Voucher Mall 50k (sàn tài trợ): Phí GD = (300k + 25k) × 6% = 19.500đ
 • Voucher Seller 50k (shop chi): Phí GD = (300k + 25k − 50k) × 6% = 16.500đ
 
-Chênh 3.000đ/đơn. Nhiều seller không phân biệt → tính sai phí GD.
+Chênh 3.000đ/đơn. Nhiều seller không phân biệt -> tính sai phí GD.
 
-## Sai lầm 1 — Tính phí GD trên giá bán đơn thuần
+## Sai lầm 1 - Tính phí GD trên giá bán đơn thuần
 
 Đây là sai lầm phổ biến nhất, đặc biệt khi seller copy template P&L cũ.
 
@@ -574,26 +574,26 @@ Chênh 3.000đ/đơn. Nhiều seller không phân biệt → tính sai phí GD.
 
 Sai lệch điển hình: 1–2% của doanh thu. Shop GMV 500tr/tháng = sai lệch 5–10tr/tháng trong P&L.
 
-## Sai lầm 2 — Trừ cả Voucher Mall
+## Sai lầm 2 - Trừ cả Voucher Mall
 
 Một số seller assume "voucher là voucher" và trừ cả 2 loại khỏi base.
 
-Hậu quả: P&L tính phí GD thấp hơn thực tế → khi check sale order với báo cáo Seller Center, thấy "thiếu hụt" 0.5–1% mỗi tháng → confused tại sao reconcile không khớp.
+Hậu quả: P&L tính phí GD thấp hơn thực tế -> khi check sale order với báo cáo Seller Center, thấy "thiếu hụt" 0.5–1% mỗi tháng -> confused tại sao reconcile không khớp.
 
 Cách check: Trong báo cáo Seller Center, mục "Total fees" sẽ hiện chính xác phí GD thực tế. So sánh với P&L của bạn để phát hiện sai lệch.
 
-## Sai lầm 3 — Quên tính phí GD vào P&L của campaign ads
+## Sai lầm 3 - Quên tính phí GD vào P&L của campaign ads
 
 Khi tính ROAS và margin của campaign cụ thể, nhiều seller chỉ trừ hoa hồng và quên phí GD.
 
 **Ví dụ campaign:**
-• Doanh thu 10.000.000đ, ads spend 2.000.000đ → ROAS 5x
+• Doanh thu 10.000.000đ, ads spend 2.000.000đ -> ROAS 5x
 • Hoa hồng 14% = 1.400.000đ
 • Margin còn lại trên gross margin?
 
 Nếu quên phí GD: profit estimate cao hơn ~600.000đ. Lặp lại 50 campaigns/tháng = sai lệch tổng 30tr+.
 
-## Ví dụ cụ thể — Tính phí GD chuẩn
+## Ví dụ cụ thể - Tính phí GD chuẩn
 
 **Đơn 1: Sản phẩm 280k, ship buyer trả 25k, không voucher**
 Phí GD = (280k + 25k) × 6% = **18.300đ**
@@ -618,8 +618,8 @@ PhiGD = (GiaBan + PhiShipBuyer - VoucherSeller) * 0.06
 \`\`\`
 
 Phân biệt rõ 2 cột voucher:
-• \`VoucherSeller\` — voucher mình tự chi
-• \`VoucherMall\` — voucher sàn tài trợ (chỉ track cho marketing analysis, không vào công thức GD)
+• \`VoucherSeller\` - voucher mình tự chi
+• \`VoucherMall\` - voucher sàn tài trợ (chỉ track cho marketing analysis, không vào công thức GD)
 
 Hoặc dùng [Tool tính phí sàn](/tools/tinh-phi-san) đã build sẵn công thức chuẩn.
 
@@ -629,9 +629,9 @@ Phí GD 6% trên ship buyer trả nghe như nhỏ, nhưng có thể đẩy break
 
 **Sản phẩm 300k, GM 50%, ship buyer trả 25k:**
 • Tính sai (không cộng ship): break-even ROAS = 1 ÷ (50% − 14% − 6% − 8%) = 1 ÷ 22% = 4.5x
-• Tính đúng (cộng ship vào base GD): phí GD thực 1.500đ thêm = 0.5% revenue → break-even ROAS = 1 ÷ 21.5% = 4.7x
+• Tính đúng (cộng ship vào base GD): phí GD thực 1.500đ thêm = 0.5% revenue -> break-even ROAS = 1 ÷ 21.5% = 4.7x
 
-Chênh lệch 0.2x ROAS — đủ để 1 campaign từ "có lãi" thành "đang lỗ" mà không biết.
+Chênh lệch 0.2x ROAS - đủ để 1 campaign từ "có lãi" thành "đang lỗ" mà không biết.
 
 ## Lời khuyên thực chiến
 
@@ -650,7 +650,7 @@ Lấy số phí GD chính xác cho từng đơn tại [Tool tính phí sàn](/to
   /* ───────────── Bài 6 ───────────── */
   {
     id: "blog-A6-dat-sai-nganh-cap-3",
-    title: "Đặt sai ngành cấp 3 — Mất 1–3% hoa hồng mỗi đơn mà không biết",
+    title: "Đặt sai ngành cấp 3 - Mất 1–3% hoa hồng mỗi đơn mà không biết",
     slug: "dat-sai-nganh-cap-3-mat-hoa-hong",
     excerpt:
       "Phí hoa hồng tính theo ngành cấp 3 (leaf category), không phải cấp 1. Đặt sai = bị áp nhầm mức phí cao hơn 1–3%. Hướng dẫn check và đổi ngành đúng.",
@@ -658,11 +658,11 @@ Lấy số phí GD chính xác cho từng đơn tại [Tool tính phí sàn](/to
     readTime: 5,
     publishedAt: "2026-05-10T13:30:00.000Z",
     featured: false,
-    seoTitle: "Đặt sai ngành cấp 3 trên Shopee/TikTok — Mất 1-3% hoa hồng",
+    seoTitle: "Đặt sai ngành cấp 3 trên Shopee/TikTok - Mất 1-3% hoa hồng",
     seoDescription:
       "Hướng dẫn check ngành cấp 3 đúng trên Seller Center Shopee và TikTok Shop. Top 5 ngành dễ đặt sai, cách yêu cầu sàn đổi lại, và case study mất tiền thật.",
     content: `
-Đây là một trong những "leak" lớn nhất mà tôi thường thấy ở các shop khi audit P&L — sản phẩm bị đặt sai ngành cấp 3, dẫn đến áp phí hoa hồng cao hơn 1–3% mỗi đơn. Nhân với volume hàng nghìn đơn/tháng = tốn hàng chục triệu vô lý.
+Đây là một trong những "leak" lớn nhất mà tôi thường thấy ở các shop khi audit P&L - sản phẩm bị đặt sai ngành cấp 3, dẫn đến áp phí hoa hồng cao hơn 1–3% mỗi đơn. Nhân với volume hàng nghìn đơn/tháng = tốn hàng chục triệu vô lý.
 
 ## Tại sao ngành cấp 3 quan trọng?
 
@@ -672,7 +672,7 @@ Cả Shopee và TikTok Shop đều có cấu trúc danh mục 3 cấp:
 **Cấp 2**: Trong Beauty có Skincare, Makeup, Haircare, Fragrance, ...
 **Cấp 3 (leaf)**: Trong Skincare có Sữa rửa mặt, Toner, Serum, Kem chống nắng, ...
 
-Phí hoa hồng được tính theo **ngành cấp 3** — không phải cấp 1. Mỗi cấp 3 có mức phí riêng. Trong cùng 1 cấp 1 (Beauty), phí cấp 3 có thể chênh 2–4%.
+Phí hoa hồng được tính theo **ngành cấp 3** - không phải cấp 1. Mỗi cấp 3 có mức phí riêng. Trong cùng 1 cấp 1 (Beauty), phí cấp 3 có thể chênh 2–4%.
 
 ## Ví dụ phí cấp 3 chênh lệch
 
@@ -692,29 +692,29 @@ Trong ngành Fashion Non-Mall:
 
 ## Top 5 ngành dễ đặt sai
 
-**1. Beauty — Skincare:** Serum / Essence / Toner / Sữa rửa mặt rất dễ confuse. Một số sản phẩm "ambiguous" (multi-function) cho phép đặt vào nhiều cấp 3 — chọn cấp có phí thấp nhất.
+**1. Beauty - Skincare:** Serum / Essence / Toner / Sữa rửa mặt rất dễ confuse. Một số sản phẩm "ambiguous" (multi-function) cho phép đặt vào nhiều cấp 3 - chọn cấp có phí thấp nhất.
 
-**2. Fashion — Áo:** "Áo phông" vs "Áo croptop" vs "Áo polo" có phí khác. Thiết kế áo overlap nhiều style.
+**2. Fashion - Áo:** "Áo phông" vs "Áo croptop" vs "Áo polo" có phí khác. Thiết kế áo overlap nhiều style.
 
 **3. Mother & Baby:** "Đồ chơi giáo dục" vs "Đồ chơi vận động" vs "Đồ học tập" có phí 12–15%.
 
-**4. Home & Living — Đồ trang trí:** "Đèn trang trí" vs "Đồ phong thuỷ" vs "Khung tranh" chênh 1–2%.
+**4. Home & Living - Đồ trang trí:** "Đèn trang trí" vs "Đồ phong thuỷ" vs "Khung tranh" chênh 1–2%.
 
-**5. Electronics — Phụ kiện:** "Cáp sạc" vs "Sạc dự phòng" vs "Phụ kiện máy tính" overlap nhiều, phí khác.
+**5. Electronics - Phụ kiện:** "Cáp sạc" vs "Sạc dự phòng" vs "Phụ kiện máy tính" overlap nhiều, phí khác.
 
 ## Cách check ngành cấp 3 hiện tại
 
 **Shopee Seller Center:**
 1. Vào "Quản lý sản phẩm"
 2. Click vào sản phẩm cần check
-3. Xem "Danh mục" — phải hiện đầy đủ 3 cấp (cấp 1 > cấp 2 > cấp 3)
-4. Nếu chỉ thấy 2 cấp → sản phẩm chưa được phân loại đúng cấp 3
+3. Xem "Danh mục" - phải hiện đầy đủ 3 cấp (cấp 1 > cấp 2 > cấp 3)
+4. Nếu chỉ thấy 2 cấp -> sản phẩm chưa được phân loại đúng cấp 3
 
 **TikTok Shop Seller Center:**
 1. Vào "Products"
 2. Mở từng sản phẩm
-3. Xem "Category" — phải có path đầy đủ 3 cấp
-4. Nếu category hiện "Other" hoặc cấp 1 generic → phí thường bị áp ở mức cao mặc định
+3. Xem "Category" - phải có path đầy đủ 3 cấp
+4. Nếu category hiện "Other" hoặc cấp 1 generic -> phí thường bị áp ở mức cao mặc định
 
 ## Cách phát hiện đang bị áp nhầm phí
 
@@ -727,7 +727,7 @@ Mở 1 đơn random trong Seller Center, xem "Phí hoa hồng" thực tế. Đ�
 • Chênh 0.5–1% = vấn đề
 
 **Method 3: So sánh với competitor**
-Tìm 3 shop bán cùng sản phẩm. Hỏi họ phí hoa hồng đang được áp (qua Cộng đồng Shopee Ads / Facebook group seller). Nếu shop bạn cao hơn → check ngành.
+Tìm 3 shop bán cùng sản phẩm. Hỏi họ phí hoa hồng đang được áp (qua Cộng đồng Shopee Ads / Facebook group seller). Nếu shop bạn cao hơn -> check ngành.
 
 ## Cách yêu cầu sàn đổi ngành
 
@@ -743,14 +743,14 @@ Tìm 3 shop bán cùng sản phẩm. Hỏi họ phí hoa hồng đang được �
 3. Submit for review
 4. Approval thường 24–48h
 
-**Lưu ý quan trọng:** Phí áp dụng từ thời điểm đổi ngành **được duyệt**. Phí trước đó bạn đã trả không được hoàn — nhưng nếu chứng minh được sàn đã misclassify (lỗi từ sàn, không phải bạn), có thể request hoàn về email support. Tỷ lệ thành công ~30%.
+**Lưu ý quan trọng:** Phí áp dụng từ thời điểm đổi ngành **được duyệt**. Phí trước đó bạn đã trả không được hoàn - nhưng nếu chứng minh được sàn đã misclassify (lỗi từ sàn, không phải bạn), có thể request hoàn về email support. Tỷ lệ thành công ~30%.
 
-## Case study — Mất tiền thật
+## Case study - Mất tiền thật
 
 Khách hàng tôi audit vào 06/2025 (Shopee Beauty shop):
 • 800 đơn/tháng × AOV 250k = GMV 200tr/tháng
 • Phí hoa hồng đang chịu: 14.5% (mức Serum)
-• Đúng phải là: 12.5% (Sữa rửa mặt + Cleanser — 60% sản phẩm shop là loại này)
+• Đúng phải là: 12.5% (Sữa rửa mặt + Cleanser - 60% sản phẩm shop là loại này)
 • Chênh: 2% × 200tr = 4 triệu/tháng
 • Trong 8 tháng trước khi phát hiện: mất ~32 triệu
 
@@ -768,7 +768,7 @@ Tôi khuyên client audit ngành mỗi 3 tháng:
 • Phí hoa hồng thực tế
 • Phí hoa hồng theo bảng
 
-**Bước 3**: Đánh dấu SKU có chênh lệch > 0.5% → priority đổi
+**Bước 3**: Đánh dấu SKU có chênh lệch > 0.5% -> priority đổi
 
 **Bước 4**: Đổi ngành theo thứ tự ưu tiên (SKU GMV cao trước)
 
@@ -778,26 +778,26 @@ Tôi khuyên client audit ngành mỗi 3 tháng:
 
 **1. Đặt vào cấp 1 hoặc cấp 2 generic.** Bị áp phí mặc định cao nhất của ngành cấp 1 đó.
 
-**2. Cố ý đặt sai để có phí thấp.** Sàn detect được → phạt nặng (giảm visibility, suspend shop). Không đáng risk.
+**2. Cố ý đặt sai để có phí thấp.** Sàn detect được -> phạt nặng (giảm visibility, suspend shop). Không đáng risk.
 
-**3. Đặt theo "khả năng tìm thấy" thay vì leaf chính xác.** Buyer tìm theo keyword chứ không theo category — đặt đúng category không ảnh hưởng search visibility.
+**3. Đặt theo "khả năng tìm thấy" thay vì leaf chính xác.** Buyer tìm theo keyword chứ không theo category - đặt đúng category không ảnh hưởng search visibility.
 
 **4. Không cập nhật khi sàn ra ngành cấp 3 mới.** Sàn thường xuyên cấu trúc lại categories. Sản phẩm cũ có thể đã có cấp 3 mới phù hợp hơn (phí thấp hơn).
 
 ## Lời khuyên thực chiến
 
-Audit ngành cấp 3 là việc rẻ nhất bạn có thể làm để tăng EBITDA. Không tốn thời gian build creative mới, không tốn ngân sách ads, không tốn nhân sự — chỉ cần 1-2 giờ research + đợi duyệt.
+Audit ngành cấp 3 là việc rẻ nhất bạn có thể làm để tăng EBITDA. Không tốn thời gian build creative mới, không tốn ngân sách ads, không tốn nhân sự - chỉ cần 1-2 giờ research + đợi duyệt.
 
 ROI thường thấy: shop GMV 500tr/tháng tiết kiệm được 3–8tr/tháng sau audit ngành. Với shop 2 tỷ/tháng = 15–30tr/tháng. Tích luỹ năm = 200–400tr.
 
-Lấy bảng phí ngành cấp 3 chuẩn cho TikTok và Shopee tại [Tool tính phí sàn](/tools/tinh-phi-san) — có search và filter theo ngành cụ thể.
+Lấy bảng phí ngành cấp 3 chuẩn cho TikTok và Shopee tại [Tool tính phí sàn](/tools/tinh-phi-san) - có search và filter theo ngành cụ thể.
 `,
   },
 
   /* ───────────── Bài 7 ───────────── */
   {
     id: "blog-A7-shop-moi-tiktok-vs-shopee",
-    title: "Shop mới 2026 — TikTok Shop hay Shopee bắt đầu trước? Quyết định theo ngành",
+    title: "Shop mới 2026 - TikTok Shop hay Shopee bắt đầu trước? Quyết định theo ngành",
     slug: "shop-moi-tiktok-vs-shopee-bat-dau-truoc",
     excerpt:
       "Seller mới 2026 thường confused: TikTok Shop hay Shopee trước? Phân tích 5 yếu tố: cost build, ROAS tự nhiên, ramp-up time, learning curve, ngành cụ thể.",
@@ -805,11 +805,11 @@ Lấy bảng phí ngành cấp 3 chuẩn cho TikTok và Shopee tại [Tool tính
     readTime: 7,
     publishedAt: "2026-05-10T14:00:00.000Z",
     featured: false,
-    seoTitle: "Shop mới 2026 — TikTok Shop hay Shopee nên bắt đầu trước?",
+    seoTitle: "Shop mới 2026 - TikTok Shop hay Shopee nên bắt đầu trước?",
     seoDescription:
       "So sánh chi tiết TikTok Shop vs Shopee cho seller mới 2026: cost build, ROAS tự nhiên, ramp-up time, learning curve, decision tree theo ngành.",
     content: `
-"Em mới mở shop, nên tập trung TikTok Shop hay Shopee trước?" — câu hỏi tôi nhận từ seller mới gần như mỗi tuần. Câu trả lời ngắn: tuỳ ngành và năng lực team. Bài viết này phân tích 5 yếu tố quyết định và đưa ra decision tree cụ thể.
+"Em mới mở shop, nên tập trung TikTok Shop hay Shopee trước?" - câu hỏi tôi nhận từ seller mới gần như mỗi tuần. Câu trả lời ngắn: tuỳ ngành và năng lực team. Bài viết này phân tích 5 yếu tố quyết định và đưa ra decision tree cụ thể.
 
 ## Khác biệt cốt lõi 2 platform
 
@@ -827,7 +827,7 @@ Lấy bảng phí ngành cấp 3 chuẩn cho TikTok và Shopee tại [Tool tính
 • Cần SEO product, voucher mix tốt
 • Phù hợp ngành "thực dụng": Electronics, Home & Living, Gia dụng, Sách
 
-## Yếu tố 1 — Cost build ban đầu
+## Yếu tố 1 - Cost build ban đầu
 
 **TikTok Shop:**
 • Content production: 5–15tr/tháng (KOL micro, KOC, hoặc team in-house)
@@ -841,13 +841,13 @@ Lấy bảng phí ngành cấp 3 chuẩn cho TikTok và Shopee tại [Tool tính
 • Ads search + discovery: 5–15tr/tháng minimum
 • **Tổng minimum:** 8–20tr/tháng
 
-→ **Shopee cost lower** để bắt đầu. Nếu vốn dưới 50tr, ưu tiên Shopee.
+-> **Shopee cost lower** để bắt đầu. Nếu vốn dưới 50tr, ưu tiên Shopee.
 
-## Yếu tố 2 — Ramp-up time
+## Yếu tố 2 - Ramp-up time
 
 **TikTok Shop:**
 • Tháng 1–2: build content + test, doanh thu thấp (5–20tr)
-• Tháng 3–4: bắt đầu có content "trúng" → spike
+• Tháng 3–4: bắt đầu có content "trúng" -> spike
 • Tháng 5–6: stable nếu duy trì content + ads
 • **Time to break-even:** 3–6 tháng
 
@@ -857,25 +857,25 @@ Lấy bảng phí ngành cấp 3 chuẩn cho TikTok và Shopee tại [Tool tính
 • Tháng 4–6: scale dần với voucher + ads
 • **Time to break-even:** 4–8 tháng
 
-→ **TikTok ramp-up nhanh hơn nếu có content tốt.** Shopee chậm hơn nhưng predictable hơn.
+-> **TikTok ramp-up nhanh hơn nếu có content tốt.** Shopee chậm hơn nhưng predictable hơn.
 
-## Yếu tố 3 — Learning curve
+## Yếu tố 3 - Learning curve
 
 **TikTok Shop:**
-• Học content (hook, story, CTA) — khó nếu chưa có background marketing
+• Học content (hook, story, CTA) - khó nếu chưa có background marketing
 • Học data ads phức tạp hơn (interest, behavior targeting)
-• Live commerce — cần host charisma + script
+• Live commerce - cần host charisma + script
 • **Difficulty:** 7/10
 
 **Shopee:**
-• Học listing SEO (title, description, hashtag) — ai cũng có thể học
+• Học listing SEO (title, description, hashtag) - ai cũng có thể học
 • Ads dashboard đơn giản hơn (search, discovery, GMV Max)
 • Voucher logic + campaign mùa
 • **Difficulty:** 5/10
 
-→ **Shopee dễ học hơn cho người mới.** Người background bán hàng truyền thống học Shopee nhanh hơn.
+-> **Shopee dễ học hơn cho người mới.** Người background bán hàng truyền thống học Shopee nhanh hơn.
 
-## Yếu tố 4 — ROAS tự nhiên
+## Yếu tố 4 - ROAS tự nhiên
 
 **TikTok Shop:**
 • Beauty: ROAS 6–12x (nếu content tốt)
@@ -889,21 +889,21 @@ Lấy bảng phí ngành cấp 3 chuẩn cho TikTok và Shopee tại [Tool tính
 • Electronics: 5–8x (Shopee có ưu thế)
 • Home & Living: 4–7x
 
-→ **TikTok ROAS cao hơn Beauty/Fashion. Shopee ROAS cao hơn Electronics/Home.**
+-> **TikTok ROAS cao hơn Beauty/Fashion. Shopee ROAS cao hơn Electronics/Home.**
 
-## Yếu tố 5 — Risk và sustainability
+## Yếu tố 5 - Risk và sustainability
 
 **TikTok Shop risk:**
-• Content viral phụ thuộc thuật toán → có thể "tắt" đột ngột
-• Algorithm thay đổi 1–2 lần/năm → strategy có thể obsolete
+• Content viral phụ thuộc thuật toán -> có thể "tắt" đột ngột
+• Algorithm thay đổi 1–2 lần/năm -> strategy có thể obsolete
 • Cạnh tranh content tăng nhanh
 
 **Shopee risk:**
 • Phí tăng đều 1–2 lần/năm
 • Phải compete giá với shop khác nhiều hơn
-• Search visibility phụ thuộc review base — chậm build
+• Search visibility phụ thuộc review base - chậm build
 
-→ **Shopee predictable hơn, TikTok upside lớn hơn nhưng volatile.**
+-> **Shopee predictable hơn, TikTok upside lớn hơn nhưng volatile.**
 
 ## Decision Tree theo ngành
 
@@ -935,13 +935,13 @@ Lấy bảng phí ngành cấp 3 chuẩn cho TikTok và Shopee tại [Tool tính
 • Test xem platform nào fit ngành
 • Risk: overhead lớn, dễ fail cả 2
 
-→ **Single platform first an toàn hơn 80% case.**
+-> **Single platform first an toàn hơn 80% case.**
 
 ## Sai lầm phổ biến của shop mới
 
 **1. Bắt đầu cả 2 platform cùng lúc với budget hạn chế.** Kết quả: cả 2 đều underfund, fail cả 2.
 
-**2. Chọn platform theo "trend" thay vì theo ngành.** Beauty seller bắt đầu Shopee vì "ai cũng nói Shopee dễ" → chậm 6 tháng so với TikTok.
+**2. Chọn platform theo "trend" thay vì theo ngành.** Beauty seller bắt đầu Shopee vì "ai cũng nói Shopee dễ" -> chậm 6 tháng so với TikTok.
 
 **3. Expect ROAS cao ngay tháng 1.** Cả 2 platform đều cần 2–3 tháng learning. Tháng 1 lỗ là bình thường.
 
@@ -959,7 +959,7 @@ Lấy bảng phí ngành cấp 3 chuẩn cho TikTok và Shopee tại [Tool tính
 
 **Tháng 5**: Build product line 2–3 SKU bổ trợ. Test cross-sell và bundle.
 
-**Tháng 6**: Đánh giá lại — nên expand sang platform thứ 2 chưa? Hire fulltime team chưa?
+**Tháng 6**: Đánh giá lại - nên expand sang platform thứ 2 chưa? Hire fulltime team chưa?
 
 ## Lời khuyên thực chiến
 
@@ -967,7 +967,7 @@ Lấy bảng phí ngành cấp 3 chuẩn cho TikTok và Shopee tại [Tool tính
 
 **2. Vốn ban đầu phải đủ 3–6 tháng burn.** Đa số shop fail vì hết vốn ở tháng 4–5 khi chưa break-even.
 
-**3. Track unit economics từ ngày 1.** Profit/đơn, CPA, CM% — không track = mù dữ liệu, scale lỗ.
+**3. Track unit economics từ ngày 1.** Profit/đơn, CPA, CM% - không track = mù dữ liệu, scale lỗ.
 
 **4. Hire mentor hoặc tham gia khoá học thực chiến.** Học từ sai lầm người khác rẻ hơn nhiều so với tự học.
 
@@ -978,17 +978,17 @@ Tính chi phí build shop trên từng platform tại [Mẫu P&L Ecom](/tools/pn
   /* ───────────── Bài 8 ───────────── */
   {
     id: "blog-A8-shopee-sls-vs-spx",
-    title: "Shopee SPX Express vs đối tác giao hàng — Chi phí ship thực tế cho seller 2026",
+    title: "Shopee SPX Express vs đối tác giao hàng - Chi phí ship thực tế cho seller 2026",
     slug: "shopee-spx-vs-doi-tac-giao-hang",
     excerpt:
-      "Bảng phí ship Shopee SPX 2026 theo trọng lượng và khoảng cách. So sánh chi phí với GHTK, GHN, J&T — khi nào chọn SPX vs đối tác khác?",
+      "Bảng phí ship Shopee SPX 2026 theo trọng lượng và khoảng cách. So sánh chi phí với GHTK, GHN, J&T - khi nào chọn SPX vs đối tác khác?",
     category: "shopee",
     readTime: 6,
     publishedAt: "2026-05-10T14:30:00.000Z",
     featured: false,
-    seoTitle: "Shopee SPX vs GHTK GHN J&T 2026 — Phí ship thực tế cho seller",
+    seoTitle: "Shopee SPX vs GHTK GHN J&T 2026 - Phí ship thực tế cho seller",
     seoDescription:
-      "Bảng phí ship Shopee SPX Express 2026 theo trọng lượng + khoảng cách. So sánh GHTK, GHN, J&T — khi nào nên dùng SPX vs đối tác bên ngoài.",
+      "Bảng phí ship Shopee SPX Express 2026 theo trọng lượng + khoảng cách. So sánh GHTK, GHN, J&T - khi nào nên dùng SPX vs đối tác bên ngoài.",
     content: `
 SPX Express là đối tác giao hàng chính của Shopee, ngày càng được Shopee push mạnh với ưu đãi và priority. Nhưng SPX có thực sự rẻ nhất cho seller? Bài viết này so sánh phí thực tế với GHTK, GHN, J&T và phân tích khi nào chọn SPX.
 
@@ -1035,7 +1035,7 @@ SPX Express là đối tác giao hàng chính của Shopee, ngày càng được
 • Liên miền < 1kg: 38.000đ
 • **Đặc điểm:** COD tốt, mạng lưới rộng
 
-→ **SPX cạnh tranh nhất cho buyer trong app Shopee.** Nhưng nếu seller bán đa kênh (Shopee + TikTok + Tiki), GHN/GHTK linh hoạt hơn.
+-> **SPX cạnh tranh nhất cho buyer trong app Shopee.** Nhưng nếu seller bán đa kênh (Shopee + TikTok + Tiki), GHN/GHTK linh hoạt hơn.
 
 ## Khi nào nên chọn SPX?
 
@@ -1075,7 +1075,7 @@ Mặc dù phí ship là **buyer trả** (không phải seller chi), nó vẫn �
 
 **AOV 100–300k:**
 • SPX tốt cho 90% case
-• Test thử buyer trả ship vs seller absorb ship → so CVR
+• Test thử buyer trả ship vs seller absorb ship -> so CVR
 
 **AOV 300k–1tr:**
 • SPX hoặc GHN đều OK
@@ -1089,11 +1089,11 @@ Mặc dù phí ship là **buyer trả** (không phải seller chi), nó vẫn �
 
 **1. Free ship cho mọi đơn để tăng CVR.** Margin biến mất. Tốt hơn là dùng voucher freeship targeted (đơn đầu, ngày sale).
 
-**2. Đặt phí ship cao để buyer "thấy đỡ đắt".** Phản tác dụng — buyer cộng tổng (giá + ship) trước khi quyết.
+**2. Đặt phí ship cao để buyer "thấy đỡ đắt".** Phản tác dụng - buyer cộng tổng (giá + ship) trước khi quyết.
 
 **3. Không track shipping ROI.** Shop dùng GHTK 5 năm không bao giờ check rate mới. GHN/SPX có thể đã rẻ hơn 15%.
 
-**4. Tính ship cố định cho mọi vùng.** Buyer xa miền chịu ship cao hơn → margin từ vùng xa thấp hơn. Cần track theo vùng.
+**4. Tính ship cố định cho mọi vùng.** Buyer xa miền chịu ship cao hơn -> margin từ vùng xa thấp hơn. Cần track theo vùng.
 
 ## Tip thực chiến tối ưu chi phí ship
 
@@ -1107,24 +1107,24 @@ Mặc dù phí ship là **buyer trả** (không phải seller chi), nó vẫn �
 
 ## Lời khuyên thực chiến
 
-Phí ship không phải "phải làm sao thấp nhất" — quan trọng là **"buyer thấy hợp lý + shop không lỗ"**. SPX không nhất thiết là tối ưu cho mọi shop. Audit lại mỗi quý dựa trên volume, AOV, ngành.
+Phí ship không phải "phải làm sao thấp nhất" - quan trọng là **"buyer thấy hợp lý + shop không lỗ"**. SPX không nhất thiết là tối ưu cho mọi shop. Audit lại mỗi quý dựa trên volume, AOV, ngành.
 
-Trong P&L, phí ship buyer trả tăng phí GD 6% → tăng tổng phí sàn 0.3–0.5%. Đừng quên factor này khi tính break-even ROAS — input "phí ship buyer trả TB/đơn" tại [Mẫu P&L Ecom](/tools/pnl-ecom) để tính chuẩn.
+Trong P&L, phí ship buyer trả tăng phí GD 6% -> tăng tổng phí sàn 0.3–0.5%. Đừng quên factor này khi tính break-even ROAS - input "phí ship buyer trả TB/đơn" tại [Mẫu P&L Ecom](/tools/pnl-ecom) để tính chuẩn.
 `,
   },
 
   /* ───────────── Bài 9 ───────────── */
   {
     id: "blog-A9-tiktok-live-commerce-fee",
-    title: "TikTok Shop Live Commerce — Phí hoa hồng có khác feed/search? Phân tích 2026",
+    title: "TikTok Shop Live Commerce - Phí hoa hồng có khác feed/search? Phân tích 2026",
     slug: "tiktok-shop-live-commerce-phi-hoa-hong",
     excerpt:
-      "Live commerce trên TikTok Shop có phí hoa hồng giống feed/search — không có discount riêng. Nhưng ROAS organic và conversion rate khác biệt rất lớn. Phân tích đầy đủ.",
+      "Live commerce trên TikTok Shop có phí hoa hồng giống feed/search - không có discount riêng. Nhưng ROAS organic và conversion rate khác biệt rất lớn. Phân tích đầy đủ.",
     category: "tiktok",
     readTime: 7,
     publishedAt: "2026-05-10T15:00:00.000Z",
     featured: false,
-    seoTitle: "TikTok Live Commerce 2026 — Phí hoa hồng + ROAS organic",
+    seoTitle: "TikTok Live Commerce 2026 - Phí hoa hồng + ROAS organic",
     seoDescription:
       "Phí hoa hồng live commerce TikTok Shop giống feed/search nhưng ROAS organic 2-3x cao hơn. Phân tích cấu trúc phí, lợi thế live, và benchmark ngành.",
     content: `
@@ -1139,7 +1139,7 @@ TikTok Shop không có bảng phí riêng cho live. Phí hoa hồng tính theo n
 • F&B Non-Mall: 11.5%
 • ...
 
-Cộng phí giao dịch 6% và phí cơ sở hạ tầng 3.000đ/đơn — y hệt feed.
+Cộng phí giao dịch 6% và phí cơ sở hạ tầng 3.000đ/đơn - y hệt feed.
 
 **Nhưng có 3 chi phí thêm khi live:**
 
@@ -1166,9 +1166,9 @@ Live có "social proof" thực thời gian: nghìn người xem cùng lúc, comm
 Live host có thể upsell, bundle, recommend complementary products tại chỗ. Buyer ở trạng thái mua hàng cảm xúc.
 
 **3. Volume burst lớn.**
-1 live 2h có thể đẩy 500–2.000 đơn → khai thác thế mạnh "moment marketing". Ngày thường feed/search chỉ đẩy 50–200 đơn.
+1 live 2h có thể đẩy 500–2.000 đơn -> khai thác thế mạnh "moment marketing". Ngày thường feed/search chỉ đẩy 50–200 đơn.
 
-## Cấu trúc P&L Live Commerce — Ví dụ thực tế
+## Cấu trúc P&L Live Commerce - Ví dụ thực tế
 
 Live 2h Beauty, 1.000 đơn, AOV 280k = GMV 280tr:
 
@@ -1189,13 +1189,13 @@ So với feed/search cùng GMV (giả sử 1.000 đơn):
 • Có ads spend cao hơn (50–80tr cho 1.000 đơn)
 • Profit thường: 280tr − 200tr (chi phí + ads) = 80tr
 
-→ **Feed/search profit cao hơn per đơn** nếu có thể đạt cùng volume. Nhưng live có lợi thế **đạt volume nhanh hơn nhiều**.
+-> **Feed/search profit cao hơn per đơn** nếu có thể đạt cùng volume. Nhưng live có lợi thế **đạt volume nhanh hơn nhiều**.
 
 ## Khi nào nên ưu tiên Live Commerce?
 
 **1. Sản phẩm có "wow factor" hoặc demo được.** Beauty (test trên da), Fashion (try-on), F&B (taste test) phù hợp live nhất.
 
-**2. Sản phẩm có "decision urgency".** Limited edition, new launch, mùa sale — buyer mua nhanh khi có scarcity.
+**2. Sản phẩm có "decision urgency".** Limited edition, new launch, mùa sale - buyer mua nhanh khi có scarcity.
 
 **3. Brand muốn build cộng đồng + repeat buyer.** Live tạo connection cá nhân với buyer mạnh hơn ads.
 
@@ -1211,23 +1211,23 @@ So với feed/search cùng GMV (giả sử 1.000 đơn):
 
 **4. Vốn dưới 100tr/tháng.** Live cần invest content + ads boost + voucher = chi phí cao tối thiểu 30–50tr.
 
-## Tối ưu Live Commerce — 7 nguyên tắc
+## Tối ưu Live Commerce - 7 nguyên tắc
 
 **1. Live cùng giờ mỗi tuần (consistency).** Buyer build thói quen quay lại.
 
-**2. Setup voucher exclusive chỉ live.** Code chỉ active trong giờ live → chốt nhanh.
+**2. Setup voucher exclusive chỉ live.** Code chỉ active trong giờ live -> chốt nhanh.
 
 **3. Bundle 2–3 sản phẩm với discount nhẹ.** AOV tăng 40–60%.
 
-**4. Replay sau live tận dụng tiếp.** TikTok cho replay clip có engagement → continue chốt đơn 24–48h sau.
+**4. Replay sau live tận dụng tiếp.** TikTok cho replay clip có engagement -> continue chốt đơn 24–48h sau.
 
-**5. Track real-time CPM, CTR, CVR.** Không chỉ doanh thu — adjust trong khi live.
+**5. Track real-time CPM, CTR, CVR.** Không chỉ doanh thu - adjust trong khi live.
 
-**6. Train host về objection handling.** "Sản phẩm này thực ra rẻ hơn trên Shopee" → host xử lý thế nào?
+**6. Train host về objection handling.** "Sản phẩm này thực ra rẻ hơn trên Shopee" -> host xử lý thế nào?
 
 **7. Diversify host, không depend 1 người.** Risk cao nếu host nghỉ/đột xuất.
 
-## Tính ROAS Live Commerce — Cách đúng
+## Tính ROAS Live Commerce - Cách đúng
 
 Nhiều shop tính ROAS live sai vì chỉ track ads spend, quên affiliate commission và voucher live.
 
@@ -1247,7 +1247,7 @@ Khác hoàn toàn ROAS "trên giấy" 280/1.5 = 187x (vô nghĩa).
 
 **1. Tính profit chỉ trên ads spend.** Quên affiliate commission cho creator.
 
-**2. Voucher live quá deep (>20%).** Buyer biết shop sẽ giảm lần sau → đợi chứ không mua.
+**2. Voucher live quá deep (>20%).** Buyer biết shop sẽ giảm lần sau -> đợi chứ không mua.
 
 **3. Live mỗi ngày không nghỉ.** Burnout host, content lặp, audience chán.
 
@@ -1255,7 +1255,7 @@ Khác hoàn toàn ROAS "trên giấy" 280/1.5 = 187x (vô nghĩa).
 
 **5. Không track repeat buyer từ live.** Live attract buyer xem live, không phải buyer chất lượng. Repeat rate live thường thấp hơn search 30–50%.
 
-## Benchmark ngành — Live Commerce 2026
+## Benchmark ngành - Live Commerce 2026
 
 **Beauty:**
 • ROAS organic: 8–15x
@@ -1279,7 +1279,7 @@ Khác hoàn toàn ROAS "trên giấy" 280/1.5 = 187x (vô nghĩa).
 
 ## Lời khuyên thực chiến
 
-Live commerce là "high-risk high-reward". Đầu tư đúng cách (host tốt, content chuẩn, voucher hợp lý) → upside cực lớn. Đầu tư ẩu → đốt tiền nhanh.
+Live commerce là "high-risk high-reward". Đầu tư đúng cách (host tốt, content chuẩn, voucher hợp lý) -> upside cực lớn. Đầu tư ẩu -> đốt tiền nhanh.
 
 **Thứ tự ưu tiên cho shop mới làm live:**
 1. Build content TikTok organic 2–3 tháng trước
@@ -1288,22 +1288,22 @@ Live commerce là "high-risk high-reward". Đầu tư đúng cách (host tốt, 
 4. Scale lên 2–3 lần/tuần
 5. Hire KOC affiliate khi đã có format ổn định
 
-Tính cost cho live commerce với cấu trúc đầy đủ tại [Mẫu P&L Ecom](/tools/pnl-ecom) — input affiliate vào "Marketing khác" và voucher vào "Voucher seller %".
+Tính cost cho live commerce với cấu trúc đầy đủ tại [Mẫu P&L Ecom](/tools/pnl-ecom) - input affiliate vào "Marketing khác" và voucher vào "Voucher seller %".
 `,
   },
 
   /* ───────────── Bài 10 ───────────── */
   {
     id: "blog-A10-cap-nhat-chinh-sach-shopee-tiktok-h1-2026",
-    title: "Cập nhật chính sách Shopee/TikTok 6 tháng đầu 2026 — Checklist seller phải biết",
+    title: "Cập nhật chính sách Shopee/TikTok 6 tháng đầu 2026 - Checklist seller phải biết",
     slug: "cap-nhat-chinh-sach-shopee-tiktok-h1-2026",
     excerpt:
-      "Tổng hợp tất cả thay đổi quan trọng của Shopee và TikTok Shop nửa đầu 2026: phí, voucher, chính sách hoàn hàng, bảo vệ seller, freeship — checklist 12 mục.",
+      "Tổng hợp tất cả thay đổi quan trọng của Shopee và TikTok Shop nửa đầu 2026: phí, voucher, chính sách hoàn hàng, bảo vệ seller, freeship - checklist 12 mục.",
     category: "ecom",
     readTime: 8,
     publishedAt: "2026-05-10T15:30:00.000Z",
     featured: true,
-    seoTitle: "Cập nhật Shopee TikTok H1 2026 — Checklist 12 thay đổi seller phải biết",
+    seoTitle: "Cập nhật Shopee TikTok H1 2026 - Checklist 12 thay đổi seller phải biết",
     seoDescription:
       "Toàn bộ chính sách Shopee và TikTok Shop thay đổi nửa đầu 2026: phí, voucher, hoàn hàng, freeship, bảo vệ seller. Checklist 12 mục + impact P&L cho seller.",
     content: `
@@ -1315,7 +1315,7 @@ Nửa đầu 2026 chứng kiến nhiều đợt cập nhật chính sách lớn 
 
 **Impact:** Margin shop trung bình giảm 1–1.5%. Beauty Mall ảnh hưởng nặng nhất.
 
-**Action:** Audit lại P&L với phí mới. Nếu Contribution Margin < 15% sau update → xem xét tăng giá hoặc cắt SKU lỗ.
+**Action:** Audit lại P&L với phí mới. Nếu Contribution Margin < 15% sau update -> xem xét tăng giá hoặc cắt SKU lỗ.
 
 ## 2. Phí cơ sở hạ tầng (CSHT) áp dụng 100% đơn (Q1/2026)
 
@@ -1327,7 +1327,7 @@ Nửa đầu 2026 chứng kiến nhiều đợt cập nhật chính sách lớn 
 
 ## 3. Voucher Extra Plus nâng cap lên 80.000đ (TikTok 03/2026)
 
-**Thay đổi:** Cap Voucher Extra Plus tăng từ 70.000đ → 80.000đ. Phí giữ 5.5%.
+**Thay đổi:** Cap Voucher Extra Plus tăng từ 70.000đ -> 80.000đ. Phí giữ 5.5%.
 
 **Impact:** Tích cực cho shop có AOV cao (>1.5tr). Tiêu cực không.
 
@@ -1335,11 +1335,11 @@ Nửa đầu 2026 chứng kiến nhiều đợt cập nhật chính sách lớn 
 
 ## 4. SFR (Bồi hoàn vận chuyển) ra mắt rộng rãi (TikTok 02/2026)
 
-**Thay đổi:** SFR áp dụng toàn shop với phí 1.620đ/đơn — opt-in.
+**Thay đổi:** SFR áp dụng toàn shop với phí 1.620đ/đơn - opt-in.
 
 **Impact:** Shop return rate > 3% có thể tiết kiệm 50–70% chi phí xử lý hoàn.
 
-**Action:** Đo return rate 30 ngày, nếu > 3% → bật SFR.
+**Action:** Đo return rate 30 ngày, nếu > 3% -> bật SFR.
 
 ## 5. Voucher Mall freeship áp dụng SPX độc quyền (Shopee 04/2026)
 
@@ -1357,15 +1357,15 @@ Nửa đầu 2026 chứng kiến nhiều đợt cập nhật chính sách lớn 
 
 **Action:** Xây dựng quy trình hoàn hàng nghiêm hơn, prep buffer cash flow.
 
-## 7. Phí ship liên miền tăng 5–10% (SPX, GHN — Q2/2026)
+## 7. Phí ship liên miền tăng 5–10% (SPX, GHN - Q2/2026)
 
 **Thay đổi:** Phí ship liên miền tăng 5–10% do giá xăng và logistics.
 
-**Impact:** Buyer xa miền chịu phí cao hơn → CVR giảm 5–10% ở vùng xa.
+**Impact:** Buyer xa miền chịu phí cao hơn -> CVR giảm 5–10% ở vùng xa.
 
 **Action:** Xem xét open kho thứ 2 ở vùng xa. Hoặc absorb phí ship cho buyer đầu lần.
 
-## 8. Bảo vệ seller — Mediation system mới (Shopee 03/2026)
+## 8. Bảo vệ seller - Mediation system mới (Shopee 03/2026)
 
 **Thay đổi:** Khi dispute hoàn hàng, có mediator độc lập review (không tự động favor buyer).
 
@@ -1393,7 +1393,7 @@ Nửa đầu 2026 chứng kiến nhiều đợt cập nhật chính sách lớn 
 
 **Thay đổi:** 1 Shopee Coin = 100đ (trước 200đ). Buyer cần 2x coins để claim cùng giá trị voucher.
 
-**Impact:** Voucher Shopee Coins ít hấp dẫn hơn → seller nên dùng voucher seller riêng.
+**Impact:** Voucher Shopee Coins ít hấp dẫn hơn -> seller nên dùng voucher seller riêng.
 
 **Action:** Tăng voucher Seller direct (1–3% giá bán) thay vì depend voucher Coins.
 
@@ -1412,7 +1412,7 @@ Tổng tác động 12 thay đổi vào P&L shop trung bình:
 **Tiêu cực:**
 • Phí hoa hồng +1% revenue
 • Phí ship liên miền nhẹ +0.3%
-• Return rate có thể tăng → cost xử lý hoàn +0.5%
+• Return rate có thể tăng -> cost xử lý hoàn +0.5%
 • Tổng tiêu cực: ~1.8% revenue
 
 **Tích cực (nếu khai thác đúng):**
@@ -1421,7 +1421,7 @@ Tổng tác động 12 thay đổi vào P&L shop trung bình:
 • Mediation system bảo vệ seller: +0.3%
 • Tổng tích cực: ~1.8% revenue
 
-→ **Net impact gần như zero nếu adopt nhanh các tính năng mới.** Shop chậm adopt chịu net negative 1.5–2%.
+-> **Net impact gần như zero nếu adopt nhanh các tính năng mới.** Shop chậm adopt chịu net negative 1.5–2%.
 
 ## Action plan 30 ngày cho seller
 
@@ -1442,7 +1442,7 @@ Tổng tác động 12 thay đổi vào P&L shop trung bình:
 
 **Tuần 4: Đo lường + adjust**
 • Reconcile P&L tháng đầu sau update
-• So với P&L tháng trước → identify line items thay đổi
+• So với P&L tháng trước -> identify line items thay đổi
 • Điều chỉnh ads target dựa trên break-even mới
 
 ## Lời khuyên thực chiến
