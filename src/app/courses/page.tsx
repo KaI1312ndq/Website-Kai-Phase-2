@@ -27,6 +27,7 @@ type Course = {
   title: string;
   subtitle: string;
   format: "Cohort" | "Self-paced" | "Lớp offline" | "Workshop";
+  category: "offline" | "online";
   duration: string;
   price: string;
   audience: string;
@@ -45,6 +46,7 @@ const COURSES: Course[] = [
     title: "Khoá Ecom Foundation",
     subtitle: "Cohort 8 tuần — từ 0 đến Marketing Manager Ecom",
     format: "Cohort",
+    category: "offline",
     duration: "8 tuần · live online + recording",
     price: "Cohort 1 — apply để biết giá",
     audience: "Sinh viên năm cuối + new joiner muốn vào Marketing/Ecom + chủ shop nhỏ tự chạy",
@@ -65,6 +67,7 @@ const COURSES: Course[] = [
     title: "TikTok Ads từ A→Z",
     subtitle: "Mini course self-paced cho junior marketer",
     format: "Self-paced",
+    category: "online",
     duration: "15 video · ~4-6h tổng",
     price: "499.000đ",
     audience: "Marketer fresher + chủ shop muốn tự chạy TikTok Ads không qua agency",
@@ -85,6 +88,7 @@ const COURSES: Course[] = [
     title: "Shopee Performance trong 14 ngày",
     subtitle: "Mini course self-paced",
     format: "Self-paced",
+    category: "online",
     duration: "12 video · ~4h",
     price: "399.000đ",
     audience: "Seller mới + Marketing assistant đang quản gian hàng Shopee",
@@ -105,6 +109,7 @@ const COURSES: Course[] = [
     title: "P&L gian hàng cho người mới",
     subtitle: "Mini course self-paced — đọc + làm được P&L",
     format: "Self-paced",
+    category: "online",
     duration: "8 video · ~2h",
     price: "299.000đ",
     audience: "Marketer + seller mới — chưa biết đọc/làm P&L mà cần để đàm phán KPI",
@@ -125,6 +130,7 @@ const COURSES: Course[] = [
     title: "MBTI x Career — Chọn nghề Marketing đúng",
     subtitle: "Mini course self-paced cho sinh viên + new grad",
     format: "Self-paced",
+    category: "online",
     duration: "10 video · ~3h",
     price: "299.000đ",
     audience: "Sinh viên năm 3-4 + new grad chưa biết chọn nhánh nào trong Marketing/Ecom",
@@ -145,6 +151,7 @@ const COURSES: Course[] = [
     title: "Workshop Offline — Ecom Foundation 1 ngày",
     subtitle: "Lớp hybrid 6h tại Hà Nội cho sinh viên + chủ shop",
     format: "Lớp offline",
+    category: "offline",
     duration: "6 giờ · 1 ngày · max 30 người",
     price: "990.000đ (early bird) — 1.500.000đ",
     audience: "Sinh viên Hà Nội + chủ shop nhỏ muốn networking + học nhanh trong 1 ngày",
@@ -241,33 +248,36 @@ export default function CoursesPage() {
               Cohort Ecom Foundation 8 tuần + mini courses self-paced + workshop offline tại Hà Nội. Thiết kế cho <strong className="text-white">sinh viên năm cuối / new joiner / junior marketer</strong> muốn vào ngành Marketing/Ecom Việt Nam một cách đúng đắn.
             </p>
             <div className="flex flex-wrap gap-3">
-              <a href="#courses" className="px-6 py-3 rounded-xl text-[0.95rem] font-bold text-white" style={{ background: "var(--grad-primary)", boxShadow: "0 8px 24px rgba(20,110,245,0.35)" }}>
-                Xem toàn bộ khoá học →
+              <a href="#offline" className="px-6 py-3 rounded-xl text-[0.95rem] font-bold text-white" style={{ background: "var(--grad-primary)", boxShadow: "0 8px 24px rgba(20,110,245,0.35)" }}>
+                Cohort & Workshop →
               </a>
-              <Link href="/quiz/huong-nghiep-marketing" className="px-6 py-3 rounded-xl text-[0.95rem] font-bold" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid var(--line)", color: "white" }}>
+              <a href="#online" className="px-6 py-3 rounded-xl text-[0.95rem] font-bold" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid var(--line)", color: "white" }}>
+                Mini courses online
+              </a>
+              <Link href="/quiz/huong-nghiep-marketing" className="px-6 py-3 rounded-xl text-[0.95rem] font-bold" style={{ background: "transparent", color: "#7da9ff", textDecoration: "underline" }}>
                 Test hướng nghiệp trước
               </Link>
             </div>
           </div>
         </section>
 
-        {/* COURSES GRID */}
-        <section id="courses" className="relative">
+        {/* OFFLINE / HYBRID — flagship cohort + workshop */}
+        <section id="offline" className="relative">
           <div className="max-w-[1200px] mx-auto px-6 md:px-10 py-16 md:py-20">
             <Reveal>
               <div className="flex flex-wrap items-end justify-between gap-4 mb-10">
                 <div>
-                  <div className="section-tag">Khoá học hiện có</div>
-                  <h2 className="t-h2 text-white">{COURSES.length} chương trình · {COURSES.filter((c) => c.status === "available").length} đang mở</h2>
+                  <div className="section-tag">Offline · Hybrid</div>
+                  <h2 className="t-h2 text-white leading-tight">Cohort 8 tuần & Workshop trực tiếp</h2>
+                  <p className="t-body mt-2 max-w-[600px]" style={{ color: "var(--ink-mute)" }}>
+                    Chương trình premium có live session, mentorship, community + final project. Phù hợp người commit thời gian + muốn outcome cụ thể trong 1-2 tháng.
+                  </p>
                 </div>
-                <p className="t-body max-w-[420px]" style={{ color: "var(--ink-mute)" }}>
-                  Không chắc nên học cái nào? Làm <Link href="/quiz/huong-nghiep-marketing" className="underline" style={{ color: "#7da9ff" }}>Test hướng nghiệp</Link> trước — Quảng đề xuất khoá phù hợp.
-                </p>
               </div>
             </Reveal>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-              {COURSES.map((c) => {
+              {COURSES.filter((c) => c.category === "offline").map((c) => {
                 const status = STATUS_META[c.status];
                 const isAvailable = c.status === "available";
                 return (
@@ -326,6 +336,98 @@ export default function CoursesPage() {
                       ) : (
                         <a
                           href={`#waitlist`}
+                          className="text-[0.85rem] font-bold px-4 py-2.5 rounded-lg"
+                          style={{ background: `${c.color}15`, border: `1px solid ${c.color}40`, color: c.color }}
+                        >
+                          {c.cta}
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* ONLINE · Self-paced mini courses */}
+        <section id="online" className="relative border-t" style={{ borderColor: "var(--line)" }}>
+          <div className="max-w-[1200px] mx-auto px-6 md:px-10 py-16 md:py-20">
+            <Reveal>
+              <div className="flex flex-wrap items-end justify-between gap-4 mb-10">
+                <div>
+                  <div className="section-tag">Online · Self-paced</div>
+                  <h2 className="t-h2 text-white leading-tight">Mini courses tự học · 299k—499k</h2>
+                  <p className="t-body mt-2 max-w-[600px]" style={{ color: "var(--ink-mute)" }}>
+                    Video tự học, không deadline, mua 1 lần dùng mãi. Phù hợp unblock 1 kỹ năng cụ thể (TikTok Ads, Shopee, P&L) trong vài giờ.
+                  </p>
+                </div>
+                <Link href="/quiz/huong-nghiep-marketing" className="text-[0.85rem] font-semibold inline-flex items-center gap-1.5" style={{ color: "#7da9ff" }}>
+                  Test hướng nghiệp gợi ý khoá →
+                </Link>
+              </div>
+            </Reveal>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+              {COURSES.filter((c) => c.category === "online").map((c) => {
+                const status = STATUS_META[c.status];
+                const isAvailable = c.status === "available";
+                return (
+                  <div
+                    key={c.id}
+                    className="rounded-2xl p-6 md:p-7 flex flex-col"
+                    style={{
+                      background: isAvailable ? `${c.color}08` : "rgba(255,255,255,0.025)",
+                      border: `1px solid ${isAvailable ? c.color + "55" : "var(--line)"}`,
+                      boxShadow: isAvailable ? `0 8px 30px ${c.color}15` : "none",
+                    }}
+                  >
+                    <div className="flex items-start justify-between gap-3 mb-4">
+                      <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: `${c.color}18`, border: `1px solid ${c.color}40`, color: c.color }}>
+                        <Icon name={c.icon} size={20} />
+                      </div>
+                      <span className="text-[0.65rem] font-bold uppercase tracking-[0.14em] px-2 py-1 rounded-md flex-shrink-0" style={{ background: `${status.color}15`, color: status.color, border: `1px solid ${status.color}40` }}>
+                        {status.label}
+                      </span>
+                    </div>
+
+                    <h3 className="text-[1.25rem] font-extrabold text-white leading-tight mb-1.5">{c.title}</h3>
+                    <p className="text-[0.88rem] font-semibold mb-3" style={{ color: c.color }}>{c.subtitle}</p>
+
+                    <div className="flex flex-wrap gap-2 mb-4 text-[0.74rem]">
+                      <span className="px-2 py-0.5 rounded" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.75)" }}>{c.format}</span>
+                      <span className="px-2 py-0.5 rounded" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.75)" }}>{c.duration}</span>
+                    </div>
+
+                    <div className="text-[0.72rem] font-bold uppercase tracking-[0.14em] mb-1.5" style={{ color: "rgba(255,255,255,0.5)" }}>Phù hợp với</div>
+                    <p className="text-[0.84rem] mb-4 leading-snug" style={{ color: "rgba(255,255,255,0.82)" }}>{c.audience}</p>
+
+                    <div className="text-[0.72rem] font-bold uppercase tracking-[0.14em] mb-2" style={{ color: "rgba(255,255,255,0.5)" }}>Bạn sẽ học được</div>
+                    <ul className="flex flex-col gap-1.5 mb-5 list-none">
+                      {c.highlights.map((h) => (
+                        <li key={h} className="flex items-start gap-2 text-[0.84rem]" style={{ color: "rgba(255,255,255,0.88)" }}>
+                          <Icon name="check" size={12} color="#5fffaa" strokeWidth={3} />
+                          <span className="leading-snug">{h}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="mt-auto pt-4 flex items-end justify-between gap-3" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                      <div>
+                        <div className="text-[0.7rem] uppercase tracking-[0.14em] font-bold" style={{ color: "rgba(255,255,255,0.5)" }}>Học phí</div>
+                        <div className="text-[1.1rem] font-extrabold text-white mt-0.5">{c.price}</div>
+                      </div>
+                      {isAvailable ? (
+                        <Link
+                          href={c.href}
+                          className="text-[0.85rem] font-bold px-4 py-2.5 rounded-lg text-white"
+                          style={{ background: c.color === "#146ef5" ? "var(--grad-primary)" : c.color, boxShadow: `0 4px 14px ${c.color}50` }}
+                        >
+                          {c.cta} →
+                        </Link>
+                      ) : (
+                        <a
+                          href="#waitlist"
                           className="text-[0.85rem] font-bold px-4 py-2.5 rounded-lg"
                           style={{ background: `${c.color}15`, border: `1px solid ${c.color}40`, color: c.color }}
                         >

@@ -6,13 +6,64 @@ import { Show, UserButton } from "@clerk/nextjs";
 import Icon, { type IconName } from "@/components/icons/Icon";
 import CartButton from "@/components/cart/CartButton";
 
-type Submenu = { label: string; desc?: string; href: string; badge?: string };
+type Submenu = { label: string; desc?: string; href: string; badge?: string; section?: string };
 type NavLink = { label: string; href: string; submenu?: Submenu[]; submenuIcon?: IconName; viewAllText?: string };
 
 const links: NavLink[] = [
   { label: "Về tôi", href: "/#about" },
   { label: "Case Study", href: "/#casestudies" },
-  { label: "Khoá học", href: "/courses" },
+  {
+    label: "Khoá học",
+    href: "/courses",
+    submenuIcon: "graduation-cap",
+    viewAllText: "Xem tất cả khoá học",
+    submenu: [
+      // Offline / Hybrid — cohort + workshop premium
+      {
+        section: "Offline · Hybrid",
+        label: "Khoá Ecom Foundation",
+        desc: "Cohort 8 tuần · live + recording · Slack community · final project",
+        href: "/ecom-foundation",
+        badge: "Đang mở",
+      },
+      {
+        section: "Offline · Hybrid",
+        label: "Workshop Ecom 1 ngày — Hà Nội",
+        desc: "6h offline · max 30 người · networking + Quảng 1-1 mini",
+        href: "/courses#waitlist",
+        badge: "Sắp ra",
+      },
+      // Online self-paced mini courses
+      {
+        section: "Online · Self-paced",
+        label: "TikTok Ads từ A→Z",
+        desc: "15 video · ~5h · 499k · cho fresher + chủ shop tự chạy ads",
+        href: "/courses#online",
+        badge: "Sắp ra",
+      },
+      {
+        section: "Online · Self-paced",
+        label: "Shopee Performance 14 ngày",
+        desc: "12 video · ~4h · 399k · setup gian hàng + Ads + voucher",
+        href: "/courses#online",
+        badge: "Sắp ra",
+      },
+      {
+        section: "Online · Self-paced",
+        label: "P&L gian hàng cho người mới",
+        desc: "8 video · ~2h · 299k · đọc + làm P&L từ 0",
+        href: "/courses#online",
+        badge: "Sắp ra",
+      },
+      {
+        section: "Online · Self-paced",
+        label: "MBTI x Career Marketing",
+        desc: "10 video · ~3h · 299k · cho sinh viên năm 3-4",
+        href: "/courses#online",
+        badge: "Sắp ra",
+      },
+    ],
+  },
   { label: "Tài liệu", href: "/resources" },
   {
     label: "Tools",
@@ -155,24 +206,32 @@ export default function Navbar() {
                         boxShadow: "0 24px 60px rgba(5,10,31,0.55)",
                         backdropFilter: "blur(20px) saturate(180%)",
                       }}>
-                        {l.submenu.map((s) => (
-                          <Link key={s.href} href={s.href}
-                            className="flex items-start gap-3 px-3 py-2.5 rounded-lg transition-colors"
-                            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(20,110,245,0.10)"; }}
-                            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
-                          >
-                            <span className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: "rgba(20,110,245,0.12)", border: "1px solid rgba(20,110,245,0.22)", color: "#7da9ff" }}>
-                              <Icon name={(l.submenuIcon || "tool") as IconName} size={16} />
-                            </span>
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2">
-                                <span className="text-[0.88rem] font-semibold text-white">{s.label}</span>
-                                {s.badge && <span className="text-[0.6rem] font-bold uppercase tracking-[0.14em] px-1.5 py-0.5 rounded-md" style={{ background: "rgba(0,215,34,0.15)", color: "#5fffaa", border: "1px solid rgba(0,215,34,0.3)" }}>{s.badge}</span>}
+                        {(() => {
+                          // Group submenu items by section (if any have section set).
+                          // Sections render with a small uppercase header divider above the group.
+                          const hasSections = l.submenu!.some((s) => s.section);
+                          if (!hasSections) {
+                            return l.submenu!.map((s) => (
+                              <SubmenuItem key={s.href} s={s} icon={(l.submenuIcon || "tool") as IconName} />
+                            ));
+                          }
+                          const groups = new Map<string, Submenu[]>();
+                          for (const s of l.submenu!) {
+                            const key = s.section || "Khác";
+                            if (!groups.has(key)) groups.set(key, []);
+                            groups.get(key)!.push(s);
+                          }
+                          return Array.from(groups.entries()).map(([section, items], gi) => (
+                            <div key={section} className={gi > 0 ? "mt-2 pt-2" : ""} style={gi > 0 ? { borderTop: "1px solid rgba(255,255,255,0.06)" } : undefined}>
+                              <div className="px-3 pt-1 pb-1.5 text-[0.62rem] font-bold uppercase tracking-[0.16em]" style={{ color: "rgba(255,255,255,0.42)" }}>
+                                {section}
                               </div>
-                              {s.desc && <div className="text-[0.75rem] mt-0.5 leading-snug" style={{ color: "rgba(255,255,255,0.55)" }}>{s.desc}</div>}
+                              {items.map((s) => (
+                                <SubmenuItem key={s.href} s={s} icon={(l.submenuIcon || "tool") as IconName} />
+                              ))}
                             </div>
-                          </Link>
-                        ))}
+                          ));
+                        })()}
                         <div className="border-t mt-1 pt-1" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
                           <Link href={l.href} className="flex items-center justify-between px-3 py-2 rounded-lg transition-colors text-[0.78rem] font-semibold"
                             style={{ color: "rgba(255,255,255,0.6)" }}
@@ -317,31 +376,31 @@ export default function Navbar() {
                           </span>
                         </Link>
                         <div className="px-2 pb-2 flex flex-col gap-1" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-                          {l.submenu.map((s) => (
-                            <Link
-                              key={s.href}
-                              href={s.href}
-                              onClick={() => setMobileOpen(false)}
-                              className="flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg"
-                            >
-                              <div className="min-w-0">
-                                <div className="flex items-center gap-2">
-                                  <span className="text-[0.9rem] font-semibold text-white truncate">{s.label}</span>
-                                  {s.badge && (
-                                    <span className="text-[0.55rem] font-bold uppercase tracking-[0.14em] px-1.5 py-0.5 rounded" style={{ background: "rgba(0,215,34,0.15)", color: "#5fffaa", border: "1px solid rgba(0,215,34,0.3)" }}>
-                                      {s.badge}
-                                    </span>
-                                  )}
+                          {(() => {
+                            const hasSections = l.submenu!.some((s) => s.section);
+                            const items = l.submenu!;
+                            if (!hasSections) {
+                              return items.map((s) => (
+                                <MobileSubmenuItem key={s.href} s={s} onClose={() => setMobileOpen(false)} />
+                              ));
+                            }
+                            const groups = new Map<string, Submenu[]>();
+                            for (const s of items) {
+                              const key = s.section || "Khác";
+                              if (!groups.has(key)) groups.set(key, []);
+                              groups.get(key)!.push(s);
+                            }
+                            return Array.from(groups.entries()).map(([section, gi], idx) => (
+                              <div key={section} className={idx > 0 ? "mt-2 pt-2" : ""} style={idx > 0 ? { borderTop: "1px solid rgba(255,255,255,0.05)" } : undefined}>
+                                <div className="px-3 pt-1 pb-1 text-[0.62rem] font-bold uppercase tracking-[0.16em]" style={{ color: "rgba(255,255,255,0.42)" }}>
+                                  {section}
                                 </div>
-                                {s.desc && (
-                                  <div className="text-[0.72rem] mt-0.5 leading-snug truncate" style={{ color: "rgba(255,255,255,0.5)" }}>
-                                    {s.desc}
-                                  </div>
-                                )}
+                                {gi.map((s) => (
+                                  <MobileSubmenuItem key={s.href} s={s} onClose={() => setMobileOpen(false)} />
+                                ))}
                               </div>
-                              <Icon name="arrow-right" size={14} color="rgba(255,255,255,0.4)" />
-                            </Link>
-                          ))}
+                            ));
+                          })()}
                         </div>
                       </div>
                     ) : (
@@ -363,5 +422,54 @@ export default function Navbar() {
         )}
       </AnimatePresence>
     </>
+  );
+}
+
+function SubmenuItem({ s, icon }: { s: Submenu; icon: IconName }) {
+  return (
+    <Link
+      href={s.href}
+      className="flex items-start gap-3 px-3 py-2.5 rounded-lg transition-colors"
+      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(20,110,245,0.10)"; }}
+      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
+    >
+      <span className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: "rgba(20,110,245,0.12)", border: "1px solid rgba(20,110,245,0.22)", color: "#7da9ff" }}>
+        <Icon name={icon} size={16} />
+      </span>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2">
+          <span className="text-[0.88rem] font-semibold text-white">{s.label}</span>
+          {s.badge && <span className="text-[0.6rem] font-bold uppercase tracking-[0.14em] px-1.5 py-0.5 rounded-md" style={{ background: "rgba(0,215,34,0.15)", color: "#5fffaa", border: "1px solid rgba(0,215,34,0.3)" }}>{s.badge}</span>}
+        </div>
+        {s.desc && <div className="text-[0.75rem] mt-0.5 leading-snug" style={{ color: "rgba(255,255,255,0.55)" }}>{s.desc}</div>}
+      </div>
+    </Link>
+  );
+}
+
+function MobileSubmenuItem({ s, onClose }: { s: Submenu; onClose: () => void }) {
+  return (
+    <Link
+      href={s.href}
+      onClick={onClose}
+      className="flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg"
+    >
+      <div className="min-w-0">
+        <div className="flex items-center gap-2">
+          <span className="text-[0.9rem] font-semibold text-white truncate">{s.label}</span>
+          {s.badge && (
+            <span className="text-[0.55rem] font-bold uppercase tracking-[0.14em] px-1.5 py-0.5 rounded" style={{ background: "rgba(0,215,34,0.15)", color: "#5fffaa", border: "1px solid rgba(0,215,34,0.3)" }}>
+              {s.badge}
+            </span>
+          )}
+        </div>
+        {s.desc && (
+          <div className="text-[0.72rem] mt-0.5 leading-snug truncate" style={{ color: "rgba(255,255,255,0.5)" }}>
+            {s.desc}
+          </div>
+        )}
+      </div>
+      <Icon name="arrow-right" size={14} color="rgba(255,255,255,0.4)" />
+    </Link>
   );
 }
