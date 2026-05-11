@@ -287,7 +287,7 @@ export default function PnLCalculator() {
 
         {/* Platform */}
         <div>
-          <label className="block text-[0.78rem] font-semibold mb-1.5 text-white">Phí sàn — chọn platform</label>
+          <label className="block text-[0.78rem] font-semibold mb-1.5 text-white">Phí sàn - chọn platform</label>
           <div className="grid grid-cols-2 gap-1.5 mb-2.5">
             {PLATFORM_PRESETS.map((p, i) => {
               const active = activePlatform === i;
@@ -328,7 +328,7 @@ export default function PnLCalculator() {
           <Field label="Voucher seller" hint="% chi voucher trên Net Revenue">
             <PctInput value={state.voucherSellerPct} onChange={(v) => { setActiveScenario(null); set("voucherSellerPct", v); }} />
           </Field>
-          <Field label="Phí ship buyer trả" hint="TB/đơn — tính phí GD chuẩn">
+          <Field label="Phí ship buyer trả" hint="TB/đơn - tính phí GD chuẩn">
             <VNDInput value={state.buyerShippingPerOrder} onChange={(v) => { setActiveScenario(null); set("buyerShippingPerOrder", v); }} />
           </Field>
         </div>
@@ -388,7 +388,7 @@ export default function PnLCalculator() {
           <div className="px-6 py-4 border-b flex items-center justify-between flex-wrap gap-3" style={{ borderColor: "var(--line)" }}>
             <div>
               <div className="text-[0.7rem] font-bold uppercase tracking-[0.15em]" style={{ color: "rgba(255,255,255,0.5)" }}>Báo cáo P&L · 1 tháng</div>
-              <div className="text-[1rem] font-semibold text-white mt-0.5">Gian hàng TMĐT — {result.grossRevenue > 0 ? `${Math.round(state.orders).toLocaleString("vi-VN")} đơn` : "—"}</div>
+              <div className="text-[1rem] font-semibold text-white mt-0.5">Gian hàng TMĐT - {result.grossRevenue > 0 ? `${Math.round(state.orders).toLocaleString("vi-VN")} đơn` : "-"}</div>
             </div>
             <button
               onClick={() => window.print()}
@@ -446,7 +446,7 @@ export default function PnLCalculator() {
             </div>
             <div className="rounded-xl p-4" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid var(--line)" }}>
               <div className="text-[0.7rem] font-bold uppercase tracking-[0.13em] mb-1.5" style={{ color: "rgba(255,255,255,0.5)" }}>ROAS</div>
-              <div className="text-[1.05rem] font-bold text-white">{result.roas > 0 ? `${result.roas.toFixed(1)}x` : "—"}</div>
+              <div className="text-[1.05rem] font-bold text-white">{result.roas > 0 ? `${result.roas.toFixed(1)}x` : "-"}</div>
             </div>
             <div className="rounded-xl p-4" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid var(--line)" }}>
               <div className="text-[0.7rem] font-bold uppercase tracking-[0.13em] mb-1.5" style={{ color: "rgba(255,255,255,0.5)" }}>Tổng phí sàn %</div>
@@ -460,7 +460,7 @@ export default function PnLCalculator() {
           <div className="rounded-xl px-5 py-4 text-[0.88rem] leading-[1.7]" style={{ background: result.operatingProfit < 0 ? "rgba(255,90,114,0.08)" : result.operatingMarginPct < 5 ? "rgba(255,212,121,0.08)" : "rgba(95,255,170,0.07)", border: `1px solid ${result.operatingProfit < 0 ? "rgba(255,90,114,0.25)" : result.operatingMarginPct < 5 ? "rgba(255,212,121,0.25)" : "rgba(95,255,170,0.25)"}`, color: "rgba(255,255,255,0.78)" }}>
             <strong className="text-white">Chẩn đoán nhanh: </strong>
             {result.operatingProfit < 0 ? (
-              <>Đang lỗ {fmtVND(Math.abs(result.operatingProfit))}đ/tháng. Vấn đề lớn nhất thường là: gross margin {fmtPct(result.grossMarginPct)} {result.grossMarginPct < 35 ? "quá mỏng — cần giảm COGS hoặc tăng AOV" : "ổn — vấn đề ở chi phí cố định hoặc ads quá lớn so với volume"}.</>
+              <>Đang lỗ {fmtVND(Math.abs(result.operatingProfit))}đ/tháng. Vấn đề lớn nhất thường là: gross margin {fmtPct(result.grossMarginPct)} {result.grossMarginPct < 35 ? "quá mỏng - cần giảm COGS hoặc tăng AOV" : "ổn - vấn đề ở chi phí cố định hoặc ads quá lớn so với volume"}.</>
             ) : result.operatingMarginPct < 5 ? (
               <>Margin {fmtPct(margin)} đang mỏng. Buffer thấp khi sàn tăng phí. Hướng cải thiện: tăng AOV bằng bundle, tối ưu ads để giảm CPA, hoặc giãn chi phí cố định.</>
             ) : result.operatingMarginPct >= 15 ? (

@@ -62,7 +62,7 @@ export default function Calculator() {
         <div className="section-tag">Nhập thông tin</div>
         <h2 className="text-[1.15rem] font-bold text-white mb-1 mt-2">Lương Gross/tháng</h2>
         <p className="text-[0.82rem] mb-5" style={{ color: "var(--ink-mute)" }}>
-          Chỉ cần lương Gross — các trường khác để mặc định cũng được.
+          Chỉ cần lương Gross - các trường khác để mặc định cũng được.
         </p>
 
         <div className="mb-5">
@@ -132,7 +132,7 @@ export default function Calculator() {
           </label>
         </div>
 
-        {/* Insurance base salary — optional. Most contracts đóng BH trên mức thấp hơn lương Gross */}
+        {/* Insurance base salary - optional. Most contracts đóng BH trên mức thấp hơn lương Gross */}
         {hasInsurance && (
           <div className="mb-2">
             <label className="block text-[0.78rem] font-semibold mb-1.5 text-white">
@@ -153,7 +153,7 @@ export default function Calculator() {
               </span>
             </div>
             <div className="text-[0.72rem] mt-1.5 leading-snug" style={{ color: "var(--ink-mute)" }}>
-              Hầu hết hợp đồng VN đóng BH trên 1 mức cố định (thường mức tối thiểu vùng hoặc thoả thuận) — KHÁC lương Gross. Nhìn bảng lương hằng tháng để biết chính xác. Để trống = đóng full Gross.
+              Hầu hết hợp đồng VN đóng BH trên 1 mức cố định (thường mức tối thiểu vùng hoặc thoả thuận) - KHÁC lương Gross. Nhìn bảng lương hằng tháng để biết chính xác. Để trống = đóng full Gross.
             </div>
           </div>
         )}
@@ -172,7 +172,7 @@ export default function Calculator() {
             </div>
             <h2 className="text-[1.1rem] font-bold text-white mb-2">Nhập lương Gross để xem kết quả</h2>
             <p className="text-[0.88rem] max-w-[440px] mx-auto" style={{ color: "var(--ink-soft)" }}>
-              Tool sẽ so sánh thuế bạn phải đóng theo luật <strong className="text-white">2025</strong> và <strong className="text-white">2026 mới</strong> — đồng thời tính lương Net thực nhận.
+              Tool sẽ so sánh thuế bạn phải đóng theo luật <strong className="text-white">2025</strong> và <strong className="text-white">2026 mới</strong> - đồng thời tính lương Net thực nhận.
             </p>
           </div>
         ) : (
@@ -209,7 +209,7 @@ function ResultView({ c, hasInsurance }: { c: ReturnType<typeof compareYears>; h
               Bạn tiết kiệm <span style={{ color: "#5fffaa" }}>{fmt(annualTaxDelta)}đ/năm</span>
             </h2>
             <p className="text-[0.95rem] leading-[1.6]" style={{ color: "var(--ink-soft)" }}>
-              Theo luật mới 2026 (Nghị quyết 110/2025/UBTVQH15), bạn đóng thuế ít hơn <strong style={{ color: "#5fffaa" }}>{fmt(taxDelta)}đ/tháng</strong> so với luật 2025. Lương Net tăng tương đương — tổng cộng <strong className="text-white">+{fmt(annualNetDelta)}đ/năm</strong>.
+              Theo luật mới 2026 (Nghị quyết 110/2025/UBTVQH15), bạn đóng thuế ít hơn <strong style={{ color: "#5fffaa" }}>{fmt(taxDelta)}đ/tháng</strong> so với luật 2025. Lương Net tăng tương đương - tổng cộng <strong className="text-white">+{fmt(annualNetDelta)}đ/năm</strong>.
             </p>
           </>
         ) : (
@@ -218,7 +218,7 @@ function ResultView({ c, hasInsurance }: { c: ReturnType<typeof compareYears>; h
               Thuế 2026 và 2025 bằng nhau với mức lương này
             </h2>
             <p className="text-[0.95rem] leading-[1.6]" style={{ color: "var(--ink-soft)" }}>
-              Lương Gross của bạn chưa vượt mức giảm trừ gia cảnh → không phải đóng thuế cả 2 năm.
+              Lương Gross của bạn chưa vượt mức giảm trừ gia cảnh  không phải đóng thuế cả 2 năm.
             </p>
           </>
         )}

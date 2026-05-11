@@ -18,7 +18,7 @@ const links: NavLink[] = [
     submenuIcon: "graduation-cap",
     viewAllText: "Xem tất cả khoá học",
     submenu: [
-      // Offline / Hybrid — flagship cohort
+      // Offline / Hybrid - flagship cohort
       {
         section: "Offline · Hybrid",
         label: "Khoá Ecom Foundation",
@@ -29,7 +29,7 @@ const links: NavLink[] = [
       // Online self-paced mini courses
       {
         section: "Online · Self-paced",
-        label: "TikTok Ads từ A→Z",
+        label: "TikTok Ads từ AZ",
         desc: "15 video · ~5h · 499k · cho fresher + chủ shop tự chạy ads",
         href: "/courses#online",
         badge: "Sắp ra",
@@ -84,7 +84,7 @@ const links: NavLink[] = [
       },
       {
         label: "Mẫu P&L Ecom",
-        desc: "Báo cáo lãi lỗ gian hàng — Net Revenue → EBITDA, in PDF",
+        desc: "Báo cáo lãi lỗ gian hàng - Net Revenue  EBITDA, in PDF",
         href: "/tools/pnl-ecom",
         badge: "Mới",
       },
@@ -197,7 +197,7 @@ export default function Navbar() {
                     )}
                   </Link>
                   {l.submenu && (
-                    // Dropdown panel — shows on hover. pt-3 below trigger creates a hoverable bridge so the panel doesn't disappear when cursor moves down.
+                    // Dropdown panel - shows on hover. pt-3 below trigger creates a hoverable bridge so the panel doesn't disappear when cursor moves down.
                     <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-200">
                       <div className="rounded-xl p-2 min-w-[340px]" style={{
                         background: "rgba(8,16,43,0.96)",
@@ -238,7 +238,7 @@ export default function Navbar() {
                             onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)"; }}
                           >
                             <span>{l.viewAllText || `Xem tất cả ${l.label.toLowerCase()}`}</span>
-                            <span>→</span>
+                            <span></span>
                           </Link>
                         </div>
                       </div>
@@ -248,7 +248,7 @@ export default function Navbar() {
               ))}
             </ul>
 
-            {/* Cart + Auth — desktop */}
+            {/* Cart + Auth - desktop */}
             <div className="hidden md:flex items-center gap-2 ml-2">
               <CartButton />
               <Show when="signed-out">
@@ -337,7 +337,7 @@ export default function Navbar() {
                     onClick={() => setMobileOpen(false)}
                     className="text-[0.9rem] font-semibold text-white pl-2"
                   >
-                    Tài khoản của tôi →
+                    Tài khoản của tôi 
                   </Link>
                   <UserButton
                     appearance={{ elements: { avatarBox: "w-10 h-10 ring-2 ring-white/15" } }}

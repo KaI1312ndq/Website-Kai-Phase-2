@@ -42,10 +42,10 @@ export default function ContactForm() {
       botcheck: "",
       "Họ tên": form.name,
       Email: form.email,
-      "SĐT / Zalo": form.phone || "—",
-      "Quan tâm": interestLabel[form.interest] || form.interest || "—",
-      "Đối tượng": whoLabel[form.who] || form.who || "—",
-      "Lời nhắn": form.message || "—",
+      "SĐT / Zalo": form.phone || "-",
+      "Quan tâm": interestLabel[form.interest] || form.interest || "-",
+      "Đối tượng": whoLabel[form.who] || form.who || "-",
+      "Lời nhắn": form.message || "-",
     };
 
     try {
@@ -173,7 +173,7 @@ export default function ContactForm() {
         </div>
         <button onClick={handleSubmit} disabled={state === "loading" || !form.name || !form.email || !form.phone}
           className="btn btn-primary w-full justify-center py-3.5 text-[0.95rem] font-semibold disabled:opacity-50 disabled:cursor-not-allowed">
-          {state === "loading" ? "Đang gửi..." : <>Gửi thông tin <span className="arrow">→</span></>}
+          {state === "loading" ? "Đang gửi..." : <>Gửi thông tin</>}
         </button>
         {state === "error" && <p className="text-center text-[0.82rem]" style={{ color: "#ee1d36" }}>Có lỗi. Vui lòng nhắn Zalo hoặc Email trực tiếp.</p>}
         <p className="text-center text-[0.78rem] inline-flex items-center justify-center gap-1.5" style={{ color: "rgba(255,255,255,0.5)" }}>

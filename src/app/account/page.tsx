@@ -22,7 +22,7 @@ export default async function AccountPage() {
   const fullName = [user?.firstName, user?.lastName].filter(Boolean).join(" ").trim() || null;
   const email = user?.primaryEmailAddress?.emailAddress || user?.emailAddresses[0]?.emailAddress || null;
   const phone = user?.primaryPhoneNumber?.phoneNumber || user?.phoneNumbers?.[0]?.phoneNumber || null;
-  // Display priority: username → first name → email local-part
+  // Display priority: username  first name  email local-part
   const displayName = username || fullName || email?.split("@")[0] || "bạn";
 
   const cards = [
@@ -47,7 +47,7 @@ export default async function AccountPage() {
               Chào <span className="grad-text">{displayName}.</span>
             </h1>
 
-            {/* User info chips — surface stored fields like phone for Quảng's records */}
+            {/* User info chips - surface stored fields like phone for Quảng's records */}
             <div className="flex flex-wrap items-center gap-2 mb-6">
               {username && (
                 <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[0.8rem]" style={{ background: "rgba(20,110,245,0.10)", border: "1px solid rgba(20,110,245,0.22)", color: "#7da9ff" }}>
@@ -91,7 +91,7 @@ export default async function AccountPage() {
                   <h3 className="text-[1.05rem] font-semibold text-white mb-1.5">{c.title}</h3>
                   <p className="text-[0.88rem] leading-snug" style={{ color: "var(--ink-soft)" }}>{c.desc}</p>
                   <div className="mt-4 text-[0.82rem] font-semibold" style={{ color: "#7da9ff" }}>
-                    Mở →
+                    Mở 
                   </div>
                 </Link>
               ))}

@@ -35,12 +35,12 @@ export default function LeadPopup() {
       trackEvent("lead_popup_shown");
     }
 
-    // Desktop — exit intent (chuột rời cửa sổ phía trên)
+    // Desktop - exit intent (chuột rời cửa sổ phía trên)
     function onMouseLeave(e: MouseEvent) {
       if (e.clientY <= 0) show();
     }
 
-    // Mobile + desktop — scroll past 70%
+    // Mobile + desktop - scroll past 70%
     function onScroll() {
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       if (docHeight > 0 && window.scrollY / docHeight >= 0.7) show();
@@ -68,7 +68,7 @@ export default function LeadPopup() {
 
     const payload = {
       access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY,
-      subject: `[Lead Popup] Tư vấn 15p — ${form.name}`,
+      subject: `[Lead Popup] Tư vấn 15p - ${form.name}`,
       from_name: `Lead Popup · ${form.name}`,
       botcheck: "",
       Source: "Lead capture popup",
@@ -164,7 +164,7 @@ export default function LeadPopup() {
                 </h3>
 
                 <p className="text-[0.92rem] leading-[1.65] mb-5" style={{ color: "rgba(255,255,255,0.7)" }}>
-                  Để lại email — mình sẽ inbox Zalo để đặt lịch quick meet 15 phút. 2 bên cùng đánh giá phù hợp trước khi quyết định gì.
+                  Để lại email - mình sẽ inbox Zalo để đặt lịch quick meet 15 phút. 2 bên cùng đánh giá phù hợp trước khi quyết định gì.
                 </p>
 
                 {/* Cohort status */}
@@ -193,7 +193,7 @@ export default function LeadPopup() {
                     disabled={state === "loading" || !form.name || !form.email}
                     className="btn btn-primary w-full justify-center py-3 text-[0.92rem] font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {state === "loading" ? "Đang gửi..." : <>Đăng ký tư vấn 15 phút <span className="arrow">→</span></>}
+                    {state === "loading" ? "Đang gửi..." : <>Đăng ký tư vấn 15 phút</>}
                   </button>
                   {state === "error" && (
                     <p className="text-center text-[0.78rem]" style={{ color: "#ee1d36" }}>
@@ -203,7 +203,7 @@ export default function LeadPopup() {
                 </div>
 
                 <p className="text-center text-[0.72rem] mt-4" style={{ color: "rgba(255,255,255,0.4)" }}>
-                  Apply không phải nộp tiền — quick meet rồi mới quyết.
+                  Apply không phải nộp tiền - quick meet rồi mới quyết.
                 </p>
               </div>
             )}

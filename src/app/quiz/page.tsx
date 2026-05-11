@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     title: "Quiz · Trắc nghiệm Tính cách & Lãnh đạo Miễn phí",
-    description: "MBTI, Phong cách lãnh đạo, Hướng nghiệp — biết mình rõ hơn trong 5-15 phút.",
+    description: "MBTI, Phong cách lãnh đạo, Hướng nghiệp - biết mình rõ hơn trong 5-15 phút.",
   },
 };
 
@@ -64,7 +64,7 @@ export default function QuizLandingPage() {
               Khám phá<br /><span className="grad-text">tính cách của bạn.</span>
             </h1>
             <p className="t-body-lg max-w-[640px]">
-              Bộ trắc nghiệm tính cách và phong cách lãnh đạo — biết mình rõ hơn để chọn nghề, làm việc và phát triển hiệu quả hơn.
+              Bộ trắc nghiệm tính cách và phong cách lãnh đạo - biết mình rõ hơn để chọn nghề, làm việc và phát triển hiệu quả hơn.
             </p>
           </div>
         </section>
@@ -105,7 +105,7 @@ export default function QuizLandingPage() {
                     )}
                   </div>
                   <div className="text-[0.9rem] font-bold flex items-center gap-1.5 group-hover:gap-2.5 transition-all" style={{ color: q.color }}>
-                    Bắt đầu test <span>→</span>
+                    Bắt đầu test <span></span>
                   </div>
                 </Link>
               ))}

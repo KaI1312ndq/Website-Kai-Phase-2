@@ -10,8 +10,8 @@ import { BANK_CONFIG, generateVietQRUrl } from "@/lib/payment/config";
 import OrderStatusPoller from "./OrderStatusPoller";
 
 export const metadata: Metadata = {
-  title: "Đơn hàng — Đợi xác nhận thanh toán",
-  description: "Quét QR Techcombank để chuyển khoản — file sẽ gửi qua email sau khi xác nhận.",
+  title: "Đơn hàng - Đợi xác nhận thanh toán",
+  description: "Quét QR Techcombank để chuyển khoản - file sẽ gửi qua email sau khi xác nhận.",
   robots: { index: false, follow: false }, // không cho Google index trang này
 };
 
@@ -49,7 +49,7 @@ export default async function OrderStatusPage({ params }: { params: Promise<{ or
             <div className="section-tag">Đơn hàng · {order.orderNumber}</div>
             <h1 className="t-h1 leading-[1.1] text-white max-w-[820px] mb-3">
               {order.total === 0 ? (
-                <>Đơn miễn phí — <span className="grad-text">đã gửi file qua email.</span></>
+                <>Đơn miễn phí - <span className="grad-text">đã gửi file qua email.</span></>
               ) : isDelivered ? (
                 <>File đã gửi vào <span className="grad-text">email của bạn.</span></>
               ) : isPaid ? (
@@ -60,12 +60,12 @@ export default async function OrderStatusPage({ params }: { params: Promise<{ or
             </h1>
             <p className="t-body" style={{ color: "var(--ink-soft)" }}>
               {order.total === 0
-                ? `Voucher ${order.voucherCode || ""} đã áp dụng — không cần chuyển khoản. File gửi vào ${order.customer.email} (kiểm tra cả spam).`
+                ? `Voucher ${order.voucherCode || ""} đã áp dụng - không cần chuyển khoản. File gửi vào ${order.customer.email} (kiểm tra cả spam).`
                 : isDelivered
                   ? `File đã được gửi vào ${order.customer.email}. Kiểm tra hộp thư + spam.`
                   : isPaid
                     ? "Đợi 1-2 phút mình gửi file vào email của bạn."
-                    : "Mở ứng dụng ngân hàng → quét QR → tiền tự nhập kèm mã đơn → xong."}
+                    : "Mở ứng dụng ngân hàng  quét QR  tiền tự nhập kèm mã đơn  xong."}
             </p>
           </div>
         </section>
@@ -117,9 +117,9 @@ export default async function OrderStatusPage({ params }: { params: Promise<{ or
             {/* Payment QR / Status */}
             {!isPaid && (
               <div className="rounded-2xl p-6 md:p-7 mb-6" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
-                <h2 className="text-[1.1rem] font-bold text-white mb-1">Quét QR — auto-fill số tiền + mã đơn</h2>
+                <h2 className="text-[1.1rem] font-bold text-white mb-1">Quét QR - auto-fill số tiền + mã đơn</h2>
                 <p className="text-[0.85rem] mb-5" style={{ color: "var(--ink-mute)" }}>
-                  Mở app ngân hàng bất kỳ → quét QR → kiểm tra → ấn chuyển. Mã đơn sẽ tự nhập vào nội dung.
+                  Mở app ngân hàng bất kỳ  quét QR  kiểm tra  ấn chuyển. Mã đơn sẽ tự nhập vào nội dung.
                 </p>
 
                 <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
@@ -155,7 +155,7 @@ export default async function OrderStatusPage({ params }: { params: Promise<{ or
                 <Step n={1} done={isPaid} text="Bạn chuyển khoản (1-2 phút)" />
                 <Step n={2} done={isPaid} active={!isPaid} text={isPaid ? "Đã nhận tiền" : "Đợi mình nhận tiền (thường <1 giờ giờ hành chính)"} />
                 <Step n={3} done={isDelivered} active={isPaid && !isDelivered} text={isDelivered ? `File đã gửi vào ${order.customer.email}` : `Mình gửi file vào email ${order.customer.email}`} />
-                <Step n={4} done={isDelivered} text="Bạn click link trong email → tải file về" />
+                <Step n={4} done={isDelivered} text="Bạn click link trong email  tải file về" />
               </div>
             </div>
 

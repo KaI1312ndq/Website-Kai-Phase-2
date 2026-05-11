@@ -6,12 +6,12 @@ import { useEffect, useState } from "react";
  *
  * Logic dự kiến tháng khai giảng:
  *   - Hardcoded TARGET_MONTH (vd "2026-07")
- *   - Nếu tháng hiện tại đã qua TARGET_MONTH → tự đẩy sang tháng kế tiếp
- *   - Nếu tháng hiện tại == TARGET_MONTH → vẫn show TARGET_MONTH
+ *   - Nếu tháng hiện tại đã qua TARGET_MONTH  tự đẩy sang tháng kế tiếp
+ *   - Nếu tháng hiện tại == TARGET_MONTH  vẫn show TARGET_MONTH
  *
  * Sửa TARGET_MONTH để cập nhật mục tiêu khai giảng.
  */
-const TARGET_MONTH = "2026-07"; // YYYY-MM — khoá 1 dự kiến
+const TARGET_MONTH = "2026-07"; // YYYY-MM - khoá 1 dự kiến
 
 function viMonthLabel(d: Date) {
   return `T${d.getMonth() + 1}/${d.getFullYear()}`;
@@ -21,7 +21,7 @@ function effectiveStartMonth() {
   const [y, m] = TARGET_MONTH.split("-").map(Number);
   const target = new Date(y, m - 1, 1);
   const now = new Date();
-  // Nếu tháng hiện tại đã qua TARGET → đẩy sang tháng kế tiếp
+  // Nếu tháng hiện tại đã qua TARGET  đẩy sang tháng kế tiếp
   if (now.getFullYear() > target.getFullYear() || (now.getFullYear() === target.getFullYear() && now.getMonth() > target.getMonth())) {
     return new Date(now.getFullYear(), now.getMonth() + 1, 1);
   }
@@ -62,7 +62,7 @@ export default function CohortStatus({ variant = "default" }: { variant?: "defau
     );
   }
 
-  // default — full status card
+  // default - full status card
   return (
     <div className="rounded-xl p-4 md:p-5" style={{ background: "rgba(20,40,90,0.45)", border: "1px solid rgba(74,214,255,0.25)" }}>
       <div className="flex items-center gap-2 mb-4">

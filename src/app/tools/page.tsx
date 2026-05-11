@@ -6,12 +6,12 @@ import Link from "next/link";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.nguyenducquang.website";
 
 export const metadata: Metadata = {
-  title: "Tools — Công cụ miễn phí cho seller TMĐT",
+  title: "Tools - Công cụ miễn phí cho seller TMĐT",
   description: "Bộ tools miễn phí cho seller Ecommerce: tính phí sàn TikTok Shop & Shopee, ROAS calculator, P&L template, và nhiều hơn nữa.",
   alternates: { canonical: "/tools" },
   openGraph: {
     type: "website",
-    title: "Tools — Công cụ miễn phí cho seller TMĐT",
+    title: "Tools - Công cụ miễn phí cho seller TMĐT",
     description: "Bộ tools miễn phí cho seller Ecommerce: tính phí sàn TikTok & Shopee và nhiều hơn nữa.",
   },
 };
@@ -47,7 +47,7 @@ const TOOLS = [
     href: "/tools/roas-calculator",
     badge: "Mới · 2026",
     title: "ROAS Calculator",
-    desc: "Tính ROAS break-even cần đạt theo cost & target margin. Cho biết campaign target ROAS bao nhiêu là đủ — có preset phí TikTok Shop & Shopee 2026.",
+    desc: "Tính ROAS break-even cần đạt theo cost & target margin. Cho biết campaign target ROAS bao nhiêu là đủ - có preset phí TikTok Shop & Shopee 2026.",
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7da9ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" />
@@ -59,8 +59,8 @@ const TOOLS = [
   {
     href: "/tools/pnl-ecom",
     badge: "Mới · 2026",
-    title: "Mẫu P&L Ecom — Báo cáo lãi lỗ",
-    desc: "Lập P&L gian hàng TMĐT 5 tầng (Net Revenue → Gross → Contribution → Marketing → EBITDA). Preset phí TikTok Shop & Shopee 2026, có chẩn đoán margin và in PDF.",
+    title: "Mẫu P&L Ecom - Báo cáo lãi lỗ",
+    desc: "Lập P&L gian hàng TMĐT 5 tầng (Net Revenue  Gross  Contribution  Marketing  EBITDA). Preset phí TikTok Shop & Shopee 2026, có chẩn đoán margin và in PDF.",
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a78bff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" /><polyline points="2 20 22 20" />
@@ -113,7 +113,7 @@ export default function ToolsPage() {
               Công cụ cho<br /><span className="grad-text">seller TMĐT.</span>
             </h1>
             <p className="t-body-lg max-w-[640px]">
-              Bộ tools tự build từ kinh nghiệm thực chiến — tính phí sàn, ROAS, P&L, và nhiều hơn nữa. Tất cả miễn phí, không cần đăng ký.
+              Bộ tools tự build từ kinh nghiệm thực chiến - tính phí sàn, ROAS, P&L, và nhiều hơn nữa. Tất cả miễn phí, không cần đăng ký.
             </p>
           </div>
         </section>
@@ -142,7 +142,7 @@ export default function ToolsPage() {
                       {t.keywords.map((k) => <span key={k} className="wf-badge text-[0.7rem]">{k}</span>)}
                     </div>
                     {t.available ? (
-                      <div className="text-[0.85rem] font-semibold grad-text group-hover:underline">Mở tool →</div>
+                      <div className="text-[0.85rem] font-semibold grad-text group-hover:underline">Mở tool </div>
                     ) : (
                       <div className="text-[0.85rem] font-semibold" style={{ color: "rgba(255,255,255,0.4)" }}>Sắp ra mắt</div>
                     )}

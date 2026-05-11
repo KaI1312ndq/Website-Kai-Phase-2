@@ -22,13 +22,13 @@ const CATEGORY_LABELS: Record<string, string> = {
 };
 
 export const metadata = {
-  title: "Blog & Insights — Nguyễn Đức Quảng",
+  title: "Blog & Insights - Nguyễn Đức Quảng",
   description: "Góc nhìn thực tế về Ecommerce, Performance Marketing và Leadership cho seller TMĐT Việt Nam.",
   alternates: {
     canonical: "/blog",
     types: { "application/rss+xml": [{ url: "/blog/feed.xml", title: "Blog & Insights RSS" }] },
   },
-  openGraph: { type: "website", title: "Blog & Insights — Nguyễn Đức Quảng", description: "Góc nhìn thực tế về Ecommerce, Performance Marketing và Leadership." },
+  openGraph: { type: "website", title: "Blog & Insights - Nguyễn Đức Quảng", description: "Góc nhìn thực tế về Ecommerce, Performance Marketing và Leadership." },
 };
 
 export const revalidate = 60;
@@ -78,7 +78,7 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
   const blogLd = {
     "@context": "https://schema.org",
     "@type": "Blog",
-    name: "Blog & Insights — Nguyễn Đức Quảng",
+    name: "Blog & Insights - Nguyễn Đức Quảng",
     url: `${SITE_URL}/blog`,
     inLanguage: "vi-VN",
     publisher: { "@type": "Person", name: "Nguyễn Đức Quảng", url: SITE_URL },
@@ -126,7 +126,7 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
           </div>
         </section>
 
-        {/* FEATURED POSTS — only show on first page, no filter */}
+        {/* FEATURED POSTS - only show on first page, no filter */}
         {!isFiltered && page === 1 && featuredPosts.length > 0 && (
           <section className="relative border-b" style={{ borderColor: "var(--line)" }}>
             <div className="max-w-[1300px] mx-auto px-6 md:px-10 py-16 md:py-20">
@@ -141,7 +141,7 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
           </section>
         )}
 
-        {/* MAIN POSTS — filter + grid + pagination */}
+        {/* MAIN POSTS - filter + grid + pagination */}
         <section className="relative">
           <div className="max-w-[1300px] mx-auto px-6 md:px-10 py-16 md:py-20">
             <div className="flex items-end justify-between mb-8 flex-wrap gap-3">
@@ -186,7 +186,7 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
                 <p className="t-body mb-7">
                   {search ? `Chưa có bài nào khớp "${search}".` : "Chuyên mục này chưa có bài viết."} Hãy thử filter khác.
                 </p>
-                <Link href="/blog" className="btn btn-primary">Xem tất cả bài viết →</Link>
+                <Link href="/blog" className="btn btn-primary">Xem tất cả bài viết </Link>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -237,7 +237,7 @@ function FeaturedPostsGrid({ posts }: { posts: any[] }) {
             {primary.title}
           </h3>
           {primary.excerpt && <p className="text-[0.92rem] leading-[1.6] line-clamp-3" style={{ color: "var(--ink-mute)" }}>{primary.excerpt}</p>}
-          <div className="mt-auto pt-5 text-[0.85rem] font-semibold grad-text">Đọc bài →</div>
+          <div className="mt-auto pt-5 text-[0.85rem] font-semibold grad-text">Đọc bài </div>
         </div>
       </Link>
 
@@ -298,7 +298,7 @@ function PostCard({ post }: { post: any }) {
         </div>
         <h2 className="text-[1.05rem] font-semibold mb-2 leading-snug tracking-tight text-white group-hover:text-[#7da9ff] transition-colors">{post.title}</h2>
         {post.excerpt && <p className="text-[0.88rem] leading-[1.6] line-clamp-2" style={{ color: "var(--ink-mute)" }}>{post.excerpt}</p>}
-        <div className="mt-auto pt-4 text-[0.82rem] font-semibold grad-text">Đọc tiếp →</div>
+        <div className="mt-auto pt-4 text-[0.82rem] font-semibold grad-text">Đọc tiếp </div>
       </div>
     </Link>
   );

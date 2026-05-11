@@ -2,8 +2,8 @@
 import { useEffect, useRef, useState, ReactNode, ElementType } from "react";
 
 /**
- * Lightweight CSS-only Reveal — uses IntersectionObserver + CSS keyframes.
- * No framer-motion dependency for simple fade-up — saves ~25KB gzipped on initial load.
+ * Lightweight CSS-only Reveal - uses IntersectionObserver + CSS keyframes.
+ * No framer-motion dependency for simple fade-up - saves ~25KB gzipped on initial load.
  *
  * Use `instant` for above-the-fold content (LCP).
  */

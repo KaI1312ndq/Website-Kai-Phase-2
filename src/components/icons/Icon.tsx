@@ -1,5 +1,5 @@
 /**
- * Centralized SVG icon system — Lucide-style stroke icons.
+ * Centralized SVG icon system - Lucide-style stroke icons.
  * Use instead of emoji to keep visual professional.
  */
 

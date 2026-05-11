@@ -5,8 +5,8 @@ import { slugify } from "@/lib/blog/headings";
 /**
  * Wrap PortableText with custom block components:
  * - h2 / h3 emit deterministic IDs cho TOC anchor
- * - tableBlock → render HTML <table> với border + zebra stripes
- * - externalImage → render <figure> với <img> + caption + credit
+ * - tableBlock  render HTML <table> với border + zebra stripes
+ * - externalImage  render <figure> với <img> + caption + credit
  */
 export default function PortableTextWithIds({ value }: { value: any }) {
   // Track occurrence count per slug to disambiguate duplicates (matches extractHeadings logic)

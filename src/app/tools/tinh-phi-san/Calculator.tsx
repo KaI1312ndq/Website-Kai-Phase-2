@@ -6,7 +6,7 @@ import {
   type ExtraCost, type PlatformKey, type TiktokMatch, type ShopeeMatch,
 } from "@/lib/fees/lookup";
 
-// Shopee trái → TikTok phải (per Quảng's request)
+// Shopee trái  TikTok phải (per Quảng's request)
 const PLATFORMS: PlatformKey[] = ["shopeeNonMall", "shopeeMall", "tiktokNonMall", "tiktokMall"];
 
 const DEFAULT_EXTRAS: ExtraCost[] = [
@@ -318,7 +318,7 @@ export default function Calculator() {
           <Field label="Giá bán" hint="(VNĐ)">
             <NumberInput value={price} onChange={setPrice} suffix="đ" placeholder="500.000" />
           </Field>
-          <Field label="Giá vốn — COGS" hint="(VNĐ)">
+          <Field label="Giá vốn - COGS" hint="(VNĐ)">
             <NumberInput value={cogs} onChange={setCogs} suffix="đ" placeholder="200.000" />
             {cogsWarn && <div className="text-[0.7rem] mt-1" style={{ color: "#ff5a72" }}>⚠ COGS ≥ giá bán</div>}
           </Field>
@@ -337,7 +337,7 @@ export default function Calculator() {
 
       {/* ════ Shopee + TikTok ════ */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-6">
-        {/* Shopee — LEFT */}
+        {/* Shopee - LEFT */}
         <Section title="Shopee" accent="#EE4D2D">
           <div className="space-y-4">
             <div>
@@ -359,7 +359,7 @@ export default function Calculator() {
             </div>
 
             <div>
-              <label className="block text-[0.78rem] font-semibold mb-2 text-white">Phí option <span className="font-normal" style={{ color: "rgba(255,255,255,0.45)" }}>— đăng ký</span></label>
+              <label className="block text-[0.78rem] font-semibold mb-2 text-white">Phí option <span className="font-normal" style={{ color: "rgba(255,255,255,0.45)" }}>- đăng ký</span></label>
               <div className="space-y-2">
                 <CheckboxRow checked={spVoucherExtra} onChange={setSpVoucherExtra} label="Voucher Extra" hint="4% · cap 50.000đ" />
                 <CheckboxRow checked={spPiShip} onChange={setSpPiShip} label="Pi Ship" hint="1.600đ/đơn" />
@@ -368,7 +368,7 @@ export default function Calculator() {
           </div>
         </Section>
 
-        {/* TikTok — RIGHT */}
+        {/* TikTok - RIGHT */}
         <Section title="TikTok Shop" accent="#ff3358">
           <div className="space-y-4">
             <div>
@@ -390,7 +390,7 @@ export default function Calculator() {
             </div>
 
             <div>
-              <label className="block text-[0.78rem] font-semibold mb-2 text-white">Voucher Extra <span className="font-normal" style={{ color: "rgba(255,255,255,0.45)" }}>— chọn 1</span></label>
+              <label className="block text-[0.78rem] font-semibold mb-2 text-white">Voucher Extra <span className="font-normal" style={{ color: "rgba(255,255,255,0.45)" }}>- chọn 1</span></label>
               <SegmentedControl
                 value={ttVoucher}
                 onChange={setTtVoucher}
@@ -403,8 +403,8 @@ export default function Calculator() {
             </div>
 
             <div>
-              <label className="block text-[0.78rem] font-semibold mb-2 text-white">Phí option khác <span className="font-normal" style={{ color: "rgba(255,255,255,0.45)" }}>— đăng ký</span></label>
-              <CheckboxRow checked={ttSfr} onChange={setTtSfr} label="SFR — Bồi hoàn vận chuyển" hint="1.620đ/đơn" />
+              <label className="block text-[0.78rem] font-semibold mb-2 text-white">Phí option khác <span className="font-normal" style={{ color: "rgba(255,255,255,0.45)" }}>- đăng ký</span></label>
+              <CheckboxRow checked={ttSfr} onChange={setTtSfr} label="SFR - Bồi hoàn vận chuyển" hint="1.620đ/đơn" />
             </div>
           </div>
         </Section>
@@ -577,9 +577,9 @@ export default function Calculator() {
         </div>
       </div>
 
-      {/* Lưu ý — đẩy xuống dưới */}
+      {/* Lưu ý - đẩy xuống dưới */}
       <div className="rounded-xl p-4 text-[0.82rem] leading-[1.65]" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.6)" }}>
-        <strong className="text-white">Lưu ý:</strong> Tất cả phí trong tool đã bao gồm thuế GTGT và <strong className="text-white">tính cho 1 đơn hàng</strong>. Phí TikTok Shop áp dụng từ 09/05/2026, Shopee từ 08/05/2026. Default rate khi chưa chọn ngành: TikTok 12.5% / 15.5% · Shopee 10.5% / 13.5%. Nếu bạn không tìm thấy ngành chính xác trong ô tìm kiếm, chọn ngành gần nhất hoặc để trống — tool sẽ dùng default rate trung bình.
+        <strong className="text-white">Lưu ý:</strong> Tất cả phí trong tool đã bao gồm thuế GTGT và <strong className="text-white">tính cho 1 đơn hàng</strong>. Phí TikTok Shop áp dụng từ 09/05/2026, Shopee từ 08/05/2026. Default rate khi chưa chọn ngành: TikTok 12.5% / 15.5% · Shopee 10.5% / 13.5%. Nếu bạn không tìm thấy ngành chính xác trong ô tìm kiếm, chọn ngành gần nhất hoặc để trống - tool sẽ dùng default rate trung bình.
       </div>
     </div>
   );

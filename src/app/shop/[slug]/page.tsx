@@ -30,12 +30,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const image = product.coverImage ? urlFor(product.coverImage).width(1200).height(630).url() : undefined;
 
   return {
-    title: `${product.title} — ${product.price.toLocaleString("vi-VN")}đ`,
+    title: `${product.title} - ${product.price.toLocaleString("vi-VN")}đ`,
     description: product.shortDescription,
     alternates: { canonical: `/shop/${slug}` },
     openGraph: {
       type: "website",
-      title: `${product.title} — ${product.price.toLocaleString("vi-VN")}đ`,
+      title: `${product.title} - ${product.price.toLocaleString("vi-VN")}đ`,
       description: product.shortDescription,
       url: `${SITE_URL}/shop/${slug}`,
       images: image ? [{ url: image, width: 1200, height: 630 }] : undefined,
@@ -207,7 +207,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
           </div>
         </section>
 
-        {/* "Trong này có gì" — Bullets */}
+        {/* "Trong này có gì" - Bullets */}
         {Array.isArray(product.bullets) && product.bullets.length > 0 && (
           <section className="relative border-b" style={{ borderColor: "var(--line)" }}>
             <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-14 md:py-20">
@@ -236,7 +236,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               <USPCard
                 number="01"
                 title="Đã được kiểm chứng"
-                desc="Đúc kết từ 60+ project Ecom thực chiến. Không phải lý thuyết suông — mỗi template/data đều có context thực."
+                desc="Đúc kết từ 60+ project Ecom thực chiến. Không phải lý thuyết suông - mỗi template/data đều có context thực."
               />
               <USPCard
                 number="02"
@@ -246,7 +246,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               <USPCard
                 number="03"
                 title="Update mãi mãi"
-                desc="Khi data thay đổi (phí sàn 2027, salary mới), Quảng update file → bạn nhận lại miễn phí qua email."
+                desc="Khi data thay đổi (phí sàn 2027, salary mới), Quảng update file  bạn nhận lại miễn phí qua email."
               />
             </div>
           </div>
@@ -349,11 +349,11 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
           <div className="max-w-[820px] mx-auto px-6 md:px-10 py-14 md:py-20 text-center">
             <div className="rounded-2xl p-8 md:p-10" style={{ background: "linear-gradient(135deg, rgba(20,110,245,0.10) 0%, rgba(122,61,255,0.10) 100%)", border: "1px solid rgba(20,110,245,0.25)" }}>
               <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-2" style={{ color: "#7da9ff" }}>Combo tiết kiệm</div>
-              <h3 className="text-[1.4rem] font-bold text-white mb-3">Mua combo 3 — chỉ 199k</h3>
+              <h3 className="text-[1.4rem] font-bold text-white mb-3">Mua combo 3 - chỉ 199k</h3>
               <p className="text-[0.95rem] mb-5" style={{ color: "rgba(255,255,255,0.8)" }}>
                 Mua từng cái 297k. Combo 3 chỉ 199k (-98k). Khuyến mãi giới hạn.
               </p>
-              <Link href="/shop" className="btn btn-primary">Xem combo 3 sản phẩm →</Link>
+              <Link href="/shop" className="btn btn-primary">Xem combo 3 sản phẩm </Link>
             </div>
           </div>
         </section>

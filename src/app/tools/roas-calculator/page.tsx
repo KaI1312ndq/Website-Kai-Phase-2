@@ -5,9 +5,9 @@ import Link from "next/link";
 import Calculator from "./Calculator";
 
 export const metadata: Metadata = {
-  title: "ROAS Calculator — Tính Break-even ROAS & Target ROAS miễn phí",
+  title: "ROAS Calculator - Tính Break-even ROAS & Target ROAS miễn phí",
   description:
-    "Công cụ tính ROAS break-even và target ROAS cho seller TMĐT — nhập giá vốn, phí sàn, chi phí vận hành, target margin → biết ngay ROAS cần đạt. Miễn phí, không cần đăng ký.",
+    "Công cụ tính ROAS break-even và target ROAS cho seller TMĐT - nhập giá vốn, phí sàn, chi phí vận hành, target margin  biết ngay ROAS cần đạt. Miễn phí, không cần đăng ký.",
   keywords: [
     "ROAS là gì", "tính ROAS", "ROAS calculator", "break-even ROAS",
     "công thức ROAS", "ROAS bao nhiêu là đủ", "tính ROAS ecom",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "vi_VN",
-    title: "ROAS Calculator — Tính Break-even & Target ROAS miễn phí",
+    title: "ROAS Calculator - Tính Break-even & Target ROAS miễn phí",
     description:
       "Tính ROAS break-even theo giá vốn, phí sàn và margin target. Công cụ miễn phí cho seller TikTok Shop & Shopee.",
   },
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 const FAQS = [
   {
     q: "ROAS là gì?",
-    a: "ROAS (Return on Ad Spend) = Doanh thu / Chi phí quảng cáo. Ví dụ: bỏ 1 triệu ads thu về 5 triệu doanh thu = ROAS 5x. ROAS đo hiệu quả của từng đồng ads chi ra, nhưng ROAS cao không đồng nghĩa với lãi — phụ thuộc vào cấu trúc chi phí của từng sản phẩm.",
+    a: "ROAS (Return on Ad Spend) = Doanh thu / Chi phí quảng cáo. Ví dụ: bỏ 1 triệu ads thu về 5 triệu doanh thu = ROAS 5x. ROAS đo hiệu quả của từng đồng ads chi ra, nhưng ROAS cao không đồng nghĩa với lãi - phụ thuộc vào cấu trúc chi phí của từng sản phẩm.",
   },
   {
     q: "Công thức tính ROAS là gì?",
@@ -41,31 +41,31 @@ const FAQS = [
   },
   {
     q: "ROAS bao nhiêu là đủ cho Beauty/Fashion/F&B/Electronics?",
-    a: "Mỗi ngành khác nhau do gross margin và phí sàn khác nhau. Tham khảo benchmark (phí TikTok Non-Mall ~18.5%, ops ~8%): Beauty/Health 55–70% gross margin → break-even ~4–5x, target 8–12x. Fashion 45–60% → break-even ~5–7x, target 10–15x. F&B/FMCG 35–50% → break-even ~6–8x, target 12–18x. Electronics 15–25% → break-even 15–25x, target 30–50x. Nhập số thực của sản phẩm vào tool để có kết quả chính xác.",
+    a: "Mỗi ngành khác nhau do gross margin và phí sàn khác nhau. Tham khảo benchmark (phí TikTok Non-Mall ~18.5%, ops ~8%): Beauty/Health 55–70% gross margin  break-even ~4–5x, target 8–12x. Fashion 45–60%  break-even ~5–7x, target 10–15x. F&B/FMCG 35–50%  break-even ~6–8x, target 12–18x. Electronics 15–25%  break-even 15–25x, target 30–50x. Nhập số thực của sản phẩm vào tool để có kết quả chính xác.",
   },
   {
     q: "Tại sao ROAS cao nhưng vẫn lỗ?",
-    a: "Vì ROAS không tính phí sàn, giá vốn, hay chi phí vận hành. Ví dụ: sản phẩm 200.000đ, giá vốn 150.000đ (gross margin 25%), phí sàn 18.5%, ops 8% → break-even ROAS = 1 ÷ (25% − 18.5% − 8%) = âm số → không bao giờ có lãi dù ROAS vô cực. Bài học: luôn kiểm tra gross margin trước khi chạy ads.",
+    a: "Vì ROAS không tính phí sàn, giá vốn, hay chi phí vận hành. Ví dụ: sản phẩm 200.000đ, giá vốn 150.000đ (gross margin 25%), phí sàn 18.5%, ops 8%  break-even ROAS = 1 ÷ (25% − 18.5% − 8%) = âm số  không bao giờ có lãi dù ROAS vô cực. Bài học: luôn kiểm tra gross margin trước khi chạy ads.",
   },
   {
     q: "Phí sàn ảnh hưởng ROAS thế nào?",
-    a: "Phí sàn trực tiếp làm giảm 'available margin' cho ads và profit. Mỗi 3% phí sàn tăng thêm đẩy break-even ROAS lên ~0.5–1x. Ví dụ sản phẩm Beauty gross margin 60%: phí sàn Non-Mall 18.5% → break-even ~4.4x; phí Mall 21.5% → break-even ~5.2x. Đây là lý do phải so sánh kỹ Mall vs Non-Mall trước khi chạy ads.",
+    a: "Phí sàn trực tiếp làm giảm 'available margin' cho ads và profit. Mỗi 3% phí sàn tăng thêm đẩy break-even ROAS lên ~0.5–1x. Ví dụ sản phẩm Beauty gross margin 60%: phí sàn Non-Mall 18.5%  break-even ~4.4x; phí Mall 21.5%  break-even ~5.2x. Đây là lý do phải so sánh kỹ Mall vs Non-Mall trước khi chạy ads.",
   },
   {
     q: "ROAS TikTok Shop và Shopee có khác nhau không?",
-    a: "Phí sàn khác nhau nên break-even ROAS cũng khác nhau dù cùng sản phẩm. TikTok Non-Mall ~18.5%, Shopee Non-Mall ~18% (chênh 0.5%). TikTok Mall ~21.5%, Shopee Mall ~21%. Ngoài phí, performance của ads và live commerce trên 2 sàn cũng khác — TikTok thường có ROAS tự nhiên cao hơn nhờ content viral, nhưng Shopee ads ổn định và dễ scale hơn. Dùng Tool tính phí sàn để lấy số phí chính xác rồi nhập vào đây.",
+    a: "Phí sàn khác nhau nên break-even ROAS cũng khác nhau dù cùng sản phẩm. TikTok Non-Mall ~18.5%, Shopee Non-Mall ~18% (chênh 0.5%). TikTok Mall ~21.5%, Shopee Mall ~21%. Ngoài phí, performance của ads và live commerce trên 2 sàn cũng khác - TikTok thường có ROAS tự nhiên cao hơn nhờ content viral, nhưng Shopee ads ổn định và dễ scale hơn. Dùng Tool tính phí sàn để lấy số phí chính xác rồi nhập vào đây.",
   },
   {
     q: "Cách tăng ROAS mà không tăng ngân sách ads?",
-    a: "4 hướng tối ưu: (1) Tăng giá bán hoặc upsell/bundle → tăng gross margin, giảm break-even ROAS. (2) Giảm COGS bằng cách negotiate supplier, đặt số lượng lớn. (3) Tối ưu landing page và CVR — cùng số tiền ads nhưng ra nhiều đơn hơn. (4) Cải thiện creative, targeting — giảm CPM/CPC. Tối ưu ROAS là cải thiện cả 4 mặt trận, không chỉ tối ưu ads account.",
+    a: "4 hướng tối ưu: (1) Tăng giá bán hoặc upsell/bundle  tăng gross margin, giảm break-even ROAS. (2) Giảm COGS bằng cách negotiate supplier, đặt số lượng lớn. (3) Tối ưu landing page và CVR - cùng số tiền ads nhưng ra nhiều đơn hơn. (4) Cải thiện creative, targeting - giảm CPM/CPC. Tối ưu ROAS là cải thiện cả 4 mặt trận, không chỉ tối ưu ads account.",
   },
   {
     q: "MER là gì? Khác ROAS thế nào?",
-    a: "MER (Marketing Efficiency Ratio) = Tổng doanh thu ÷ Tổng chi phí marketing (tất cả channels: paid ads, influencer, photoshoot, samples, v.v.). ROAS chỉ tính riêng paid ads. MER phản ánh hiệu quả marketing tổng thể và sustainability của business — thường thấp hơn ROAS paid vì tử số lớn hơn. Seller nên track cả 2: ROAS để tối ưu campaign, MER để đánh giá sức khoẻ business.",
+    a: "MER (Marketing Efficiency Ratio) = Tổng doanh thu ÷ Tổng chi phí marketing (tất cả channels: paid ads, influencer, photoshoot, samples, v.v.). ROAS chỉ tính riêng paid ads. MER phản ánh hiệu quả marketing tổng thể và sustainability của business - thường thấp hơn ROAS paid vì tử số lớn hơn. Seller nên track cả 2: ROAS để tối ưu campaign, MER để đánh giá sức khoẻ business.",
   },
   {
     q: "ROAS nên đo theo đơn hay theo tháng?",
-    a: "Cần đo cả 2 cấp độ. ROAS per đơn (hoặc per campaign): để biết SKU nào đang lãi, targeting nào hiệu quả, có nên scale không. ROAS/MER theo tháng: để đánh giá tổng hiệu quả marketing và so sánh với target business. Một campaign ROAS 10x nhưng volume thấp không bằng 6x nhưng volume 10x — phải nhìn cả margin tuyệt đối và tỷ suất.",
+    a: "Cần đo cả 2 cấp độ. ROAS per đơn (hoặc per campaign): để biết SKU nào đang lãi, targeting nào hiệu quả, có nên scale không. ROAS/MER theo tháng: để đánh giá tổng hiệu quả marketing và so sánh với target business. Một campaign ROAS 10x nhưng volume thấp không bằng 6x nhưng volume 10x - phải nhìn cả margin tuyệt đối và tỷ suất.",
   },
 ];
 
@@ -76,7 +76,7 @@ export default function ROASCalculatorPage() {
   const appLd = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    name: "ROAS Calculator — Tính Break-even & Target ROAS",
+    name: "ROAS Calculator - Tính Break-even & Target ROAS",
     applicationCategory: "BusinessApplication",
     applicationSubCategory: "ROAS Calculator",
     operatingSystem: "Web",
@@ -131,7 +131,7 @@ export default function ROASCalculatorPage() {
         "@type": "HowToStep",
         position: 3,
         name: "Nhập chi phí vận hành và target margin",
-        text: "Nhập chi phí vận hành (fulfillment, nhân sự — không tính ads) và margin % muốn đạt. Thường ops 5–15%, target margin 10–20%.",
+        text: "Nhập chi phí vận hành (fulfillment, nhân sự - không tính ads) và margin % muốn đạt. Thường ops 5–15%, target margin 10–20%.",
       },
       {
         "@type": "HowToStep",
@@ -183,10 +183,10 @@ export default function ROASCalculatorPage() {
             </div>
             <div className="section-tag">Tools · Miễn phí</div>
             <h1 className="t-h1 mb-4 leading-[1.1] text-white max-w-[820px]">
-              ROAS Calculator — <span className="grad-text">Break-even & Target ROAS.</span>
+              ROAS Calculator - <span className="grad-text">Break-even & Target ROAS.</span>
             </h1>
             <p className="t-body-lg max-w-[760px] mb-6">
-              Nhập giá vốn, phí sàn, chi phí vận hành và target margin — tool tính ngay <strong className="text-white">ROAS break-even</strong> (mức tối thiểu không lỗ) và <strong className="text-white">Target ROAS</strong> cần đạt. Có preset phí TikTok Shop & Shopee 2026.
+              Nhập giá vốn, phí sàn, chi phí vận hành và target margin - tool tính ngay <strong className="text-white">ROAS break-even</strong> (mức tối thiểu không lỗ) và <strong className="text-white">Target ROAS</strong> cần đạt. Có preset phí TikTok Shop & Shopee 2026.
             </p>
             <div className="flex flex-wrap gap-2">
               {["Break-even ROAS", "Target Margin", "TikTok Shop", "Shopee", "Bảng kịch bản ROAS", "Phân bổ doanh thu"].map((tag) => (
@@ -247,7 +247,7 @@ export default function ROASCalculatorPage() {
             <div className="section-tag">Công thức</div>
             <h2 className="t-h2 mb-3 text-white">Công thức tính <span className="grad-text">Break-even ROAS.</span></h2>
             <p className="t-body mb-10 max-w-[680px]">
-              ROAS break-even phụ thuộc vào gross margin, phí sàn và chi phí vận hành — không phải chỉ gross margin. Đây là sai lầm phổ biến nhất của seller khi đặt KPI ads.
+              ROAS break-even phụ thuộc vào gross margin, phí sàn và chi phí vận hành - không phải chỉ gross margin. Đây là sai lầm phổ biến nhất của seller khi đặt KPI ads.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
@@ -279,7 +279,7 @@ export default function ROASCalculatorPage() {
               <strong className="text-white">Ví dụ thực tế:</strong> Sản phẩm Beauty giá 300.000đ, COGS 90.000đ (GM 70%), phí TikTok Non-Mall 18.5%, ops 8%, target margin 15%.<br />
               Break-even ROAS = 1 ÷ (70% − 18.5% − 8%) = 1 ÷ 43.5% ≈ <strong className="text-white">2.3x</strong> (chỉ để không lỗ)<br />
               Target ROAS = 1 ÷ (70% − 18.5% − 8% − 15%) = 1 ÷ 28.5% ≈ <strong className="text-white">3.5x</strong> (để lãi 15%).<br />
-              <span style={{ color: "rgba(255,255,255,0.55)" }}>→ Đây là sản phẩm có cấu trúc tốt. Fashion hay F&B sẽ cần target ROAS cao hơn nhiều.</span>
+              <span style={{ color: "rgba(255,255,255,0.55)" }}> Đây là sản phẩm có cấu trúc tốt. Fashion hay F&B sẽ cần target ROAS cao hơn nhiều.</span>
             </div>
           </div>
         </section>
@@ -289,7 +289,7 @@ export default function ROASCalculatorPage() {
           <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-24 md:py-32">
             <div className="section-tag">Benchmark ngành</div>
             <h2 className="t-h2 mb-3 text-white">
-              ROAS bao nhiêu là đủ — <span className="grad-text">theo ngành hàng.</span>
+              ROAS bao nhiêu là đủ - <span className="grad-text">theo ngành hàng.</span>
             </h2>
             <p className="t-body mb-8 max-w-[680px]">
               Benchmark tính với phí TikTok Non-Mall ~18.5% + chi phí vận hành 8% điển hình. Nhập số thực của sản phẩm vào tool để có kết quả chính xác.
@@ -329,7 +329,7 @@ export default function ROASCalculatorPage() {
             </div>
 
             <div className="rounded-xl px-5 py-4 text-[0.85rem] leading-[1.7]" style={{ background: "rgba(255,212,121,0.06)", border: "1px solid rgba(255,212,121,0.22)", color: "rgba(255,255,255,0.7)" }}>
-              <strong className="text-white">Lưu ý Electronics:</strong> ROAS break-even 15–25x không có nghĩa là không thể chạy ads — seller Electronics thường build từ repeat purchase (accessory, consumable) và upsell warranty, không thuần profit per đơn đầu. Nếu chỉ bán 1 đơn, ads gần như không có lãi.
+              <strong className="text-white">Lưu ý Electronics:</strong> ROAS break-even 15–25x không có nghĩa là không thể chạy ads - seller Electronics thường build từ repeat purchase (accessory, consumable) và upsell warranty, không thuần profit per đơn đầu. Nếu chỉ bán 1 đơn, ads gần như không có lãi.
             </div>
           </div>
         </section>
@@ -338,7 +338,7 @@ export default function ROASCalculatorPage() {
         <section className="relative border-t" style={{ borderColor: "var(--line)" }}>
           <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-24 md:py-32">
             <div className="section-tag">Thuật ngữ</div>
-            <h2 className="t-h2 mb-8 text-white">Glossary — <span className="grad-text">thuật ngữ cần biết.</span></h2>
+            <h2 className="t-h2 mb-8 text-white">Glossary - <span className="grad-text">thuật ngữ cần biết.</span></h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
                 {
@@ -359,7 +359,7 @@ export default function ROASCalculatorPage() {
                 },
                 {
                   term: "COGS",
-                  def: "Cost of Goods Sold — giá vốn. Gồm xuất xưởng + bao bì + logistics về kho.",
+                  def: "Cost of Goods Sold - giá vốn. Gồm xuất xưởng + bao bì + logistics về kho.",
                 },
                 {
                   term: "MER",
@@ -416,12 +416,12 @@ export default function ROASCalculatorPage() {
                 <div className="text-[0.72rem] font-bold uppercase tracking-[0.14em] mb-2" style={{ color: "#4ad6ff" }}>Tool</div>
                 <div className="text-[1rem] font-semibold text-white mb-2">Tính phí sàn TikTok Shop & Shopee</div>
                 <div className="text-[0.88rem] leading-[1.6]" style={{ color: "var(--ink-mute)" }}>
-                  Lấy số phí sàn chính xác (hoa hồng + giao dịch + voucher extra) theo ngành hàng cụ thể → nhập vào ROAS Calculator.
+                  Lấy số phí sàn chính xác (hoa hồng + giao dịch + voucher extra) theo ngành hàng cụ thể  nhập vào ROAS Calculator.
                 </div>
               </Link>
               <Link href="/ecom-foundation" className="glass p-6 block hover:border-blue-500/30 transition-colors">
                 <div className="text-[0.72rem] font-bold uppercase tracking-[0.14em] mb-2" style={{ color: "#5fffaa" }}>Khoá học</div>
-                <div className="text-[1rem] font-semibold text-white mb-2">Ecom Foundation — Build P&L thực chiến</div>
+                <div className="text-[1rem] font-semibold text-white mb-2">Ecom Foundation - Build P&L thực chiến</div>
                 <div className="text-[0.88rem] leading-[1.6]" style={{ color: "var(--ink-mute)" }}>
                   12 buổi từ cơ cấu chi phí, P&L gian hàng, đến tối ưu ROAS và scale team Ecom. Dành cho seller muốn làm bài bản.
                 </div>
@@ -439,10 +439,10 @@ export default function ROASCalculatorPage() {
               Muốn hiểu sâu hơn về <span className="grad-text">P&L & tối ưu ROAS?</span>
             </h2>
             <p className="t-body max-w-[600px] mx-auto mb-8">
-              Khoá Ecom Foundation đi từ cơ cấu chi phí, cách đọc P&L gian hàng, đến tối ưu ROAS và scale team — từ kinh nghiệm quản lý 60+ project Ecom thực tế.
+              Khoá Ecom Foundation đi từ cơ cấu chi phí, cách đọc P&L gian hàng, đến tối ưu ROAS và scale team - từ kinh nghiệm quản lý 60+ project Ecom thực tế.
             </p>
             <Link href="/ecom-foundation" className="btn btn-primary">
-              Xem khoá học <span className="arrow">→</span>
+              Xem khoá học
             </Link>
           </div>
         </section>

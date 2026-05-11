@@ -7,7 +7,7 @@ import CheckoutClient from "./CheckoutClient";
 
 export const metadata: Metadata = {
   title: "Thanh toán",
-  description: "Hoàn tất đơn hàng — nhập thông tin nhận file và áp dụng voucher (nếu có).",
+  description: "Hoàn tất đơn hàng - nhập thông tin nhận file và áp dụng voucher (nếu có).",
   robots: { index: false, follow: false },
 };
 

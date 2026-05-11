@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const archetype = getQuizArchetypes(slug).find((a) => a.id === type);
   if (!quiz || !archetype) return { title: "Kết quả Quiz" };
 
-  const title = `${archetype.name} — ${quiz.name} | Phân tích chi tiết`;
+  const title = `${archetype.name} - ${quiz.name} | Phân tích chi tiết`;
   const description = `${archetype.tagline}. ${archetype.description[0].slice(0, 140)}...`;
 
   return {
@@ -207,7 +207,7 @@ export default async function QuizResultPage({ params }: { params: Promise<{ slu
                     <ul className="flex flex-col gap-2 list-none">
                       {archetype.advice.map((a) => (
                         <li key={a} className="text-[0.92rem] leading-[1.6] flex items-start gap-2.5" style={{ color: "var(--ink-soft)" }}>
-                          <span style={{ color: archetype.color }}>→</span>
+                          <span style={{ color: archetype.color }}></span>
                           <span>{a}</span>
                         </li>
                       ))}
@@ -217,16 +217,16 @@ export default async function QuizResultPage({ params }: { params: Promise<{ slu
 
                 {/* Share */}
                 <div>
-                  <ShareButtons url={pageUrl} title={`${archetype.name} — ${quiz.name}`} />
+                  <ShareButtons url={pageUrl} title={`${archetype.name} - ${quiz.name}`} />
                 </div>
 
                 {/* Retake CTA */}
                 <div className="rounded-2xl p-6 md:p-8 text-center" style={{ background: "linear-gradient(135deg, rgba(20,110,245,0.10) 0%, rgba(122,61,255,0.10) 100%)", border: "1px solid rgba(20,110,245,0.28)" }}>
                   <p className="text-[0.95rem] mb-4" style={{ color: "rgba(255,255,255,0.85)" }}>
-                    Đây là kết quả {archetype.name} — bạn có muốn tự làm bài test để kiểm tra mình không?
+                    Đây là kết quả {archetype.name} - bạn có muốn tự làm bài test để kiểm tra mình không?
                   </p>
                   <Link href={`/quiz/${slug}`} className="btn btn-primary">
-                    Làm bài test ngay <span className="arrow">→</span>
+                    Làm bài test ngay
                   </Link>
                 </div>
               </article>
@@ -264,7 +264,7 @@ export default async function QuizResultPage({ params }: { params: Promise<{ slu
                   </p>
                   <Link href="/ecom-foundation" className="block w-full text-center py-2.5 rounded-lg text-[0.85rem] font-bold"
                     style={{ background: "var(--grad-primary)", color: "white" }}>
-                    Xem khoá học →
+                    Xem khoá học 
                   </Link>
                 </div>
               </aside>

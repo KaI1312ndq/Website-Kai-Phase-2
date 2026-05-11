@@ -33,17 +33,17 @@ const IconCalendar = () => <Ic d={<><rect x="3" y="4" width="18" height="18" rx=
 const ModuleIcon = ({ mod, color }: { mod: string; color: string }) => {
   const props = { width: 22, height: 22, viewBox: "0 0 24 24", fill: "none", stroke: color, strokeWidth: 2, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
   switch (mod) {
-    case "M1": // Tư duy thị trường — lightbulb
+    case "M1": // Tư duy thị trường - lightbulb
       return <svg {...props}><path d="M9 18h6M10 22h4" /><path d="M2 9a10 10 0 0120 0c0 4-3 6-3 9H5c0-3-3-5-3-9z" /></svg>;
-    case "M2": // Chiến lược SP — target
+    case "M2": // Chiến lược SP - target
       return <svg {...props}><circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="5" /><circle cx="12" cy="12" r="1.5" fill={color} stroke="none" /></svg>;
-    case "M3": // Vận hành sàn — store
+    case "M3": // Vận hành sàn - store
       return <svg {...props}><path d="M3 9l1.5-5h15L21 9" /><path d="M5 9v11a1 1 0 001 1h12a1 1 0 001-1V9" /><path d="M9 21v-6h6v6" /></svg>;
-    case "M4": // Performance — rocket / trending
+    case "M4": // Performance - rocket / trending
       return <svg {...props}><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" /></svg>;
-    case "M5": // Data & Plan — bar chart
+    case "M5": // Data & Plan - bar chart
       return <svg {...props}><line x1="3" y1="20" x2="21" y2="20" /><rect x="5" y="10" width="3" height="10" /><rect x="10.5" y="6" width="3" height="14" /><rect x="16" y="13" width="3" height="7" /></svg>;
-    case "Final": // Capstone — trophy
+    case "Final": // Capstone - trophy
       return <svg {...props}><path d="M8 21h8" /><path d="M12 17v4" /><path d="M7 4h10v5a5 5 0 01-10 0V4z" /><path d="M17 6h3a2 2 0 01-2 4h-1" /><path d="M7 6H4a2 2 0 002 4h1" /></svg>;
     default:
       return <svg {...props}><circle cx="12" cy="12" r="9" /></svg>;
@@ -103,7 +103,7 @@ function CourseHero() {
 
           <Reveal instant>
             <p className="t-body-lg max-w-[520px] mb-8" style={{ color: "rgba(255,255,255,0.72)" }}>
-              Khoá foundation về thương mại điện tử cho người mới và marketer trẻ — không dạy tool lẻ, không hứa hẹn ngắn hạn. Xây tư duy đúng từ đầu để bước vào ngành làm thật.
+              Khoá foundation về thương mại điện tử cho người mới và marketer trẻ - không dạy tool lẻ, không hứa hẹn ngắn hạn. Xây tư duy đúng từ đầu để bước vào ngành làm thật.
             </p>
           </Reveal>
 
@@ -116,10 +116,10 @@ function CourseHero() {
           <Reveal instant>
             <div className="flex gap-3 items-center flex-wrap">
               <Link href="#apply" className="btn btn-primary">
-                Đăng ký Khoá 1 — 999.000đ <span className="arrow">→</span>
+                Đăng ký Khoá 1 - 999.000đ
               </Link>
               <Link href="#curriculum" className="btn btn-ghost">
-                Xem lộ trình <span className="arrow">→</span>
+                Xem lộ trình
               </Link>
             </div>
           </Reveal>
@@ -158,7 +158,7 @@ function CohortCard() {
               <span className="text-[0.62rem] font-bold uppercase tracking-[0.16em]" style={{ color: "#5fffaa" }}>Đang nhận application</span>
             </div>
             <div className="text-[1.6rem] font-bold tracking-tight text-white leading-tight mb-1">{COURSE.cohort.label}</div>
-            <div className="text-[0.85rem]" style={{ color: "rgba(255,255,255,0.65)" }}>{COURSE.name} — Khoá đầu tiên</div>
+            <div className="text-[0.85rem]" style={{ color: "rgba(255,255,255,0.65)" }}>{COURSE.name} - Khoá đầu tiên</div>
           </div>
         </div>
 
@@ -188,7 +188,7 @@ function CohortCard() {
                 <path d="M9 18h6M10 22h4" /><path d="M2 9a10 10 0 0120 0c0 4-3 6-3 9H5c0-3-3-5-3-9z" />
               </svg>
               <span className="text-[0.78rem]" style={{ color: "rgba(255,255,255,0.78)" }}>
-                Lớp nhỏ giữ chất lượng — <strong className="text-white">tối đa 7</strong>, chốt khi đủ ít nhất <strong className="text-white">5</strong>.
+                Lớp nhỏ giữ chất lượng - <strong className="text-white">tối đa 7</strong>, chốt khi đủ ít nhất <strong className="text-white">5</strong>.
               </span>
             </div>
           </div>
@@ -267,7 +267,7 @@ function OutcomesSection() {
           </h2>
         </Reveal>
         <Reveal delay={0.14}>
-          <p className="t-caption mb-12 max-w-[520px]">6 năng lực cụ thể, đo được — không phải kiến thức mơ hồ.</p>
+          <p className="t-caption mb-12 max-w-[520px]">6 năng lực cụ thể, đo được - không phải kiến thức mơ hồ.</p>
         </Reveal>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
           {OUTCOMES.map((o, i) => (
@@ -420,7 +420,7 @@ function CurriculumSection() {
 }
 
 /* ─── FORMAT ─── */
-/* ─── Tool callout — links from M3 Vận hành sàn ─── */
+/* ─── Tool callout - links from M3 Vận hành sàn ─── */
 function ToolCallout() {
   return (
     <section className="relative">
@@ -438,11 +438,11 @@ function ToolCallout() {
               <div className="text-[0.62rem] font-bold uppercase tracking-[0.16em] mb-1.5" style={{ color: "#7ee2ff" }}>Tool miễn phí · Practice ngay</div>
               <div className="text-[1.1rem] md:text-[1.2rem] font-bold tracking-tight text-white mb-1.5">Tính phí sàn TikTok Shop & Shopee</div>
               <p className="text-[0.88rem] leading-[1.6]" style={{ color: "rgba(255,255,255,0.7)" }}>
-                Học xong B5 (Tư duy giá · Tồn kho · Điểm gian hàng), thực hành ngay với tool tính phí sàn — so sánh đồng thời 4 phương án Mall vs Non-Mall. Bảng phí 2026 mới nhất.
+                Học xong B5 (Tư duy giá · Tồn kho · Điểm gian hàng), thực hành ngay với tool tính phí sàn - so sánh đồng thời 4 phương án Mall vs Non-Mall. Bảng phí 2026 mới nhất.
               </p>
             </div>
             <Link href="/tools/tinh-phi-san" className="btn btn-primary flex-shrink-0">
-              Mở tool <span className="arrow">→</span>
+              Mở tool
             </Link>
           </div>
         </Reveal>
@@ -454,7 +454,7 @@ function ToolCallout() {
 function FormatSection() {
   const blocks = [
     { icon: <IconBook />, title: "Training", desc: "Mỗi buổi 2–3 tiếng. Trainer chia sẻ tư duy + case study thực tế. Lớp nhỏ nên thực sự là thảo luận, không phải giảng 1 chiều." },
-    { icon: <IconQuiz />, title: "Quiz cuối buổi", desc: "Quiz nhanh 5–10 câu (Google Form hoặc giấy) để chốt kiến thức key. Không pass/fail — chỉ giúp bạn biết mình đang ở đâu." },
+    { icon: <IconQuiz />, title: "Quiz cuối buổi", desc: "Quiz nhanh 5–10 câu (Google Form hoặc giấy) để chốt kiến thức key. Không pass/fail - chỉ giúp bạn biết mình đang ở đâu." },
     { icon: <IconChart />, title: "Bài thu hoạch", desc: "Bài tập về nhà làm bằng Sheet, nộp trước buổi sau. Trainer đọc và feedback 1-1. Không chấm điểm, chỉ đánh giá định tính." },
   ];
   return (
@@ -489,7 +489,7 @@ function FormatSection() {
             <div className="text-[0.92rem] leading-[1.7]">
               <strong className="text-white">Presentation lớn 2 tuần/lần.</strong>{" "}
               <span style={{ color: "var(--ink-soft)" }}>
-                Sau B2 (chiến lược kinh doanh), B5 (vận hành sàn), B8 (setup ads), và B11 (Plan 1 năm). Bạn trình bày — trainer + lớp cùng phản biện. Đây là phần xây tự tin và giao tiếp chuyên nghiệp.
+                Sau B2 (chiến lược kinh doanh), B5 (vận hành sàn), B8 (setup ads), và B11 (Plan 1 năm). Bạn trình bày - trainer + lớp cùng phản biện. Đây là phần xây tự tin và giao tiếp chuyên nghiệp.
               </span>
             </div>
           </div>
@@ -513,7 +513,7 @@ function AfterCourseSection() {
           </h2>
         </Reveal>
         <Reveal delay={0.14}>
-          <p className="t-caption mb-12 max-w-[520px]">3 tháng mentoring + tài liệu + group hỗ trợ vĩnh viễn — đi cùng bạn dài hạn.</p>
+          <p className="t-caption mb-12 max-w-[520px]">3 tháng mentoring + tài liệu + group hỗ trợ vĩnh viễn - đi cùng bạn dài hạn.</p>
         </Reveal>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
           {AFTER_COURSE.map((it, i) => (
@@ -548,7 +548,7 @@ function TrainerSection() {
             }}>
               <div className="relative" style={{ background: "linear-gradient(135deg, #0d1c52 0%, #1e2c7a 50%, #2a1c6a 100%)" }}>
                 <div className="absolute inset-0 z-0" style={{ backgroundImage: "radial-gradient(rgba(125,169,255,0.18) 1.2px, transparent 1.2px)", backgroundSize: "20px 20px", opacity: 0.5 }} />
-                <Image src="/kai-photo.webp" alt={`${COURSE.trainer.name} — Trainer Foundation Ecommerce`} width={600} height={750} className="relative z-10 w-full h-auto block object-cover object-top" style={{ aspectRatio: "4/5" }} sizes="(max-width: 768px) 90vw, 360px" />
+                <Image src="/kai-photo.webp" alt={`${COURSE.trainer.name} - Trainer Foundation Ecommerce`} width={600} height={750} className="relative z-10 w-full h-auto block object-cover object-top" style={{ aspectRatio: "4/5" }} sizes="(max-width: 768px) 90vw, 360px" />
                 <div className="absolute inset-0 z-20" style={{ background: "linear-gradient(180deg, transparent 50%, rgba(8,16,43,0.85) 100%)" }} />
               </div>
               <div className="px-5 py-4 border-t" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
@@ -568,13 +568,13 @@ function TrainerSection() {
             <Reveal delay={0.14}>
               <div className="space-y-4 mb-8">
                 <p className="t-body">
-                  Hơn <strong className="text-white">5 năm thực chiến</strong> trong lĩnh vực Digital Marketing và Ecommerce — kinh qua cả Agency (UpBase) và Client (Yumvita). Từng làm Ecom từ những ngày đầu của TikTok Shop tại Việt Nam.
+                  Hơn <strong className="text-white">5 năm thực chiến</strong> trong lĩnh vực Digital Marketing và Ecommerce - kinh qua cả Agency (UpBase) và Client (Yumvita). Từng làm Ecom từ những ngày đầu của TikTok Shop tại Việt Nam.
                 </p>
                 <p className="t-body">
                   Hiện là <strong className="text-white">Digital Marketing Manager tại UpBase</strong>, quản lý team 12 người phụ trách 60+ dự án trên TikTok Shop, Shopee, Meta, Google với ngân sách <strong className="text-white">10 tỷ VNĐ/tháng</strong>.
                 </p>
                 <p className="t-body">
-                  Đã mentor 20+ marketer trẻ. Đoạt giải <strong className="text-white">TikTok Awards 2024 — Best Commerce Campaign Gold</strong> với một thương hiệu thời trang.
+                  Đã mentor 20+ marketer trẻ. Đoạt giải <strong className="text-white">TikTok Awards 2024 - Best Commerce Campaign Gold</strong> với một thương hiệu thời trang.
                 </p>
               </div>
             </Reveal>
@@ -605,13 +605,13 @@ function PricingSection() {
   const tiers = [
     {
       name: "Khoá 1", badge: "Khoá đầu tiên", price: "999.000", featured: true,
-      desc: "Mở bán testing — số lượng giới hạn",
+      desc: "Mở bán testing - số lượng giới hạn",
       bullets: ["Full nội dung 12 buổi", "Slot giới hạn 7 học viên", "3 tháng mentoring 1-1", "Group hỗ trợ vĩnh viễn"],
       cta: "Đăng ký Khoá 1",
     },
     {
       name: "Early-bird", badge: "Khoá sau", price: "2.999.000",
-      desc: "Đóng đơn trước cuối tháng — countdown tự reset",
+      desc: "Đóng đơn trước cuối tháng - countdown tự reset",
       bullets: ["Full nội dung 12 buổi", "Slot mở rộng hơn", "3 tháng mentoring 1-1", "Group hỗ trợ vĩnh viễn"],
       cta: "Quan tâm Early-bird",
     },
@@ -681,7 +681,7 @@ function PricingSection() {
                   </ul>
 
                   <Link href="#apply" className={t.featured ? "btn btn-primary w-full justify-center mt-auto" : "btn btn-ghost w-full justify-center mt-auto"}>
-                    {t.cta} <span className="arrow">→</span>
+                    {t.cta}
                   </Link>
                 </div>
               </motion.div>
@@ -696,7 +696,7 @@ function PricingSection() {
             </span>
             <div className="text-[0.92rem] leading-[1.7]" style={{ color: "var(--ink-soft)" }}>
               <strong className="text-white">Đăng ký nhóm 2+ người giảm thêm 10%.</strong>{" "}
-              Apply cùng nhóm bạn cùng học cùng tiến — group nhỏ 1–2 người chung môi trường công ty hoặc trường thường giữ nhịp tốt hơn.
+              Apply cùng nhóm bạn cùng học cùng tiến - group nhỏ 1–2 người chung môi trường công ty hoặc trường thường giữ nhịp tốt hơn.
             </div>
           </div>
         </Reveal>
@@ -708,9 +708,9 @@ function PricingSection() {
 /* ─── APPLY FLOW ─── */
 function ApplyFlowSection() {
   const steps = [
-    { no: "01", title: "Đăng ký form", desc: "Điền form bên dưới — không cam kết gì, chỉ là khởi đầu." },
+    { no: "01", title: "Đăng ký form", desc: "Điền form bên dưới - không cam kết gì, chỉ là khởi đầu." },
     { no: "02", title: "Trainer review", desc: "Mình đọc application và liên hệ trong 24h để đặt lịch quick meet." },
-    { no: "03", title: "Quick meet 15 phút", desc: "Zoom hoặc offline. Cùng nhau check phù hợp 2 chiều — bạn với khoá, mình với bạn." },
+    { no: "03", title: "Quick meet 15 phút", desc: "Zoom hoặc offline. Cùng nhau check phù hợp 2 chiều - bạn với khoá, mình với bạn." },
     { no: "04", title: "Xác nhận + chuyển khoản", desc: "Phù hợp 2 bên: chuyển khoản học phí + sắp xếp lịch học cùng lớp." },
   ];
   return (
@@ -719,7 +719,7 @@ function ApplyFlowSection() {
         <Reveal><div className="section-tag">Quy trình apply</div></Reveal>
         <Reveal delay={0.08}>
           <h2 className="t-h2 mb-12 max-w-[640px] text-white">
-            Apply không phải nộp tiền là vào — <span className="grad-text">2 bên cùng phù hợp</span> mới làm việc.
+            Apply không phải nộp tiền là vào - <span className="grad-text">2 bên cùng phù hợp</span> mới làm việc.
           </h2>
         </Reveal>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 relative">
@@ -786,7 +786,7 @@ function ApplySection() {
             </Reveal>
             <Reveal delay={0.14}>
               <p className="t-body mb-8 max-w-[440px]">
-                Điền application bên dưới — mình sẽ liên hệ trong <strong className="text-white">24 giờ</strong> để đặt lịch quick meet 15 phút. Apply không phải nộp tiền là vào.
+                Điền application bên dưới - mình sẽ liên hệ trong <strong className="text-white">24 giờ</strong> để đặt lịch quick meet 15 phút. Apply không phải nộp tiền là vào.
               </p>
             </Reveal>
             <Reveal delay={0.2}>
@@ -801,9 +801,9 @@ function ApplySection() {
                     <Ic d={<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />} w={16} color="#ffae13" />
                   </span>
                   <div className="text-[0.85rem] leading-[1.6]">
-                    <div className="font-bold text-white mb-0.5">Khoá 1 — chỉ 999.000đ</div>
+                    <div className="font-bold text-white mb-0.5">Khoá 1 - chỉ 999.000đ</div>
                     <div style={{ color: "var(--ink-soft)" }}>
-                      Khoá đầu tiên giới hạn <strong className="text-white">7 học viên</strong>. Mình giảm sâu để testing — các khoá sau sẽ là 2.999.000đ rồi 4.999.000đ.
+                      Khoá đầu tiên giới hạn <strong className="text-white">7 học viên</strong>. Mình giảm sâu để testing - các khoá sau sẽ là 2.999.000đ rồi 4.999.000đ.
                     </div>
                   </div>
                 </div>

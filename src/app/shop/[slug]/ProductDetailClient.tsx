@@ -45,7 +45,7 @@ export default function ProductDetailClient({
         className="w-full inline-flex items-center justify-center gap-2 text-white font-bold text-[1rem] px-6 py-3.5 rounded-xl transition-all hover:scale-[1.02]"
         style={{ background: "var(--grad-primary)", boxShadow: "0 8px 24px rgba(20,110,245,0.35)" }}
       >
-        Mua ngay — {price.toLocaleString("vi-VN")}đ
+        Mua ngay - {price.toLocaleString("vi-VN")}đ
       </button>
       <button
         onClick={handleAddToCart}
@@ -57,7 +57,7 @@ export default function ProductDetailClient({
         }}
       >
         <Icon name={inCart ? "check" : "shopping-cart"} size={16} strokeWidth={inCart ? 3 : 2} />
-        {inCart ? "Đã có trong giỏ — Mở giỏ hàng" : "Thêm vào giỏ hàng"}
+        {inCart ? "Đã có trong giỏ - Mở giỏ hàng" : "Thêm vào giỏ hàng"}
       </button>
       <div className="text-center text-[0.78rem]" style={{ color: "var(--ink-mute)" }}>
         Combo 2 sản phẩm chỉ 169k · Combo 3 chỉ 199k

@@ -36,7 +36,7 @@ export default function ResourceLeadGate({ resourceId, resourceTitle, buttonLabe
     setSubmitting(true);
     setError(null);
     try {
-      // Reuse quiz-leads endpoint with resource-<id> slug — Quảng filter trong Sanity Studio
+      // Reuse quiz-leads endpoint with resource-<id> slug - Quảng filter trong Sanity Studio
       const res = await fetch("/api/quiz-leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -102,14 +102,14 @@ export default function ResourceLeadGate({ resourceId, resourceTitle, buttonLabe
                 </p>
                 {downloadUrl && (
                   <a href={downloadUrl} target="_blank" rel="noreferrer" className="inline-block mt-4 px-5 py-2.5 rounded-lg text-[0.88rem] font-semibold text-white" style={{ background: "var(--grad-primary)" }}>
-                    Tải lại file →
+                    Tải lại file 
                   </a>
                 )}
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-3">
                 <p className="text-[0.85rem] mb-1" style={{ color: "var(--ink-soft)" }}>
-                  Nhập tên + email để nhận tài liệu. Quảng KHÔNG spam — chỉ gửi tài liệu Quảng nghĩ thật sự có giá trị.
+                  Nhập tên + email để nhận tài liệu. Quảng KHÔNG spam - chỉ gửi tài liệu Quảng nghĩ thật sự có giá trị.
                 </p>
                 <div>
                   <label className="block text-[0.78rem] font-semibold mb-1 text-white">Tên *</label>
@@ -144,7 +144,7 @@ export default function ResourceLeadGate({ resourceId, resourceTitle, buttonLabe
                   className="text-white font-bold text-[0.95rem] px-6 py-3 rounded-xl transition-all"
                   style={{ background: "var(--grad-primary)", boxShadow: "0 6px 18px rgba(20,110,245,0.35)", opacity: submitting ? 0.6 : 1 }}
                 >
-                  {submitting ? "Đang gửi..." : downloadUrl ? "Nhận tài liệu →" : "Đăng ký nhận sớm →"}
+                  {submitting ? "Đang gửi..." : downloadUrl ? "Nhận tài liệu " : "Đăng ký nhận sớm "}
                 </button>
               </form>
             )}

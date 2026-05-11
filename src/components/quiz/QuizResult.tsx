@@ -8,7 +8,7 @@ type Props = {
   config: QuizConfig;
   result: {
     archetype: QuizArchetype;
-    /** Phong cách phụ — điểm cao nhì. Chỉ có cho leadership + career. */
+    /** Phong cách phụ - điểm cao nhì. Chỉ có cho leadership + career. */
     secondary?: QuizArchetype;
     secondaryScore?: number;
     topScore?: number;
@@ -36,8 +36,8 @@ export default function QuizResult({ config, result, onRetake }: Props) {
   const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
   const shareUrl = baseUrl ? `${baseUrl}/quiz/${config.slug}/result/${archetype.id}` : "";
   const shareTitle = secondary
-    ? `Tôi vừa làm "${config.name}" — chính: ${archetype.name}, phụ: ${secondary.name}!`
-    : `Tôi vừa làm "${config.name}" — kết quả: ${archetype.name}!`;
+    ? `Tôi vừa làm "${config.name}" - chính: ${archetype.name}, phụ: ${secondary.name}!`
+    : `Tôi vừa làm "${config.name}" - kết quả: ${archetype.name}!`;
 
   // % mix giữa chính + phụ (chỉ khi có secondary)
   const mixTotal = (topScore || 0) + (secondaryScore || 0);
@@ -72,7 +72,7 @@ export default function QuizResult({ config, result, onRetake }: Props) {
         )}
       </div>
 
-      {/* Secondary style — phong cách phụ */}
+      {/* Secondary style - phong cách phụ */}
       {secondary && (
         <div
           className="mt-6 rounded-2xl p-6 md:p-7"
@@ -83,7 +83,7 @@ export default function QuizResult({ config, result, onRetake }: Props) {
         >
           <div className="flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.18em] mb-3" style={{ color: secondary.color }}>
             <Icon name="sparkles" size={14} />
-            <span>Phong cách phụ — bạn mix thêm</span>
+            <span>Phong cách phụ - bạn mix thêm</span>
           </div>
           <div className="flex items-baseline gap-3 mb-3 flex-wrap">
             <h3 className="text-[1.4rem] md:text-[1.6rem] font-extrabold text-white">{secondary.name}</h3>
@@ -108,7 +108,7 @@ export default function QuizResult({ config, result, onRetake }: Props) {
             className="inline-flex items-center gap-1.5 text-[0.85rem] font-semibold"
             style={{ color: secondary.color }}
           >
-            Xem chi tiết phong cách phụ →
+            Xem chi tiết phong cách phụ 
           </Link>
         </div>
       )}
@@ -219,7 +219,7 @@ export default function QuizResult({ config, result, onRetake }: Props) {
           <ul className="flex flex-col gap-2 list-none">
             {archetype.advice.map((a) => (
               <li key={a} className="text-[0.92rem] leading-[1.6] flex items-start gap-2.5" style={{ color: "var(--ink-soft)" }}>
-                <span style={{ color: archetype.color }}>→</span>
+                <span style={{ color: archetype.color }}></span>
                 <span>{a}</span>
               </li>
             ))}
@@ -234,7 +234,7 @@ export default function QuizResult({ config, result, onRetake }: Props) {
             Follow cả 2 phong cách
           </div>
           <p className="text-[0.9rem] mb-4 leading-[1.6]" style={{ color: "var(--ink-soft)" }}>
-            Bạn không thuần 1 phong cách — kết hợp <strong style={{ color: archetype.color }}>{archetype.name}</strong> ({primaryPct}%) với <strong style={{ color: secondary.color }}>{secondary.name}</strong> ({secondaryPct}%). Đọc kỹ cả 2 để hiểu hết điểm mạnh + điểm cần lưu ý:
+            Bạn không thuần 1 phong cách - kết hợp <strong style={{ color: archetype.color }}>{archetype.name}</strong> ({primaryPct}%) với <strong style={{ color: secondary.color }}>{secondary.name}</strong> ({secondaryPct}%). Đọc kỹ cả 2 để hiểu hết điểm mạnh + điểm cần lưu ý:
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Link
@@ -244,7 +244,7 @@ export default function QuizResult({ config, result, onRetake }: Props) {
             >
               <span className="text-[0.65rem] font-bold uppercase tracking-[0.14em]" style={{ color: archetype.color }}>Chính · {primaryPct}%</span>
               <span className="text-[1rem] font-bold text-white">{archetype.name}</span>
-              <span className="text-[0.78rem]" style={{ color: "var(--ink-mute)" }}>Xem chi tiết →</span>
+              <span className="text-[0.78rem]" style={{ color: "var(--ink-mute)" }}>Xem chi tiết </span>
             </Link>
             <Link
               href={`/quiz/${config.slug}/result/${secondary.id}`}
@@ -253,7 +253,7 @@ export default function QuizResult({ config, result, onRetake }: Props) {
             >
               <span className="text-[0.65rem] font-bold uppercase tracking-[0.14em]" style={{ color: secondary.color }}>Phụ · {secondaryPct}%</span>
               <span className="text-[1rem] font-bold text-white">{secondary.name}</span>
-              <span className="text-[0.78rem]" style={{ color: "var(--ink-mute)" }}>Xem chi tiết →</span>
+              <span className="text-[0.78rem]" style={{ color: "var(--ink-mute)" }}>Xem chi tiết </span>
             </Link>
           </div>
         </div>
@@ -279,10 +279,10 @@ export default function QuizResult({ config, result, onRetake }: Props) {
           Muốn hiểu sâu hơn về tư duy lãnh đạo và phát triển sự nghiệp?
         </h3>
         <p className="text-[0.92rem] leading-[1.6] mb-5" style={{ color: "rgba(255,255,255,0.75)" }}>
-          Đọc thêm bài viết về Leadership, Career và phát triển bản thân trên blog của Quảng — chia sẻ thực tế từ kinh nghiệm 60+ project.
+          Đọc thêm bài viết về Leadership, Career và phát triển bản thân trên blog của Quảng - chia sẻ thực tế từ kinh nghiệm 60+ project.
         </p>
         <div className="flex flex-wrap gap-3">
-          <Link href="/blog" className="btn btn-primary">Xem blog →</Link>
+          <Link href="/blog" className="btn btn-primary">Xem blog </Link>
           <Link href="/quiz" className="text-[0.88rem] font-semibold px-4 py-2.5 rounded-lg transition-all" style={{ border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.85)" }}>
             Quiz khác
           </Link>

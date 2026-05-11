@@ -6,7 +6,7 @@ import GradientBlobs from "@/components/GradientBlobs";
 
 export const metadata: Metadata = {
   title: "Đăng nhập",
-  description: "Đăng nhập vào tài khoản nguyenducquang.website — xem đơn hàng, tải lại file, theo dõi quiz history.",
+  description: "Đăng nhập vào tài khoản nguyenducquang.website - xem đơn hàng, tải lại file, theo dõi quiz history.",
   robots: { index: false, follow: false },
 };
 
@@ -23,7 +23,7 @@ export default function SignInPage() {
           ]} />
           <div className="relative max-w-[1100px] mx-auto px-6 md:px-10 pt-28 pb-16 md:pt-32 md:pb-20 w-full">
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-10 items-center">
-              {/* Left — pitch */}
+              {/* Left - pitch */}
               <div className="text-center lg:text-left">
                 <div className="section-tag mx-auto lg:mx-0">Đăng nhập</div>
                 <h1 className="t-h1 leading-[1.1] text-white mb-5">
@@ -48,7 +48,7 @@ export default function SignInPage() {
                 </ul>
               </div>
 
-              {/* Right — Clerk SignIn */}
+              {/* Right - Clerk SignIn */}
               <div className="flex justify-center lg:justify-end">
                 <SignIn
                   appearance={{

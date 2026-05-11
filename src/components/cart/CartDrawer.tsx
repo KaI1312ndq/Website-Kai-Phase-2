@@ -80,7 +80,7 @@ export default function CartDrawer() {
                 className="px-5 py-2.5 rounded-lg text-[0.88rem] font-semibold text-white"
                 style={{ background: "var(--grad-primary)", boxShadow: "0 4px 14px rgba(20,110,245,0.35)" }}
               >
-                Đến Shop →
+                Đến Shop 
               </Link>
             </div>
           ) : (
@@ -152,7 +152,7 @@ export default function CartDrawer() {
             {pricing.discount > 0 && (
               <div className="text-[0.78rem] font-semibold flex items-center gap-1.5" style={{ color: "#5fffaa" }}>
                 <Icon name="gift" size={12} />
-                Đã áp dụng combo — tiết kiệm {pricing.discount.toLocaleString("vi-VN")}đ
+                Đã áp dụng combo - tiết kiệm {pricing.discount.toLocaleString("vi-VN")}đ
               </div>
             )}
             <Link
@@ -161,7 +161,7 @@ export default function CartDrawer() {
               className="text-center px-6 py-3 rounded-xl text-[0.95rem] font-bold text-white transition-all hover:scale-[1.01]"
               style={{ background: "var(--grad-primary)", boxShadow: "0 8px 24px rgba(20,110,245,0.4)" }}
             >
-              Thanh toán →
+              Thanh toán 
             </Link>
             <Link
               href="/shop"

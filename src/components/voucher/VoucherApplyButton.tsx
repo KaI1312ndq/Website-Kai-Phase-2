@@ -23,7 +23,7 @@ export default function VoucherApplyButton({
       className="text-[0.78rem] font-bold px-3 py-1.5 rounded-lg flex-shrink-0"
       style={{ background: "rgba(20,110,245,0.18)", border: "1px solid rgba(20,110,245,0.4)", color: "#7da9ff" }}
     >
-      Dùng ngay →
+      Dùng ngay 
     </button>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 
-/** Sticky progress bar at top — shows % scrolled through article body. */
+/** Sticky progress bar at top - shows % scrolled through article body. */
 export default function ReadingProgress({ targetSelector = "article" }: { targetSelector?: string }) {
   const [progress, setProgress] = useState(0);
 

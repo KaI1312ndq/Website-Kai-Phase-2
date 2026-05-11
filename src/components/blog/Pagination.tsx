@@ -68,7 +68,7 @@ export default function Pagination({
           className="px-3.5 py-2 rounded-lg text-[0.85rem] font-semibold transition-all"
           style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.85)" }}
         >
-          Sau →
+          Sau 
         </Link>
       )}
     </nav>

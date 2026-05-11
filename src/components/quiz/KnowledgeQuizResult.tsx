@@ -22,24 +22,24 @@ type Tier = {
 const TIERS: Tier[] = [
   {
     id: "gold",
-    name: "Vàng — Chuyên gia chỉ số",
+    name: "Vàng - Chuyên gia chỉ số",
     iconName: "trophy",
     color: "#ffd479",
     feedback: "Bạn nắm cực vững các metrics digital ads. Tự tin chạy campaign + tư vấn cho team. Tiếp tục học deep-dive: attribution model, MMP, incremental testing.",
   },
   {
     id: "silver",
-    name: "Bạc — Vững nền tảng",
+    name: "Bạc - Vững nền tảng",
     iconName: "check",
     color: "#7da9ff",
     feedback: "Bạn nắm được phần lớn metrics cơ bản. Cần luyện thêm về benchmark thực tế VN + cách diagnose campaign khi có vấn đề. Đọc blog ROAS + Marketing Index để nâng level.",
   },
   {
     id: "bronze",
-    name: "Đồng — Đang học",
+    name: "Đồng - Đang học",
     iconName: "book-open",
     color: "#a78bff",
-    feedback: "Bạn đang ở giai đoạn học fundamentals. Tập trung học: ROAS, CPC, CPM, CTR, CIR, AOV trước. Đừng nản — phần lớn marketer chỉ thực sự nắm metrics sau 6-12 tháng làm việc thực tế.",
+    feedback: "Bạn đang ở giai đoạn học fundamentals. Tập trung học: ROAS, CPC, CPM, CTR, CIR, AOV trước. Đừng nản - phần lớn marketer chỉ thực sự nắm metrics sau 6-12 tháng làm việc thực tế.",
   },
 ];
 
@@ -82,7 +82,7 @@ export default function KnowledgeQuizResult({
     } catch {}
   }, [config.slug, correctCount]);
 
-  const shareTitle = `Tôi vừa làm "${config.name}" — đạt ${correctCount}/${total} (${percent}%) — tier ${tier.name}!`;
+  const shareTitle = `Tôi vừa làm "${config.name}" - đạt ${correctCount}/${total} (${percent}%) - tier ${tier.name}!`;
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
 
   return (
@@ -160,7 +160,7 @@ export default function KnowledgeQuizResult({
         <ShareButtons url={shareUrl} title={shareTitle} />
       </div>
 
-      {/* Review mode — show all questions with answers */}
+      {/* Review mode - show all questions with answers */}
       {reviewMode && (
         <div className="rounded-2xl p-6 md:p-8 mb-8" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
           <h2 className="text-[1.2rem] font-bold text-white mb-5">Review {total} câu</h2>
@@ -227,10 +227,10 @@ export default function KnowledgeQuizResult({
           Muốn nắm vững metrics + áp dụng thực chiến?
         </h3>
         <p className="text-[0.92rem] leading-[1.6] mb-5" style={{ color: "rgba(255,255,255,0.75)" }}>
-          Đọc thêm blog Marketing Index — benchmarks ROAS/CPA thực tế VN từ 60+ project. Hoặc dùng ROAS Calculator để tính break-even cho shop của bạn.
+          Đọc thêm blog Marketing Index - benchmarks ROAS/CPA thực tế VN từ 60+ project. Hoặc dùng ROAS Calculator để tính break-even cho shop của bạn.
         </p>
         <div className="flex flex-wrap gap-3">
-          <Link href="/index" className="btn btn-primary">Vào Marketing Index <span className="arrow">→</span></Link>
+          <Link href="/index" className="btn btn-primary">Vào Marketing Index</Link>
           <Link href="/tools/roas-calculator" className="text-[0.88rem] font-semibold px-4 py-2.5 rounded-lg transition-all" style={{ border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.85)" }}>
             ROAS Calculator
           </Link>

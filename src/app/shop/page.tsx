@@ -9,15 +9,15 @@ import ShopClient from "./ShopClient";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.nguyenducquang.website";
 
 export const metadata: Metadata = {
-  title: "Shop — Templates Excel, Báo cáo PDF & Brief Marketing 2026",
+  title: "Shop - Templates Excel, Báo cáo PDF & Brief Marketing 2026",
   description:
-    "Mẫu P&L Excel, Salary Benchmark VN 2026, Brief Templates Marketing — premium templates từ kinh nghiệm 60+ project Ecom. Combo 3 chỉ 199k.",
+    "Mẫu P&L Excel, Salary Benchmark VN 2026, Brief Templates Marketing - premium templates từ kinh nghiệm 60+ project Ecom. Combo 3 chỉ 199k.",
   alternates: { canonical: "/shop" },
   openGraph: {
     type: "website",
     locale: "vi_VN",
-    title: "Shop — Templates Marketing & Ecom Premium 2026",
-    description: "Mẫu P&L Excel, Salary PDF, Brief Templates — combo từ 99k.",
+    title: "Shop - Templates Marketing & Ecom Premium 2026",
+    description: "Mẫu P&L Excel, Salary PDF, Brief Templates - combo từ 99k.",
     url: `${SITE_URL}/shop`,
   },
 };
@@ -33,7 +33,7 @@ export default async function ShopPage() {
   const itemListLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "Shop — Premium Templates Marketing",
+    name: "Shop - Premium Templates Marketing",
     description: "Mẫu Excel, PDF, Brief templates premium cho marketer + ecom seller VN.",
     url: `${SITE_URL}/shop`,
     numberOfItems: products.length,
@@ -76,7 +76,7 @@ export default async function ShopPage() {
               Templates &<br /><span className="grad-text">Báo cáo Marketing.</span>
             </h1>
             <p className="t-body-lg max-w-[640px]">
-              Mẫu Excel, PDF, Brief templates đã đóng gói sẵn — từ kinh nghiệm 60+ project Ecom. Mỗi sản phẩm 99k. Mua combo càng nhiều càng giảm sâu.
+              Mẫu Excel, PDF, Brief templates đã đóng gói sẵn - từ kinh nghiệm 60+ project Ecom. Mỗi sản phẩm 99k. Mua combo càng nhiều càng giảm sâu.
             </p>
           </div>
         </section>
@@ -87,7 +87,7 @@ export default async function ShopPage() {
               <div className="rounded-2xl p-10 text-center" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
                 <h2 className="text-[1.2rem] font-bold text-white mb-2">Sản phẩm đang được chuẩn bị</h2>
                 <p className="text-[0.92rem]" style={{ color: "var(--ink-mute)" }}>
-                  Quay lại sớm — Quảng đang upload templates lên.
+                  Quay lại sớm - Quảng đang upload templates lên.
                 </p>
               </div>
             ) : (

@@ -74,7 +74,7 @@ export default function CommentSection({
       if (!res.ok) {
         setError(data.error || "Có lỗi khi gửi bình luận. Vui lòng thử lại.");
       } else {
-        // Optimistic add — show comment immediately (since auto-approve)
+        // Optimistic add - show comment immediately (since auto-approve)
         const newComment: Comment = {
           _id: `local-${Date.now()}`,
           authorName: authorName.trim(),
@@ -102,7 +102,7 @@ export default function CommentSection({
         {comments.length === 0 ? "Bình luận" : `${comments.length} bình luận`}
       </h2>
       <p className="text-[0.88rem] mb-8" style={{ color: "var(--ink-mute)" }}>
-        Chia sẻ ý kiến của bạn — bình luận hiện ngay sau khi gửi.
+        Chia sẻ ý kiến của bạn - bình luận hiện ngay sau khi gửi.
       </p>
 
       {/* Comment list */}
@@ -137,7 +137,7 @@ export default function CommentSection({
           </button>
         )}
         <p className="text-[0.78rem] mb-5" style={{ color: "var(--ink-mute)" }}>
-          Email không bắt buộc, không hiện công khai. Bình luận đăng tức thì — hãy giữ tinh thần xây dựng.
+          Email không bắt buộc, không hiện công khai. Bình luận đăng tức thì - hãy giữ tinh thần xây dựng.
         </p>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -203,7 +203,7 @@ export default function CommentSection({
               className="btn btn-primary"
               style={{ opacity: submitting ? 0.6 : 1 }}
             >
-              {submitting ? "Đang gửi..." : "Gửi bình luận"} {!submitting && <span className="arrow">→</span>}
+              {submitting ? "Đang gửi..." : "Gửi bình luận"}
             </button>
           </div>
         </form>

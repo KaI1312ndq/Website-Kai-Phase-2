@@ -68,7 +68,7 @@ export default function LeadCaptureGate({ config, result, onComplete }: Props) {
           Bài test đã hoàn thành!
         </h2>
         <p className="text-[0.95rem] leading-[1.7]" style={{ color: "var(--ink-soft)" }}>
-          Để nhận <strong className="text-white">phân tích chi tiết tính cách</strong> của bạn — bao gồm điểm mạnh, điểm yếu, công việc phù hợp và cách phát triển — vui lòng để lại thông tin liên hệ.
+          Để nhận <strong className="text-white">phân tích chi tiết tính cách</strong> của bạn - bao gồm điểm mạnh, điểm yếu, công việc phù hợp và cách phát triển - vui lòng để lại thông tin liên hệ.
         </p>
         <p className="text-[0.78rem] mt-3" style={{ color: "rgba(255,255,255,0.45)" }}>
           Thông tin của bạn được bảo mật, không spam.
@@ -139,7 +139,7 @@ export default function LeadCaptureGate({ config, result, onComplete }: Props) {
             opacity: submitting ? 0.6 : 1,
           }}
         >
-          {submitting ? "Đang xử lý..." : <>Xem kết quả của tôi <span>→</span></>}
+          {submitting ? "Đang xử lý..." : <>Xem kết quả của tôi <span></span></>}
         </button>
       </form>
     </div>

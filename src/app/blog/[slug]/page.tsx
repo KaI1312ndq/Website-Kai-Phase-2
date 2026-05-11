@@ -126,7 +126,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
         )}
 
-        {/* HERO — full width with cover image background */}
+        {/* HERO - full width with cover image background */}
         <section className="relative overflow-hidden border-b" style={{ borderColor: "var(--line)" }}>
           <div className="grid-pattern" />
           <div className="blob blob-blue blob-anim" style={{ width: 500, height: 500, top: "-15%", left: "-5%", opacity: 0.5 }} />
@@ -194,7 +194,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             )}
           </div>
 
-          {/* Cover image — full width banner */}
+          {/* Cover image - full width banner */}
           {image && (
             <div className="relative max-w-[1300px] mx-auto px-6 md:px-10 pb-12 md:pb-16">
               <div className="relative aspect-[16/9] rounded-2xl overflow-hidden" style={{ border: "1px solid var(--line)" }}>
@@ -204,7 +204,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           )}
         </section>
 
-        {/* BODY — 2-column with sticky sidebar */}
+        {/* BODY - 2-column with sticky sidebar */}
         <section className="relative">
           <div className="max-w-[1300px] mx-auto px-6 md:px-10 py-14 md:py-20">
             <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_320px] gap-10 xl:gap-16">
@@ -237,10 +237,10 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                     Muốn build P&L thực chiến + scale shop từ kinh nghiệm 60+ project?
                   </div>
                   <p className="text-[0.95rem] leading-[1.7] mb-5" style={{ color: "rgba(255,255,255,0.75)" }}>
-                    Khoá Ecom Foundation — 12 buổi từ cơ cấu chi phí, P&L gian hàng, đến tối ưu ROAS và build team.
+                    Khoá Ecom Foundation - 12 buổi từ cơ cấu chi phí, P&L gian hàng, đến tối ưu ROAS và build team.
                   </p>
                   <Link href="/ecom-foundation" className="btn btn-primary">
-                    Xem khoá học <span className="arrow">→</span>
+                    Xem khoá học
                   </Link>
                 </div>
 
@@ -255,7 +255,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                     ← Tất cả bài viết
                   </Link>
                   <Link href="/#contact" className="text-[0.88rem] font-semibold transition-colors hover:text-white" style={{ color: "var(--ink-soft)" }}>
-                    Liên hệ Quảng →
+                    Liên hệ Quảng 
                   </Link>
                 </div>
 

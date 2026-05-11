@@ -55,7 +55,7 @@ export default function KnowledgeQuizRunner({
       if (!raw) return;
       const data = JSON.parse(raw);
       if (data?.phase === "running" && data?.answers && Object.keys(data.answers).length > 0) {
-        // Just show resume option in intro — don't auto-restore
+        // Just show resume option in intro - don't auto-restore
       }
     } catch {}
   }, [config.slug]);
@@ -99,7 +99,7 @@ export default function KnowledgeQuizRunner({
     window.addEventListener("beforeunload", beforeUnload);
 
     // Guard 2: Browser back/forward button (popstate)
-    // Push a sentinel state — when user clicks back, popstate fires.
+    // Push a sentinel state - when user clicks back, popstate fires.
     // Show confirm dialog. If they cancel, push state back to lock them in.
     window.history.pushState({ quizGuard: true }, "", window.location.href);
 
@@ -111,14 +111,14 @@ export default function KnowledgeQuizRunner({
         // Re-push to keep them on page
         window.history.pushState({ quizGuard: true }, "", window.location.href);
       } else {
-        // Allow exit — let next back navigation through
+        // Allow exit - let next back navigation through
         window.removeEventListener("popstate", onPopState);
         window.history.back();
       }
     };
     window.addEventListener("popstate", onPopState);
 
-    // Guard 3: Click on internal links — intercept and confirm
+    // Guard 3: Click on internal links - intercept and confirm
     const onLinkClick = (e: MouseEvent) => {
       const target = (e.target as HTMLElement)?.closest("a") as HTMLAnchorElement | null;
       if (!target) return;
@@ -275,7 +275,7 @@ export default function KnowledgeQuizRunner({
       {/* Anti-cheat banner */}
       <div className="mt-5 rounded-lg px-4 py-2.5 text-[0.78rem] flex items-center gap-2" style={{ background: "rgba(255,212,121,0.08)", border: "1px solid rgba(255,212,121,0.25)", color: "rgba(255,255,255,0.7)" }}>
         <Icon name="info" size={14} color="#ffd479" />
-        <span>Bài đang chấm điểm — tránh đóng tab hoặc rời trang giữa chừng. Tiến độ tự động lưu.</span>
+        <span>Bài đang chấm điểm - tránh đóng tab hoặc rời trang giữa chừng. Tiến độ tự động lưu.</span>
       </div>
     </div>
   );
@@ -317,9 +317,9 @@ function IntroScreen({
           Quy tắc bài test
         </div>
         <ul className="flex flex-col gap-2 text-[0.88rem]" style={{ color: "rgba(255,255,255,0.85)" }}>
-          <li className="flex items-start gap-2"><Icon name="clock" size={14} color={config.color} /><span>Mỗi câu có {secondsPerQ} giây để chọn — hết giờ tự đánh sai</span></li>
+          <li className="flex items-start gap-2"><Icon name="clock" size={14} color={config.color} /><span>Mỗi câu có {secondsPerQ} giây để chọn - hết giờ tự đánh sai</span></li>
           <li className="flex items-start gap-2"><Icon name="check" size={14} color="#5fffaa" /><span>Sau khi chọn: hiện đáp án đúng + giải thích, tự chuyển câu</span></li>
-          <li className="flex items-start gap-2"><Icon name="alert-triangle" size={14} color="#ffd479" /><span>Đã chọn rồi không sửa được — chọn cẩn thận</span></li>
+          <li className="flex items-start gap-2"><Icon name="alert-triangle" size={14} color="#ffd479" /><span>Đã chọn rồi không sửa được - chọn cẩn thận</span></li>
           <li className="flex items-start gap-2"><Icon name="trophy" size={14} color="#ffd479" /><span>Cuối bài có tier Vàng (≥80%), Bạc (≥50%), Đồng</span></li>
         </ul>
       </div>
@@ -544,7 +544,7 @@ function QuestionCard({
               <div className="text-[0.85rem] font-bold mb-1" style={{ color: timedOut ? "#ffd479" : pickedThisQ === question.ans ? COLORS.correct : COLORS.wrong }}>
                 {timedOut ? "Hết giờ" : pickedThisQ === question.ans ? "Chính xác!" : "Sai rồi"}
                 {!timedOut && pickedThisQ !== question.ans && (
-                  <span className="font-normal" style={{ color: "rgba(255,255,255,0.7)" }}> — đáp án đúng là <strong style={{ color: COLORS.correct }}>{String.fromCharCode(65 + question.ans)}</strong></span>
+                  <span className="font-normal" style={{ color: "rgba(255,255,255,0.7)" }}> - đáp án đúng là <strong style={{ color: COLORS.correct }}>{String.fromCharCode(65 + question.ans)}</strong></span>
                 )}
               </div>
               <div className="text-[0.88rem] leading-[1.6]" style={{ color: "rgba(255,255,255,0.85)" }}>

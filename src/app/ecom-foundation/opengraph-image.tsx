@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "nodejs";
-export const alt = "Foundation Ecommerce — Tư duy thật, Thực chiến thật";
+export const alt = "Foundation Ecommerce - Tư duy thật, Thực chiến thật";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -62,7 +62,7 @@ export default async function OG() {
           </div>
         </div>
 
-        {/* Middle — title */}
+        {/* Middle - title */}
         <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
           <div style={{ fontSize: "120px", fontWeight: 800, lineHeight: 1.0, letterSpacing: "-0.04em", display: "flex", flexDirection: "column" }}>
             <span style={{ color: "white" }}>Foundation</span>
@@ -73,7 +73,7 @@ export default async function OG() {
           </div>
         </div>
 
-        {/* Bottom — pricing + format */}
+        {/* Bottom - pricing + format */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: "40px" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
             <div style={{ fontSize: "16px", color: "rgba(255,255,255,0.5)", letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600 }}>Khoá 1 · giới hạn 7 học viên</div>

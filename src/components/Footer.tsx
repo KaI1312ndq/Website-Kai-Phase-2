@@ -17,7 +17,7 @@ export default function Footer() {
             Kai<span className="grad-text">.</span>
           </Link>
           <p className="text-[0.92rem] leading-[1.7] max-w-[380px] mt-5" style={{ color: "rgba(255,255,255,0.55)" }}>
-            Ecom Growth Expert & Team Builder. Giúp thương hiệu tăng trưởng bền vững trên TMĐT — TikTok Shop, Shopee, Meta, Google.
+            Ecom Growth Expert & Team Builder. Giúp thương hiệu tăng trưởng bền vững trên TMĐT - TikTok Shop, Shopee, Meta, Google.
           </p>
           <div className="flex gap-2 mt-6">
             {[

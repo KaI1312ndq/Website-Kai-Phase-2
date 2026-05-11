@@ -82,17 +82,17 @@ const pillars = [
 
 const expertise = [
   { icon: <IconTrend />, title: "Ecommerce Performance Marketing", desc: "Triển khai chiến lược full-funnel trên TikTok, Shopee, Meta, Google với mục tiêu ROAS và tăng trưởng doanh thu.", tags: ["TikTok Ads", "Shopee Ads", "Meta Ads", "Google Ads"] },
-  { icon: <IconTeam />, title: "Team Building & Leadership", desc: "Xây dựng team từ 0→1, thiết lập quy trình, đào tạo, quản trị hiệu suất và văn hóa hướng đến kết quả.", tags: ["Recruitment", "Training", "OKR/KPI", "Operation"] },
+  { icon: <IconTeam />, title: "Team Building & Leadership", desc: "Xây dựng team từ 01, thiết lập quy trình, đào tạo, quản trị hiệu suất và văn hóa hướng đến kết quả.", tags: ["Recruitment", "Training", "OKR/KPI", "Operation"] },
   { icon: <IconNav />, title: "Ecommerce Strategy & Consulting", desc: "Tư vấn mô hình, định vị sản phẩm, chiến lược kênh, chiến lược giá và kế hoạch tăng trưởng dài hạn.", tags: ["Strategy", "Brand Positioning", "Growth Plan"] },
 ];
 
 const caseStudies = [
-  { platform: "TikTok Shop · Fashion", metric: "11B", unit: "", label: "Doanh thu 3 ngày Super Brand Day", detail: "Top 1 TikTok Shop Fashion", role: "Lead Media + Content Strategy", award: "Best Commerce Campaign Gold — TikTok Awards 2024", tags: ["TikTok Shop", "Media", "KOC/KOL"] },
+  { platform: "TikTok Shop · Fashion", metric: "11B", unit: "", label: "Doanh thu 3 ngày Super Brand Day", detail: "Top 1 TikTok Shop Fashion", role: "Lead Media + Content Strategy", award: "Best Commerce Campaign Gold - TikTok Awards 2024", tags: ["TikTok Shop", "Media", "KOC/KOL"] },
   { platform: "Multi-platform · Health & Beauty", metric: "60", unit: "+", label: "Dự án triển khai đồng thời", detail: "TikTok · Shopee · Meta · Google", role: "Digital Marketing Manager", award: "Ngân sách 10B+/tháng, tăng trưởng 5-20%/tháng", tags: ["Performance", "Multi-platform", "ROAS"] },
   { platform: "Multi-platform · Health & Beauty 2", metric: "5-20", unit: "%", label: "Tăng trưởng tháng-on-tháng", detail: "Quản lý team Performance", role: "Team Lead", award: "", tags: ["Performance", "Growth"] },
-  { platform: "Sắp cập nhật", metric: "—", unit: "", label: "Case study thứ 4", detail: "", role: "", award: "", tags: [] as string[] },
-  { platform: "Sắp cập nhật", metric: "—", unit: "", label: "Case study thứ 5", detail: "", role: "", award: "", tags: [] as string[] },
-  { platform: "Sắp cập nhật", metric: "—", unit: "", label: "Case study thứ 6", detail: "", role: "", award: "", tags: [] as string[] },
+  { platform: "Sắp cập nhật", metric: "-", unit: "", label: "Case study thứ 4", detail: "", role: "", award: "", tags: [] as string[] },
+  { platform: "Sắp cập nhật", metric: "-", unit: "", label: "Case study thứ 5", detail: "", role: "", award: "", tags: [] as string[] },
+  { platform: "Sắp cập nhật", metric: "-", unit: "", label: "Case study thứ 6", detail: "", role: "", award: "", tags: [] as string[] },
 ];
 
 const timeline = [
@@ -104,11 +104,11 @@ const timeline = [
 ];
 
 const faqs = [
-  { q: "Khoá Foundation Ecommerce dành cho ai?", a: "Sinh viên muốn vào ngành TMĐT, người mới đi làm chuyển sang Ecom, marketer trẻ đang làm sàn nhưng muốn nâng tư duy. Không phù hợp nếu bạn đã hơn 3 năm Ecom expert — sẽ quá cơ bản." },
+  { q: "Khoá Foundation Ecommerce dành cho ai?", a: "Sinh viên muốn vào ngành TMĐT, người mới đi làm chuyển sang Ecom, marketer trẻ đang làm sàn nhưng muốn nâng tư duy. Không phù hợp nếu bạn đã hơn 3 năm Ecom expert - sẽ quá cơ bản." },
   { q: "Lộ trình 12 buổi gồm những gì?", a: "5 module: Tư duy thị trường (2 buổi) · Chiến lược SP (1 buổi) · Vận hành sàn (2 buổi) · Performance Ads (4 buổi) · Data & Plan + Capstone (3 buổi). Mỗi buổi 2–3h, có quiz cuối buổi và bài thu hoạch Sheet. Chi tiết từng buổi xem ở trang Khoá học." },
-  { q: "Học phí bao nhiêu?", a: "Khoá 1 mở bán testing chỉ 999.000đ — giới hạn 7 học viên. Early-bird các khoá sau 2.999.000đ. Giá chuẩn 4.999.000đ. Đăng ký nhóm 2+ người giảm thêm 10%." },
-  { q: "Sau khoá có hỗ trợ gì?", a: "3 tháng mentoring 1-1 (tối thiểu 2 tuần/buổi) — career advice, CV review, technical Q&A, apply công việc. Thêm slide + template + Zalo group hỗ trợ vĩnh viễn." },
-  { q: "Apply thế nào?", a: "Vào trang Khoá học, điền application. Mình sẽ liên hệ trong 24h đặt lịch quick meet 15 phút để 2 bên cùng đánh giá phù hợp. Sau đó mới chuyển khoản — apply không phải nộp tiền là vào." },
+  { q: "Học phí bao nhiêu?", a: "Khoá 1 mở bán testing chỉ 999.000đ - giới hạn 7 học viên. Early-bird các khoá sau 2.999.000đ. Giá chuẩn 4.999.000đ. Đăng ký nhóm 2+ người giảm thêm 10%." },
+  { q: "Sau khoá có hỗ trợ gì?", a: "3 tháng mentoring 1-1 (tối thiểu 2 tuần/buổi) - career advice, CV review, technical Q&A, apply công việc. Thêm slide + template + Zalo group hỗ trợ vĩnh viễn." },
+  { q: "Apply thế nào?", a: "Vào trang Khoá học, điền application. Mình sẽ liên hệ trong 24h đặt lịch quick meet 15 phút để 2 bên cùng đánh giá phù hợp. Sau đó mới chuyển khoản - apply không phải nộp tiền là vào." },
 ];
 
 const mentorFeatures = [
@@ -134,11 +134,11 @@ type Props = {
 };
 
 export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sanityTimeline, sanityBrands }: Props = {}) {
-  // Map Sanity → display shape, fall back to hardcoded if empty
+  // Map Sanity  display shape, fall back to hardcoded if empty
   const caseStudyList = sanityCaseStudies && sanityCaseStudies.length
     ? sanityCaseStudies.map((c) => ({
-        platform: [c.platforms?.join(" · "), c.brand].filter(Boolean).join(" · ") || c.title || "—",
-        metric: c.headline || "—",
+        platform: [c.platforms?.join(" · "), c.brand].filter(Boolean).join(" · ") || c.title || "-",
+        metric: c.headline || "-",
         unit: c.headlineLabel || "",
         label: c.description || "",
         detail: c.brand || "",
@@ -201,17 +201,17 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
 
               <Reveal instant>
                 <p className="t-body-lg max-w-[500px] mb-8" style={{ color: "rgba(255,255,255,0.72)" }}>
-                  Tôi xây team, vận hành Ecom đa kênh và mentor cho thế hệ marketer mới — với kết quả đo lường bằng số thật, và sự nghiệp được xây dựng chậm mà chắc.
+                  Tôi xây team, vận hành Ecom đa kênh và mentor cho thế hệ marketer mới - với kết quả đo lường bằng số thật, và sự nghiệp được xây dựng chậm mà chắc.
                 </p>
               </Reveal>
 
               <Reveal instant>
                 <div className="flex gap-3 items-center flex-wrap">
                   <Link href="/#contact" className="btn btn-primary">
-                    Làm việc cùng tôi <span className="arrow">→</span>
+                    Làm việc cùng tôi
                   </Link>
                   <Link href="/ecom-foundation" className="btn btn-ghost">
-                    Xem khoá Ecom Foundation <span className="arrow">→</span>
+                    Xem khoá Ecom Foundation
                   </Link>
                 </div>
               </Reveal>
@@ -271,7 +271,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
                   </h2>
                 </div>
                 <Link href="/#casestudies" className="btn btn-ghost text-[0.85rem] py-2.5">
-                  Xem case studies <span className="arrow">→</span>
+                  Xem case studies
                 </Link>
               </div>
             </Reveal>
@@ -405,7 +405,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
                   Tại <strong className="text-white">UpBase</strong>, quản lý team 12 người phụ trách 60+ dự án trên TikTok Shop, Shopee, Meta, Google với ngân sách <strong className="text-white">10 tỷ VNĐ/tháng</strong>.
                 </p>
                 <Link href="/#contact" className="btn btn-ghost">
-                  Tìm hiểu thêm về tôi <span className="arrow">→</span>
+                  Tìm hiểu thêm về tôi
                 </Link>
               </Reveal>
             </div>
@@ -491,12 +491,12 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
                     )}
                     {cs.award && (
                       <p className="text-[0.82rem] pt-4 border-t mt-3 font-semibold grad-text" style={{ borderColor: "var(--line)" }}>
-                        → {cs.award}
+                         {cs.award}
                       </p>
                     )}
                     {cs.slug && (
                       <div className="text-[0.78rem] font-semibold mt-3 pt-3 border-t grad-text group-hover:underline" style={{ borderColor: "var(--line)" }}>
-                        Đọc chi tiết →
+                        Đọc chi tiết 
                       </div>
                     )}
                   </motion.div>
@@ -564,7 +564,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
                 ))}
               </div>
 
-              {/* Portrait card — sticky right */}
+              {/* Portrait card - sticky right */}
               <Reveal delay={0.2}>
                 <div className="lg:sticky lg:top-28">
                   <motion.div
@@ -580,7 +580,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
                     {/* Photo */}
                     <div className="relative" style={{ background: "linear-gradient(135deg, #0d1c52 0%, #142768 100%)" }}>
                       <div className="absolute inset-0 z-0" style={{ backgroundImage: "radial-gradient(rgba(125,169,255,0.18) 1.2px, transparent 1.2px)", backgroundSize: "20px 20px", opacity: 0.5 }} />
-                      <Image src="/kai-photo.webp" alt="Nguyễn Đức Quảng — Digital Marketing Manager" width={600} height={750} className="relative z-10 w-full h-auto block object-cover object-top" style={{ aspectRatio: "4/5" }} sizes="(max-width: 768px) 90vw, 360px" />
+                      <Image src="/kai-photo.webp" alt="Nguyễn Đức Quảng - Digital Marketing Manager" width={600} height={750} className="relative z-10 w-full h-auto block object-cover object-top" style={{ aspectRatio: "4/5" }} sizes="(max-width: 768px) 90vw, 360px" />
                       <div className="absolute inset-0 z-20" style={{ background: "linear-gradient(180deg, transparent 50%, rgba(8,16,43,0.85) 100%)" }} />
                     </div>
                     {/* Caption */}
@@ -617,7 +617,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
                       {[...Array(t?.rating || 5)].map((_, j) => <IconStar key={j} />)}
                     </div>
                     <p className="text-[0.95rem] leading-[1.75] italic mb-6" style={{ color: "var(--ink-soft)" }}>
-                      "{t?.content || "Sắp cập nhật — nhận xét từ client hoặc đồng nghiệp."}"
+                      "{t?.content || "Sắp cập nhật - nhận xét từ client hoặc đồng nghiệp."}"
                     </p>
                     <div className="flex items-center gap-3 pt-4 border-t" style={{ borderColor: "var(--line)" }}>
                       <div className="w-10 h-10 rounded-full flex-shrink-0" style={{ background: "var(--grad-primary)" }} />
@@ -649,7 +649,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
               </Reveal>
               <Reveal delay={0.14}>
                 <p className="text-[1.05rem] leading-[1.75]" style={{ color: "var(--ink-soft)" }}>
-                  Khoá foundation về thương mại điện tử — 12 buổi · 6 tuần · 100% Offline Hà Nội. Xây tư duy đúng từ đầu để bước vào ngành làm thật, không học cho biết.
+                  Khoá foundation về thương mại điện tử - 12 buổi · 6 tuần · 100% Offline Hà Nội. Xây tư duy đúng từ đầu để bước vào ngành làm thật, không học cho biết.
                 </p>
               </Reveal>
             </div>
@@ -666,9 +666,9 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
                   {[
                     { num: "M1", title: "Tư duy thị trường TMĐT", count: "2 buổi", items: ["Thương mại & Ecom hiện nay", "Sharing kinh nghiệm trainer", "Chiến lược kinh doanh đa sàn"], color: "#4ad6ff" },
                     { num: "M2", title: "Chiến lược sản phẩm", count: "1 buổi", items: ["Phân tích đối thủ", "Định vị USP & SWOT", "Customer journey"], color: "#7da9ff" },
-                    { num: "M3", title: "Vận hành sàn", count: "2 buổi", items: ["Setup gian hàng A→Z", "Tư duy giá & phí sàn", "Tồn kho · Điểm gian hàng (Mall vs non-Mall)"], color: "#a78bff" },
+                    { num: "M3", title: "Vận hành sàn", count: "2 buổi", items: ["Setup gian hàng AZ", "Tư duy giá & phí sàn", "Tồn kho · Điểm gian hàng (Mall vs non-Mall)"], color: "#a78bff" },
                     { num: "M4", title: "Performance Marketing", count: "4 buổi", items: ["Traffic & thuật toán", "Bộ chỉ số Marketing", "TikTok · Shopee · Facebook Ads · KOC"], color: "#ed52cb" },
-                    { num: "M5", title: "Data & Plan + Capstone", count: "3 buổi", items: ["Plan tháng/quý + IMC", "Plan 1 năm + P&L", "Phân tích data → giải pháp"], color: "#ffae13" },
+                    { num: "M5", title: "Data & Plan + Capstone", count: "3 buổi", items: ["Plan tháng/quý + IMC", "Plan 1 năm + P&L", "Phân tích data  giải pháp"], color: "#ffae13" },
                   ].map((m, i) => (
                     <motion.div key={i}
                       initial={{ opacity: 0, x: -20 }}
@@ -714,7 +714,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
                   ))}
                 </div>
                 <Link href="/ecom-foundation" className="btn btn-primary">
-                  Xem chi tiết khoá học <span className="arrow">→</span>
+                  Xem chi tiết khoá học
                 </Link>
               </Reveal>
             </div>
@@ -768,7 +768,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
                     </div>
 
                     <Link href="/ecom-foundation#apply" className="btn btn-primary w-full justify-center">
-                      Đăng ký Early-bird <span className="arrow">→</span>
+                      Đăng ký Early-bird
                     </Link>
                   </div>
                 </motion.div>
@@ -790,7 +790,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
                   <div className="text-[0.78rem] leading-[1.6]">
                     <div className="font-bold mb-0.5" style={{ color: "#ffd479" }}>Khoá đầu tiên · chỉ 999.000đ</div>
                     <div style={{ color: "rgba(255,255,255,0.65)" }}>
-                      Số lượng giới hạn —{" "}
+                      Số lượng giới hạn -{" "}
                       <a href="https://zalo.me/0868464658" target="_blank" rel="noreferrer" className="underline font-semibold" style={{ color: "#ffd479" }}>
                         inbox mình
                       </a>{" "}
@@ -813,7 +813,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
             </Reveal>
             <Reveal delay={0.14}>
               <p className="t-caption mb-10 max-w-[520px]">
-                Câu hỏi sâu hơn về curriculum và policy — xem đầy đủ tại trang Khoá học.
+                Câu hỏi sâu hơn về curriculum và policy - xem đầy đủ tại trang Khoá học.
               </p>
             </Reveal>
             <div className="max-w-[760px]">
@@ -834,7 +834,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
               ))}
               <div className="mt-8">
                 <Link href="/ecom-foundation#faq" className="btn btn-ghost text-[0.85rem] py-2.5">
-                  Xem toàn bộ FAQ khoá học <span className="arrow">→</span>
+                  Xem toàn bộ FAQ khoá học
                 </Link>
               </div>
             </div>
@@ -856,7 +856,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
                 </Reveal>
                 <Reveal delay={0.14}>
                   <p className="t-body mb-8 max-w-[440px]">
-                    Để lại thông tin — mình sẽ liên hệ trong vòng <strong className="text-white">24 giờ</strong> để trao đổi về khoá học hoặc dự án phù hợp với bạn.
+                    Để lại thông tin - mình sẽ liên hệ trong vòng <strong className="text-white">24 giờ</strong> để trao đổi về khoá học hoặc dự án phù hợp với bạn.
                   </p>
                 </Reveal>
                 <Reveal delay={0.2}>

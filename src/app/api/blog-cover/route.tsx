@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import type { NextRequest } from "next/server";
 
 /**
- * Dynamic blog cover image generator — fallback khi post chưa có coverImage Sanity.
+ * Dynamic blog cover image generator - fallback khi post chưa có coverImage Sanity.
  *   GET /api/blog-cover?title=<title>&category=<slug>&w=1600&h=900
  *
  * Render: gradient hero + category badge + title adaptive font size.
@@ -10,7 +10,7 @@ import type { NextRequest } from "next/server";
  */
 
 // Note: Node runtime (default). Edge runtime trên Vercel Hobby plan có issue
-// silently trả empty body — Node runtime ImageResponse render đúng.
+// silently trả empty body - Node runtime ImageResponse render đúng.
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 

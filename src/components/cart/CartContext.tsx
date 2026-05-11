@@ -65,7 +65,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setHydrated(true);
   }, []);
 
-  // 2) When user signs in, merge server cart with local cart (server wins on conflict — most recent device)
+  // 2) When user signs in, merge server cart with local cart (server wins on conflict - most recent device)
   //    Then on subsequent local changes, push to server (debounced).
   useEffect(() => {
     if (!hydrated || !isLoaded) return;

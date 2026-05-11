@@ -57,7 +57,7 @@ export default async function OG({ params }: { params: { slug: string; type: str
           </div>
         </div>
 
-        {/* Middle — title */}
+        {/* Middle - title */}
         <div style={{ display: "flex", flexDirection: "column", gap: "16px", position: "relative", zIndex: 1 }}>
           <div style={{ fontSize: "26px", fontWeight: 600, color: "rgba(255,255,255,0.55)", letterSpacing: "0.12em", textTransform: "uppercase" }}>
             Kết quả của tôi
@@ -70,7 +70,7 @@ export default async function OG({ params }: { params: { slug: string; type: str
           </div>
         </div>
 
-        {/* Bottom — strengths + URL */}
+        {/* Bottom - strengths + URL */}
         <div style={{ display: "flex", flexDirection: "column", gap: "14px", position: "relative", zIndex: 1 }}>
           <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
             {archetype.strengths.slice(0, 3).map((s) => (

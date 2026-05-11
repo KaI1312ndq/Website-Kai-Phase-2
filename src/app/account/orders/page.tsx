@@ -90,7 +90,7 @@ export default async function OrdersPage() {
                   className="inline-block px-5 py-2.5 rounded-lg text-[0.9rem] font-semibold text-white"
                   style={{ background: "var(--grad-primary)", boxShadow: "0 4px 14px rgba(20,110,245,0.35)" }}
                 >
-                  Đến Shop →
+                  Đến Shop 
                 </Link>
               </div>
             ) : (
@@ -151,12 +151,12 @@ export default async function OrdersPage() {
                             className="text-[0.82rem] font-bold px-4 py-2 rounded-lg text-white"
                             style={{ background: "var(--grad-primary)", boxShadow: "0 4px 12px rgba(20,110,245,0.3)" }}
                           >
-                            Tải lại file →
+                            Tải lại file 
                           </Link>
                         )}
                         {expired && (
                           <span className="text-[0.78rem] px-3 py-2 rounded-lg" style={{ color: "#ffd479", background: "rgba(255,212,121,0.08)" }}>
-                            Link đã hết hạn — liên hệ admin để cấp lại
+                            Link đã hết hạn - liên hệ admin để cấp lại
                           </span>
                         )}
                       </div>

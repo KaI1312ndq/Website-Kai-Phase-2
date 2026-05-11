@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "nodejs";
-export const alt = "Tính Thuế TNCN 2026 — So sánh 2025 vs 2026 miễn phí";
+export const alt = "Tính Thuế TNCN 2026 - So sánh 2025 vs 2026 miễn phí";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -35,7 +35,7 @@ export default async function OG() {
           </div>
         </div>
 
-        {/* Middle — title */}
+        {/* Middle - title */}
         <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
           <div style={{ fontSize: "28px", fontWeight: 600, color: "rgba(255,255,255,0.55)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
             Thuế TNCN 2026

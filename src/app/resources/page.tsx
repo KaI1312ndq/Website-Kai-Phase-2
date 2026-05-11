@@ -10,14 +10,14 @@ import ResourceLeadGate from "./ResourceLeadGate";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.nguyenducquang.website";
 
 export const metadata: Metadata = {
-  title: "Tài liệu miễn phí — Marketing / Ecom cho sinh viên + junior marketer",
+  title: "Tài liệu miễn phí - Marketing / Ecom cho sinh viên + junior marketer",
   description:
-    "Tổng hợp tài liệu miễn phí của Quảng — Salary Benchmark 2026, Career Roadmap, CV Template Marketing, P&L Excel, framework cheatsheet. Cộng với 3 tool + 5 quiz trên site.",
+    "Tổng hợp tài liệu miễn phí của Quảng - Salary Benchmark 2026, Career Roadmap, CV Template Marketing, P&L Excel, framework cheatsheet. Cộng với 3 tool + 5 quiz trên site.",
   alternates: { canonical: "/resources" },
   openGraph: {
     type: "website",
     title: "Tài liệu miễn phí · Nguyễn Đức Quảng",
-    description: "Salary Benchmark, Career Roadmap, CV Template, P&L Excel + tools + quizzes — tất cả miễn phí.",
+    description: "Salary Benchmark, Career Roadmap, CV Template, P&L Excel + tools + quizzes - tất cả miễn phí.",
     url: `${SITE_URL}/resources`,
   },
 };
@@ -29,7 +29,7 @@ type Magnet = {
   icon: IconName;
   color: string;
   status: "available" | "soon";
-  /** Available: file URL to deliver. Soon: undefined → form chỉ thu email, Quảng send sau */
+  /** Available: file URL to deliver. Soon: undefined  form chỉ thu email, Quảng send sau */
   downloadUrl?: string;
   fileType: string;
   forAudience: string;
@@ -39,7 +39,7 @@ const MAGNETS: Magnet[] = [
   {
     id: "salary-benchmark-2026",
     title: "Salary Benchmark Marketing/Ecom VN 2026",
-    description: "Báo cáo lương chi tiết cho 5 archetype + 4 level (Intern → Manager). Dữ liệu tổng hợp từ 200+ JD + survey alumni.",
+    description: "Báo cáo lương chi tiết cho 5 archetype + 4 level (Intern  Manager). Dữ liệu tổng hợp từ 200+ JD + survey alumni.",
     icon: "trending-up",
     color: "#5fffaa",
     status: "soon",
@@ -69,7 +69,7 @@ const MAGNETS: Magnet[] = [
   {
     id: "pnl-template",
     title: "P&L Excel Template gian hàng TMĐT",
-    description: "File Excel P&L 5 tầng (Net Revenue → EBITDA) cho TikTok Shop + Shopee. Có sẵn formula, fill số là ra.",
+    description: "File Excel P&L 5 tầng (Net Revenue  EBITDA) cho TikTok Shop + Shopee. Có sẵn formula, fill số là ra.",
     icon: "tool",
     color: "#a78bff",
     status: "soon",
@@ -98,7 +98,7 @@ const MAGNETS: Magnet[] = [
   },
 ];
 
-// Tools đã có sẵn — link trực tiếp, không cần email gate
+// Tools đã có sẵn - link trực tiếp, không cần email gate
 const FREE_TOOLS = [
   { title: "Tính phí sàn TikTok & Shopee", href: "/tools/tinh-phi-san", icon: "tool" as IconName, color: "#146ef5" },
   { title: "ROAS Calculator", href: "/tools/roas-calculator", icon: "trending-up" as IconName, color: "#7a3dff" },
@@ -141,14 +141,14 @@ export default function ResourcesPage() {
           <div className="relative max-w-[1200px] mx-auto px-6 md:px-10 pt-28 pb-12 md:pt-32 md:pb-16">
             <div className="section-tag">Tài liệu miễn phí</div>
             <h1 className="t-h1 leading-[1.05] text-white mb-4 max-w-[900px]">
-              Toàn bộ tài liệu Quảng làm <span className="grad-text">— miễn phí, không spam</span>
+              Toàn bộ tài liệu Quảng làm <span className="grad-text">- miễn phí, không spam</span>
             </h1>
             <p className="t-body-lg max-w-[700px] mb-6" style={{ color: "var(--ink-soft)" }}>
-              Salary Benchmark, Career Roadmap, CV Template, P&L Excel, Cheatsheet copywriting — cộng với <strong className="text-white">3 tool + 5 quiz</strong> dùng trực tiếp trên site. Quảng làm cho sinh viên + junior marketer thật sự cần.
+              Salary Benchmark, Career Roadmap, CV Template, P&L Excel, Cheatsheet copywriting - cộng với <strong className="text-white">3 tool + 5 quiz</strong> dùng trực tiếp trên site. Quảng làm cho sinh viên + junior marketer thật sự cần.
             </p>
             <div className="flex flex-wrap gap-3">
               <a href="#downloads" className="px-6 py-3 rounded-xl text-[0.95rem] font-bold text-white" style={{ background: "var(--grad-primary)", boxShadow: "0 8px 24px rgba(20,110,245,0.35)" }}>
-                Xem tài liệu tải về →
+                Xem tài liệu tải về 
               </a>
               <a href="#tools" className="px-6 py-3 rounded-xl text-[0.95rem] font-bold" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid var(--line)", color: "white" }}>
                 Tools + Quizzes
@@ -163,9 +163,9 @@ export default function ResourcesPage() {
             <Reveal>
               <div className="mb-8">
                 <div className="section-tag">Tải về</div>
-                <h2 className="t-h2 text-white">{MAGNETS.length} tài liệu — nhập email để nhận</h2>
+                <h2 className="t-h2 text-white">{MAGNETS.length} tài liệu - nhập email để nhận</h2>
                 <p className="text-[0.92rem] mt-2 max-w-[600px]" style={{ color: "var(--ink-mute)" }}>
-                  Tài liệu &quot;Sắp ra mắt&quot; bạn vẫn nhập email được — Quảng sẽ gửi ngay khi file ready (1-2 tuần).
+                  Tài liệu &quot;Sắp ra mắt&quot; bạn vẫn nhập email được - Quảng sẽ gửi ngay khi file ready (1-2 tuần).
                 </p>
               </div>
             </Reveal>
@@ -209,7 +209,7 @@ export default function ResourcesPage() {
                       <ResourceLeadGate
                         resourceId={m.id}
                         resourceTitle={m.title}
-                        buttonLabel={isAvailable ? "Tải miễn phí →" : "Đăng ký nhận sớm →"}
+                        buttonLabel={isAvailable ? "Tải miễn phí " : "Đăng ký nhận sớm "}
                         buttonColor={m.color}
                         downloadUrl={m.downloadUrl}
                       />
@@ -230,7 +230,7 @@ export default function ResourcesPage() {
                 <div className="section-tag">Tools miễn phí</div>
                 <h2 className="t-h2 text-white mb-2">{FREE_TOOLS.length} tool tính toán online</h2>
                 <p className="text-[0.9rem] mb-5" style={{ color: "var(--ink-mute)" }}>
-                  Tính phí sàn / ROAS / P&L ngay trên trình duyệt — không cần tải, không cần đăng ký.
+                  Tính phí sàn / ROAS / P&L ngay trên trình duyệt - không cần tải, không cần đăng ký.
                 </p>
                 <ul className="flex flex-col gap-2.5 list-none">
                   {FREE_TOOLS.map((t) => (
@@ -256,7 +256,7 @@ export default function ResourcesPage() {
                 <div className="section-tag">Quiz miễn phí</div>
                 <h2 className="t-h2 text-white mb-2">{QUIZZES.length} bài test</h2>
                 <p className="text-[0.9rem] mb-5" style={{ color: "var(--ink-mute)" }}>
-                  Test phong cách / career / kiến thức — có lưu kết quả + trang chi tiết SEO riêng.
+                  Test phong cách / career / kiến thức - có lưu kết quả + trang chi tiết SEO riêng.
                 </p>
                 <ul className="flex flex-col gap-2.5 list-none">
                   {QUIZZES.map((q) => (
@@ -297,7 +297,7 @@ export default function ResourcesPage() {
                 className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[1rem] font-bold text-white"
                 style={{ background: "var(--grad-primary)", boxShadow: "0 8px 24px rgba(20,110,245,0.4)" }}
               >
-                Làm test hướng nghiệp + nhận newsletter →
+                Làm test hướng nghiệp + nhận newsletter 
               </Link>
               <p className="text-[0.78rem] mt-3" style={{ color: "var(--ink-mute)" }}>
                 Hiện newsletter gom qua quiz lead. Email signup riêng sẽ launch khi audience đủ lớn.

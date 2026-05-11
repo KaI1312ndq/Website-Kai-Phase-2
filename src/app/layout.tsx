@@ -12,7 +12,7 @@ import PageTransition from "@/components/PageTransition";
 import { CartProvider } from "@/components/cart/CartContext";
 import CartDrawer from "@/components/cart/CartDrawer";
 
-// Clerk — use official dark baseTheme + site-palette overrides for proper contrast
+// Clerk - use official dark baseTheme + site-palette overrides for proper contrast
 const clerkAppearance = {
   baseTheme: dark,
   variables: {
@@ -72,7 +72,7 @@ const clerkAppearance = {
   },
 };
 
-// Reduced weights to cut critical font requests in half (was 5+4 = 9 weights → 3+2 = 5)
+// Reduced weights to cut critical font requests in half (was 5+4 = 9 weights  3+2 = 5)
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin", "vietnamese"],
   weight: ["400", "600", "700"],
@@ -94,8 +94,8 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.nguyenducquang
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Nguyễn Đức Quảng — Ecom Growth Expert",
-    template: "%s — Nguyễn Đức Quảng",
+    default: "Nguyễn Đức Quảng - Ecom Growth Expert",
+    template: "%s - Nguyễn Đức Quảng",
   },
   description:
     "Digital Marketing Manager, Team Builder & Ecom Strategist. Giúp thương hiệu tăng trưởng bền vững trên TikTok Shop, Shopee, Meta và các nền tảng Ecommerce.",
@@ -113,12 +113,12 @@ export const metadata: Metadata = {
     locale: "vi_VN",
     siteName: "Nguyễn Đức Quảng",
     url: SITE_URL,
-    title: "Nguyễn Đức Quảng — Ecom Growth Expert",
+    title: "Nguyễn Đức Quảng - Ecom Growth Expert",
     description: "Digital Marketing Manager, Team Builder & Ecom Strategist.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nguyễn Đức Quảng — Ecom Growth Expert",
+    title: "Nguyễn Đức Quảng - Ecom Growth Expert",
     description: "Marketer · Leader · Mentor.",
   },
   robots: {
@@ -161,7 +161,7 @@ const personLd = {
     { "@type": "Language", name: "English", alternateName: "en" },
   ],
   award: [
-    "TikTok Awards 2024 — Best Commerce Campaign Gold",
+    "TikTok Awards 2024 - Best Commerce Campaign Gold",
   ],
   alumniOf: { "@type": "EducationalOrganization", name: "Marketing/Ecom Vietnam" },
   hasOccupation: {
@@ -196,14 +196,14 @@ const websiteLd = {
 const organizationLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  name: "Nguyễn Đức Quảng — Ecom Growth Expert",
+  name: "Nguyễn Đức Quảng - Ecom Growth Expert",
   url: SITE_URL,
   logo: `${SITE_URL}/icon.png`,
   image: `${SITE_URL}/kai-photo.webp`,
   founder: { "@type": "Person", name: "Nguyễn Đức Quảng" },
   email: "qforwork13@gmail.com",
   telephone: "+84868464658",
-  priceRange: "999.000đ — 5.000.000đ",
+  priceRange: "999.000đ - 5.000.000đ",
   address: { "@type": "PostalAddress", addressLocality: "Hà Nội", addressRegion: "Thanh Xuân", addressCountry: "VN" },
   areaServed: { "@type": "Country", name: "Vietnam" },
   serviceType: ["Ecommerce Consulting", "Digital Marketing Training", "Team Building", "Performance Marketing"],

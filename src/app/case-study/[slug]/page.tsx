@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   let cs: any;
   try { cs = await getCaseStudy(slug); } catch {}
   if (!cs) return { title: "Case Study" };
-  const title = `${cs.title || cs.brand || "Case Study"} — Case Study`;
+  const title = `${cs.title || cs.brand || "Case Study"} - Case Study`;
   const description = cs.description || `${cs.brand || ""} · ${(cs.platforms || []).join(" · ")}`.trim();
   return {
     title,
@@ -53,7 +53,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
   try { cs = await getCaseStudy(slug); } catch {}
   if (!cs) notFound();
 
-  // Related — same category, exclude current
+  // Related - same category, exclude current
   let related: any[] = [];
   try {
     const all = await getCaseStudies();
@@ -177,7 +177,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
                 ← Tất cả case studies
               </Link>
               <Link href="/#contact" className="btn btn-primary">
-                Làm việc cùng tôi <span className="arrow">→</span>
+                Làm việc cùng tôi
               </Link>
             </div>
           </div>
@@ -208,7 +208,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
                         {r.description}
                       </div>
                     )}
-                    <div className="text-[0.82rem] font-semibold grad-text mt-2">Đọc tiếp →</div>
+                    <div className="text-[0.82rem] font-semibold grad-text mt-2">Đọc tiếp </div>
                   </Link>
                 ))}
               </div>

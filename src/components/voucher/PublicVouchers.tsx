@@ -73,7 +73,7 @@ export default async function PublicVouchers({ product }: { product?: CartItem }
         ))}
       </ul>
       <div className="mt-2 text-[0.7rem]" style={{ color: "rgba(255,255,255,0.4)" }}>
-        Nhập mã ở bước checkout — có thể dùng cùng với combo giảm giá.
+        Nhập mã ở bước checkout - có thể dùng cùng với combo giảm giá.
       </div>
     </div>
   );

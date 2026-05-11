@@ -145,7 +145,7 @@ export default function CheckoutClient() {
           className="inline-block px-5 py-2.5 rounded-lg text-[0.9rem] font-semibold text-white"
           style={{ background: "var(--grad-primary)", boxShadow: "0 4px 14px rgba(20,110,245,0.35)" }}
         >
-          Đến Shop →
+          Đến Shop 
         </Link>
       </div>
     );
@@ -156,7 +156,7 @@ export default function CheckoutClient() {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6 items-start">
-      {/* Left — form */}
+      {/* Left - form */}
       <form
         onSubmit={handleSubmit}
         className="rounded-2xl p-6 md:p-7 flex flex-col gap-5"
@@ -240,7 +240,7 @@ export default function CheckoutClient() {
         </button>
       </form>
 
-      {/* Right — order summary */}
+      {/* Right - order summary */}
       <aside className="rounded-2xl p-6 lg:sticky lg:top-24" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
         <h2 className="text-[1rem] font-bold text-white mb-4">Đơn hàng của bạn</h2>
 
@@ -289,7 +289,7 @@ export default function CheckoutClient() {
             </div>
           )}
 
-          {/* Voucher input — applies directly to total below */}
+          {/* Voucher input - applies directly to total below */}
           <div className="mt-3 pt-3" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
             <div className="text-[0.72rem] font-semibold uppercase tracking-[0.14em] mb-2" style={{ color: "rgba(255,255,255,0.5)" }}>
               Mã voucher

@@ -9,9 +9,9 @@ import Icon, { type IconName } from "@/components/icons/Icon";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.nguyenducquang.website";
 
 export const metadata: Metadata = {
-  title: "Khoá học — Marketing / Ecom cho sinh viên + junior marketer",
+  title: "Khoá học - Marketing / Ecom cho sinh viên + junior marketer",
   description:
-    "Khoá Ecom Foundation cohort + mini courses self-paced về TikTok Ads, Shopee Performance, P&L gian hàng. Học từ thực chiến — đầu ra cụ thể, không lý thuyết suông.",
+    "Khoá Ecom Foundation cohort + mini courses self-paced về TikTok Ads, Shopee Performance, P&L gian hàng. Học từ thực chiến - đầu ra cụ thể, không lý thuyết suông.",
   alternates: { canonical: "/courses" },
   openGraph: {
     type: "website",
@@ -44,14 +44,14 @@ const COURSES: Course[] = [
     id: "ecom-foundation",
     slug: "ecom-foundation",
     title: "Khoá Ecom Foundation",
-    subtitle: "Cohort 8 tuần — từ 0 đến Marketing Manager Ecom",
+    subtitle: "Cohort 8 tuần - từ 0 đến Marketing Manager Ecom",
     format: "Cohort",
     category: "offline",
     duration: "8 tuần · live online + recording",
-    price: "Cohort 1 — apply để biết giá",
+    price: "Cohort 1 - apply để biết giá",
     audience: "Sinh viên năm cuối + new joiner muốn vào Marketing/Ecom + chủ shop nhỏ tự chạy",
     highlights: [
-      "11 module thực chiến: tư duy đa sàn → setup → traffic → ads → plan IMC → P&L",
+      "11 module thực chiến: tư duy đa sàn  setup  traffic  ads  plan IMC  P&L",
       "1 brand thật + dataset thật để làm bài tập + final project P&L 12 tháng",
       "Direct feedback từ Quảng + alumni Slack community",
       "Outcome: portfolio P&L + brief campaign mang đi phỏng vấn",
@@ -64,7 +64,7 @@ const COURSES: Course[] = [
   },
   {
     id: "tiktok-ads",
-    title: "TikTok Ads từ A→Z",
+    title: "TikTok Ads từ AZ",
     subtitle: "Mini course self-paced cho junior marketer",
     format: "Self-paced",
     category: "online",
@@ -74,7 +74,7 @@ const COURSES: Course[] = [
     highlights: [
       "Setup TikTok Ads Manager + Business Center từ 0",
       "Cấu trúc campaign · target audience · bidding · creative testing",
-      "Phân tích metric ROAS, CIR, CPM — biết khi nào scale, khi nào pause",
+      "Phân tích metric ROAS, CIR, CPM - biết khi nào scale, khi nào pause",
       "Case study 3 brand thực: FMCG, Beauty, Tech",
     ],
     color: "#ff5a72",
@@ -94,9 +94,9 @@ const COURSES: Course[] = [
     audience: "Seller mới + Marketing assistant đang quản gian hàng Shopee",
     highlights: [
       "Setup gian hàng + xếp hạng category + chính sách Shopee Mall",
-      "Shopee Ads — Discovery vs Search · bidding strategy",
+      "Shopee Ads - Discovery vs Search · bidding strategy",
       "Optimize listing: title · image · description theo Shopee algorithm",
-      "Voucher · Flash Sale · Live · KOL Affiliate — khi nào dùng cái nào",
+      "Voucher · Flash Sale · Live · KOL Affiliate - khi nào dùng cái nào",
     ],
     color: "#ee4d2d",
     icon: "tool",
@@ -107,16 +107,16 @@ const COURSES: Course[] = [
   {
     id: "pnl-for-newbie",
     title: "P&L gian hàng cho người mới",
-    subtitle: "Mini course self-paced — đọc + làm được P&L",
+    subtitle: "Mini course self-paced - đọc + làm được P&L",
     format: "Self-paced",
     category: "online",
     duration: "8 video · ~2h",
     price: "299.000đ",
-    audience: "Marketer + seller mới — chưa biết đọc/làm P&L mà cần để đàm phán KPI",
+    audience: "Marketer + seller mới - chưa biết đọc/làm P&L mà cần để đàm phán KPI",
     highlights: [
-      "Net Revenue → Gross → Contribution → Marketing → EBITDA: từng tầng nghĩa là gì",
+      "Net Revenue  Gross  Contribution  Marketing  EBITDA: từng tầng nghĩa là gì",
       "Phân biệt phí sàn cố định vs variable · cost mở rộng kênh",
-      "Excel template kèm theo — fill số là ra ngay",
+      "Excel template kèm theo - fill số là ra ngay",
       "Áp dụng trên 2 case TikTok Shop + Shopee thực tế",
     ],
     color: "#5fffaa",
@@ -127,7 +127,7 @@ const COURSES: Course[] = [
   },
   {
     id: "career-marketing",
-    title: "MBTI x Career — Chọn nghề Marketing đúng",
+    title: "MBTI x Career - Chọn nghề Marketing đúng",
     subtitle: "Mini course self-paced cho sinh viên + new grad",
     format: "Self-paced",
     category: "online",
@@ -135,9 +135,9 @@ const COURSES: Course[] = [
     price: "299.000đ",
     audience: "Sinh viên năm 3-4 + new grad chưa biết chọn nhánh nào trong Marketing/Ecom",
     highlights: [
-      "5 archetype career trong Marketing/Ecom Việt Nam — bạn fit cái nào",
+      "5 archetype career trong Marketing/Ecom Việt Nam - bạn fit cái nào",
       "Lương + lộ trình thăng tiến 1-3-5 năm theo từng archetype",
-      "Skill cần học (110 skills framework) — ưu tiên gì cho 6 tháng đầu",
+      "Skill cần học (110 skills framework) - ưu tiên gì cho 6 tháng đầu",
       "CV template + interview question theo từng nhánh",
     ],
     color: "#a78bff",
@@ -155,11 +155,11 @@ const FAQS = [
   },
   {
     q: "Tôi là sinh viên năm 3, chưa từng làm Marketing, học được không?",
-    a: "Khoá Ecom Foundation thiết kế cho người MỚI — không yêu cầu kiến thức nền. Mini courses tuỳ topic: TikTok Ads / Shopee Performance / P&L cần biết 1 chút Marketing cơ bản; MBTI x Career thì không yêu cầu gì.",
+    a: "Khoá Ecom Foundation thiết kế cho người MỚI - không yêu cầu kiến thức nền. Mini courses tuỳ topic: TikTok Ads / Shopee Performance / P&L cần biết 1 chút Marketing cơ bản; MBTI x Career thì không yêu cầu gì.",
   },
   {
     q: "Học xong có việc làm không?",
-    a: "Quảng không guarantee job — bạn vẫn phải tự apply + phỏng vấn. NHƯNG outcome của khoá là bạn có: (1) Portfolio P&L thực tế + brief campaign + final project mang đi phỏng vấn, (2) Network alumni đã đi làm tại brand/agency, (3) Letter of recommendation từ Quảng nếu hoàn thành tốt. 70% học viên Khoá 1 đã apply được job Marketing/Ecom trong 3 tháng sau khi học xong.",
+    a: "Quảng không guarantee job - bạn vẫn phải tự apply + phỏng vấn. NHƯNG outcome của khoá là bạn có: (1) Portfolio P&L thực tế + brief campaign + final project mang đi phỏng vấn, (2) Network alumni đã đi làm tại brand/agency, (3) Letter of recommendation từ Quảng nếu hoàn thành tốt. 70% học viên Khoá 1 đã apply được job Marketing/Ecom trong 3 tháng sau khi học xong.",
   },
   {
     q: "Bao giờ Mini Courses ra mắt?",
@@ -174,7 +174,7 @@ const FAQS = [
 const STATUS_META: Record<Course["status"], { label: string; color: string }> = {
   available: { label: "Đang mở", color: "#5fffaa" },
   soon: { label: "Sắp ra mắt", color: "#ffd479" },
-  waitlist: { label: "Đầy slot — waitlist", color: "#7da9ff" },
+  waitlist: { label: "Đầy slot - waitlist", color: "#7da9ff" },
 };
 
 export default function CoursesPage() {
@@ -221,14 +221,14 @@ export default function CoursesPage() {
           <div className="relative max-w-[1200px] mx-auto px-6 md:px-10 pt-28 pb-12 md:pt-32 md:pb-16">
             <div className="section-tag">Khoá học</div>
             <h1 className="t-h1 leading-[1.05] text-white mb-4 max-w-[900px]">
-              Học Marketing / Ecom <span className="grad-text">từ thực chiến — không lý thuyết suông</span>
+              Học Marketing / Ecom <span className="grad-text">từ thực chiến - không lý thuyết suông</span>
             </h1>
             <p className="t-body-lg max-w-[700px] mb-6" style={{ color: "var(--ink-soft)" }}>
               Cohort Ecom Foundation 8 tuần + mini courses self-paced + workshop offline tại Hà Nội. Thiết kế cho <strong className="text-white">sinh viên năm cuối / new joiner / junior marketer</strong> muốn vào ngành Marketing/Ecom Việt Nam một cách đúng đắn.
             </p>
             <div className="flex flex-wrap gap-3">
               <a href="#offline" className="px-6 py-3 rounded-xl text-[0.95rem] font-bold text-white" style={{ background: "var(--grad-primary)", boxShadow: "0 8px 24px rgba(20,110,245,0.35)" }}>
-                Cohort & Workshop →
+                Cohort & Workshop 
               </a>
               <a href="#online" className="px-6 py-3 rounded-xl text-[0.95rem] font-bold" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid var(--line)", color: "white" }}>
                 Mini courses online
@@ -240,7 +240,7 @@ export default function CoursesPage() {
           </div>
         </section>
 
-        {/* OFFLINE / HYBRID — flagship cohort + workshop */}
+        {/* OFFLINE / HYBRID - flagship cohort + workshop */}
         <section id="offline" className="relative">
           <div className="max-w-[1200px] mx-auto px-6 md:px-10 py-16 md:py-20">
             <Reveal>
@@ -310,7 +310,7 @@ export default function CoursesPage() {
                           className="text-[0.85rem] font-bold px-4 py-2.5 rounded-lg text-white"
                           style={{ background: c.color === "#146ef5" ? "var(--grad-primary)" : c.color, boxShadow: `0 4px 14px ${c.color}50` }}
                         >
-                          {c.cta} →
+                          {c.cta} 
                         </Link>
                       ) : (
                         <a
@@ -336,13 +336,13 @@ export default function CoursesPage() {
               <div className="flex flex-wrap items-end justify-between gap-4 mb-10">
                 <div>
                   <div className="section-tag">Online · Self-paced</div>
-                  <h2 className="t-h2 text-white leading-tight">Mini courses tự học · 299k—499k</h2>
+                  <h2 className="t-h2 text-white leading-tight">Mini courses tự học · 299k-499k</h2>
                   <p className="t-body mt-2 max-w-[600px]" style={{ color: "var(--ink-mute)" }}>
                     Video tự học, không deadline, mua 1 lần dùng mãi. Phù hợp unblock 1 kỹ năng cụ thể (TikTok Ads, Shopee, P&L) trong vài giờ.
                   </p>
                 </div>
                 <Link href="/quiz/huong-nghiep-marketing" className="text-[0.85rem] font-semibold inline-flex items-center gap-1.5" style={{ color: "#7da9ff" }}>
-                  Test hướng nghiệp gợi ý khoá →
+                  Test hướng nghiệp gợi ý khoá 
                 </Link>
               </div>
             </Reveal>
@@ -402,7 +402,7 @@ export default function CoursesPage() {
                           className="text-[0.85rem] font-bold px-4 py-2.5 rounded-lg text-white"
                           style={{ background: c.color === "#146ef5" ? "var(--grad-primary)" : c.color, boxShadow: `0 4px 14px ${c.color}50` }}
                         >
-                          {c.cta} →
+                          {c.cta} 
                         </Link>
                       ) : (
                         <a
@@ -435,7 +435,7 @@ export default function CoursesPage() {
                 className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-[1rem] font-bold text-white"
                 style={{ background: "var(--grad-primary)", boxShadow: "0 8px 24px rgba(20,110,245,0.4)" }}
               >
-                Làm test hướng nghiệp + đăng ký →
+                Làm test hướng nghiệp + đăng ký 
               </Link>
               <p className="text-[0.78rem] mt-4" style={{ color: "var(--ink-mute)" }}>
                 Hiện waitlist gom qua form test (5 phút). Sẽ có signup form riêng khi mini courses chính thức launch.

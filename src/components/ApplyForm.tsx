@@ -45,17 +45,17 @@ export default function ApplyForm() {
 
     const payload = {
       access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY,
-      subject: `[Ecom Foundation · K1] Application — ${form.name}`,
+      subject: `[Ecom Foundation · K1] Application - ${form.name}`,
       from_name: `Ecom Foundation Apply · ${form.name}`,
       botcheck: "",
       "Họ tên": form.name,
       Email: form.email,
       "Zalo / SĐT": form.phone,
-      "Giai đoạn": stageLabel[form.stage] || form.stage || "—",
-      "Mục tiêu": form.goal || "—",
-      "Laptop + Excel": form.hasLaptop === "yes" ? "Có" : form.hasLaptop === "no" ? "Chưa" : "—",
-      "Cam kết tham dự": commitLabel[form.commit] || "—",
-      "Slot quick meet": slotLabel[form.slot] || form.slot || "—",
+      "Giai đoạn": stageLabel[form.stage] || form.stage || "-",
+      "Mục tiêu": form.goal || "-",
+      "Laptop + Excel": form.hasLaptop === "yes" ? "Có" : form.hasLaptop === "no" ? "Chưa" : "-",
+      "Cam kết tham dự": commitLabel[form.commit] || "-",
+      "Slot quick meet": slotLabel[form.slot] || form.slot || "-",
     };
 
     try {
@@ -209,11 +209,11 @@ export default function ApplyForm() {
         </div>
         <button onClick={submit} disabled={state === "loading" || !form.name || !form.email || !form.phone}
           className="btn btn-primary w-full justify-center py-3.5 text-[0.95rem] font-semibold disabled:opacity-50 disabled:cursor-not-allowed">
-          {state === "loading" ? "Đang gửi..." : <>Gửi application <span className="arrow">→</span></>}
+          {state === "loading" ? "Đang gửi..." : <>Gửi application</>}
         </button>
         {state === "error" && <p className="text-center text-[0.82rem]" style={{ color: "#ee1d36" }}>Có lỗi. Vui lòng inbox Zalo hoặc Email trực tiếp.</p>}
         <p className="text-center text-[0.78rem]" style={{ color: "rgba(255,255,255,0.5)" }}>
-          Application không phải nộp tiền — sẽ có quick meet 15 phút trước khi 2 bên xác nhận.
+          Application không phải nộp tiền - sẽ có quick meet 15 phút trước khi 2 bên xác nhận.
         </p>
       </div>
     </div>

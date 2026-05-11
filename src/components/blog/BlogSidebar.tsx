@@ -50,7 +50,7 @@ export default function BlogSidebar({
         </div>
       )}
 
-      {/* Relevant Tools (top 2 — context-aware) */}
+      {/* Relevant Tools (top 2 - context-aware) */}
       {relevantTools.length > 0 && (
         <div className="rounded-xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--line)" }}>
           <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-3" style={{ color: "rgba(255,255,255,0.5)" }}>
@@ -80,7 +80,7 @@ export default function BlogSidebar({
         </div>
       )}
 
-      {/* Relevant Quiz (single — context-aware) */}
+      {/* Relevant Quiz (single - context-aware) */}
       {relevantQuiz && (
         <div className="rounded-xl p-5" style={{ background: `${relevantQuiz.color}10`, border: `1px solid ${relevantQuiz.color}33` }}>
           <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-3" style={{ color: relevantQuiz.color }}>
@@ -97,7 +97,7 @@ export default function BlogSidebar({
               <div className="text-[0.92rem] font-bold text-white leading-snug mb-1">{relevantQuiz.title}</div>
               <div className="text-[0.78rem] mb-3" style={{ color: "rgba(255,255,255,0.65)" }}>{relevantQuiz.description}</div>
               <Link href={relevantQuiz.href} className="text-[0.82rem] font-bold inline-flex items-center gap-1" style={{ color: relevantQuiz.color }}>
-                Làm test ngay <span>→</span>
+                Làm test ngay <span></span>
               </Link>
             </div>
           </div>
@@ -121,7 +121,7 @@ export default function BlogSidebar({
                 <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: t.color }} />
                 <span className="text-[0.85rem] font-medium text-white">{t.label}</span>
               </span>
-              <span className="text-[0.78rem]" style={{ color: "rgba(255,255,255,0.4)" }}>→</span>
+              <span className="text-[0.78rem]" style={{ color: "rgba(255,255,255,0.4)" }}></span>
             </Link>
           ))}
         </div>
@@ -133,14 +133,14 @@ export default function BlogSidebar({
           Khoá học · Đang mở apply
         </div>
         <div className="text-[1.05rem] font-bold mb-2 leading-tight text-white">
-          Ecom Foundation — 12 buổi build P&L thực chiến.
+          Ecom Foundation - 12 buổi build P&L thực chiến.
         </div>
         <div className="text-[0.82rem] leading-[1.55] mb-4" style={{ color: "rgba(255,255,255,0.7)" }}>
-          Từ cơ cấu chi phí, P&L gian hàng, tối ưu ROAS đến scale team — kinh nghiệm 60+ project Ecom.
+          Từ cơ cấu chi phí, P&L gian hàng, tối ưu ROAS đến scale team - kinh nghiệm 60+ project Ecom.
         </div>
         <Link href="/ecom-foundation" className="block w-full text-center py-2.5 rounded-lg text-[0.85rem] font-bold transition-all"
           style={{ background: "var(--grad-primary)", color: "white", boxShadow: "0 4px 14px rgba(20,110,245,0.35)" }}>
-          Xem khoá học →
+          Xem khoá học 
         </Link>
       </div>
 

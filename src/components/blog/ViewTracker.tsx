@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 
-/** Fires once per page mount — increments viewCount via API (server-side dedupes per IP). */
+/** Fires once per page mount - increments viewCount via API (server-side dedupes per IP). */
 export default function ViewTracker({ postId }: { postId: string }) {
   useEffect(() => {
     if (!postId) return;

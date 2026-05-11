@@ -176,8 +176,8 @@ export default function ROASCalculator() {
           </div>
           <PercentInput value={platformFeePct} onChange={handlePlatformFeeChange} />
           <div className="mt-1.5 text-[0.75rem]" style={{ color: "rgba(255,255,255,0.4)" }}>
-            Hoặc nhập tay — lấy số chính xác từ{" "}
-            <a href="/tools/tinh-phi-san" className="underline" style={{ color: "#7da9ff" }}>Tool tính phí sàn →</a>
+            Hoặc nhập tay - lấy số chính xác từ{" "}
+            <a href="/tools/tinh-phi-san" className="underline" style={{ color: "#7da9ff" }}>Tool tính phí sàn </a>
           </div>
         </div>
 
@@ -201,7 +201,7 @@ export default function ROASCalculator() {
             label="Break-even ROAS"
             value={result.breakEvenROAS ? result.breakEvenROAS.toFixed(1) + "x" : null}
             sub={result.breakEvenROAS
-              ? `Dưới ${result.breakEvenROAS.toFixed(1)}x là đang lỗ. Ads spend = ${result.breakEvenROAS ? fmtVND(price / result.breakEvenROAS) : "—"}₫/đơn`
+              ? `Dưới ${result.breakEvenROAS.toFixed(1)}x là đang lỗ. Ads spend = ${result.breakEvenROAS ? fmtVND(price / result.breakEvenROAS) : "-"}₫/đơn`
               : "Gross margin quá thấp so với phí sàn + vận hành"}
             color="#4ad6ff"
           />
@@ -227,7 +227,7 @@ export default function ROASCalculator() {
         {result.isViable && result.targetROAS && (
           <div className="glass p-6">
             <div className="text-[0.7rem] font-bold uppercase tracking-[0.15em] mb-4" style={{ color: "rgba(255,255,255,0.5)" }}>
-              Phân bổ doanh thu — tại target ROAS {result.targetROAS.toFixed(1)}x
+              Phân bổ doanh thu - tại target ROAS {result.targetROAS.toFixed(1)}x
             </div>
             <div className="flex h-8 rounded-lg overflow-hidden mb-4">
               {breakdownBars.map((b) =>
@@ -256,7 +256,7 @@ export default function ROASCalculator() {
         <div className="glass overflow-hidden">
           <div className="px-6 py-4 border-b" style={{ borderColor: "var(--line)" }}>
             <div className="text-[0.7rem] font-bold uppercase tracking-[0.15em]" style={{ color: "rgba(255,255,255,0.5)" }}>
-              Bảng kịch bản ROAS — lợi nhuận/đơn theo ROAS
+              Bảng kịch bản ROAS - lợi nhuận/đơn theo ROAS
             </div>
           </div>
           <div className="overflow-x-auto">

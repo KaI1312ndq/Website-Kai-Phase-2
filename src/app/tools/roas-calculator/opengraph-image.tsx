@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "nodejs";
-export const alt = "ROAS Calculator — Tính Break-even & Target ROAS miễn phí";
+export const alt = "ROAS Calculator - Tính Break-even & Target ROAS miễn phí";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -35,7 +35,7 @@ export default async function OG() {
           </div>
         </div>
 
-        {/* Middle — title */}
+        {/* Middle - title */}
         <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
           <div style={{ fontSize: "28px", fontWeight: 600, color: "rgba(255,255,255,0.55)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
             ROAS Calculator 2026
@@ -49,7 +49,7 @@ export default async function OG() {
           </div>
         </div>
 
-        {/* Bottom — feature chips */}
+        {/* Bottom - feature chips */}
         <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
           {["Break-even ROAS", "Target Margin", "Bảng 13 kịch bản", "Phân bổ doanh thu", "Miễn phí"].map((t) => (
             <div key={t} style={{

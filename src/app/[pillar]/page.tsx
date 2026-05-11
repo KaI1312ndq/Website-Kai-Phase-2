@@ -16,7 +16,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.nguyenducquang
 const TOOL_META: Record<string, { title: string; desc: string; color: string; icon: IconName }> = {
   "tinh-phi-san": {
     title: "Tính phí sàn TikTok & Shopee",
-    desc: "So sánh đồng thời 4 platform — Mall vs Non-Mall, có search ngành cấp 3.",
+    desc: "So sánh đồng thời 4 platform - Mall vs Non-Mall, có search ngành cấp 3.",
     color: "#4ad6ff",
     icon: "tool",
   },
@@ -28,7 +28,7 @@ const TOOL_META: Record<string, { title: string; desc: string; color: string; ic
   },
   "pnl-ecom": {
     title: "Mẫu P&L Ecom",
-    desc: "Báo cáo lãi lỗ 5 tầng: Net Revenue → Gross → Contribution → Marketing → EBITDA.",
+    desc: "Báo cáo lãi lỗ 5 tầng: Net Revenue  Gross  Contribution  Marketing  EBITDA.",
     color: "#a78bff",
     icon: "layers",
   },
@@ -281,7 +281,7 @@ export default async function PillarPage({ params }: { params: Promise<{ pillar:
                       <div className="flex-1 min-w-0">
                         <h3 className="text-[1.1rem] font-bold text-white mb-2">{tool.title}</h3>
                         <p className="text-[0.88rem] leading-[1.6]" style={{ color: "var(--ink-mute)" }}>{tool.desc}</p>
-                        <div className="text-[0.85rem] font-semibold mt-3" style={{ color: tool.color }}>Mở tool →</div>
+                        <div className="text-[0.85rem] font-semibold mt-3" style={{ color: tool.color }}>Mở tool </div>
                       </div>
                     </Link>
                   );
@@ -305,7 +305,7 @@ export default async function PillarPage({ params }: { params: Promise<{ pillar:
                   {quiz.shortDescription}
                 </p>
                 <Link href={`/quiz/${quiz.slug}`} className="btn btn-primary">
-                  Làm test ngay <span className="arrow">→</span>
+                  Làm test ngay
                 </Link>
               </div>
             </div>
@@ -371,9 +371,9 @@ export default async function PillarPage({ params }: { params: Promise<{ pillar:
             <div className="section-tag mx-auto">Khoá học</div>
             <h2 className="t-h2 mb-4 text-white">Muốn học sâu hơn từ <span className="grad-text">60+ project thực chiến?</span></h2>
             <p className="t-body max-w-[600px] mx-auto mb-8">
-              Khoá Ecom Foundation — 12 buổi từ cơ cấu chi phí, P&L gian hàng, tối ưu ROAS đến scale team Ecom.
+              Khoá Ecom Foundation - 12 buổi từ cơ cấu chi phí, P&L gian hàng, tối ưu ROAS đến scale team Ecom.
             </p>
-            <Link href="/ecom-foundation" className="btn btn-primary">Xem khoá học <span className="arrow">→</span></Link>
+            <Link href="/ecom-foundation" className="btn btn-primary">Xem khoá học</Link>
           </div>
         </section>
       </main>

@@ -6,7 +6,7 @@ import GradientBlobs from "@/components/GradientBlobs";
 import Icon from "@/components/icons/Icon";
 
 export const metadata: Metadata = {
-  title: "Trang không tồn tại — 404",
+  title: "Trang không tồn tại - 404",
   description: "Trang bạn tìm kiếm không tồn tại hoặc đã được di chuyển. Khám phá các tools, blog và quizzes của Quảng.",
 };
 
@@ -43,7 +43,7 @@ export default function NotFound() {
                 Trang này không tồn tại
               </h1>
               <p className="text-[1rem] max-w-[560px] mx-auto" style={{ color: "var(--ink-soft)" }}>
-                Có thể URL đã thay đổi, hoặc bạn vừa gõ nhầm. Đừng lo — site có nhiều thứ hay khám phá ở dưới.
+                Có thể URL đã thay đổi, hoặc bạn vừa gõ nhầm. Đừng lo - site có nhiều thứ hay khám phá ở dưới.
               </p>
             </div>
 
@@ -97,7 +97,7 @@ export default function NotFound() {
                   Hoặc tìm bài viết theo từ khoá:
                 </p>
                 <Link href="/blog" className="btn btn-primary">
-                  Vào trang Blog tìm kiếm <span className="arrow">→</span>
+                  Vào trang Blog tìm kiếm
                 </Link>
               </div>
             </div>

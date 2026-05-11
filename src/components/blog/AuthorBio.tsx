@@ -42,13 +42,13 @@ export default function AuthorBio() {
           </div>
           <p className="text-[0.92rem] leading-[1.7] mb-5" style={{ color: "var(--ink-soft)" }}>
             Đã quản lý growth + team marketing cho 60+ thương hiệu TMĐT tại Việt Nam, từ shop launch 0 đến brand 5+ tỷ GMV/tháng.
-            Đoạt giải <strong className="text-white">TikTok Awards 2024 — Best Commerce Campaign Gold</strong>.
+            Đoạt giải <strong className="text-white">TikTok Awards 2024 - Best Commerce Campaign Gold</strong>.
             Hiện mentor 20+ marketer trẻ và phụ trách khoá <Link href="/ecom-foundation" className="underline" style={{ color: "#7da9ff" }}>Ecom Foundation</Link>.
           </p>
 
           <div className="flex items-center gap-3 flex-wrap">
             <Link href="/ecom-foundation" className="btn btn-primary text-[0.85rem] py-2 px-4">
-              Xem khoá học <span className="arrow">→</span>
+              Xem khoá học
             </Link>
             <Link href="/#contact" className="text-[0.85rem] font-semibold px-4 py-2 rounded-lg transition-all" style={{ border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.85)" }}>
               Liên hệ Quảng

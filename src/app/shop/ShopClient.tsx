@@ -140,7 +140,7 @@ export default function ShopClient({ products }: { products: Product[] }) {
             className="px-6 py-3 rounded-xl text-[0.95rem] font-bold text-white transition-all hover:scale-[1.02]"
             style={{ background: "var(--grad-primary)", boxShadow: "0 8px 24px rgba(20,110,245,0.4)" }}
           >
-            Thanh toán →
+            Thanh toán 
           </Link>
         </div>
       )}

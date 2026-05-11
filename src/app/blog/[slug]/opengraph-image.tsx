@@ -54,7 +54,7 @@ export default async function OG({ params }: { params: Promise<{ slug: string }>
         <div style={{ position: "absolute", top: "-18%", right: "-8%", width: "560px", height: "560px", borderRadius: "50%", background: meta.gradient, display: "flex" }} />
         <div style={{ position: "absolute", bottom: "-22%", left: "-12%", width: "560px", height: "560px", borderRadius: "50%", background: "radial-gradient(circle, rgba(122,61,255,0.32), transparent 65%)", display: "flex" }} />
 
-        {/* Top — Brand + Category */}
+        {/* Top - Brand + Category */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
             <div style={{ width: "48px", height: "48px", borderRadius: "12px", background: "linear-gradient(135deg, #146ef5 0%, #4b5dff 50%, #7a3dff 100%)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "28px", fontWeight: 800 }}>K</div>
@@ -65,7 +65,7 @@ export default async function OG({ params }: { params: Promise<{ slug: string }>
           </div>
         </div>
 
-        {/* Middle — Title */}
+        {/* Middle - Title */}
         <div style={{ display: "flex", flexDirection: "column", gap: "20px", paddingTop: "20px" }}>
           <div
             style={{

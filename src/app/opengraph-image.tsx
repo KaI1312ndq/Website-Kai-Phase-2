@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "nodejs";
-export const alt = "Nguyễn Đức Quảng — Ecom Growth Expert";
+export const alt = "Nguyễn Đức Quảng - Ecom Growth Expert";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -25,7 +25,7 @@ export default async function OG() {
         <div style={{ position: "absolute", top: "-15%", left: "-10%", width: "600px", height: "600px", borderRadius: "50%", background: "radial-gradient(circle, rgba(20,110,245,0.45), transparent 65%)", display: "flex" }} />
         <div style={{ position: "absolute", bottom: "-20%", right: "-10%", width: "550px", height: "550px", borderRadius: "50%", background: "radial-gradient(circle, rgba(122,61,255,0.45), transparent 65%)", display: "flex" }} />
 
-        {/* Top — brand mark + role pill */}
+        {/* Top - brand mark + role pill */}
         <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
           <div
             style={{
@@ -49,7 +49,7 @@ export default async function OG() {
           </div>
         </div>
 
-        {/* Center — headline */}
+        {/* Center - headline */}
         <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
           <div
             style={{
@@ -77,7 +77,7 @@ export default async function OG() {
           </div>
         </div>
 
-        {/* Bottom — stats */}
+        {/* Bottom - stats */}
         <div style={{ display: "flex", gap: "56px", alignItems: "flex-end", justifyContent: "space-between" }}>
           {[
             { val: "5+", label: "Năm thực chiến" },

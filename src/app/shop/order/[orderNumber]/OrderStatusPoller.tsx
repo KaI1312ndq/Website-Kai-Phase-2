@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 /**
- * Poll status mỗi 15 giây — khi Quảng confirm thanh toán + gửi email,
+ * Poll status mỗi 15 giây - khi Quảng confirm thanh toán + gửi email,
  * trang tự refresh để hiện trạng thái mới mà user không phải reload tay.
  */
 export default function OrderStatusPoller({

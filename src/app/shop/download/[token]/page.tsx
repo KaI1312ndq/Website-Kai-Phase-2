@@ -8,7 +8,7 @@ import Icon from "@/components/icons/Icon";
 import { getOrderByDownloadToken } from "@/lib/queries";
 
 export const metadata: Metadata = {
-  title: "Tải file — Đơn hàng",
+  title: "Tải file - Đơn hàng",
   robots: { index: false, follow: false },
 };
 
@@ -127,7 +127,7 @@ export default async function DownloadPage({ params }: { params: Promise<{ token
               </div>
               <ul className="flex flex-col gap-1.5 text-[0.85rem]" style={{ color: "rgba(255,255,255,0.85)" }}>
                 <li className="flex items-start gap-2"><Icon name="check" size={12} color="#ffd479" strokeWidth={3} /><span>Lưu file về máy ngay để dùng lâu dài (link có thời hạn)</span></li>
-                <li className="flex items-start gap-2"><Icon name="check" size={12} color="#ffd479" strokeWidth={3} /><span>Bookmark trang này — quay lại tải lại bất kỳ lúc nào (đến {new Date(order.downloadExpiresAt!).toLocaleDateString("vi-VN")})</span></li>
+                <li className="flex items-start gap-2"><Icon name="check" size={12} color="#ffd479" strokeWidth={3} /><span>Bookmark trang này - quay lại tải lại bất kỳ lúc nào (đến {new Date(order.downloadExpiresAt!).toLocaleDateString("vi-VN")})</span></li>
                 <li className="flex items-start gap-2"><Icon name="check" size={12} color="#ffd479" strokeWidth={3} /><span>Link cũng đã được gửi vào email {order.customer.email}</span></li>
               </ul>
             </div>
@@ -159,9 +159,9 @@ function ErrorState({ title, message, action }: { title: string; message: string
         <p className="text-[1rem] mb-7" style={{ color: "var(--ink-soft)" }}>{message}</p>
         {action && (
           action.external ? (
-            <a href={action.href} target="_blank" rel="noreferrer" className="btn btn-primary">{action.text} →</a>
+            <a href={action.href} target="_blank" rel="noreferrer" className="btn btn-primary">{action.text} </a>
           ) : (
-            <Link href={action.href} className="btn btn-primary">{action.text} →</Link>
+            <Link href={action.href} className="btn btn-primary">{action.text} </Link>
           )
         )}
       </div>

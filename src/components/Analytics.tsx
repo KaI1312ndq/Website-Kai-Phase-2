@@ -8,7 +8,7 @@ const HOTJAR_ID = process.env.NEXT_PUBLIC_HOTJAR_ID;
 export default function Analytics() {
   return (
     <>
-      {/* Vercel Analytics + Speed Insights — auto-enabled when project has it on */}
+      {/* Vercel Analytics + Speed Insights - auto-enabled when project has it on */}
       <VercelAnalytics />
       <SpeedInsights />
 
@@ -27,7 +27,7 @@ export default function Analytics() {
         </>
       )}
 
-      {/* Hotjar — heatmaps + recordings */}
+      {/* Hotjar - heatmaps + recordings */}
       {HOTJAR_ID && (
         <Script id="hotjar" strategy="afterInteractive">
           {`

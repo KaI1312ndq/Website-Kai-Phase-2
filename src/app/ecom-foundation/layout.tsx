@@ -3,19 +3,19 @@ import type { Metadata } from "next";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.nguyenducquang.website";
 
 export const metadata: Metadata = {
-  title: "Foundation Ecommerce — Tư duy thật, Thực chiến thật",
+  title: "Foundation Ecommerce - Tư duy thật, Thực chiến thật",
   description:
-    "Khoá foundation về thương mại điện tử cho người mới và marketer trẻ. 12 buổi · 6 tuần · 100% Offline Hà Nội. Khoá 1: 999.000đ — giới hạn 7 học viên.",
+    "Khoá foundation về thương mại điện tử cho người mới và marketer trẻ. 12 buổi · 6 tuần · 100% Offline Hà Nội. Khoá 1: 999.000đ - giới hạn 7 học viên.",
   alternates: { canonical: "/ecom-foundation" },
   openGraph: {
     type: "website",
     locale: "vi_VN",
-    title: "Foundation Ecommerce — Tư duy thật, Thực chiến thật",
-    description: "Khoá học TMĐT cho người muốn làm thật. Khoá 1 chỉ 999.000đ — giới hạn 7 học viên.",
+    title: "Foundation Ecommerce - Tư duy thật, Thực chiến thật",
+    description: "Khoá học TMĐT cho người muốn làm thật. Khoá 1 chỉ 999.000đ - giới hạn 7 học viên.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Foundation Ecommerce — Tư duy thật, Thực chiến thật",
+    title: "Foundation Ecommerce - Tư duy thật, Thực chiến thật",
     description: "Khoá học TMĐT cho người muốn làm thật. Khoá 1 chỉ 999.000đ.",
   },
 };
@@ -41,7 +41,7 @@ const courseLd = {
   hasCourseInstance: [
     {
       "@type": "CourseInstance",
-      name: "Foundation Ecommerce — Khoá 1",
+      name: "Foundation Ecommerce - Khoá 1",
       courseMode: "Offline",
       location: {
         "@type": "Place",
@@ -65,17 +65,17 @@ const courseLd = {
         priceCurrency: "VND",
         availability: "https://schema.org/InStock",
         url: `${SITE_URL}/ecom-foundation#apply`,
-        category: "Khoá 1 — Giới hạn 7 học viên",
+        category: "Khoá 1 - Giới hạn 7 học viên",
       },
     },
   ],
   syllabusSections: [
-    { "@type": "Syllabus", name: "Module 1 — Tư duy thị trường TMĐT (2 buổi)" },
-    { "@type": "Syllabus", name: "Module 2 — Chiến lược sản phẩm, đối thủ, USP, SWOT (1 buổi)" },
-    { "@type": "Syllabus", name: "Module 3 — Vận hành sàn: setup, tư duy giá, tồn kho, điểm gian hàng (2 buổi)" },
-    { "@type": "Syllabus", name: "Module 4 — Performance Marketing: traffic, chỉ số, TikTok/Shopee/Facebook Ads (4 buổi)" },
-    { "@type": "Syllabus", name: "Module 5 — Data & Plan: lập plan, P&L, phân tích data (2 buổi)" },
-    { "@type": "Syllabus", name: "Capstone — Plan 1 năm + P&L cho 1 brand thật (1 buổi)" },
+    { "@type": "Syllabus", name: "Module 1 - Tư duy thị trường TMĐT (2 buổi)" },
+    { "@type": "Syllabus", name: "Module 2 - Chiến lược sản phẩm, đối thủ, USP, SWOT (1 buổi)" },
+    { "@type": "Syllabus", name: "Module 3 - Vận hành sàn: setup, tư duy giá, tồn kho, điểm gian hàng (2 buổi)" },
+    { "@type": "Syllabus", name: "Module 4 - Performance Marketing: traffic, chỉ số, TikTok/Shopee/Facebook Ads (4 buổi)" },
+    { "@type": "Syllabus", name: "Module 5 - Data & Plan: lập plan, P&L, phân tích data (2 buổi)" },
+    { "@type": "Syllabus", name: "Capstone - Plan 1 năm + P&L cho 1 brand thật (1 buổi)" },
   ],
   offers: {
     "@type": "Offer",

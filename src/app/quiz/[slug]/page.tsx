@@ -19,12 +19,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const quiz = getQuiz(slug);
   if (!quiz) return { title: "Quiz" };
   return {
-    title: `${quiz.name} — Trắc nghiệm miễn phí`,
+    title: `${quiz.name} - Trắc nghiệm miễn phí`,
     description: quiz.longDescription,
     alternates: { canonical: `/quiz/${slug}` },
     openGraph: {
       type: "website",
-      title: `${quiz.name} — Trắc nghiệm miễn phí`,
+      title: `${quiz.name} - Trắc nghiệm miễn phí`,
       description: quiz.shortDescription,
       url: `${SITE_URL}/quiz/${slug}`,
     },

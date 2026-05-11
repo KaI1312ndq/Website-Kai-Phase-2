@@ -133,7 +133,7 @@ export default function QuizRunner({ config, questions, archetypes }: Props) {
         }
       }, 220);
     } else {
-      // Last question — clear progress, go to gate or result
+      // Last question - clear progress, go to gate or result
       try { window.localStorage.removeItem(STORAGE_KEY(config.slug)); } catch {}
       trackEvent("quiz_completed", {
         quiz_slug: config.slug,
@@ -178,7 +178,7 @@ export default function QuizRunner({ config, questions, archetypes }: Props) {
 
   return (
     <div className="relative">
-      {/* Progress bar — only during running */}
+      {/* Progress bar - only during running */}
       {phase === "running" && (
         <div className="sticky top-[80px] z-40 mb-6 -mx-4">
           <div className="rounded-full overflow-hidden h-1.5" style={{ background: "rgba(255,255,255,0.06)" }}>
@@ -229,7 +229,7 @@ export default function QuizRunner({ config, questions, archetypes }: Props) {
         <div className="rounded-2xl p-8 text-center" style={{ background: "rgba(255,90,114,0.08)", border: "1px solid rgba(255,90,114,0.3)" }}>
           <div className="text-[1.1rem] font-bold text-white mb-2">Có lỗi khi tính kết quả</div>
           <p className="text-[0.9rem]" style={{ color: "var(--ink-mute)" }}>Vui lòng làm lại bài test.</p>
-          <button onClick={handleRetake} className="btn btn-primary mt-4">Làm lại →</button>
+          <button onClick={handleRetake} className="btn btn-primary mt-4">Làm lại </button>
         </div>
       )}
     </div>
@@ -253,7 +253,7 @@ const QUIZ_BENEFITS: Record<string, string[]> = {
   "huong-nghiep-marketing": [
     "Xác định 1 trong 5 archetype career: Creator / Analyst / Communicator / Builder / Operator",
     "Danh sách 5-7 role cụ thể phù hợp + range lương tham khảo VN",
-    "Skills cần học để vào nghề + lộ trình junior → senior",
+    "Skills cần học để vào nghề + lộ trình junior  senior",
     "Lời khuyên cá nhân hoá từ kinh nghiệm 60+ project Ecom",
   ],
 };
@@ -281,7 +281,7 @@ function IntroScreen({ config, onStart, onResume }: { config: QuizConfig; onStar
               className="px-4 py-2 rounded-lg text-[0.85rem] font-bold text-white transition-all"
               style={{ background: "var(--grad-primary)" }}
             >
-              Tiếp tục →
+              Tiếp tục 
             </button>
             <button
               onClick={onStart}
@@ -346,7 +346,7 @@ function IntroScreen({ config, onStart, onResume }: { config: QuizConfig; onStar
           className="inline-flex items-center gap-2 text-white font-bold text-[1rem] px-8 py-3.5 rounded-xl transition-transform hover:scale-[1.03]"
           style={{ background: `linear-gradient(135deg, ${config.color} 0%, #7a3dff 100%)`, boxShadow: `0 8px 24px ${config.color}40` }}
         >
-          Bắt đầu test ngay <span>→</span>
+          Bắt đầu test ngay <span></span>
         </button>
 
         <p className="text-[0.78rem] mt-6 inline-flex items-center justify-center gap-1.5 flex-wrap" style={{ color: "rgba(255,255,255,0.4)" }}>
