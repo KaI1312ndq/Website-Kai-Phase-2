@@ -65,6 +65,12 @@ const links: NavLink[] = [
     viewAllText: "Xem tất cả tools",
     submenu: [
       {
+        label: "Tính Thuế TNCN 2026",
+        desc: "So sánh luật 2025 vs 2026 · giảm trừ 15.5M · lương Net",
+        href: "/tools/tinh-thue-tncn",
+        badge: "Hot",
+      },
+      {
         label: "Tính phí sàn TikTok & Shopee",
         desc: "So sánh Mall vs Non-Mall · phí 2026 · miễn phí",
         href: "/tools/tinh-phi-san",

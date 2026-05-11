@@ -48,6 +48,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/tools/tinh-phi-san`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
     { url: `${baseUrl}/tools/roas-calculator`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.88 },
     { url: `${baseUrl}/tools/pnl-ecom`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.86 },
+    { url: `${baseUrl}/tools/tinh-thue-tncn`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.92 },
     { url: `${baseUrl}/tools`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.85 },
     { url: `${baseUrl}/blog`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.7 },
     { url: `${baseUrl}/quiz`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.82 },
