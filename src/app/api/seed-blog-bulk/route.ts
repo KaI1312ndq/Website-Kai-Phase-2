@@ -8,6 +8,7 @@ import { TNCN_POSTS } from "@/lib/blog/tncn-cluster";
 import { BATCH_2_3_POSTS, BATCH_2_3_IDS } from "@/lib/blog/batch-2-3-content";
 import { BATCH_4_POSTS, BATCH_4_IDS } from "@/lib/blog/batch-4-content";
 import { BLOG_METADATA } from "@/lib/blog/metadata";
+import { injectAutoImages } from "@/lib/blog/auto-image";
 
 /**
  * Bulk seed 50 blog posts vào Sanity:
@@ -69,8 +70,13 @@ export async function GET(req: NextRequest) {
 
   for (const post of allPosts) {
     try {
-      const body = mdToBlocks(post.id.replace(/[^a-zA-Z0-9]/g, "_") + "_", post.content);
       const meta = BLOG_METADATA[post.id];
+      const enrichedMd = injectAutoImages({
+        postId: post.id,
+        category: meta?.category ?? post.category ?? "default",
+        markdown: post.content,
+      });
+      const body = mdToBlocks(post.id.replace(/[^a-zA-Z0-9]/g, "_") + "_", enrichedMd);
       const doc = {
         _id: post.id,
         _type: "post",

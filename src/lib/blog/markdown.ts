@@ -13,11 +13,13 @@
 
 type Span = { _type: "span"; _key: string; text: string; marks: string[] };
 
+type LinkMarkDef = { _type: "link"; _key: string; href: string };
+
 type TextBlock = {
   _type: "block";
   _key: string;
   style: "normal" | "h2" | "h3" | "blockquote";
-  markDefs: never[];
+  markDefs: LinkMarkDef[];
   children: Span[];
 };
 
@@ -40,17 +42,33 @@ type TableBlock = {
 
 export type BlogBlock = TextBlock | ExternalImage | TableBlock;
 
-function parseInline(text: string, keyPrefix: string): Span[] {
+/**
+ * Parse inline markdown: **bold** + [text](url) links.
+ * Returns spans + markDefs cho link references.
+ * Link mark được generate _key unique trong block để Portable Text resolve.
+ */
+function parseInline(text: string, keyPrefix: string): { spans: Span[]; markDefs: LinkMarkDef[] } {
   const spans: Span[] = [];
-  const re = /\*\*([^*]+)\*\*/g;
+  const markDefs: LinkMarkDef[] = [];
+  // Combined regex: link OR bold. Link first so [**text**](url) treated as link.
+  const re = /\[([^\]]+)\]\(([^)]+)\)|\*\*([^*]+)\*\*/g;
   let last = 0;
   let i = 0;
+  let linkIdx = 0;
   let m: RegExpExecArray | null;
   while ((m = re.exec(text)) !== null) {
     if (m.index > last) {
       spans.push({ _type: "span", _key: `${keyPrefix}s${i++}`, text: text.slice(last, m.index), marks: [] });
     }
-    spans.push({ _type: "span", _key: `${keyPrefix}s${i++}`, text: m[1], marks: ["strong"] });
+    if (m[1] !== undefined && m[2] !== undefined) {
+      // Link match: [text](url)
+      const linkKey = `${keyPrefix}lnk${linkIdx++}`;
+      markDefs.push({ _type: "link", _key: linkKey, href: m[2] });
+      spans.push({ _type: "span", _key: `${keyPrefix}s${i++}`, text: m[1], marks: [linkKey] });
+    } else if (m[3] !== undefined) {
+      // Bold match: **text**
+      spans.push({ _type: "span", _key: `${keyPrefix}s${i++}`, text: m[3], marks: ["strong"] });
+    }
     last = m.index + m[0].length;
   }
   if (last < text.length) {
@@ -59,7 +77,7 @@ function parseInline(text: string, keyPrefix: string): Span[] {
   if (spans.length === 0) {
     spans.push({ _type: "span", _key: `${keyPrefix}s0`, text, marks: [] });
   }
-  return spans;
+  return { spans, markDefs };
 }
 
 /** Match standalone-line image syntax: ![alt](url) or ![alt|caption](url) or ![alt|caption|credit](url) */
@@ -145,12 +163,13 @@ export function mdToBlocks(prefix: string, markdown: string): BlogBlock[] {
       style = "blockquote";
       text = sec.slice(2);
     }
+    const { spans, markDefs } = parseInline(text, key);
     return {
       _type: "block",
       _key: key,
       style,
-      markDefs: [],
-      children: parseInline(text, key),
+      markDefs,
+      children: spans,
     } satisfies TextBlock;
   });
 }

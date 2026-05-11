@@ -13,6 +13,23 @@ export default function PortableTextWithIds({ value }: { value: any }) {
   const seen = new Map<string, number>();
 
   const components: PortableTextComponents = {
+    marks: {
+      link: ({ children, value }: any) => {
+        const href: string = value?.href || "#";
+        const isExternal = /^https?:\/\//i.test(href);
+        return (
+          <a
+            href={href}
+            {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+            className="font-medium underline decoration-[#7da9ff]/40 decoration-[1.5px] underline-offset-[3px] transition-colors hover:decoration-[#7da9ff] hover:text-[#7da9ff]"
+            style={{ color: "#7da9ff" }}
+          >
+            {children}
+          </a>
+        );
+      },
+      strong: ({ children }: any) => <strong>{children}</strong>,
+    },
     block: {
       h2: ({ children, value }: any) => {
         const text = (value?.children || []).map((c: any) => c.text).join("").trim();

@@ -14,16 +14,84 @@ import type { NextRequest } from "next/server";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const CATEGORY_META: Record<string, { label: string; accent: string; gradient: string }> = {
-  shopee: { label: "Shopee", accent: "#ee4d2d", gradient: "radial-gradient(circle, rgba(238,77,45,0.40), transparent 65%)" },
-  "tiktok-shop": { label: "TikTok Shop", accent: "#ff5a72", gradient: "radial-gradient(circle, rgba(255,90,114,0.40), transparent 65%)" },
-  marketing: { label: "Marketing", accent: "#7da9ff", gradient: "radial-gradient(circle, rgba(125,169,255,0.40), transparent 65%)" },
-  ads: { label: "Ads", accent: "#7da9ff", gradient: "radial-gradient(circle, rgba(125,169,255,0.40), transparent 65%)" },
-  ecommerce: { label: "Ecom", accent: "#5fffaa", gradient: "radial-gradient(circle, rgba(95,255,170,0.40), transparent 65%)" },
-  career: { label: "Career", accent: "#5fffaa", gradient: "radial-gradient(circle, rgba(95,255,170,0.40), transparent 65%)" },
-  mbti: { label: "MBTI", accent: "#a78bff", gradient: "radial-gradient(circle, rgba(167,139,255,0.40), transparent 65%)" },
-  team: { label: "Team", accent: "#ffd479", gradient: "radial-gradient(circle, rgba(255,212,121,0.40), transparent 65%)" },
-  default: { label: "Blog", accent: "#7da9ff", gradient: "radial-gradient(circle, rgba(20,110,245,0.40), transparent 65%)" },
+type CoverMeta = {
+  label: string;
+  accent: string;
+  gradient: string;
+  bg: string;
+  blobSecondary: string;
+};
+
+/**
+ * Mỗi category có tonemood riêng: bg base + accent + 2 blob.
+ * 8 nhóm chính + legacy values backward compat.
+ */
+const CATEGORY_META: Record<string, CoverMeta> = {
+  "tmdt-co-ban": {
+    label: "TMĐT 101", accent: "#ff8a4c",
+    gradient: "radial-gradient(circle, rgba(255,138,76,0.48), transparent 65%)",
+    bg: "linear-gradient(135deg, #1f0a05 0%, #361408 35%, #4a1f10 70%, #2b1208 100%)",
+    blobSecondary: "radial-gradient(circle, rgba(255,90,40,0.34), transparent 65%)",
+  },
+  "ads-scaling": {
+    label: "Ads & Scaling", accent: "#4ad6ff",
+    gradient: "radial-gradient(circle, rgba(74,214,255,0.48), transparent 65%)",
+    bg: "linear-gradient(135deg, #050a1f 0%, #0a1438 35%, #0d1c52 70%, #1a1f4a 100%)",
+    blobSecondary: "radial-gradient(circle, rgba(122,61,255,0.34), transparent 65%)",
+  },
+  "unit-economics": {
+    label: "Unit Economics", accent: "#5fffaa",
+    gradient: "radial-gradient(circle, rgba(95,255,170,0.48), transparent 65%)",
+    bg: "linear-gradient(135deg, #051f12 0%, #082e1a 35%, #0d4528 70%, #0a2a1d 100%)",
+    blobSecondary: "radial-gradient(circle, rgba(74,214,255,0.34), transparent 65%)",
+  },
+  "mua-vu-sale": {
+    label: "Mùa vụ & Sale", accent: "#ffd479",
+    gradient: "radial-gradient(circle, rgba(255,212,121,0.48), transparent 65%)",
+    bg: "linear-gradient(135deg, #1f1505 0%, #322208 35%, #4d3510 70%, #2b1f08 100%)",
+    blobSecondary: "radial-gradient(circle, rgba(255,107,53,0.34), transparent 65%)",
+  },
+  "team-leadership": {
+    label: "Team & Leadership", accent: "#ff8aff",
+    gradient: "radial-gradient(circle, rgba(255,138,255,0.45), transparent 65%)",
+    bg: "linear-gradient(135deg, #1a0a1f 0%, #2b1238 35%, #401a52 70%, #2a1238 100%)",
+    blobSecondary: "radial-gradient(circle, rgba(167,139,255,0.34), transparent 65%)",
+  },
+  "case-study-data": {
+    label: "Case Study & Data", accent: "#7da9ff",
+    gradient: "radial-gradient(circle, rgba(125,169,255,0.48), transparent 65%)",
+    bg: "linear-gradient(135deg, #0a0f1f 0%, #0f1a3d 35%, #1a2a5c 70%, #14204a 100%)",
+    blobSecondary: "radial-gradient(circle, rgba(95,255,170,0.30), transparent 65%)",
+  },
+  "tam-ly-mindset": {
+    label: "Tâm lý & Mindset", accent: "#a78bff",
+    gradient: "radial-gradient(circle, rgba(167,139,255,0.48), transparent 65%)",
+    bg: "linear-gradient(135deg, #0f051f 0%, #1c0a38 35%, #2a1052 70%, #1a0a3d 100%)",
+    blobSecondary: "radial-gradient(circle, rgba(255,138,255,0.32), transparent 65%)",
+  },
+  "thue-cong-cu": {
+    label: "Thuế & Công cụ", accent: "#ff6b6b",
+    gradient: "radial-gradient(circle, rgba(255,107,107,0.48), transparent 65%)",
+    bg: "linear-gradient(135deg, #1f050a 0%, #381015 35%, #521a22 70%, #2b0a10 100%)",
+    blobSecondary: "radial-gradient(circle, rgba(255,138,76,0.32), transparent 65%)",
+  },
+
+  // ----- Legacy backward-compat values -----
+  shopee: { label: "Shopee", accent: "#ee4d2d", gradient: "radial-gradient(circle, rgba(238,77,45,0.45), transparent 65%)", bg: "linear-gradient(135deg, #1a0805 0%, #2b1208 35%, #401812 70%, #1f0a05 100%)", blobSecondary: "radial-gradient(circle, rgba(255,107,53,0.30), transparent 65%)" },
+  "tiktok-shop": { label: "TikTok Shop", accent: "#ff5a72", gradient: "radial-gradient(circle, rgba(255,90,114,0.45), transparent 65%)", bg: "linear-gradient(135deg, #1a0510 0%, #2b0820 35%, #401838 70%, #1f0a18 100%)", blobSecondary: "radial-gradient(circle, rgba(255,138,255,0.28), transparent 65%)" },
+  performance: { label: "Performance", accent: "#7da9ff", gradient: "radial-gradient(circle, rgba(125,169,255,0.45), transparent 65%)", bg: "linear-gradient(135deg, #050a1f 0%, #0a1438 35%, #0d1c52 70%, #1a1f4a 100%)", blobSecondary: "radial-gradient(circle, rgba(122,61,255,0.30), transparent 65%)" },
+  ecom: { label: "Ecom", accent: "#5fffaa", gradient: "radial-gradient(circle, rgba(95,255,170,0.45), transparent 65%)", bg: "linear-gradient(135deg, #051f12 0%, #082e1a 35%, #0d4528 70%, #0a2a1d 100%)", blobSecondary: "radial-gradient(circle, rgba(74,214,255,0.30), transparent 65%)" },
+  leadership: { label: "Leadership", accent: "#ff8aff", gradient: "radial-gradient(circle, rgba(255,138,255,0.45), transparent 65%)", bg: "linear-gradient(135deg, #1a0a1f 0%, #2b1238 35%, #401a52 70%, #2a1238 100%)", blobSecondary: "radial-gradient(circle, rgba(167,139,255,0.30), transparent 65%)" },
+  mindset: { label: "Mindset", accent: "#a78bff", gradient: "radial-gradient(circle, rgba(167,139,255,0.45), transparent 65%)", bg: "linear-gradient(135deg, #0f051f 0%, #1c0a38 35%, #2a1052 70%, #1a0a3d 100%)", blobSecondary: "radial-gradient(circle, rgba(255,138,255,0.28), transparent 65%)" },
+  psychology: { label: "Tâm lý", accent: "#a78bff", gradient: "radial-gradient(circle, rgba(167,139,255,0.45), transparent 65%)", bg: "linear-gradient(135deg, #0f051f 0%, #1c0a38 35%, #2a1052 70%, #1a0a3d 100%)", blobSecondary: "radial-gradient(circle, rgba(255,138,255,0.28), transparent 65%)" },
+  marketing: { label: "Marketing", accent: "#7da9ff", gradient: "radial-gradient(circle, rgba(125,169,255,0.45), transparent 65%)", bg: "linear-gradient(135deg, #050a1f 0%, #0a1438 35%, #0d1c52 70%, #1a1f4a 100%)", blobSecondary: "radial-gradient(circle, rgba(122,61,255,0.30), transparent 65%)" },
+  ads: { label: "Ads", accent: "#4ad6ff", gradient: "radial-gradient(circle, rgba(74,214,255,0.45), transparent 65%)", bg: "linear-gradient(135deg, #050a1f 0%, #0a1438 35%, #0d1c52 70%, #1a1f4a 100%)", blobSecondary: "radial-gradient(circle, rgba(122,61,255,0.30), transparent 65%)" },
+  ecommerce: { label: "Ecom", accent: "#5fffaa", gradient: "radial-gradient(circle, rgba(95,255,170,0.45), transparent 65%)", bg: "linear-gradient(135deg, #051f12 0%, #082e1a 35%, #0d4528 70%, #0a2a1d 100%)", blobSecondary: "radial-gradient(circle, rgba(74,214,255,0.30), transparent 65%)" },
+  career: { label: "Career", accent: "#5fffaa", gradient: "radial-gradient(circle, rgba(95,255,170,0.45), transparent 65%)", bg: "linear-gradient(135deg, #051f12 0%, #082e1a 35%, #0d4528 70%, #0a2a1d 100%)", blobSecondary: "radial-gradient(circle, rgba(74,214,255,0.30), transparent 65%)" },
+  mbti: { label: "MBTI", accent: "#a78bff", gradient: "radial-gradient(circle, rgba(167,139,255,0.45), transparent 65%)", bg: "linear-gradient(135deg, #0f051f 0%, #1c0a38 35%, #2a1052 70%, #1a0a3d 100%)", blobSecondary: "radial-gradient(circle, rgba(255,138,255,0.28), transparent 65%)" },
+  team: { label: "Team", accent: "#ffd479", gradient: "radial-gradient(circle, rgba(255,212,121,0.45), transparent 65%)", bg: "linear-gradient(135deg, #1f1505 0%, #322208 35%, #4d3510 70%, #2b1f08 100%)", blobSecondary: "radial-gradient(circle, rgba(255,107,53,0.30), transparent 65%)" },
+
+  default: { label: "Blog", accent: "#7da9ff", gradient: "radial-gradient(circle, rgba(20,110,245,0.45), transparent 65%)", bg: "linear-gradient(135deg, #050a1f 0%, #0a1438 35%, #0d1c52 70%, #1a1f4a 100%)", blobSecondary: "radial-gradient(circle, rgba(122,61,255,0.32), transparent 65%)" },
 };
 
 export async function GET(req: NextRequest) {
@@ -47,14 +115,14 @@ export async function GET(req: NextRequest) {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "70px 80px",
-          background: "linear-gradient(135deg, #050a1f 0%, #0a1438 35%, #0d1c52 70%, #1a1f4a 100%)",
+          background: meta.bg,
           color: "white",
           fontFamily: "system-ui, sans-serif",
           position: "relative",
         }}
       >
         <div style={{ position: "absolute", top: "-18%", right: "-8%", width: "640px", height: "640px", borderRadius: "50%", background: meta.gradient, display: "flex" }} />
-        <div style={{ position: "absolute", bottom: "-22%", left: "-12%", width: "640px", height: "640px", borderRadius: "50%", background: "radial-gradient(circle, rgba(122,61,255,0.32), transparent 65%)", display: "flex" }} />
+        <div style={{ position: "absolute", bottom: "-22%", left: "-12%", width: "640px", height: "640px", borderRadius: "50%", background: meta.blobSecondary, display: "flex" }} />
 
         {/* Top */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
