@@ -15,6 +15,15 @@ type Props = {
     scores: Record<string, number>;
     ranked?: Array<{ id: string; score: number }>;
     dichotomies?: Array<{ a: string; b: string; aScore: number; bScore: number; aPct: number }>;
+    /** Multi-score quizzes (EQ, BigFive, DarkTriad): dimension % map */
+    dimensions?: Record<string, number>;
+    /** EQ specific */
+    totalScore?: number;
+    totalPct?: number;
+    /** Dark Triad specific */
+    avgPct?: number;
+    /** Enneagram wing */
+    wing?: string;
     type?: string;
   };
   onRetake: () => void;
@@ -110,6 +119,53 @@ export default function QuizResult({ config, result, onRetake }: Props) {
           >
             Xem chi tiết phong cách phụ 
           </Link>
+        </div>
+      )}
+
+      {/* Multi-score dimension bars (EQ, BigFive, DarkTriad) */}
+      {result.dimensions && config.dimensionLabels && (
+        <div className="mt-6 rounded-2xl p-6 md:p-8" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+          <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-5" style={{ color: "rgba(255,255,255,0.55)" }}>
+            {result.totalScore !== undefined
+              ? `Tổng điểm EQ: ${result.totalScore}/160`
+              : result.avgPct !== undefined
+              ? `Trung bình: ${result.avgPct}%`
+              : "Phân tích chi tiết"}
+          </div>
+          <div className="flex flex-col gap-5">
+            {Object.entries(result.dimensions).map(([dimKey, pct]) => {
+              const label = config.dimensionLabels?.[dimKey] || dimKey;
+              return (
+                <div key={dimKey}>
+                  <div className="flex items-center justify-between text-[0.92rem] mb-2">
+                    <span className="font-semibold text-white">{label}</span>
+                    <span className="font-bold" style={{ color: archetype.color }}>{pct}%</span>
+                  </div>
+                  <div className="h-3 rounded-full relative overflow-hidden" style={{ background: "rgba(255,255,255,0.06)" }}>
+                    <div
+                      className="absolute top-0 left-0 h-full transition-all duration-700"
+                      style={{ width: `${pct}%`, background: `linear-gradient(90deg, ${archetype.color}, ${archetype.color}cc)` }}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Enneagram wing display */}
+      {result.wing && (
+        <div className="mt-6 rounded-2xl p-6" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+          <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-3" style={{ color: "rgba(255,255,255,0.55)" }}>
+            Wing (Cánh) của bạn
+          </div>
+          <div className="text-[1.1rem] font-bold text-white">
+            Type {result.type}w{result.wing}
+          </div>
+          <p className="text-[0.88rem] mt-2" style={{ color: "var(--ink-soft)" }}>
+            Wing là type liền kề chiếm điểm cao thứ 2 - định nghĩa nuance trong type chính của bạn.
+          </p>
         </div>
       )}
 

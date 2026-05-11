@@ -51,11 +51,34 @@ export type QuizConfig = {
   /** Whether result requires lead capture (email/phone) */
   gateResult: boolean;
   /** Internal: type for scoring */
-  scoringType: "leadership" | "mbti" | "career" | "knowledge";
+  scoringType:
+    | "leadership"
+    | "mbti"
+    | "career"
+    | "knowledge"
+    | "disc"
+    | "eq"
+    | "big-five"
+    | "enneagram"
+    | "dark-triad";
   /** Format: 'personality' (archetype) hoặc 'knowledge' (right/wrong with timer) */
   format?: "personality" | "knowledge";
   /** Knowledge quiz: giây mỗi câu (default 30) */
   secondsPerQuestion?: number;
+  /** Show dimension scores chart on result page (multi-score quizzes EQ/BigFive/DarkTriad) */
+  showDimensions?: boolean;
+  /** Dimension labels for chart - key match với scoring code */
+  dimensionLabels?: Record<string, string>;
+  /** Likert format 1-5 scale thay vì A/B/C/D options */
+  likertScale?: boolean;
+};
+
+/** Multi-score result - EQ, Big Five, Dark Triad. Mỗi dimension 0-100% */
+export type MultiScoreResult = {
+  dimensions: Record<string, number>;
+  total?: number;
+  level?: string;
+  dominant?: string;
 };
 
 /** Knowledge quiz question - single correct answer + explanation */

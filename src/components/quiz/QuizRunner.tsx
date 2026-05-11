@@ -1,7 +1,11 @@
 "use client";
 import { useState, useMemo, useEffect, useRef } from "react";
 import type { QuizConfig, QuizQuestion, QuizArchetype } from "@/lib/quiz/types";
-import { computeLeadershipResult, computeMBTIResult, computeCareerResult } from "@/lib/quiz/compute";
+import {
+  computeLeadershipResult, computeMBTIResult, computeCareerResult,
+  computeDiscResult, computeEqResult, computeBigFiveResult,
+  computeEnneagramResult, computeDarkTriadResult,
+} from "@/lib/quiz/compute";
 import { trackEvent } from "@/lib/track";
 import QuizResult from "./QuizResult";
 import LeadCaptureGate from "./LeadCaptureGate";
@@ -84,6 +88,33 @@ export default function QuizRunner({ config, questions, archetypes }: Props) {
       const secondaryScore = secondaryEntry?.score;
       const topScore = r.ranked[0]?.score;
       return { archetype, secondary, secondaryScore, topScore, scores: r.scores, ranked: r.ranked, type: r.topId };
+    } else if (config.scoringType === "disc") {
+      const r = computeDiscResult(answers);
+      const archetype = archetypes.find((a) => a.id === r.topId);
+      const secondaryEntry = r.ranked.find((x) => x.id !== r.topId && x.score > 0);
+      const secondary = secondaryEntry ? archetypes.find((a) => a.id === secondaryEntry.id) : undefined;
+      const topScore = r.ranked[0]?.score;
+      return { archetype, secondary, secondaryScore: secondaryEntry?.score, topScore, scores: r.scores, ranked: r.ranked, type: r.topId };
+    } else if (config.scoringType === "eq") {
+      const r = computeEqResult(answers);
+      const archetype = archetypes.find((a) => a.id === r.topId);
+      return { archetype, dimensions: r.dimensions, totalScore: r.totalScore, totalPct: r.totalPct, type: r.topId };
+    } else if (config.scoringType === "big-five") {
+      const r = computeBigFiveResult(answers);
+      const archetype = archetypes.find((a) => a.id === r.topId);
+      return { archetype, dimensions: r.dimensions, type: r.topId };
+    } else if (config.scoringType === "enneagram") {
+      const r = computeEnneagramResult(answers);
+      const archetype = archetypes.find((a) => a.id === r.topId);
+      const wingArch = r.wing ? archetypes.find((a) => a.id === r.wing) : undefined;
+      const ranked = Object.entries(r.scores)
+        .map(([id, score]) => ({ id, score }))
+        .sort((a, b) => b.score - a.score);
+      return { archetype, secondary: wingArch, scores: r.scores, ranked, type: r.topId, wing: r.wing };
+    } else if (config.scoringType === "dark-triad") {
+      const r = computeDarkTriadResult(answers);
+      const archetype = archetypes.find((a) => a.id === r.topId);
+      return { archetype, dimensions: r.dimensions, avgPct: r.avgPct, type: r.topId };
     } else {
       const r = computeMBTIResult(answers);
       const archetype = archetypes.find((a) => a.id === r.type);
@@ -255,6 +286,36 @@ const QUIZ_BENEFITS: Record<string, string[]> = {
     "Danh sách 5-7 role cụ thể phù hợp + range lương tham khảo VN",
     "Skills cần học để vào nghề + lộ trình junior  senior",
     "Lời khuyên cá nhân hoá từ kinh nghiệm 60+ project Ecom",
+  ],
+  "test-disc": [
+    "Phong cách hành xử chính D-I-S-C + phong cách phụ",
+    "Career fit + môi trường phù hợp cho phong cách của bạn",
+    "Cách làm việc với 3 phong cách còn lại trong team",
+    "Cảnh báo điểm yếu + lời khuyên balance cụ thể",
+  ],
+  "test-eq": [
+    "Tổng điểm EQ 0-160 theo thang Goleman + xếp hạng",
+    "Breakdown 5 chiều: Tự nhận thức, Tự kiểm soát, Động lực, Đồng cảm, Kỹ năng xã hội",
+    "Identify 2 dimension yếu nhất + roadmap cải thiện 30 ngày",
+    "Career fit + advice cụ thể theo level EQ",
+  ],
+  "test-big-five": [
+    "5 chiều OCEAN với % cụ thể (Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism)",
+    "Chiều mạnh nhất + ảnh hưởng đến career, relationship",
+    "So với MBTI: ưu điểm của test khoa học validated",
+    "Cảnh báo health nếu Neuroticism cao + resources hỗ trợ",
+  ],
+  "test-enneagram": [
+    "1 trong 9 type Enneagram + wing chính xác (vd 5w4 hoặc 5w6)",
+    "Core fear + core desire - động lực sâu bên trong",
+    "Arrow integration (khi healthy) + disintegration (khi stress)",
+    "Career fit + best relationship pair với type khác",
+  ],
+  "test-dark-triad": [
+    "3 trait Mưu mẹo / Ái kỷ / Vô cảm với % cụ thể",
+    "Level: Bright Triad (sáng) / Balanced / Tilted / Pronounced Dark",
+    "Famous people có pattern tương tự (cho fun)",
+    "Disclaimer + lời khuyên reflection (KHÔNG chẩn đoán bệnh)",
   ],
 };
 

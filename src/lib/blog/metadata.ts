@@ -260,6 +260,68 @@ export const BLOG_METADATA: Record<string, BlogMeta> = {
     category: "thue-cong-cu",
     tags: ["bhxh", "thue", "10-5", "framework", "2026"],
   },
+
+  /* ═════════════ QUIZ TIER D - 15 bài (tam-ly-mindset) ═════════════ */
+  "blog-Q1-disc-la-gi-test-4-phong-cach": {
+    category: "tam-ly-mindset",
+    tags: ["disc", "framework", "personality", "team", "career", "tinh-cach"],
+  },
+  "blog-Q2-disc-trong-tuyen-dung-4-kieu": {
+    category: "tam-ly-mindset",
+    tags: ["disc", "hire", "hr", "team", "management", "framework"],
+  },
+  "blog-Q3-disc-trong-tinh-yeu": {
+    category: "tam-ly-mindset",
+    tags: ["disc", "relationship", "tinh-yeu", "compatibility", "framework"],
+  },
+  "blog-Q4-eq-la-gi-5-khia-canh": {
+    category: "tam-ly-mindset",
+    tags: ["eq", "framework", "goleman", "psychology", "career"],
+  },
+  "blog-Q5-eq-thap-7-dau-hieu": {
+    category: "tam-ly-mindset",
+    tags: ["eq", "anxiety", "self-development", "30-ngay", "checklist"],
+  },
+  "blog-Q6-eq-trong-cong-viec-manager": {
+    category: "tam-ly-mindset",
+    tags: ["eq", "leadership", "manager", "case-study", "data", "career"],
+  },
+  "blog-Q7-big-five-ocean-test": {
+    category: "tam-ly-mindset",
+    tags: ["big-five", "ocean", "personality", "framework", "research"],
+  },
+  "blog-Q8-big-five-career-fit": {
+    category: "tam-ly-mindset",
+    tags: ["big-five", "career", "huong-nghiep", "mapping", "framework"],
+  },
+  "blog-Q9-neuroticism-cao": {
+    category: "tam-ly-mindset",
+    tags: ["neuroticism", "anxiety", "wellness", "90-ngay", "framework"],
+  },
+  "blog-Q10-enneagram-9-kieu-tinh-cach": {
+    category: "tam-ly-mindset",
+    tags: ["enneagram", "personality", "framework", "9-type", "psychology"],
+  },
+  "blog-Q11-enneagram-career": {
+    category: "tam-ly-mindset",
+    tags: ["enneagram", "career", "huong-nghiep", "9-type", "mapping"],
+  },
+  "blog-Q12-enneagram-tinh-yeu": {
+    category: "tam-ly-mindset",
+    tags: ["enneagram", "relationship", "tinh-yeu", "compatibility", "9-type"],
+  },
+  "blog-Q13-dark-triad-3-trait": {
+    category: "tam-ly-mindset",
+    tags: ["dark-triad", "psychology", "framework", "research"],
+  },
+  "blog-Q14-dark-triad-cong-so": {
+    category: "tam-ly-mindset",
+    tags: ["dark-triad", "workplace", "manipulation", "red-flag", "checklist"],
+  },
+  "blog-Q15-dark-triad-tinh-yeu": {
+    category: "tam-ly-mindset",
+    tags: ["dark-triad", "relationship", "red-flag", "abuse", "psychology"],
+  },
 };
 
 /** Pillar articles - sitemap priority cao + thường top traffic */

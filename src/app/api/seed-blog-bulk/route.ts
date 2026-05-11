@@ -7,6 +7,7 @@ import { PSYCHOLOGY_POSTS } from "@/lib/blog/psychology-content";
 import { TNCN_POSTS } from "@/lib/blog/tncn-cluster";
 import { BATCH_2_3_POSTS, BATCH_2_3_IDS } from "@/lib/blog/batch-2-3-content";
 import { BATCH_4_POSTS, BATCH_4_IDS } from "@/lib/blog/batch-4-content";
+import { QUIZ_TIER_D_POSTS } from "@/lib/blog/quiz-tier-d-content";
 import { BLOG_METADATA } from "@/lib/blog/metadata";
 import { injectAutoImages } from "@/lib/blog/auto-image";
 
@@ -58,6 +59,7 @@ export async function GET(req: NextRequest) {
     ...remainingDrafts.map((p) => ({ ...p, group: "B-F" })),
     ...BATCH_2_3_POSTS.map((p) => ({ ...p, group: "Batch-2-3" })),
     ...BATCH_4_POSTS.map((p) => ({ ...p, group: "Batch-4" })),
+    ...QUIZ_TIER_D_POSTS.map((p) => ({ ...p, group: "Quiz-Tier-D" })),
     ...PSYCHOLOGY_POSTS.map((p) => ({ ...p, group: "P" })),
     ...TNCN_POSTS.map((p) => ({ ...p, group: "T-TNCN" })),
   ];
