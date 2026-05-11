@@ -30,6 +30,10 @@ export default function ShopClient({ products }: { products: Product[] }) {
   const [phone, setPhone] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [voucherInput, setVoucherInput] = useState("");
+  const [voucherChecking, setVoucherChecking] = useState(false);
+  const [voucherError, setVoucherError] = useState<string | null>(null);
+  const [voucher, setVoucher] = useState<{ code: string; displayName?: string; discount: number; finalTotal: number; isFree: boolean } | null>(null);
   const router = useRouter();
   const searchParams = useSearchParams();
   const { user } = useUser();
@@ -39,7 +43,55 @@ export default function ShopClient({ products }: { products: Product[] }) {
     if (searchParams.get("checkout") === "1" && items.length > 0) {
       setPhase("checkout");
     }
+    // Pre-apply voucher from query string (e.g. ?voucher=BANBE100)
+    const v = searchParams.get("voucher");
+    if (v) setVoucherInput(v);
   }, [searchParams, items.length]);
+
+  // Re-clear voucher if subtotal changes (cart updated after apply)
+  useEffect(() => {
+    if (voucher && pricing && voucher.finalTotal + voucher.discount !== pricing.total) {
+      setVoucher(null);
+      setVoucherError(null);
+    }
+  }, [pricing, voucher]);
+
+  async function applyVoucher(codeOverride?: string) {
+    const code = (codeOverride ?? voucherInput).trim();
+    if (!code || !pricing) return;
+    setVoucherChecking(true);
+    setVoucherError(null);
+    try {
+      const res = await fetch("/api/vouchers/validate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code, subtotal: pricing.total }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.ok) {
+        setVoucherError(data.error || "Không áp dụng được mã");
+        setVoucher(null);
+      } else {
+        setVoucher({
+          code: data.voucher.code,
+          displayName: data.voucher.displayName,
+          discount: data.discount,
+          finalTotal: data.finalTotal,
+          isFree: data.isFree,
+        });
+        setVoucherInput(data.voucher.code);
+      }
+    } catch {
+      setVoucherError("Lỗi kết nối");
+    }
+    setVoucherChecking(false);
+  }
+
+  function clearVoucher() {
+    setVoucher(null);
+    setVoucherInput("");
+    setVoucherError(null);
+  }
 
   // Prefill name + email for signed-in users
   useEffect(() => {
@@ -68,6 +120,7 @@ export default function ShopClient({ products }: { products: Product[] }) {
         body: JSON.stringify({
           productIds: items.map((i) => i.id),
           customer: { name, email, phone },
+          ...(voucher ? { voucherCode: voucher.code } : {}),
         }),
       });
       const data = await res.json();
@@ -236,10 +289,85 @@ export default function ShopClient({ products }: { products: Product[] }) {
                   </li>
                 ))}
               </ul>
+              {voucher && (
+                <div className="border-t pt-2.5 mb-1 flex items-center justify-between text-[0.82rem]" style={{ borderColor: "rgba(255,255,255,0.08)", color: "#5fffaa" }}>
+                  <span className="flex items-center gap-2">
+                    <Icon name="gift" size={12} />
+                    Voucher <strong className="font-mono">{voucher.code}</strong>
+                  </span>
+                  <span className="font-semibold">−{voucher.discount.toLocaleString("vi-VN")}đ</span>
+                </div>
+              )}
               <div className="border-t pt-2.5 flex items-baseline justify-between" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
-                <span className="text-[0.85rem]" style={{ color: "var(--ink-mute)" }}>Tổng</span>
-                <span className="text-[1.4rem] font-extrabold grad-text">{pricing.total.toLocaleString("vi-VN")}đ</span>
+                <span className="text-[0.85rem]" style={{ color: "var(--ink-mute)" }}>Tổng phải trả</span>
+                <div className="flex items-baseline gap-2">
+                  {voucher && (
+                    <span className="text-[0.78rem] line-through" style={{ color: "rgba(255,255,255,0.4)" }}>
+                      {pricing.total.toLocaleString("vi-VN")}đ
+                    </span>
+                  )}
+                  <span className="text-[1.4rem] font-extrabold grad-text">
+                    {(voucher ? voucher.finalTotal : pricing.total).toLocaleString("vi-VN")}đ
+                  </span>
+                </div>
               </div>
+            </div>
+
+            {/* Voucher input */}
+            <div className="mb-4">
+              <label className="block text-[0.78rem] font-semibold mb-1.5 text-white">
+                Mã voucher <span className="font-normal" style={{ color: "var(--ink-mute)" }}>(nếu có)</span>
+              </label>
+              {voucher ? (
+                <div className="flex items-center justify-between gap-3 rounded-lg px-3 py-2.5" style={{ background: "rgba(95,255,170,0.08)", border: "1px solid rgba(95,255,170,0.3)" }}>
+                  <div className="flex items-center gap-2 min-w-0">
+                    <Icon name="check" size={14} color="#5fffaa" strokeWidth={3} />
+                    <span className="text-[0.88rem] font-bold text-white font-mono truncate">{voucher.code}</span>
+                    {voucher.isFree && (
+                      <span className="text-[0.65rem] font-bold uppercase tracking-[0.14em] px-1.5 py-0.5 rounded" style={{ background: "rgba(95,255,170,0.2)", color: "#5fffaa" }}>FREE</span>
+                    )}
+                    <span className="text-[0.78rem]" style={{ color: "#5fffaa" }}>
+                      −{voucher.discount.toLocaleString("vi-VN")}đ
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={clearVoucher}
+                    className="text-[0.78rem] font-semibold flex-shrink-0"
+                    style={{ color: "rgba(255,255,255,0.5)" }}
+                  >
+                    Bỏ
+                  </button>
+                </div>
+              ) : (
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={voucherInput}
+                    onChange={(e) => setVoucherInput(e.target.value.toUpperCase())}
+                    placeholder="VD: BANBE100"
+                    className="flex-1 px-4 py-2.5 rounded-lg outline-none uppercase font-mono text-[0.92rem]"
+                    style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)", color: "white" }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => applyVoucher()}
+                    disabled={voucherChecking || !voucherInput.trim()}
+                    className="px-4 py-2.5 rounded-lg text-[0.85rem] font-semibold transition-all"
+                    style={{
+                      background: "rgba(20,110,245,0.18)",
+                      border: "1px solid rgba(20,110,245,0.4)",
+                      color: "#7da9ff",
+                      opacity: voucherChecking || !voucherInput.trim() ? 0.5 : 1,
+                    }}
+                  >
+                    {voucherChecking ? "..." : "Áp dụng"}
+                  </button>
+                </div>
+              )}
+              {voucherError && (
+                <div className="mt-2 text-[0.78rem]" style={{ color: "#ff5a72" }}>{voucherError}</div>
+              )}
             </div>
 
             <form onSubmit={handleCheckout} className="flex flex-col gap-4">
@@ -305,7 +433,11 @@ export default function ShopClient({ products }: { products: Product[] }) {
                 className="text-white font-bold text-[1rem] px-6 py-3.5 rounded-xl transition-all"
                 style={{ background: "var(--grad-primary)", boxShadow: "0 8px 24px rgba(20,110,245,0.35)", opacity: submitting ? 0.6 : 1 }}
               >
-                {submitting ? "Đang xử lý..." : `Tạo đơn ${pricing.total.toLocaleString("vi-VN")}đ — Chuyển khoản`}
+                {submitting
+                  ? "Đang xử lý..."
+                  : voucher?.isFree
+                    ? "Nhận file miễn phí — Không cần chuyển khoản"
+                    : `Tạo đơn ${(voucher ? voucher.finalTotal : pricing.total).toLocaleString("vi-VN")}đ — Chuyển khoản`}
               </button>
             </form>
           </div>

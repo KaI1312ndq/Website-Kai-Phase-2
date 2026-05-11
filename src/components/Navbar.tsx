@@ -206,7 +206,8 @@ export default function Navbar() {
                       avatarBox: "w-9 h-9 ring-2 ring-white/10 hover:ring-white/25 transition-all",
                     },
                   }}
-                  userProfileUrl="/account"
+                  userProfileMode="navigation"
+                  userProfileUrl="/account/profile"
                 />
               </Show>
             </div>
@@ -284,7 +285,8 @@ export default function Navbar() {
               <Show when="signed-in">
                 <UserButton
                   appearance={{ elements: { avatarBox: "w-12 h-12 ring-2 ring-white/15" } }}
-                  userProfileUrl="/account"
+                  userProfileMode="navigation"
+                  userProfileUrl="/account/profile"
                 />
               </Show>
             </motion.div>

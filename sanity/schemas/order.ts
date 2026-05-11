@@ -68,6 +68,19 @@ export const orderType = defineType({
       initialValue: 0,
     }),
     defineField({
+      name: "voucherCode",
+      title: "Mã voucher đã áp dụng",
+      type: "string",
+      readOnly: true,
+    }),
+    defineField({
+      name: "voucherDiscount",
+      title: "Giảm từ voucher (VND)",
+      type: "number",
+      readOnly: true,
+      initialValue: 0,
+    }),
+    defineField({
       name: "total",
       title: "Tổng phải trả",
       type: "number",

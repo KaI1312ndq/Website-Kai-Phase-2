@@ -143,10 +143,33 @@ export async function getOrderByNumber(orderNumber: string) {
   return client.fetch(`
     *[_type == "order" && orderNumber == $orderNumber][0] {
       _id, orderNumber, customer, items, subtotal, discount, total,
+      voucherCode, voucherDiscount,
       paymentStatus, deliveryStatus, downloadToken, downloadExpiresAt,
       createdAt, paidAt, deliveredAt
     }
   `, { orderNumber });
+}
+
+// ── Vouchers ──
+export async function getVoucherByCode(code: string) {
+  return client.fetch(`
+    *[_type == "voucher" && upper(code) == $code][0] {
+      _id, code, displayName, description, type, value, visibility, active,
+      expiresAt, maxUses, usedCount, minOrderValue
+    }
+  `, { code: code.toUpperCase() });
+}
+
+export async function getPublicVouchers() {
+  const now = new Date().toISOString();
+  return client.fetch(`
+    *[_type == "voucher" && active == true && visibility == "public"
+      && (!defined(expiresAt) || expiresAt > $now)
+      && (!defined(maxUses) || coalesce(usedCount, 0) < maxUses)
+    ] | order(value desc) [0...6] {
+      _id, code, displayName, description, type, value, minOrderValue, expiresAt
+    }
+  `, { now });
 }
 
 export async function getOrdersForUser({ clerkUserId, email }: { clerkUserId?: string | null; email?: string | null }) {

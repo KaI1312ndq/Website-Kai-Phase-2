@@ -9,6 +9,7 @@ import { getProductBySlug, getAllProductSlugs } from "@/lib/queries";
 import { urlFor } from "../../../../sanity/lib/image";
 import { PortableText } from "@portabletext/react";
 import ProductDetailClient from "./ProductDetailClient";
+import PublicVouchers from "@/components/voucher/PublicVouchers";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://nguyenducquang.website";
 
@@ -162,6 +163,9 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                     Mua mãi, dùng mãi
                   </span>
                 </div>
+
+                {/* Public vouchers */}
+                <PublicVouchers />
 
                 {/* Buy now */}
                 <ProductDetailClient productId={product._id} productTitle={product.title} price={product.price} />

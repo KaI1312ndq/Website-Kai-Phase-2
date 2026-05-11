@@ -48,7 +48,9 @@ export default async function OrderStatusPage({ params }: { params: Promise<{ or
             </Link>
             <div className="section-tag">Đơn hàng · {order.orderNumber}</div>
             <h1 className="t-h1 leading-[1.1] text-white max-w-[820px] mb-3">
-              {isDelivered ? (
+              {order.total === 0 ? (
+                <>Đơn miễn phí — <span className="grad-text">đã gửi file qua email.</span></>
+              ) : isDelivered ? (
                 <>File đã gửi vào <span className="grad-text">email của bạn.</span></>
               ) : isPaid ? (
                 <>Đang gửi file qua <span className="grad-text">email...</span></>
@@ -57,11 +59,13 @@ export default async function OrderStatusPage({ params }: { params: Promise<{ or
               )}
             </h1>
             <p className="t-body" style={{ color: "var(--ink-soft)" }}>
-              {isDelivered
-                ? `File đã được gửi vào ${order.customer.email}. Kiểm tra hộp thư + spam.`
-                : isPaid
-                  ? "Đợi 1-2 phút mình gửi file vào email của bạn."
-                  : "Mở ứng dụng ngân hàng → quét QR → tiền tự nhập kèm mã đơn → xong."}
+              {order.total === 0
+                ? `Voucher ${order.voucherCode || ""} đã áp dụng — không cần chuyển khoản. File gửi vào ${order.customer.email} (kiểm tra cả spam).`
+                : isDelivered
+                  ? `File đã được gửi vào ${order.customer.email}. Kiểm tra hộp thư + spam.`
+                  : isPaid
+                    ? "Đợi 1-2 phút mình gửi file vào email của bạn."
+                    : "Mở ứng dụng ngân hàng → quét QR → tiền tự nhập kèm mã đơn → xong."}
             </p>
           </div>
         </section>
@@ -88,10 +92,19 @@ export default async function OrderStatusPage({ params }: { params: Promise<{ or
                 ))}
               </ul>
 
+              {order.voucherCode && (order.voucherDiscount || 0) > 0 && (
+                <div className="pt-3 mb-2 text-[0.85rem] flex items-center justify-between" style={{ color: "#5fffaa" }}>
+                  <span className="flex items-center gap-2">
+                    <Icon name="gift" size={14} />
+                    Voucher <strong className="font-mono">{order.voucherCode}</strong>
+                  </span>
+                  <span className="font-semibold">−{(order.voucherDiscount || 0).toLocaleString("vi-VN")}đ</span>
+                </div>
+              )}
               <div className="pt-4 border-t flex items-baseline justify-between" style={{ borderColor: "var(--line)" }}>
                 <span className="text-[0.85rem]" style={{ color: "var(--ink-mute)" }}>Tổng phải trả</span>
                 <div className="flex items-baseline gap-2">
-                  {order.discount > 0 && (
+                  {(order.discount > 0 || (order.voucherDiscount || 0) > 0) && (
                     <span className="text-[0.78rem] line-through" style={{ color: "rgba(255,255,255,0.4)" }}>
                       {order.subtotal.toLocaleString("vi-VN")}đ
                     </span>

@@ -2,12 +2,21 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@sanity/client";
 import { auth } from "@clerk/nextjs/server";
 import { calculatePrice, generateOrderNumber, generateDownloadToken } from "@/lib/payment/config";
+import { getVoucherByCode } from "@/lib/queries";
+import { normalizeCode, validateVoucher } from "@/lib/voucher";
+import { sendDeliveryEmail } from "@/lib/email/send-delivery";
 
 /**
  * Create new order with selected products.
  * POST /api/orders/create
- *   body: { productIds: string[], customer: { name, email, phone? } }
- * Returns: { orderNumber, total, redirectUrl }
+ *   body: {
+ *     productIds: string[],
+ *     customer: { name, email, phone },
+ *     voucherCode?: string,
+ *   }
+ * Returns: { orderNumber, total, redirectUrl, isFree }
+ *
+ * If voucher reduces total to 0 → mark paid + delivered immediately, send file email, skip QR.
  */
 
 const RATE_LIMIT = new Map<string, { count: number; resetAt: number }>();
@@ -32,7 +41,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { productIds, customer } = body || {};
+    const { productIds, customer, voucherCode } = body || {};
 
     if (!Array.isArray(productIds) || productIds.length === 0 || productIds.length > 10) {
       return NextResponse.json({ error: "productIds phải là mảng 1-10 phần tử" }, { status: 400 });
@@ -67,19 +76,44 @@ export async function POST(req: NextRequest) {
     });
 
     // Fetch products to validate + lock prices
-    const products = await sanity.fetch(
+    const products = (await sanity.fetch(
       `*[_type == "product" && active == true && _id in $ids] { _id, title, price }`,
       { ids: productIds }
-    ) as Array<{ _id: string; title: string; price: number }>;
+    )) as Array<{ _id: string; title: string; price: number }>;
 
     if (products.length !== productIds.length) {
       return NextResponse.json({ error: "Một số sản phẩm không tồn tại hoặc đã hết bán" }, { status: 400 });
     }
 
-    // Calculate pricing using bundle rule
-    const { subtotal, total, discount } = calculatePrice(products.length);
+    // Bundle pricing
+    const bundle = calculatePrice(products.length);
+    let total = bundle.total;
+    let voucherDiscount = 0;
+    let appliedCode: string | null = null;
+    let voucherDocId: string | null = null;
 
-    // Generate unique order number (retry if collision — extremely rare)
+    // Voucher (re-validate server-side)
+    if (voucherCode && typeof voucherCode === "string" && voucherCode.trim()) {
+      const code = normalizeCode(voucherCode);
+      const voucher = await getVoucherByCode(code);
+      const check = validateVoucher(voucher, total);
+      if (!check.ok) {
+        return NextResponse.json({ error: `Voucher: ${check.error}` }, { status: 400 });
+      }
+      voucherDiscount = check.discount;
+      total = check.finalTotal;
+      appliedCode = check.voucher.code;
+      voucherDocId = check.voucher._id;
+    }
+
+    // Attach Clerk userId if signed in
+    let clerkUserId: string | null = null;
+    try {
+      const { userId } = await auth();
+      clerkUserId = userId || null;
+    } catch {}
+
+    // Generate unique order number
     let orderNumber = generateOrderNumber();
     for (let i = 0; i < 5; i++) {
       const existing = await sanity.fetch(`*[_type == "order" && orderNumber == $on][0]._id`, { on: orderNumber });
@@ -89,13 +123,7 @@ export async function POST(req: NextRequest) {
 
     const downloadToken = generateDownloadToken();
     const now = new Date();
-
-    // Attach Clerk userId if signed in (best-effort — checkout still works for guests)
-    let clerkUserId: string | null = null;
-    try {
-      const { userId } = await auth();
-      clerkUserId = userId || null;
-    } catch {}
+    const isFree = total === 0;
 
     const doc: any = {
       _type: "order",
@@ -112,22 +140,59 @@ export async function POST(req: NextRequest) {
         title: p.title,
         price: p.price,
       })),
-      subtotal,
-      discount,
+      subtotal: bundle.subtotal,
+      discount: bundle.discount,
+      ...(appliedCode ? { voucherCode: appliedCode, voucherDiscount } : { voucherDiscount: 0 }),
       total,
-      paymentStatus: "pending",
+      paymentStatus: isFree ? "paid" : "pending",
       deliveryStatus: "pending",
       downloadToken,
       createdAt: now.toISOString(),
+      ...(isFree ? { paidAt: now.toISOString() } : {}),
     };
 
     const created = await sanity.create(doc);
+
+    // If voucher applied, bump usedCount (best-effort)
+    if (voucherDocId) {
+      try {
+        await sanity.patch(voucherDocId).inc({ usedCount: 1 }).commit();
+      } catch {}
+    }
+
+    // Free order → auto-send delivery email immediately
+    if (isFree) {
+      try {
+        const expiresAt = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
+        const emailResult = await sendDeliveryEmail({
+          to: email.trim().toLowerCase(),
+          customerName: name.trim(),
+          orderNumber,
+          total: 0,
+          items: products.map((p) => ({ title: p.title })),
+          downloadToken,
+          expiresAt: expiresAt.toISOString(),
+        });
+        const patches: any = {
+          deliveryStatus: emailResult.ok ? "delivered" : "failed",
+          downloadExpiresAt: expiresAt.toISOString(),
+        };
+        if (emailResult.ok) {
+          patches.deliveredAt = now.toISOString();
+          if (emailResult.emailId) patches.resendEmailId = emailResult.emailId;
+        }
+        await sanity.patch(created._id).set(patches).commit();
+      } catch {
+        // Email failure shouldn't block order creation; Quảng can re-send from Studio
+      }
+    }
 
     return NextResponse.json({
       ok: true,
       orderId: created._id,
       orderNumber,
       total,
+      isFree,
       redirectUrl: `/shop/order/${orderNumber}`,
     });
   } catch (e) {

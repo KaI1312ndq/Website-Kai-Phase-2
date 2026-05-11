@@ -435,10 +435,11 @@ Auto-deploy via Vercel on push to `main`. Branch deploys for any other branch.
 - [x] **Cart system** — global Context (localStorage-backed), CartButton + badge in Navbar, slide-out CartDrawer, ShopClient refactored to share cart state, signed-in users get name/email/phone auto-prefilled at checkout
 - [x] **Cross-device cart sync** — when signed in, cart syncs to Sanity `userCart` doc (debounced POST /api/cart, merge with localStorage on sign-in). Guests keep localStorage-only flow.
 - [x] **`/account/orders`** — lists user's orders (matched by clerkUserId OR email — catches guest orders made before sign-in), "Tải lại file" deep-link to existing download token, expired-token notice. Orders placed while signed in auto-attach `clerkUserId`.
+- [x] **`/account/profile`** — embedded Clerk `<UserProfile />` for name/avatar/email/phone/password edits. UserButton "Manage account" now navigates here (no modal).
+- [x] **Voucher system** — Sanity `voucher` schema (percent / fixed VND, public / hidden, expiry, max uses, min order value, used count tracking). `/api/vouchers/validate` for preview, server re-validates at `/api/orders/create`. Public vouchers render as cards on product detail pages (deep-link `?voucher=CODE&checkout=1`). **100% voucher → order auto-marked paid + delivery email sent immediately, QR/transfer skipped.**
 
 ### Up next
 - [ ] Optional Clerk profile fields: phone + username (for display + contact storage — toggle in Clerk dashboard, code already reads them)
-- [ ] `/account/profile` — edit name/phone/avatar (via Clerk `<UserProfile />` embedded)
 - [ ] Quiz #5 "Test Content Frameworks" (knowledge format, reuse infra)
 - [ ] Tool "Content Cheat Sheet" — interactive framework picker
 - [ ] Salary Calculator tool (using UpBase Salary Benchmark 2026)
