@@ -497,9 +497,55 @@ input:focus, textarea:focus { outline: none; }
   .blob-anim { animation: none; }
 }
 
-/* ── Clerk dark theme overrides — force readable text everywhere ── */
-/* Clerk's internal CSS uses --cl-color-* vars that sometimes win over inline className overrides.
-   These rules use !important to guarantee crisp white text on our dark blue palette. */
+/* ── Clerk dark theme overrides — force readable text everywhere ──
+   Clerk's internal --cl-color-* CSS vars beat appearance.elements className
+   overrides in some sub-rows (email values, connected accounts, active sessions).
+   Use !important + sweeping selectors scoped to .cl-rootBox to guarantee
+   contrast on our dark blue palette. */
+
+/* 1. Catch-all: any text inside a Clerk root box is near-white.
+   Handles section row VALUES (email text, "Google · email", session browser/IP/time)
+   which don't have dedicated .cl-* classes. */
+.cl-rootBox,
+.cl-rootBox *:not(svg):not(path):not(circle):not(rect):not(line):not(polyline) {
+  color: rgba(255, 255, 255, 0.92) !important;
+}
+
+/* 2. Restore link/action accents (overridden by rule 1) */
+.cl-rootBox a,
+.cl-rootBox .cl-profileSectionPrimaryButton,
+.cl-rootBox button[data-localization-key$="add"],
+.cl-rootBox button[data-localization-key*="connect"],
+.cl-rootBox button[data-localization-key*="update"] {
+  color: #7da9ff !important;
+}
+.cl-rootBox a:hover,
+.cl-rootBox .cl-profileSectionPrimaryButton:hover {
+  color: #ffffff !important;
+}
+
+/* 3. Destructive red */
+.cl-rootBox [data-color="danger"],
+.cl-rootBox .cl-formButtonReset[data-color="danger"] {
+  color: #ff5a72 !important;
+}
+
+/* 4. De-emphasize secondary helper text only */
+.cl-rootBox .cl-userPreviewSecondaryIdentifier,
+.cl-rootBox .cl-pageDescription,
+.cl-rootBox .cl-headerSubtitle,
+.cl-rootBox .cl-formFieldHintText,
+.cl-rootBox .cl-formFieldHelperText {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+/* 5. Primary gradient button text stays white */
+.cl-rootBox .cl-formButtonPrimary,
+.cl-rootBox .cl-formButtonPrimary * {
+  color: #ffffff !important;
+}
+
+/* Legacy targeted overrides (kept for older Clerk versions) */
 .cl-userButtonPopoverActionButton__text,
 .cl-userButtonPopoverActionButton,
 .cl-userPreviewMainIdentifier,
