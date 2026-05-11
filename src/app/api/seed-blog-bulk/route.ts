@@ -52,6 +52,10 @@ export async function GET(req: NextRequest) {
     ...TNCN_POSTS.map((p) => ({ ...p, group: "T-TNCN" })),
   ];
 
+  // ?force=1 overwrites existing docs (useful khi content code đã sửa nhưng Sanity giữ bản cũ).
+  // Default: createIfNotExists (skip nếu đã có), không phá user edits trên Studio.
+  const force = url.searchParams.get("force") === "1";
+
   const results: { id: string; group: string; title: string; status: string }[] = [];
 
   for (const post of allPosts) {
@@ -71,8 +75,13 @@ export async function GET(req: NextRequest) {
         seoDescription: post.seoDescription,
         body,
       };
-      await client.createIfNotExists(doc);
-      results.push({ id: post.id, group: post.group, title: post.title, status: "created" });
+      if (force) {
+        await client.createOrReplace(doc);
+        results.push({ id: post.id, group: post.group, title: post.title, status: "overwritten" });
+      } else {
+        await client.createIfNotExists(doc);
+        results.push({ id: post.id, group: post.group, title: post.title, status: "created" });
+      }
     } catch (e) {
       results.push({
         id: post.id,
@@ -83,7 +92,7 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  const successCount = results.filter((r) => r.status === "created").length;
+  const successCount = results.filter((r) => r.status === "created" || r.status === "overwritten").length;
   const errorCount = results.filter((r) => r.status.startsWith("error")).length;
 
   return NextResponse.json({

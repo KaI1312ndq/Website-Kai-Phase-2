@@ -205,70 +205,56 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
   );
 }
 
-/* ─── Featured grid: 1 big + 2 small ─── */
+/* ─── Featured grid: 3 equal cards in a row (vertical layout) ─── */
 function FeaturedPostsGrid({ posts }: { posts: any[] }) {
   if (posts.length === 0) return null;
-  const [primary, ...rest] = posts;
+  const featured = posts.slice(0, 3);
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-5">
-      {/* Primary */}
-      <Link href={`/blog/${primary.slug.current}`} className="group glass overflow-hidden flex flex-col">
-        <div className="aspect-[16/10] overflow-hidden flex items-center justify-center" style={{ background: "var(--grad-primary-soft)" }}>
-          <img
-            src={buildCoverUrl({
-              sanityUrl: primary.coverImage ? urlFor(primary.coverImage).width(900).height(560).url() : undefined,
-              title: primary.title,
-              category: primary.category,
-              width: 900,
-              height: 560,
-            })}
-            alt={primary.title}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            loading="lazy"
-          />
-        </div>
-        <div className="p-7 flex flex-col flex-1">
-          <div className="flex items-center gap-2 mb-3 flex-wrap">
-            <span className="wf-badge text-[0.7rem]" style={{ background: "rgba(20,110,245,0.18)", borderColor: "rgba(20,110,245,0.4)", color: "#7da9ff" }}>★ Featured</span>
-            <span className="wf-badge text-[0.7rem]">{CATEGORY_LABELS[primary.category] || primary.category}</span>
-            {primary.readTime && <span className="text-[0.72rem]" style={{ color: "var(--ink-mute)" }}>· {primary.readTime} phút đọc</span>}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      {featured.map((p: any, i: number) => (
+        <Link
+          key={p._id}
+          href={`/blog/${p.slug.current}`}
+          className="group glass overflow-hidden flex flex-col"
+        >
+          <div className="aspect-[16/9] overflow-hidden flex items-center justify-center" style={{ background: "var(--grad-primary-soft)" }}>
+            <img
+              src={buildCoverUrl({
+                sanityUrl: p.coverImage ? urlFor(p.coverImage).width(600).height(338).url() : undefined,
+                title: p.title,
+                category: p.category,
+              })}
+              alt={p.title}
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              loading="lazy"
+            />
           </div>
-          <h3 className="text-[1.3rem] md:text-[1.45rem] font-bold mb-3 leading-snug tracking-tight text-white group-hover:text-[#7da9ff] transition-colors">
-            {primary.title}
-          </h3>
-          {primary.excerpt && <p className="text-[0.92rem] leading-[1.6] line-clamp-3" style={{ color: "var(--ink-mute)" }}>{primary.excerpt}</p>}
-          <div className="mt-auto pt-5 text-[0.85rem] font-semibold grad-text">Đọc bài </div>
-        </div>
-      </Link>
-
-      {/* Secondary stack */}
-      <div className="flex flex-col gap-5">
-        {rest.slice(0, 2).map((p: any) => (
-          <Link key={p._id} href={`/blog/${p.slug.current}`} className="group glass overflow-hidden flex flex-row flex-1">
-            <div className="w-[40%] flex-shrink-0 flex items-center justify-center overflow-hidden" style={{ background: "var(--grad-primary-soft)" }}>
-              <img
-                src={buildCoverUrl({
-                  sanityUrl: p.coverImage ? urlFor(p.coverImage).width(400).height(360).url() : undefined,
-                  title: p.title,
-                  category: p.category,
-                  width: 400,
-                  height: 360,
-                })}
-                alt={p.title}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                loading="lazy"
-              />
+          <div className="p-6 flex flex-col flex-1">
+            <div className="flex items-center gap-2 mb-3 flex-wrap">
+              {i === 0 && (
+                <span className="wf-badge text-[0.66rem]" style={{ background: "rgba(20,110,245,0.18)", borderColor: "rgba(20,110,245,0.4)", color: "#7da9ff" }}>
+                  ★ Top
+                </span>
+              )}
+              <span className="wf-badge text-[0.66rem]">{CATEGORY_LABELS[p.category] || p.category}</span>
+              {p.readTime && (
+                <span className="text-[0.7rem]" style={{ color: "var(--ink-mute)" }}>
+                  · {p.readTime} phút đọc
+                </span>
+              )}
             </div>
-            <div className="p-5 flex flex-col flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-2 flex-wrap">
-                <span className="wf-badge text-[0.65rem]">{CATEGORY_LABELS[p.category] || p.category}</span>
-                {p.readTime && <span className="text-[0.68rem]" style={{ color: "var(--ink-mute)" }}>· {p.readTime}p</span>}
-              </div>
-              <h3 className="text-[0.98rem] font-semibold leading-snug tracking-tight text-white group-hover:text-[#7da9ff] transition-colors line-clamp-3">{p.title}</h3>
-            </div>
-          </Link>
-        ))}
-      </div>
+            <h3 className="text-[1.05rem] md:text-[1.1rem] font-bold mb-2.5 leading-snug tracking-tight text-white group-hover:text-[#7da9ff] transition-colors line-clamp-2">
+              {p.title}
+            </h3>
+            {p.excerpt && (
+              <p className="text-[0.86rem] leading-[1.55] line-clamp-3" style={{ color: "var(--ink-mute)" }}>
+                {p.excerpt}
+              </p>
+            )}
+            <div className="mt-auto pt-4 text-[0.82rem] font-semibold grad-text">Đọc bài</div>
+          </div>
+        </Link>
+      ))}
     </div>
   );
 }
