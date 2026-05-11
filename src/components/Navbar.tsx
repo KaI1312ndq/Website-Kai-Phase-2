@@ -66,7 +66,7 @@ const links: NavLink[] = [
     submenu: [
       {
         label: "Tính Thuế TNCN 2026",
-        desc: "So sánh luật 2025 vs 2026 · giảm trừ 15.5M · lương Net",
+        desc: "So sánh luật 2025 vs 2026 · giảm trừ 15.500.000 · lương Net",
         href: "/tools/tinh-thue-tncn",
         badge: "Hot",
       },

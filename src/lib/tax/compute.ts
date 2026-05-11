@@ -92,8 +92,8 @@ export type TaxBreakdown = {
   net: number;
 };
 
-function formatM(n: number): string {
-  return `${(n / 1_000_000).toFixed(n % 1_000_000 === 0 ? 0 : 1)}M`;
+function formatInt(n: number): string {
+  return n.toLocaleString("vi-VN");
 }
 
 export function computeTax(params: {
@@ -128,8 +128,10 @@ export function computeTax(params: {
     const amount = Math.min(remaining, bracketSize);
     const tax = amount * b.rate;
     const rangeLabel = b.upTo === Infinity
-      ? `Trên ${formatM(lastUpTo)}`
-      : `${formatM(lastUpTo)}–${formatM(b.upTo)}`;
+      ? `Trên ${formatInt(lastUpTo)}`
+      : lastUpTo === 0
+        ? `Đến ${formatInt(b.upTo)}`
+        : `${formatInt(lastUpTo)} – ${formatInt(b.upTo)}`;
     brackets.push({ rate: b.rate, amount, tax, rangeLabel });
     totalTax += tax;
     remaining -= amount;

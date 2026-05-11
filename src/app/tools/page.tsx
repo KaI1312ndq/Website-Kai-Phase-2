@@ -21,7 +21,7 @@ const TOOLS = [
     href: "/tools/tinh-thue-tncn",
     badge: "Hot · 2026",
     title: "Tính Thuế TNCN 2026 (so sánh 2025)",
-    desc: "So sánh trực tiếp thuế thu nhập cá nhân theo luật mới 2026 (5 bậc, giảm trừ 15.5M) vs luật cũ 2025 (7 bậc, giảm trừ 11M). Tự tính BHXH 10.5% + lương Net thực nhận.",
+    desc: "So sánh trực tiếp thuế thu nhập cá nhân theo luật mới 2026 (5 bậc, giảm trừ 15.500.000) vs luật cũ 2025 (7 bậc, giảm trừ 11.000.000). Tự tính BHXH 10.5% + lương Net thực nhận.",
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5fffaa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <rect x="3" y="3" width="18" height="18" rx="2" /><path d="M9 9h6M9 13h6M9 17h4" />

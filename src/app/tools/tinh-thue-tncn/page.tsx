@@ -12,12 +12,12 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.nguyenducquang
 export const metadata: Metadata = {
   title: "Tính Thuế TNCN 2026 — So sánh 2025 vs 2026 mới nhất",
   description:
-    "Tool tính thuế thu nhập cá nhân 2026 theo Nghị quyết 110/2025/UBTVQH15 — so sánh trực tiếp với luật 2025 cũ. Nhập lương Gross/tháng, tự tính BHXH 10.5% + giảm trừ gia cảnh + thuế lũy tiến 5 bậc mới + lương Net. Miễn phí.",
+    "Tool tính thuế thu nhập cá nhân 2026 theo Nghị quyết 110/2025/UBTVQH15 — so sánh trực tiếp với luật 2025 cũ. Nhập lương Gross/tháng, tự tính BHXH 10.5% + giảm trừ gia cảnh + thuế lũy tiến 5 bậc mới (giảm trừ 15.500.000 cho bản thân, 6.200.000/người phụ thuộc) + lương Net. Miễn phí.",
   alternates: { canonical: "/tools/tinh-thue-tncn" },
   openGraph: {
     type: "website",
     title: "Tính Thuế TNCN 2026 vs 2025 — Tool miễn phí",
-    description: "So sánh thuế thu nhập cá nhân theo luật mới 2026 (5 bậc, giảm trừ 15.5M) vs luật cũ 2025 (7 bậc, giảm trừ 11M). Tính lương Net trong 3 giây.",
+    description: "So sánh thuế thu nhập cá nhân theo luật mới 2026 (5 bậc, giảm trừ 15.500.000) vs luật cũ 2025 (7 bậc, giảm trừ 11.000.000). Tính lương Net trong 3 giây.",
     url: `${SITE_URL}/tools/tinh-thue-tncn`,
   },
 };
@@ -25,15 +25,15 @@ export const metadata: Metadata = {
 const FAQS = [
   {
     q: "Luật thuế TNCN 2026 khác gì 2025?",
-    a: "2 thay đổi lớn: (1) Số bậc giảm từ 7 xuống 5 (nới rộng bậc thấp + bỏ bậc 15%/25%), (2) Giảm trừ gia cảnh tăng 41% — bản thân 11M → 15.5M, người phụ thuộc 4.4M → 6.2M/tháng. Áp dụng cho thu nhập từ 1/1/2026 theo Nghị quyết 110/2025/UBTVQH15.",
+    a: "2 thay đổi lớn: (1) Số bậc giảm từ 7 xuống 5 (nới rộng bậc thấp + bỏ bậc 15%/25%), (2) Giảm trừ gia cảnh tăng 41% — bản thân 11.000.000 → 15.500.000, người phụ thuộc 4.400.000 → 6.200.000/tháng. Áp dụng cho thu nhập từ 1/1/2026 theo Nghị quyết 110/2025/UBTVQH15.",
   },
   {
     q: "Người phụ thuộc là ai?",
-    a: "Theo luật: (1) Con dưới 18 tuổi (hoặc 18+ nhưng đang đi học chính quy đến đại học), con khuyết tật; (2) Vợ/chồng + cha mẹ + ông bà + anh chị em không có thu nhập hoặc thu nhập ≤ 1M/tháng và bạn đang nuôi dưỡng. Mỗi người phụ thuộc CHỈ được đăng ký giảm trừ tại 1 người nộp thuế.",
+    a: "Theo luật: (1) Con dưới 18 tuổi (hoặc 18+ nhưng đang đi học chính quy đến đại học), con khuyết tật; (2) Vợ/chồng + cha mẹ + ông bà + anh chị em không có thu nhập hoặc thu nhập ≤ 1.000.000/tháng và bạn đang nuôi dưỡng. Mỗi người phụ thuộc CHỈ được đăng ký giảm trừ tại 1 người nộp thuế.",
   },
   {
     q: "Bảo hiểm bắt buộc 10.5% gồm những gì?",
-    a: "Người lao động đóng: BHXH 8% + BHYT 1.5% + BHTN 1% = 10.5% lương. Cap: BHXH+BHYT trừ trên mức lương tối đa 46.8M (20× lương cơ sở 2.34M) — vượt mức này thì chỉ đóng tối đa 4.446M tổng BHXH+BHYT/tháng. BHTN cap riêng tại 99.2M (20× lương tối thiểu vùng I).",
+    a: "Người lao động đóng: BHXH 8% + BHYT 1.5% + BHTN 1% = 10.5% lương. Cap: BHXH+BHYT trừ trên mức lương tối đa 46.800.000 (20× lương cơ sở 2.340.000) — vượt mức này thì chỉ đóng tối đa 4.446.000 tổng BHXH+BHYT/tháng. BHTN cap riêng tại 99.200.000 (20× lương tối thiểu vùng I).",
   },
   {
     q: "Thưởng Tết có bị tính thuế không?",
@@ -41,11 +41,11 @@ const FAQS = [
   },
   {
     q: "Tôi có 2 nguồn thu nhập (lương + freelance), tính sao?",
-    a: "Lương cố định mỗi tháng: đơn vị trả lương khấu trừ thuế theo biểu lũy tiến (tool này áp dụng). Freelance/hợp đồng dưới 3 tháng > 2M/lần: khấu trừ thẳng 10% (không qua biểu lũy tiến). Cuối năm quyết toán, gộp lại để tính chính xác — có thể nhận lại hoặc đóng thêm.",
+    a: "Lương cố định mỗi tháng: đơn vị trả lương khấu trừ thuế theo biểu lũy tiến (tool này áp dụng). Freelance/hợp đồng dưới 3 tháng > 2.000.000/lần: khấu trừ thẳng 10% (không qua biểu lũy tiến). Cuối năm quyết toán, gộp lại để tính chính xác — có thể nhận lại hoặc đóng thêm.",
   },
   {
     q: "Lương bao nhiêu thì không phải đóng thuế?",
-    a: "2026 mới: lương Gross ≤ 17.3M (nếu đóng BHXH) HOẶC ≤ 15.5M (không BHXH) + 0 người phụ thuộc → không thuế. Mỗi người phụ thuộc nâng ngưỡng thêm 6.2M. 2025 cũ: tương đương ngưỡng 12.3M (có BH) hoặc 11M (không BH).",
+    a: "2026 mới: lương Gross ≤ 17.318.000 (nếu đóng BHXH) HOẶC ≤ 15.500.000 (không BHXH) + 0 người phụ thuộc → không thuế. Mỗi người phụ thuộc nâng ngưỡng thêm 6.200.000. 2025 cũ: tương đương ngưỡng 12.291.000 (có BH) hoặc 11.000.000 (không BH).",
   },
   {
     q: "Tool có chính xác không?",
@@ -107,7 +107,7 @@ export default function TaxCalcPage() {
             </p>
             <div className="flex flex-wrap gap-3 text-[0.82rem]" style={{ color: "var(--ink-mute)" }}>
               <span className="flex items-center gap-1.5"><Icon name="check" size={12} color="#5fffaa" strokeWidth={3} /> 5 bậc thuế mới 2026</span>
-              <span className="flex items-center gap-1.5"><Icon name="check" size={12} color="#5fffaa" strokeWidth={3} /> Giảm trừ 15.5M / 6.2M</span>
+              <span className="flex items-center gap-1.5"><Icon name="check" size={12} color="#5fffaa" strokeWidth={3} /> Giảm trừ 15.500.000 / 6.200.000</span>
               <span className="flex items-center gap-1.5"><Icon name="check" size={12} color="#5fffaa" strokeWidth={3} /> So sánh luật cũ song song</span>
               <span className="flex items-center gap-1.5"><Icon name="check" size={12} color="#5fffaa" strokeWidth={3} /> Hoàn toàn miễn phí, không cần đăng ký</span>
             </div>
@@ -145,17 +145,17 @@ export default function TaxCalcPage() {
                       </tr>
                     </thead>
                     <tbody style={{ color: "rgba(255,255,255,0.85)" }}>
-                      <tr><td className="py-1">Đến 5M</td><td className="text-right tabular-nums">5%</td></tr>
-                      <tr><td className="py-1">5M – 10M</td><td className="text-right tabular-nums">10%</td></tr>
-                      <tr><td className="py-1">10M – 18M</td><td className="text-right tabular-nums">15%</td></tr>
-                      <tr><td className="py-1">18M – 32M</td><td className="text-right tabular-nums">20%</td></tr>
-                      <tr><td className="py-1">32M – 52M</td><td className="text-right tabular-nums">25%</td></tr>
-                      <tr><td className="py-1">52M – 80M</td><td className="text-right tabular-nums">30%</td></tr>
-                      <tr><td className="py-1">Trên 80M</td><td className="text-right tabular-nums">35%</td></tr>
+                      <tr><td className="py-1">Đến 5.000.000</td><td className="text-right tabular-nums">5%</td></tr>
+                      <tr><td className="py-1">5.000.000 – 10.000.000</td><td className="text-right tabular-nums">10%</td></tr>
+                      <tr><td className="py-1">10.000.000 – 18.000.000</td><td className="text-right tabular-nums">15%</td></tr>
+                      <tr><td className="py-1">18.000.000 – 32.000.000</td><td className="text-right tabular-nums">20%</td></tr>
+                      <tr><td className="py-1">32.000.000 – 52.000.000</td><td className="text-right tabular-nums">25%</td></tr>
+                      <tr><td className="py-1">52.000.000 – 80.000.000</td><td className="text-right tabular-nums">30%</td></tr>
+                      <tr><td className="py-1">Trên 80.000.000</td><td className="text-right tabular-nums">35%</td></tr>
                     </tbody>
                   </table>
                   <div className="mt-4 text-[0.82rem]" style={{ color: "rgba(255,255,255,0.75)" }}>
-                    <strong>Giảm trừ:</strong> Bản thân 11M · Phụ thuộc 4.4M/người/tháng
+                    <strong>Giảm trừ:</strong> Bản thân 11.000.000 · Phụ thuộc 4.400.000/người/tháng
                   </div>
                 </div>
               </Reveal>
@@ -172,15 +172,15 @@ export default function TaxCalcPage() {
                       </tr>
                     </thead>
                     <tbody style={{ color: "rgba(255,255,255,0.92)" }}>
-                      <tr><td className="py-1">Đến 10M</td><td className="text-right tabular-nums">5%</td></tr>
-                      <tr><td className="py-1">10M – 30M</td><td className="text-right tabular-nums">10%</td></tr>
-                      <tr><td className="py-1">30M – 60M</td><td className="text-right tabular-nums">20%</td></tr>
-                      <tr><td className="py-1">60M – 100M</td><td className="text-right tabular-nums">30%</td></tr>
-                      <tr><td className="py-1">Trên 100M</td><td className="text-right tabular-nums">35%</td></tr>
+                      <tr><td className="py-1">Đến 10.000.000</td><td className="text-right tabular-nums">5%</td></tr>
+                      <tr><td className="py-1">10.000.000 – 30.000.000</td><td className="text-right tabular-nums">10%</td></tr>
+                      <tr><td className="py-1">30.000.000 – 60.000.000</td><td className="text-right tabular-nums">20%</td></tr>
+                      <tr><td className="py-1">60.000.000 – 100.000.000</td><td className="text-right tabular-nums">30%</td></tr>
+                      <tr><td className="py-1">Trên 100.000.000</td><td className="text-right tabular-nums">35%</td></tr>
                     </tbody>
                   </table>
                   <div className="mt-4 text-[0.82rem]" style={{ color: "rgba(255,255,255,0.85)" }}>
-                    <strong>Giảm trừ:</strong> Bản thân <strong className="text-white">15.5M</strong> · Phụ thuộc <strong className="text-white">6.2M</strong>/người/tháng (<span style={{ color: "#5fffaa" }}>+41% so với 2025</span>)
+                    <strong>Giảm trừ:</strong> Bản thân <strong className="text-white">15.500.000</strong> · Phụ thuộc <strong className="text-white">6.200.000</strong>/người/tháng (<span style={{ color: "#5fffaa" }}>+41% so với 2025</span>)
                   </div>
                 </div>
               </Reveal>
@@ -192,9 +192,9 @@ export default function TaxCalcPage() {
                 <ol className="flex flex-col gap-2.5 list-none" style={{ color: "rgba(255,255,255,0.88)" }}>
                   {[
                     "Lấy Lương Gross/tháng (lương trên hợp đồng, trước trừ BH + thuế)",
-                    "Trừ BHXH 8% + BHYT 1.5% + BHTN 1% = 10.5% (cap tại 46.8M cho BHXH+BHYT)",
-                    "Trừ giảm trừ bản thân (11M cho 2025, 15.5M cho 2026)",
-                    "Trừ giảm trừ người phụ thuộc × số người (4.4M hoặc 6.2M/người)",
+                    "Trừ BHXH 8% + BHYT 1.5% + BHTN 1% = 10.5% (cap tại 46.800.000 cho BHXH + BHYT)",
+                    "Trừ giảm trừ bản thân (11.000.000 cho 2025, 15.500.000 cho 2026)",
+                    "Trừ giảm trừ người phụ thuộc × số người (4.400.000 hoặc 6.200.000/người)",
                     "= Thu nhập tính thuế. Nếu ≤ 0 → không phải đóng thuế",
                     "Áp biểu thuế lũy tiến TỪNG PHẦN (không phải toàn phần). Mỗi bậc đóng theo riêng phần thuộc bậc đó",
                     "Cộng dồn → Tổng thuế TNCN tháng",

@@ -45,7 +45,7 @@ export default async function OG() {
             <span style={{ background: "linear-gradient(120deg, #5fffaa 0%, #4ad6ff 50%, #7a3dff 100%)", backgroundClip: "text", color: "transparent" }}>2025 vs 2026.</span>
           </div>
           <div style={{ fontSize: "26px", fontWeight: 500, color: "rgba(255,255,255,0.7)", letterSpacing: "-0.01em" }}>
-            5 bậc mới · Giảm trừ 15.5M · Tính lương Net trong 3 giây
+            5 bậc mới · Giảm trừ 15.500.000 · Tính lương Net trong 3 giây
           </div>
         </div>
 
@@ -53,11 +53,11 @@ export default async function OG() {
         <div style={{ display: "flex", gap: "18px" }}>
           <div style={{ display: "flex", flexDirection: "column", padding: "16px 22px", borderRadius: "12px", background: "rgba(255,212,121,0.10)", border: "1px solid rgba(255,212,121,0.35)" }}>
             <div style={{ fontSize: "14px", fontWeight: 700, color: "#ffd479", letterSpacing: "0.1em", textTransform: "uppercase" }}>2025 cũ</div>
-            <div style={{ fontSize: "26px", fontWeight: 800, color: "white", marginTop: "4px" }}>7 bậc · 11M giảm trừ</div>
+            <div style={{ fontSize: "26px", fontWeight: 800, color: "white", marginTop: "4px" }}>7 bậc · 11.000.000 giảm trừ</div>
           </div>
           <div style={{ display: "flex", flexDirection: "column", padding: "16px 22px", borderRadius: "12px", background: "rgba(95,255,170,0.10)", border: "1px solid rgba(95,255,170,0.35)" }}>
             <div style={{ fontSize: "14px", fontWeight: 700, color: "#5fffaa", letterSpacing: "0.1em", textTransform: "uppercase" }}>2026 mới</div>
-            <div style={{ fontSize: "26px", fontWeight: 800, color: "white", marginTop: "4px" }}>5 bậc · 15.5M giảm trừ</div>
+            <div style={{ fontSize: "26px", fontWeight: 800, color: "white", marginTop: "4px" }}>5 bậc · 15.500.000 giảm trừ</div>
           </div>
         </div>
       </div>

@@ -7,10 +7,10 @@ const fmt = (n: number) => n.toLocaleString("vi-VN");
 const fmtAbs = (n: number) => Math.abs(n).toLocaleString("vi-VN");
 
 const PRESETS = [
-  { label: "15M", gross: 15_000_000 },
-  { label: "25M", gross: 25_000_000 },
-  { label: "50M", gross: 50_000_000 },
-  { label: "100M", gross: 100_000_000 },
+  { label: "15.000.000", gross: 15_000_000 },
+  { label: "25.000.000", gross: 25_000_000 },
+  { label: "50.000.000", gross: 50_000_000 },
+  { label: "100.000.000", gross: 100_000_000 },
 ];
 
 export default function Calculator() {
@@ -95,7 +95,7 @@ export default function Calculator() {
             style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)", color: "white" }}
           />
           <div className="text-[0.72rem] mt-1" style={{ color: "var(--ink-mute)" }}>
-            Mặc định 0. Mỗi người phụ thuộc giảm trừ {deps > 0 ? "6.2M (2026)" : "4.4M-6.2M"} /tháng.
+            Mặc định 0. Mỗi người phụ thuộc giảm trừ {deps > 0 ? "6.200.000 (2026)" : "4.400.000 – 6.200.000"} /tháng.
           </div>
         </div>
 
@@ -117,7 +117,7 @@ export default function Calculator() {
         </div>
 
         <div className="mt-5 text-[0.7rem] leading-relaxed" style={{ color: "var(--ink-mute)" }}>
-          💡 Tool áp dụng cho thu nhập từ tiền lương / tiền công của cá nhân cư trú. Cap BHXH+BHYT tại 46.8M (20× lương cơ sở 2.34M). Không áp dụng cho hợp đồng dưới 3 tháng, lao động tự do, freelancer ngoài hệ thống.
+          💡 Tool áp dụng cho thu nhập từ tiền lương / tiền công của cá nhân cư trú. Cap BHXH + BHYT tại 46.800.000 (20× lương cơ sở 2.340.000). Không áp dụng cho hợp đồng dưới 3 tháng, lao động tự do, freelancer ngoài hệ thống.
         </div>
       </aside>
 
