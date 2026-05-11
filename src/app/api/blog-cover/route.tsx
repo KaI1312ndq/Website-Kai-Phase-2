@@ -52,7 +52,6 @@ export async function GET(req: NextRequest) {
       >
         <div style={{ position: "absolute", top: "-18%", right: "-8%", width: "640px", height: "640px", borderRadius: "50%", background: meta.gradient, display: "flex" }} />
         <div style={{ position: "absolute", bottom: "-22%", left: "-12%", width: "640px", height: "640px", borderRadius: "50%", background: "radial-gradient(circle, rgba(122,61,255,0.32), transparent 65%)", display: "flex" }} />
-        <div style={{ position: "absolute", top: "30%", left: "60%", width: "200px", height: "200px", borderRadius: "50%", background: `${meta.accent}22`, filter: "blur(40px)", display: "flex" }} />
 
         {/* Top */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
