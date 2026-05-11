@@ -90,9 +90,9 @@ export default function ShopClient({ products }: { products: Product[] }) {
                 boxShadow: isSelected ? "0 8px 30px rgba(20,110,245,0.15)" : "none",
               }}
             >
-              <div className="aspect-[4/3] relative overflow-hidden" style={{ background: "var(--grad-primary-soft)" }}>
+              <Link href={`/shop/${p.slug.current}`} className="block aspect-[4/3] relative overflow-hidden group/img" style={{ background: "var(--grad-primary-soft)" }}>
                 {p.coverImage ? (
-                  <img src={urlFor(p.coverImage).width(800).height(600).url()} alt={p.title} className="w-full h-full object-cover" />
+                  <img src={urlFor(p.coverImage).width(800).height(600).url()} alt={p.title} className="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-[0.78rem] uppercase tracking-[0.2em] grad-text font-semibold">
                     {p.category || "Premium"}
@@ -103,9 +103,11 @@ export default function ShopClient({ products }: { products: Product[] }) {
                     <Icon name="check" size={18} strokeWidth={3} />
                   </div>
                 )}
-              </div>
+              </Link>
               <div className="p-6 flex flex-col flex-1">
-                <h3 className="text-[1.1rem] font-bold text-white mb-2 leading-tight">{p.title}</h3>
+                <Link href={`/shop/${p.slug.current}`} className="block mb-2">
+                  <h3 className="text-[1.1rem] font-bold text-white leading-tight hover:text-[#7da9ff] transition-colors">{p.title}</h3>
+                </Link>
                 {p.shortDescription && (
                   <p className="text-[0.88rem] leading-[1.6] mb-4" style={{ color: "var(--ink-mute)" }}>
                     {p.shortDescription}

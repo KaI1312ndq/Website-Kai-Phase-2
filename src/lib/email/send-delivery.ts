@@ -12,7 +12,7 @@ export type DeliveryEmailParams = {
   expiresAt: string; // ISO date
 };
 
-export async function sendDeliveryEmail(params: DeliveryEmailParams): Promise<{ ok: boolean; error?: string }> {
+export async function sendDeliveryEmail(params: DeliveryEmailParams): Promise<{ ok: boolean; error?: string; emailId?: string }> {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) return { ok: false, error: "RESEND_API_KEY not set" };
 
@@ -121,7 +121,7 @@ export async function sendDeliveryEmail(params: DeliveryEmailParams): Promise<{ 
     });
 
     if (error) return { ok: false, error: typeof error === "string" ? error : error.message };
-    return { ok: true };
+    return { ok: true, emailId: data?.id };
   } catch (e) {
     return { ok: false, error: e instanceof Error ? e.message : "Unknown error" };
   }

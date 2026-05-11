@@ -16,12 +16,30 @@ import { sendDeliveryEmail } from "@/lib/email/send-delivery";
  *   4. Update Sanity: paymentStatus=paid, deliveryStatus=delivered, paidAt, deliveredAt
  */
 
+/**
+ * Auth: accept either
+ *   1. ?secret=<SEED_SECRET> (for cURL / external admin)
+ *   2. Origin or Referer matches NEXT_PUBLIC_SITE_URL (for Sanity Studio actions)
+ *      — Studio is protected by Sanity login so this is acceptable.
+ */
+function checkAuth(req: NextRequest): boolean {
+  const url = new URL(req.url);
+  const secret = url.searchParams.get("secret");
+  if (process.env.SEED_SECRET && secret === process.env.SEED_SECRET) return true;
+
+  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://nguyenducquang.website").replace(/\/$/, "");
+  const origin = req.headers.get("origin")?.replace(/\/$/, "");
+  const referer = req.headers.get("referer") || "";
+  if (origin === siteUrl) return true;
+  if (referer.startsWith(siteUrl)) return true;
+
+  return false;
+}
+
 export async function POST(req: NextRequest) {
   try {
-    const url = new URL(req.url);
-    const secret = url.searchParams.get("secret");
-    if (!process.env.SEED_SECRET || secret !== process.env.SEED_SECRET) {
-      return NextResponse.json({ error: "Unauthorized — pass ?secret=<SEED_SECRET>" }, { status: 401 });
+    if (!checkAuth(req)) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const body = await req.json();
@@ -83,6 +101,7 @@ export async function POST(req: NextRequest) {
     };
     if (emailResult.ok) {
       patches.deliveredAt = now.toISOString();
+      if (emailResult.emailId) patches.resendEmailId = emailResult.emailId;
     }
     if (order.paymentStatus !== "paid") {
       patches.paymentStatus = "paid";

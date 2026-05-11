@@ -124,9 +124,19 @@ export async function getProductBySlug(slug: string) {
     *[_type == "product" && slug.current == $slug && active == true][0] {
       _id, title, slug, shortDescription, longDescription, bullets, price, category,
       coverImage, mockupImages,
-      "previewFileUrl": previewFile.asset->url
+      "previewFileUrl": previewFile.asset->url,
+      "reviews": *[_type == "productReview" && references(^._id)] | order(featured desc, date desc) [0...10] {
+        _id, reviewerName, reviewerRole, reviewerAvatar, rating, content, verified, featured, date
+      },
+      "relatedProducts": *[_type == "product" && active == true && _id != ^._id] | order(order asc) [0...4] {
+        _id, title, slug, shortDescription, price, coverImage, category
+      }
     }
   `, { slug });
+}
+
+export async function getAllProductSlugs() {
+  return client.fetch(`*[_type == "product" && active == true].slug.current`);
 }
 
 export async function getOrderByNumber(orderNumber: string) {

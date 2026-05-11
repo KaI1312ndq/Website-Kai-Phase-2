@@ -2,6 +2,7 @@ import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
 import { schemaTypes } from "./sanity/schemas";
+import { sendDeliveryAction } from "./sanity/actions/sendDeliveryAction";
 
 export default defineConfig({
   name: "ndq-portfolio",
@@ -198,4 +199,12 @@ export default defineConfig({
     visionTool(),
   ],
   schema: { types: schemaTypes },
+  document: {
+    actions: (prev, context) => {
+      if (context.schemaType === "order") {
+        return [sendDeliveryAction, ...prev];
+      }
+      return prev;
+    },
+  },
 });
