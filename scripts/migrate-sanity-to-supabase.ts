@@ -29,11 +29,13 @@ const sanity = createSanityClient({
   useCdn: false,
 });
 
-const sb = createSupabaseClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
-  { auth: { persistSession: false } },
-);
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SECRET_KEY;
+if (!SUPABASE_URL || !SUPABASE_KEY) {
+  console.error("Thiếu SUPABASE_URL hoặc SUPABASE_SERVICE_ROLE_KEY trong .env.local");
+  process.exit(1);
+}
+const sb = createSupabaseClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: false } });
 
 function shouldRun(name: string) {
   if (!ONLY) return true;
