@@ -6,28 +6,7 @@ import { Show, UserButton } from "@clerk/nextjs";
 import Icon, { type IconName } from "@/components/icons/Icon";
 import CartButton from "@/components/cart/CartButton";
 import AdminMenuLink from "@/components/AdminMenuLink";
-import { useTheme, type ThemeMode } from "@/components/theme/ThemeProvider";
-
-const THEME_OPTIONS: Array<{ value: ThemeMode; label: string }> = [
-  { value: "auto", label: "Giao diện: Tự động" },
-  { value: "light", label: "Giao diện: Sáng" },
-  { value: "dark", label: "Giao diện: Tối" },
-];
-
-function ThemeDot({ active }: { active: boolean }) {
-  return (
-    <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
-      <circle
-        cx="7"
-        cy="7"
-        r="5"
-        fill={active ? "#146ef5" : "transparent"}
-        stroke={active ? "#146ef5" : "currentColor"}
-        strokeWidth="1.5"
-      />
-    </svg>
-  );
-}
+import ThemeToggleButton from "@/components/theme/ThemeToggleButton";
 
 type Submenu = { label: string; desc?: string; href: string; badge?: string; section?: string };
 type NavLink = { label: string; href: string; submenu?: Submenu[]; submenuIcon?: IconName; viewAllText?: string };
@@ -145,7 +124,6 @@ const links: NavLink[] = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { mode: themeMode, setMode: setThemeMode } = useTheme();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -261,6 +239,7 @@ export default function Navbar() {
 
             {/* Cart + Auth - desktop */}
             <div className="hidden md:flex items-center gap-2 ml-2">
+              <ThemeToggleButton />
               <CartButton />
               <Show when="signed-out">
                 <Link
@@ -285,18 +264,7 @@ export default function Navbar() {
                   }}
                   userProfileMode="navigation"
                   userProfileUrl="/account/profile"
-                >
-                  <UserButton.MenuItems>
-                    {THEME_OPTIONS.map((opt) => (
-                      <UserButton.Action
-                        key={opt.value}
-                        label={`${opt.label}${themeMode === opt.value ? " ✓" : ""}`}
-                        labelIcon={<ThemeDot active={themeMode === opt.value} />}
-                        onClick={() => setThemeMode(opt.value)}
-                      />
-                    ))}
-                  </UserButton.MenuItems>
-                </UserButton>
+                />
               </Show>
             </div>
 
@@ -439,6 +407,12 @@ export default function Navbar() {
                   </motion.li>
                 ))}
               </ul>
+
+              {/* Theme toggle - mobile */}
+              <div className="mt-6 pt-4 border-t flex justify-between items-center gap-3" style={{ borderColor: "var(--st-06)" }}>
+                <span className="text-[0.85rem] font-semibold" style={{ color: "var(--ink-mute)" }}>Giao diện</span>
+                <ThemeToggleButton compact />
+              </div>
             </div>
           </motion.div>
         )}
