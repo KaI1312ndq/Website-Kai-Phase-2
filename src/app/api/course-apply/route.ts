@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getSupabaseAdmin } from "@/lib/supabase/admin";
 
 const STAGE: Record<string, string> = {
   student: "Sinh viên",
@@ -24,6 +25,21 @@ export async function POST(req: NextRequest) {
 
     if (!name || !email || !phone) {
       return NextResponse.json({ error: "Thiếu thông tin bắt buộc" }, { status: 400 });
+    }
+
+    // Persist application vào Supabase (luôn lưu, kể cả email gửi fail)
+    try {
+      await getSupabaseAdmin().from("course_applications").insert({
+        course_slug: "ecom-foundation-k1",
+        name,
+        email,
+        phone,
+        motivation: typeof goal === "string" ? goal : null,
+        experience: typeof stage === "string" ? stage : null,
+        meta: { stage, hasLaptop, commit, slot },
+      });
+    } catch (e) {
+      console.warn("[course-apply] Supabase insert failed (non-blocking):", e);
     }
 
     const subject = `[Ecom Foundation · K1] Application - ${name}`;
