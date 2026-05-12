@@ -70,6 +70,49 @@
   --ambient-1: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(20, 110, 245, 0.18), transparent 60%);
   --ambient-2: radial-gradient(ellipse 60% 40% at 100% 30%, rgba(122, 61, 255, 0.10), transparent 60%);
   --ambient-3: radial-gradient(ellipse 60% 40% at 0% 70%, rgba(20, 110, 245, 0.08), transparent 60%);
+
+  /* "Surface tone" vars - opacity-based color theo theme.
+     Dùng cho cả color/bg/border. Mass-replace inline rgba(255,255,255,X) sang var(--st-XX). */
+  --st-03: rgba(255, 255, 255, 0.03);
+  --st-04: rgba(255, 255, 255, 0.04);
+  --st-05: rgba(255, 255, 255, 0.05);
+  --st-06: rgba(255, 255, 255, 0.06);
+  --st-08: rgba(255, 255, 255, 0.08);
+  --st-10: rgba(255, 255, 255, 0.10);
+  --st-12: rgba(255, 255, 255, 0.12);
+  --st-15: rgba(255, 255, 255, 0.15);
+  --st-16: rgba(255, 255, 255, 0.16);
+  --st-20: rgba(255, 255, 255, 0.20);
+  --st-25: rgba(255, 255, 255, 0.25);
+  --st-30: rgba(255, 255, 255, 0.30);
+  --st-35: rgba(255, 255, 255, 0.35);
+  --st-40: rgba(255, 255, 255, 0.40);
+  --st-42: rgba(255, 255, 255, 0.42);
+  --st-45: rgba(255, 255, 255, 0.45);
+  --st-50: rgba(255, 255, 255, 0.50);
+  --st-55: rgba(255, 255, 255, 0.55);
+  --st-60: rgba(255, 255, 255, 0.60);
+  --st-65: rgba(255, 255, 255, 0.65);
+  --st-70: rgba(255, 255, 255, 0.70);
+  --st-72: rgba(255, 255, 255, 0.72);
+  --st-78: rgba(255, 255, 255, 0.78);
+  --st-85: rgba(255, 255, 255, 0.85);
+  --st-90: rgba(255, 255, 255, 0.90);
+
+  /* Dark blue card tones - đa số dùng cho card bg.
+     Sẽ override sang light cards trên light theme. */
+  --db-40: rgba(8, 16, 43, 0.40);
+  --db-50: rgba(8, 16, 43, 0.50);
+  --db-55: rgba(8, 16, 43, 0.55);
+  --db-60: rgba(8, 16, 43, 0.60);
+  --db-70: rgba(8, 16, 43, 0.70);
+  --db-78: rgba(8, 16, 43, 0.78);
+  --db-85: rgba(8, 16, 43, 0.85);
+  --db-95: rgba(8, 16, 43, 0.95);
+  --db-100: #08102b;
+  --dg-30: rgba(20, 40, 90, 0.30);
+  --dg-50: rgba(20, 40, 90, 0.50);
+  --dg-70: rgba(20, 40, 90, 0.70);
 }
 
 /* ─────────────────────────────────────────
@@ -133,6 +176,48 @@
   --ambient-1: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(29, 78, 216, 0.10), transparent 60%);
   --ambient-2: radial-gradient(ellipse 60% 40% at 100% 30%, rgba(79, 70, 229, 0.07), transparent 60%);
   --ambient-3: radial-gradient(ellipse 60% 40% at 0% 70%, rgba(56, 189, 248, 0.08), transparent 60%);
+
+  /* Surface tones - invert cho light: dùng navy color base.
+     Đảm bảo text + border + bg dùng rgba(255,...) tự adapt qua var. */
+  --st-03: rgba(15, 27, 61, 0.04);
+  --st-04: rgba(15, 27, 61, 0.05);
+  --st-05: rgba(15, 27, 61, 0.06);
+  --st-06: rgba(15, 27, 61, 0.07);
+  --st-08: rgba(15, 27, 61, 0.08);
+  --st-10: rgba(15, 27, 61, 0.10);
+  --st-12: rgba(15, 27, 61, 0.12);
+  --st-15: rgba(15, 27, 61, 0.14);
+  --st-16: rgba(15, 27, 61, 0.16);
+  --st-20: rgba(15, 27, 61, 0.20);
+  --st-25: rgba(15, 27, 61, 0.25);
+  --st-30: rgba(15, 27, 61, 0.30);
+  --st-35: rgba(15, 27, 61, 0.40);
+  --st-40: rgba(15, 27, 61, 0.45);
+  --st-42: rgba(15, 27, 61, 0.48);
+  --st-45: rgba(15, 27, 61, 0.50);
+  --st-50: rgba(15, 27, 61, 0.55);
+  --st-55: rgba(15, 27, 61, 0.60);
+  --st-60: rgba(15, 27, 61, 0.65);
+  --st-65: rgba(15, 27, 61, 0.70);
+  --st-70: rgba(15, 27, 61, 0.75);
+  --st-72: rgba(15, 27, 61, 0.78);
+  --st-78: rgba(15, 27, 61, 0.82);
+  --st-85: rgba(15, 27, 61, 0.85);
+  --st-90: rgba(15, 27, 61, 0.90);
+
+  /* Light cards thay cho dark blue cards */
+  --db-40: rgba(240, 247, 255, 0.50);
+  --db-50: rgba(255, 255, 255, 0.65);
+  --db-55: rgba(255, 255, 255, 0.75);
+  --db-60: rgba(255, 255, 255, 0.85);
+  --db-70: rgba(255, 255, 255, 0.92);
+  --db-78: rgba(255, 255, 255, 0.96);
+  --db-85: #ffffff;
+  --db-95: #ffffff;
+  --db-100: #ffffff;
+  --dg-30: rgba(240, 247, 255, 0.40);
+  --dg-50: rgba(232, 240, 254, 0.60);
+  --dg-70: rgba(219, 231, 252, 0.70);
 }
 
 /* Smooth transition khi đổi theme */
@@ -669,6 +754,79 @@ input:focus, textarea:focus { outline: none; }
   outline: none;
   transition: border-color 0.15s;
 }
-.input-dark::placeholder { color: rgba(255, 255, 255, 0.35); }
-.input-dark:focus { border-color: rgba(122, 169, 255, 0.6); background: rgba(255, 255, 255, 0.06); }
-.input-dark option { background: #08102b; color: #fff; }
+.input-dark::placeholder { color: var(--ink-faint); }
+.input-dark:focus { border-color: var(--wf-blue); background: var(--bg-elev-1); }
+.input-dark option { background: var(--bg-base); color: var(--ink); }
+
+/* ─────────────────────────────────────────
+   LIGHT THEME UTILITY OVERRIDES
+   Catch most Tailwind white-based classes used trên body text.
+   Buttons / pills với gradient bg vẫn giữ white nhờ exception cuối.
+   ───────────────────────────────────────── */
+[data-theme="light"] .text-white { color: var(--ink); }
+[data-theme="light"] .text-white\/95 { color: var(--ink); }
+[data-theme="light"] .text-white\/90 { color: var(--ink); }
+[data-theme="light"] .text-white\/85 { color: var(--ink-soft); }
+[data-theme="light"] .text-white\/80 { color: var(--ink-soft); }
+[data-theme="light"] .text-white\/75 { color: var(--ink-soft); }
+[data-theme="light"] .text-white\/70 { color: var(--ink-soft); }
+[data-theme="light"] .text-white\/65 { color: var(--ink-mute); }
+[data-theme="light"] .text-white\/60 { color: var(--ink-mute); }
+[data-theme="light"] .text-white\/55 { color: var(--ink-mute); }
+[data-theme="light"] .text-white\/50 { color: var(--ink-mute); }
+[data-theme="light"] .text-white\/45 { color: var(--ink-faint); }
+[data-theme="light"] .text-white\/40 { color: var(--ink-faint); }
+[data-theme="light"] .text-white\/35 { color: var(--ink-faint); }
+[data-theme="light"] .text-white\/30 { color: var(--ink-faint); }
+[data-theme="light"] .text-white\/25 { color: var(--ink-faint); }
+[data-theme="light"] .text-white\/20 { color: var(--ink-faint); }
+
+[data-theme="light"] .bg-white\/20 { background-color: var(--line-strong); }
+[data-theme="light"] .bg-white\/15 { background-color: var(--line-strong); }
+[data-theme="light"] .bg-white\/10 { background-color: var(--line); }
+[data-theme="light"] .bg-white\/5 { background-color: var(--bg-elev-1); }
+[data-theme="light"] .bg-white\/\[0\.02\] { background-color: var(--bg-elev-1); }
+[data-theme="light"] .bg-white\/\[0\.03\] { background-color: var(--bg-elev-1); }
+
+[data-theme="light"] .border-white\/30 { border-color: var(--line-strong); }
+[data-theme="light"] .border-white\/25 { border-color: var(--line-strong); }
+[data-theme="light"] .border-white\/20 { border-color: var(--line-strong); }
+[data-theme="light"] .border-white\/15 { border-color: var(--line); }
+[data-theme="light"] .border-white\/10 { border-color: var(--line); }
+[data-theme="light"] .border-white\/5 { border-color: var(--line); }
+
+[data-theme="light"] .ring-white\/10 { --tw-ring-color: var(--line); }
+[data-theme="light"] .ring-white\/25 { --tw-ring-color: var(--line-strong); }
+
+/* Exception: keep white inside gradient/primary buttons.
+   Targets nodes whose inline style references --grad-primary OR var(--wf-blue) bg,
+   plus explicit .keep-white class as escape hatch. */
+[data-theme="light"] [style*="grad-primary"],
+[data-theme="light"] [style*="grad-primary"] *,
+[data-theme="light"] [style*="--grad-primary"],
+[data-theme="light"] [style*="--grad-primary"] *,
+[data-theme="light"] .keep-white,
+[data-theme="light"] .keep-white * {
+  color: #ffffff;
+}
+[data-theme="light"] [style*="grad-primary"] .text-white,
+[data-theme="light"] .keep-white .text-white { color: #ffffff; }
+
+/* Light-mode adjustment cho input-dark (giữ class name vì widely used) */
+[data-theme="light"] .input-dark {
+  background: var(--bg-elev-1);
+  border-color: var(--line-strong);
+  color: var(--ink);
+}
+[data-theme="light"] .input-dark:focus {
+  background: var(--bg-base);
+  border-color: var(--wf-blue);
+}
+
+/* Dark cards với inline rgba blue gradient: giữ nguyên vì look đẹp trên light bg.
+   Nếu muốn fully light cards, đặt class .light-card lên element + dùng var token. */
+[data-theme="light"] .light-card {
+  background: var(--bg-base) !important;
+  border-color: var(--line) !important;
+  box-shadow: var(--shadow-card);
+}

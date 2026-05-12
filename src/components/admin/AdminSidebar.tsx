@@ -90,10 +90,10 @@ export default function AdminSidebar() {
       <nav className="space-y-7">
         {NAV.map((sec, secIdx) => (
           <div key={sec.title}>
-            {secIdx > 0 && <div className="mx-3 mb-5 h-px" style={{ background: "rgba(255,255,255,0.06)" }} />}
+            {secIdx > 0 && <div className="mx-3 mb-5 h-px" style={{ background: "var(--st-06)" }} />}
             <div
               className="text-[0.62rem] uppercase tracking-[0.18em] font-semibold mb-2 px-3"
-              style={{ color: "rgba(255,255,255,0.4)" }}
+              style={{ color: "var(--st-40)" }}
             >
               {sec.title}
             </div>
@@ -106,7 +106,7 @@ export default function AdminSidebar() {
                       href={it.href}
                       className="group relative flex items-center gap-2 pl-4 pr-3 py-1.5 rounded-md text-[0.875rem] transition"
                       style={{
-                        color: active ? "#ffffff" : "rgba(255,255,255,0.7)",
+                        color: active ? "#ffffff" : "var(--st-70)",
                         background: active ? "rgba(122,169,255,0.10)" : "transparent",
                         fontWeight: active ? 600 : 500,
                       }}
@@ -130,11 +130,11 @@ export default function AdminSidebar() {
       </nav>
 
       {/* Footer */}
-      <div className="mt-8 mx-3 pt-5 border-t" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+      <div className="mt-8 mx-3 pt-5 border-t" style={{ borderColor: "var(--st-06)" }}>
         <Link
           href="/"
           className="block text-[0.78rem] py-1.5 px-2 rounded hover:bg-white/5 transition"
-          style={{ color: "rgba(255,255,255,0.55)" }}
+          style={{ color: "var(--st-55)" }}
         >
           Về trang chính
         </Link>

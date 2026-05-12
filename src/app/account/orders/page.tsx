@@ -78,8 +78,8 @@ export default async function OrdersPage() {
 
             {list.length === 0 ? (
               <div className="rounded-2xl p-10 text-center" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
-                <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid var(--line)" }}>
-                  <Icon name="shopping-cart" size={28} color="rgba(255,255,255,0.4)" />
+                <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: "var(--st-04)", border: "1px solid var(--line)" }}>
+                  <Icon name="shopping-cart" size={28} color="var(--st-40)" />
                 </div>
                 <h2 className="text-[1.1rem] font-bold text-white mb-2">Chưa có đơn nào</h2>
                 <p className="text-[0.92rem] mb-5" style={{ color: "var(--ink-mute)" }}>
@@ -129,7 +129,7 @@ export default async function OrdersPage() {
                       {Array.isArray(o.items) && o.items.length > 0 && (
                         <ul className="flex flex-col gap-1 mb-4 list-none">
                           {o.items.map((it, i) => (
-                            <li key={i} className="text-[0.88rem] flex items-center gap-2" style={{ color: "rgba(255,255,255,0.82)" }}>
+                            <li key={i} className="text-[0.88rem] flex items-center gap-2" style={{ color: "var(--st-80)" }}>
                               <Icon name="check" size={12} color="#5fffaa" strokeWidth={3} />
                               {it.title}
                             </li>
@@ -137,11 +137,11 @@ export default async function OrdersPage() {
                         </ul>
                       )}
 
-                      <div className="flex flex-wrap gap-2 pt-2" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                      <div className="flex flex-wrap gap-2 pt-2" style={{ borderTop: "1px solid var(--st-06)" }}>
                         <Link
                           href={`/shop/order/${o.orderNumber}`}
                           className="text-[0.82rem] font-semibold px-4 py-2 rounded-lg transition-colors"
-                          style={{ background: "rgba(255,255,255,0.05)", border: "1px solid var(--line)", color: "white" }}
+                          style={{ background: "var(--st-05)", border: "1px solid var(--line)", color: "white" }}
                         >
                           Chi tiết đơn
                         </Link>

@@ -35,7 +35,7 @@ export default async function AdminCommentsPage({ searchParams }: { searchParams
         </p>
       </header>
 
-      <form method="get" action="/account/admin/comments" className="rounded-xl border p-4 space-y-3" style={{ background: "rgba(8,16,43,0.55)", borderColor: "rgba(255,255,255,0.08)" }}>
+      <form method="get" action="/account/admin/comments" className="rounded-xl border p-4 space-y-3" style={{ background: "var(--db-55)", borderColor: "var(--st-08)" }}>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <label className="block">
             <span className="block text-[0.72rem] uppercase tracking-wider font-medium mb-1.5" style={{ color: "var(--ink-mute)" }}>Tìm kiếm</span>
@@ -52,7 +52,7 @@ export default async function AdminCommentsPage({ searchParams }: { searchParams
         </div>
         <div className="flex gap-2">
           <button className="px-4 py-2 rounded-md text-[0.85rem] font-semibold text-white" style={{ background: "var(--grad-primary)" }}>Áp dụng</button>
-          <Link href="/account/admin/comments" className="px-4 py-2 rounded-md text-[0.85rem] font-medium text-white/80 border" style={{ borderColor: "rgba(255,255,255,0.15)" }}>Reset</Link>
+          <Link href="/account/admin/comments" className="px-4 py-2 rounded-md text-[0.85rem] font-medium text-white/80 border" style={{ borderColor: "var(--st-15)" }}>Reset</Link>
         </div>
       </form>
 
@@ -60,12 +60,12 @@ export default async function AdminCommentsPage({ searchParams }: { searchParams
 
       <div className="space-y-3">
         {comments.length === 0 ? (
-          <div className="rounded-xl border px-6 py-12 text-center text-[0.9rem]" style={{ borderColor: "rgba(255,255,255,0.08)", color: "var(--ink-mute)" }}>
+          <div className="rounded-xl border px-6 py-12 text-center text-[0.9rem]" style={{ borderColor: "var(--st-08)", color: "var(--ink-mute)" }}>
             Không có comment nào khớp filter.
           </div>
         ) : (
           comments.map((c) => (
-            <div key={c.id as string} className="rounded-xl border p-4" style={{ background: "rgba(8,16,43,0.5)", borderColor: "rgba(255,255,255,0.08)" }}>
+            <div key={c.id as string} className="rounded-xl border p-4" style={{ background: "var(--db-50)", borderColor: "var(--st-08)" }}>
               <div className="flex items-center justify-between gap-3 flex-wrap mb-2">
                 <div className="flex items-center gap-2">
                   <span className="text-white font-semibold text-[0.92rem]">{String(c.guest_name || "User")}</span>

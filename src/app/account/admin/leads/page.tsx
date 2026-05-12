@@ -85,7 +85,7 @@ export default async function AdminLeadsPage({ searchParams }: { searchParams: P
       </header>
 
       {/* Tab nav */}
-      <div className="flex gap-1 border-b" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+      <div className="flex gap-1 border-b" style={{ borderColor: "var(--st-08)" }}>
         {tabs.map((t) => {
           const active = tab === t.id;
           return (
@@ -200,12 +200,12 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 
 function FilterBar({ action, hidden = [], children }: { action: string; hidden?: Array<{ name: string; value: string }>; children: React.ReactNode }) {
   return (
-    <form method="get" action={action} className="rounded-xl border p-4 space-y-3" style={{ background: "rgba(8,16,43,0.55)", borderColor: "rgba(255,255,255,0.08)" }}>
+    <form method="get" action={action} className="rounded-xl border p-4 space-y-3" style={{ background: "var(--db-55)", borderColor: "var(--st-08)" }}>
       {hidden.map((h) => <input key={h.name} type="hidden" name={h.name} value={h.value} />)}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-3">{children}</div>
       <div className="flex gap-2">
         <button className="px-4 py-2 rounded-md text-[0.85rem] font-semibold text-white" style={{ background: "var(--grad-primary)" }}>Áp dụng</button>
-        <Link href={action + (hidden[0] ? `?${hidden[0].name}=${hidden[0].value}` : "")} className="px-4 py-2 rounded-md text-[0.85rem] font-medium text-white/80 border" style={{ borderColor: "rgba(255,255,255,0.15)" }}>Reset</Link>
+        <Link href={action + (hidden[0] ? `?${hidden[0].name}=${hidden[0].value}` : "")} className="px-4 py-2 rounded-md text-[0.85rem] font-medium text-white/80 border" style={{ borderColor: "var(--st-15)" }}>Reset</Link>
       </div>
     </form>
   );
@@ -216,13 +216,13 @@ function DataTable({ cols, rows, count }: { cols: string[]; rows: string[][]; co
     <>
       <div className="text-[0.78rem]" style={{ color: "var(--ink-mute)" }}>Hiển thị {count} record</div>
       {rows.length === 0 ? (
-        <div className="rounded-xl border px-6 py-12 text-center text-[0.9rem]" style={{ borderColor: "rgba(255,255,255,0.08)", color: "var(--ink-mute)" }}>
+        <div className="rounded-xl border px-6 py-12 text-center text-[0.9rem]" style={{ borderColor: "var(--st-08)", color: "var(--ink-mute)" }}>
           Không có data khớp filter.
         </div>
       ) : (
-        <div className="rounded-xl border overflow-x-auto" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+        <div className="rounded-xl border overflow-x-auto" style={{ borderColor: "var(--st-08)" }}>
           <table className="w-full text-[0.85rem]">
-            <thead style={{ background: "rgba(255,255,255,0.04)" }}>
+            <thead style={{ background: "var(--st-04)" }}>
               <tr>
                 {cols.map((c) => (
                   <th key={c} className="text-left px-4 py-3 font-semibold text-[0.74rem] uppercase tracking-wider whitespace-nowrap" style={{ color: "var(--ink-mute)" }}>{c}</th>
@@ -231,7 +231,7 @@ function DataTable({ cols, rows, count }: { cols: string[]; rows: string[][]; co
             </thead>
             <tbody>
               {rows.map((r, i) => (
-                <tr key={i} className="border-t hover:bg-white/[0.02]" style={{ borderColor: "rgba(255,255,255,0.05)" }}>
+                <tr key={i} className="border-t hover:bg-white/[0.02]" style={{ borderColor: "var(--st-05)" }}>
                   {r.map((cell, j) => (
                     <td key={j} className="px-4 py-3 text-white align-top">{cell}</td>
                   ))}

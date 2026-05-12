@@ -93,8 +93,8 @@ export default async function AdminDashboardPage() {
               <div
                 className="p-5 rounded-xl border h-full"
                 style={{
-                  background: c.highlight ? "linear-gradient(180deg, rgba(255,212,121,0.12), rgba(8,16,43,0.85))" : "linear-gradient(180deg, rgba(20,40,90,0.5), rgba(8,16,43,0.85))",
-                  borderColor: c.highlight ? "rgba(255,212,121,0.35)" : "rgba(255,255,255,0.10)",
+                  background: c.highlight ? "linear-gradient(180deg, rgba(255,212,121,0.12), var(--db-85))" : "linear-gradient(180deg, var(--dg-50), var(--db-85))",
+                  borderColor: c.highlight ? "rgba(255,212,121,0.35)" : "var(--st-10)",
                 }}
               >
                 <div className="text-[0.78rem] font-medium mb-2" style={{ color: "var(--ink-mute)" }}>{c.label}</div>
@@ -117,7 +117,7 @@ export default async function AdminDashboardPage() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
           {secondaryCards.map((c) => (
             <Link key={c.label} href={c.href} className="block p-4 rounded-lg border transition hover:bg-white/5"
-              style={{ background: "rgba(8,16,43,0.6)", borderColor: "rgba(255,255,255,0.08)" }}>
+              style={{ background: "var(--db-60)", borderColor: "var(--st-08)" }}>
               <div className="text-[1.3rem] font-bold text-white">{c.value}</div>
               <div className="text-[0.74rem] mt-0.5" style={{ color: "var(--ink-mute)" }}>{c.label}</div>
             </Link>
@@ -189,8 +189,8 @@ function ActivityList({
   rows: Array<{ primary: string; secondary: string; meta: string; badge?: string; time: string }>;
 }) {
   return (
-    <div className="rounded-xl border" style={{ background: "rgba(8,16,43,0.55)", borderColor: "rgba(255,255,255,0.08)" }}>
-      <div className="flex items-center justify-between px-5 py-3.5 border-b" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+    <div className="rounded-xl border" style={{ background: "var(--db-55)", borderColor: "var(--st-08)" }}>
+      <div className="flex items-center justify-between px-5 py-3.5 border-b" style={{ borderColor: "var(--st-06)" }}>
         <h3 className="font-bold text-white text-[0.98rem]">{title}</h3>
         <Link href={viewAll} className="text-[0.76rem] font-medium" style={{ color: "#7da9ff" }}>Xem tất cả</Link>
       </div>
@@ -199,13 +199,13 @@ function ActivityList({
       ) : (
         <ul>
           {rows.map((r, i) => (
-            <li key={i} className="flex items-start justify-between gap-3 px-5 py-3 border-b last:border-b-0" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
+            <li key={i} className="flex items-start justify-between gap-3 px-5 py-3 border-b last:border-b-0" style={{ borderColor: "var(--st-04)" }}>
               <div className="flex-1 min-w-0">
                 <div className="text-[0.88rem] font-semibold text-white truncate">{r.primary}</div>
                 <div className="text-[0.76rem] truncate" style={{ color: "var(--ink-mute)" }}>{r.secondary}</div>
                 <div className="flex items-center gap-2 mt-0.5">
                   {r.meta && <span className="text-[0.72rem]" style={{ color: "#7da9ff" }}>{r.meta}</span>}
-                  {r.badge && <span className="text-[0.68rem] px-1.5 py-0.5 rounded" style={{ background: "rgba(255,255,255,0.06)", color: "var(--ink-mute)" }}>{r.badge}</span>}
+                  {r.badge && <span className="text-[0.68rem] px-1.5 py-0.5 rounded" style={{ background: "var(--st-06)", color: "var(--ink-mute)" }}>{r.badge}</span>}
                 </div>
               </div>
               <div className="text-[0.7rem] flex-shrink-0 pt-0.5" style={{ color: "var(--ink-mute)" }}>

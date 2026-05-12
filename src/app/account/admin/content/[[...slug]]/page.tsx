@@ -31,13 +31,13 @@ export default async function AdminContentPage({ params }: { params: Promise<{ s
           target="_blank"
           rel="noopener"
           className="px-3 py-1.5 rounded-md text-[0.8rem] font-semibold text-white/85 border"
-          style={{ borderColor: "rgba(255,255,255,0.15)", background: "rgba(255,255,255,0.04)" }}
+          style={{ borderColor: "var(--st-15)", background: "var(--st-04)" }}
         >
           Mở tab mới
         </Link>
       </div>
 
-      <div className="rounded-xl border overflow-hidden" style={{ borderColor: "rgba(255,255,255,0.12)" }}>
+      <div className="rounded-xl border overflow-hidden" style={{ borderColor: "var(--st-12)" }}>
         <iframe
           src={studioUrl}
           className="w-full"

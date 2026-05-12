@@ -200,7 +200,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
               </h1>
 
               <Reveal instant>
-                <p className="t-body-lg max-w-[500px] mb-8" style={{ color: "rgba(255,255,255,0.72)" }}>
+                <p className="t-body-lg max-w-[500px] mb-8" style={{ color: "var(--st-72)" }}>
                   Tôi xây team, vận hành Ecom đa kênh và mentor cho thế hệ marketer mới - với kết quả đo lường bằng số thật, và sự nghiệp được xây dựng chậm mà chắc.
                 </p>
               </Reveal>
@@ -218,7 +218,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
 
               {/* Inline mini-stats */}
               <Reveal instant>
-                <div className="flex gap-6 md:gap-10 mt-12 pt-8 border-t" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+                <div className="flex gap-6 md:gap-10 mt-12 pt-8 border-t" style={{ borderColor: "var(--st-08)" }}>
                   {[
                     { val: "5+", label: "Năm kinh nghiệm" },
                     { val: "60+", label: "Dự án Ecom" },
@@ -227,7 +227,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
                   ].map((s) => (
                     <div key={s.label}>
                       <div className="text-[1.4rem] md:text-[1.6rem] font-bold tracking-tight grad-text leading-none">{s.val}</div>
-                      <div className="text-[0.72rem] mt-1.5" style={{ color: "rgba(255,255,255,0.5)" }}>{s.label}</div>
+                      <div className="text-[0.72rem] mt-1.5" style={{ color: "var(--st-50)" }}>{s.label}</div>
                     </div>
                   ))}
                 </div>
@@ -246,11 +246,11 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
             transition={{ delay: 1.4, duration: 0.6 }}
             className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 hidden md:flex flex-col items-center gap-2"
           >
-            <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em]" style={{ color: "rgba(255,255,255,0.4)" }}>Scroll</span>
+            <span className="text-[0.65rem] font-semibold uppercase tracking-[0.18em]" style={{ color: "var(--st-40)" }}>Scroll</span>
             <motion.div
               animate={{ y: [0, 6, 0] }}
               transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
-              style={{ color: "rgba(255,255,255,0.4)" }}
+              style={{ color: "var(--st-40)" }}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="6 9 12 15 18 9" />
@@ -282,8 +282,8 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
                   <motion.div whileHover={{ y: -4 }} transition={{ type: "spring", stiffness: 260, damping: 22 }}
                     className="relative rounded-2xl p-6 md:p-7 overflow-hidden h-full group"
                     style={{
-                      background: "linear-gradient(180deg, rgba(20,40,90,0.45) 0%, rgba(8,16,43,0.7) 100%)",
-                      border: "1px solid rgba(255,255,255,0.10)",
+                      background: "linear-gradient(180deg, rgba(20,40,90,0.45) 0%, var(--db-70) 100%)",
+                      border: "1px solid var(--st-10)",
                       boxShadow: "0 16px 40px rgba(5,10,31,0.4)",
                       backdropFilter: "blur(16px)",
                     }}>
@@ -318,7 +318,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
                     </div>
 
                     {/* Sparkline */}
-                    <div className="relative pt-4 border-t" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+                    <div className="relative pt-4 border-t" style={{ borderColor: "var(--st-06)" }}>
                       <svg viewBox="0 0 180 32" className="w-full h-[36px]" preserveAspectRatio="none">
                         <defs>
                           <linearGradient id={`sparkLine${i}`} x1="0" y1="0" x2="1" y2="0">
@@ -578,8 +578,8 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
                     transition={{ type: "spring", stiffness: 240, damping: 22 }}
                     className="rounded-2xl overflow-hidden relative"
                     style={{
-                      background: "linear-gradient(180deg, rgba(20,40,90,0.5), rgba(8,16,43,0.85))",
-                      border: "1px solid rgba(255,255,255,0.10)",
+                      background: "linear-gradient(180deg, var(--dg-50), var(--db-85))",
+                      border: "1px solid var(--st-10)",
                       boxShadow: "0 24px 60px rgba(5,10,31,0.55)",
                     }}
                   >
@@ -587,10 +587,10 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
                     <div className="relative" style={{ background: "linear-gradient(135deg, #0d1c52 0%, #142768 100%)" }}>
                       <div className="absolute inset-0 z-0" style={{ backgroundImage: "radial-gradient(rgba(125,169,255,0.18) 1.2px, transparent 1.2px)", backgroundSize: "20px 20px", opacity: 0.5 }} />
                       <Image src="/kai-photo.webp" alt="Nguyễn Đức Quảng - Digital Marketing Manager" width={600} height={750} className="relative z-10 w-full h-auto block object-cover object-top" style={{ aspectRatio: "4/5" }} sizes="(max-width: 768px) 90vw, 360px" />
-                      <div className="absolute inset-0 z-20" style={{ background: "linear-gradient(180deg, transparent 50%, rgba(8,16,43,0.85) 100%)" }} />
+                      <div className="absolute inset-0 z-20" style={{ background: "linear-gradient(180deg, transparent 50%, var(--db-85) 100%)" }} />
                     </div>
                     {/* Caption */}
-                    <div className="px-5 py-4 flex items-center justify-between gap-3 border-t" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+                    <div className="px-5 py-4 flex items-center justify-between gap-3 border-t" style={{ borderColor: "var(--st-08)" }}>
                       <div>
                         <div className="text-[0.95rem] font-bold text-white tracking-tight">Nguyễn Đức Quảng</div>
                         <div className="text-[0.78rem]" style={{ color: "var(--ink-mute)" }}>Digital Marketing Manager</div>
@@ -708,7 +708,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
                 <div className="flex flex-wrap gap-3 mb-8">
                   {mentorFeatures.map((f, i) => (
                     <div key={i} className="flex items-center gap-3 rounded-xl px-4 py-3"
-                      style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                      style={{ background: "var(--st-04)", border: "1px solid var(--st-08)" }}>
                       <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "rgba(20,110,245,0.12)", border: "1px solid rgba(20,110,245,0.2)" }}>
                         {f.icon}
                       </div>
@@ -731,7 +731,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
                 <motion.div whileHover={{ y: -4 }} transition={{ type: "spring", stiffness: 260, damping: 22 }}
                   className="relative rounded-2xl p-6 overflow-hidden"
                   style={{
-                    background: "linear-gradient(160deg, rgba(20,110,245,0.18) 0%, rgba(122,61,255,0.18) 60%, rgba(8,16,43,0.85) 100%)",
+                    background: "linear-gradient(160deg, rgba(20,110,245,0.18) 0%, rgba(122,61,255,0.18) 60%, var(--db-85) 100%)",
                     border: "1px solid rgba(74,214,255,0.35)",
                     boxShadow: "0 24px 60px rgba(20,110,245,0.25), 0 0 0 1px rgba(74,214,255,0.15) inset",
                   }}>
@@ -743,30 +743,30 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
                       <span className="text-[0.6rem] font-bold uppercase tracking-[0.16em]" style={{ color: "#7ee2ff" }}>Mở bán sớm</span>
                     </div>
 
-                    <div className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] mb-2" style={{ color: "rgba(255,255,255,0.55)" }}>Early-bird Khoá 1</div>
+                    <div className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] mb-2" style={{ color: "var(--st-55)" }}>Early-bird Khoá 1</div>
 
                     <div className="flex items-baseline gap-2 mb-1">
                       <div className="text-[2.4rem] font-bold tracking-tight leading-none grad-text">2.999.000<span className="text-[0.95rem] font-normal align-top ml-1">đ</span></div>
                     </div>
                     <div className="flex items-center gap-2 mb-5">
-                      <span className="text-[0.85rem] line-through" style={{ color: "rgba(255,255,255,0.4)" }}>4.999.000đ</span>
+                      <span className="text-[0.85rem] line-through" style={{ color: "var(--st-40)" }}>4.999.000đ</span>
                       <span className="text-[0.7rem] font-bold px-2 py-0.5 rounded-md" style={{ background: "rgba(0,215,34,0.15)", color: "#5fffaa", border: "1px solid rgba(0,215,34,0.3)" }}>-40%</span>
                     </div>
 
-                    <div className="space-y-2 mb-6 pb-6 border-b" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+                    <div className="space-y-2 mb-6 pb-6 border-b" style={{ borderColor: "var(--st-08)" }}>
                       {[
                         "2 tháng học chính + 3 tháng mentoring",
                         "Lớp nhỏ 1–5 người",
                         "100% Offline tại Hà Nội",
                       ].map((b) => (
-                        <div key={b} className="flex items-start gap-2 text-[0.82rem]" style={{ color: "rgba(255,255,255,0.78)" }}>
+                        <div key={b} className="flex items-start gap-2 text-[0.82rem]" style={{ color: "var(--st-78)" }}>
                           <svg className="flex-shrink-0 mt-0.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4ad6ff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
                           {b}
                         </div>
                       ))}
                     </div>
 
-                    <div className="flex items-center gap-2 mb-5 text-[0.78rem]" style={{ color: "rgba(255,255,255,0.65)" }}>
+                    <div className="flex items-center gap-2 mb-5 text-[0.78rem]" style={{ color: "var(--st-65)" }}>
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a78bff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
                       </svg>
@@ -795,7 +795,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
                   </div>
                   <div className="text-[0.78rem] leading-[1.6]">
                     <div className="font-bold mb-0.5" style={{ color: "#ffd479" }}>Khoá đầu tiên · chỉ 999.000đ</div>
-                    <div style={{ color: "rgba(255,255,255,0.65)" }}>
+                    <div style={{ color: "var(--st-65)" }}>
                       Số lượng giới hạn -{" "}
                       <a href="https://zalo.me/0868464658" target="_blank" rel="noreferrer" className="underline font-semibold" style={{ color: "#ffd479" }}>
                         inbox mình

@@ -34,7 +34,7 @@ export default async function AdminUsersPage({ searchParams }: { searchParams: P
         </p>
       </header>
 
-      <form method="get" action="/account/admin/users" className="rounded-xl border p-4 space-y-3" style={{ background: "rgba(8,16,43,0.55)", borderColor: "rgba(255,255,255,0.08)" }}>
+      <form method="get" action="/account/admin/users" className="rounded-xl border p-4 space-y-3" style={{ background: "var(--db-55)", borderColor: "var(--st-08)" }}>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <label className="block">
             <span className="block text-[0.72rem] uppercase tracking-wider font-medium mb-1.5" style={{ color: "var(--ink-mute)" }}>Tìm kiếm</span>
@@ -52,15 +52,15 @@ export default async function AdminUsersPage({ searchParams }: { searchParams: P
         </div>
         <div className="flex gap-2">
           <button className="px-4 py-2 rounded-md text-[0.85rem] font-semibold text-white" style={{ background: "var(--grad-primary)" }}>Áp dụng</button>
-          <Link href="/account/admin/users" className="px-4 py-2 rounded-md text-[0.85rem] font-medium text-white/80 border" style={{ borderColor: "rgba(255,255,255,0.15)" }}>Reset</Link>
+          <Link href="/account/admin/users" className="px-4 py-2 rounded-md text-[0.85rem] font-medium text-white/80 border" style={{ borderColor: "var(--st-15)" }}>Reset</Link>
         </div>
       </form>
 
       <div className="text-[0.78rem]" style={{ color: "var(--ink-mute)" }}>Hiển thị {users.length} user</div>
 
-      <div className="rounded-xl border overflow-x-auto" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+      <div className="rounded-xl border overflow-x-auto" style={{ borderColor: "var(--st-08)" }}>
         <table className="w-full text-[0.85rem]">
-          <thead style={{ background: "rgba(255,255,255,0.04)" }}>
+          <thead style={{ background: "var(--st-04)" }}>
             <tr>
               <Th>Họ tên</Th>
               <Th>Email</Th>
@@ -74,7 +74,7 @@ export default async function AdminUsersPage({ searchParams }: { searchParams: P
           </thead>
           <tbody>
             {users.map((u) => (
-              <tr key={u.id as string} className="border-t hover:bg-white/[0.02]" style={{ borderColor: "rgba(255,255,255,0.05)" }}>
+              <tr key={u.id as string} className="border-t hover:bg-white/[0.02]" style={{ borderColor: "var(--st-05)" }}>
                 <Td className="text-white font-medium">{String(u.name || "(no name)")}</Td>
                 <Td className="font-mono text-[0.78rem] text-white">{String(u.email)}</Td>
                 <Td className="text-white">{String(u.phone || "-")}</Td>
