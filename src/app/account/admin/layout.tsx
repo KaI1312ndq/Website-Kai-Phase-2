@@ -10,13 +10,16 @@ export const dynamic = "force-dynamic";
 const NAV_SECTIONS: Array<{ title: string; items: Array<{ label: string; href: string; external?: boolean }> }> = [
   {
     title: "Tổng quan",
-    items: [{ label: "Dashboard", href: "/account/admin" }],
+    items: [
+      { label: "Dashboard", href: "/account/admin" },
+      { label: "Analytics", href: "/account/admin/analytics" },
+    ],
   },
   {
     title: "Bán hàng",
     items: [
       { label: "Đơn hàng", href: "/account/admin/orders" },
-      { label: "Vouchers", href: "/studio/desk/voucher", external: true },
+      { label: "Vouchers", href: "/account/admin/content/voucher" },
     ],
   },
   {
@@ -37,14 +40,14 @@ const NAV_SECTIONS: Array<{ title: string; items: Array<{ label: string; href: s
   {
     title: "Content (Sanity)",
     items: [
-      { label: "Blog posts", href: "/studio/desk/post", external: true },
-      { label: "Case studies", href: "/studio/desk/caseStudy", external: true },
-      { label: "Products", href: "/studio/desk/product", external: true },
-      { label: "Testimonials", href: "/studio/desk/testimonial", external: true },
-      { label: "Brands", href: "/studio/desk/brand", external: true },
-      { label: "Timeline", href: "/studio/desk/timeline", external: true },
-      { label: "Site settings", href: "/studio/desk/settings", external: true },
-      { label: "Mở Studio đầy đủ", href: "/studio", external: true },
+      { label: "Tất cả content", href: "/account/admin/content" },
+      { label: "Blog posts", href: "/account/admin/content/post" },
+      { label: "Case studies", href: "/account/admin/content/caseStudy" },
+      { label: "Products", href: "/account/admin/content/product" },
+      { label: "Testimonials", href: "/account/admin/content/testimonial" },
+      { label: "Brands", href: "/account/admin/content/brand" },
+      { label: "Timeline", href: "/account/admin/content/timeline" },
+      { label: "Site settings", href: "/account/admin/content/settings" },
     ],
   },
 ];

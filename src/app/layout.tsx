@@ -7,6 +7,7 @@ import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import NoiseOverlay from "@/components/NoiseOverlay";
 import Analytics from "@/components/Analytics";
+import PageviewTracker from "@/components/PageviewTracker";
 import LeadPopup from "@/components/LeadPopup";
 import PageTransition from "@/components/PageTransition";
 import { CartProvider } from "@/components/cart/CartContext";
@@ -245,6 +246,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </CartProvider>
           <LeadPopup />
           <Analytics />
+          <PageviewTracker />
         </ClerkProvider>
       </body>
     </html>

@@ -78,7 +78,7 @@ export default async function AdminCommentsPage({ searchParams }: { searchParams
                   </span>
                 </div>
                 <span className="text-[0.72rem]" style={{ color: "var(--ink-mute)" }}>
-                  {new Date(c.created_at as string).toLocaleString("vi-VN")}
+                  {new Date(c.created_at as string).toLocaleString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh" })}
                 </span>
               </div>
               <div className="text-[0.9rem] text-white/85 whitespace-pre-line mb-2">{String(c.body)}</div>

@@ -209,7 +209,7 @@ function ActivityList({
                 </div>
               </div>
               <div className="text-[0.7rem] flex-shrink-0 pt-0.5" style={{ color: "var(--ink-mute)" }}>
-                {new Date(r.time).toLocaleDateString("vi-VN", { day: "2-digit", month: "2-digit" })}
+                {new Date(r.time).toLocaleDateString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh", day: "2-digit", month: "2-digit" })}
               </div>
             </li>
           ))}

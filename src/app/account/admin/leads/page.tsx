@@ -183,7 +183,7 @@ export default async function AdminLeadsPage({ searchParams }: { searchParams: P
 }
 
 function formatDate(d: unknown) {
-  return new Date(String(d)).toLocaleString("vi-VN", { day: "2-digit", month: "2-digit", year: "2-digit", hour: "2-digit", minute: "2-digit" });
+  return new Date(String(d)).toLocaleString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh", day: "2-digit", month: "2-digit", year: "2-digit", hour: "2-digit", minute: "2-digit" });
 }
 function truncate(s: string, n: number) {
   return s.length > n ? s.slice(0, n) + "..." : s;
