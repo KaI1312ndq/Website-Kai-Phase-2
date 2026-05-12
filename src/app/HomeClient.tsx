@@ -155,7 +155,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
         title: t.title,
         desc: t.description || "",
         current: !!t.current,
-        logo: /UpBase/i.test(t.title) ? "UpBase" : /Bad God/i.test(t.title) ? "TheBadGod" : /Xiaomi|Bigmi/i.test(t.title) ? "Xiaomi" : "",
+        logo: /UpBase/i.test(t.title) ? "UpBase" : /Bad God/i.test(t.title) ? "TheBadGod" : /Xiaomi|Bigmi/i.test(t.title) ? "Xiaomi" : /CHAANG/i.test(t.title) ? "CHAANG" : /Qled/i.test(t.title) ? "Qled" : /Kenno/i.test(t.title) ? "Kenno" : /My Self/i.test(t.title) ? "MySelf" : "",
       }))
     : timeline;
 
@@ -518,8 +518,10 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
         </section>
 
         {/* ═══════════════ TIMELINE + PORTRAIT ═══════════════ */}
-        <section id="timeline" className="relative overflow-hidden">
-          <div className="blob blob-cyan blob-anim" style={{ width: 480, height: 480, top: "20%", right: "-10%" }} />
+        <section id="timeline" className="relative">
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="blob blob-cyan blob-anim" style={{ width: 480, height: 480, top: "20%", right: "-10%" }} />
+          </div>
           <div className="relative max-w-[1400px] mx-auto px-6 md:px-10 py-28 md:py-40">
             <Reveal><div className="section-tag">Hành trình</div></Reveal>
             <Reveal delay={0.08}>
@@ -528,7 +530,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
               </h2>
             </Reveal>
 
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-10 lg:gap-16 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-10 lg:gap-16">
               {/* Timeline */}
               <div className="relative">
                 <div className="absolute left-5 top-2 bottom-2 w-[2px]" style={{ background: "linear-gradient(to bottom, #4ad6ff, #146ef5, #7a3dff, transparent)" }} />
@@ -553,9 +555,13 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
                     <div className="pb-10 flex-1">
                       <div className="flex items-center flex-wrap gap-2 mb-1.5">
                         <div className="text-[0.72rem] font-semibold uppercase tracking-[0.14em] grad-text">{t.year}</div>
-                        {t.logo === "UpBase" && <span className="text-[0.7rem] font-bold px-2.5 py-0.5 rounded-md" style={{ background: "#0052CC", color: "white" }}>UpBase</span>}
+                        {t.logo === "UpBase" && <span className="text-[0.7rem] font-bold px-2.5 py-0.5 rounded-md" style={{ background: "#FF6900", color: "white" }}>UpBase</span>}
                         {t.logo === "TheBadGod" && <span className="text-[0.7rem] font-bold px-2.5 py-0.5 rounded-md" style={{ background: "#1a5c2a", color: "white" }}>The Bad God</span>}
                         {t.logo === "Xiaomi" && <span className="text-[0.7rem] font-bold px-2.5 py-0.5 rounded-md" style={{ background: "#FF6900", color: "white" }}>Xiaomi</span>}
+                        {t.logo === "CHAANG" && <span className="text-[0.7rem] font-bold px-2.5 py-0.5 rounded-md" style={{ background: "#00b8d9", color: "white" }}>CHAANG</span>}
+                        {t.logo === "Qled" && <span className="text-[0.7rem] font-bold px-2.5 py-0.5 rounded-md" style={{ background: "#1d4ed8", color: "white" }}>Qled.Decor</span>}
+                        {t.logo === "Kenno" && <span className="text-[0.7rem] font-bold px-2.5 py-0.5 rounded-md" style={{ background: "#dc2626", color: "white" }}>Kenno</span>}
+                        {t.logo === "MySelf" && <span className="text-[0.7rem] font-bold px-2.5 py-0.5 rounded-md" style={{ background: "#1d4ed8", color: "white" }}>My Self</span>}
                       </div>
                       <div className="text-[1.05rem] font-semibold mb-1.5 tracking-tight text-white">{t.title}</div>
                       <div className="text-[0.92rem] leading-[1.7]" style={{ color: "var(--ink-mute)" }}>{t.desc}</div>
@@ -565,7 +571,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
               </div>
 
               {/* Portrait card - sticky right */}
-              <Reveal delay={0.2}>
+              <div>
                 <div className="lg:sticky lg:top-28">
                   <motion.div
                     whileHover={{ y: -4 }}
@@ -596,7 +602,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
                     </div>
                   </motion.div>
                 </div>
-              </Reveal>
+              </div>
             </div>
           </div>
         </section>
