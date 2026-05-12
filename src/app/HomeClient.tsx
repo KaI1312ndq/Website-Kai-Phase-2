@@ -369,8 +369,8 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
                 <span
                   className="text-[clamp(2rem,5vw,3.5rem)] font-bold tracking-tight whitespace-nowrap"
                   style={{
-                    color: i % 2 === 0 ? "white" : "transparent",
-                    WebkitTextStroke: i % 2 === 0 ? "0" : "1.5px rgba(125,169,255,0.8)",
+                    color: i % 2 === 0 ? "var(--ink)" : "transparent",
+                    WebkitTextStroke: i % 2 === 0 ? "0" : "1.5px var(--marquee-stroke)",
                   }}
                 >
                   {w}

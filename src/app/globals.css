@@ -113,6 +113,9 @@
   --dg-30: rgba(20, 40, 90, 0.30);
   --dg-50: rgba(20, 40, 90, 0.50);
   --dg-70: rgba(20, 40, 90, 0.70);
+
+  /* Marquee outline default (dark theme) */
+  --marquee-stroke: rgba(125, 169, 255, 0.8);
 }
 
 /* ─────────────────────────────────────────
@@ -177,6 +180,9 @@
   --ambient-2: radial-gradient(ellipse 60% 40% at 100% 30%, rgba(79, 70, 229, 0.07), transparent 60%);
   --ambient-3: radial-gradient(ellipse 60% 40% at 0% 70%, rgba(56, 189, 248, 0.08), transparent 60%);
 
+  /* Marquee outline stroke - đậm hơn cho light theme để visible */
+  --marquee-stroke: rgba(29, 78, 216, 0.55);
+
   /* Surface tones - invert cho light: dùng navy color base.
      Đảm bảo text + border + bg dùng rgba(255,...) tự adapt qua var. */
   --st-03: rgba(15, 27, 61, 0.04);
@@ -205,19 +211,56 @@
   --st-85: rgba(15, 27, 61, 0.85);
   --st-90: rgba(15, 27, 61, 0.90);
 
-  /* Light cards - subtle blue tint để pop trên page bg, có shadow elevation */
-  --db-40: rgba(225, 235, 250, 0.55);
-  --db-50: rgba(230, 240, 252, 0.70);
-  --db-55: rgba(235, 244, 254, 0.85);
-  --db-60: rgba(240, 247, 255, 0.92);
-  --db-70: rgba(245, 250, 255, 0.95);
-  --db-78: rgba(250, 252, 255, 0.96);
+  /* Light cards - SOLID white/blue tint (không glass) + visible shadow */
+  --db-40: #e8f0fe;
+  --db-50: #eef4ff;
+  --db-55: #f3f7fd;
+  --db-60: #f7fafd;
+  --db-70: #fbfcff;
+  --db-78: #ffffff;
   --db-85: #ffffff;
   --db-95: #ffffff;
   --db-100: #ffffff;
-  --dg-30: rgba(215, 230, 250, 0.45);
-  --dg-50: rgba(220, 233, 252, 0.65);
-  --dg-70: rgba(210, 226, 250, 0.78);
+  --dg-30: #dde8fa;
+  --dg-50: #d8e4f8;
+  --dg-70: #c8d8f0;
+}
+
+/* Light theme: gỡ backdrop-filter blur trên Navbar/cards (glass effect không phù hợp light bg) */
+[data-theme="light"] {
+  /* Lines + surfaces đậm hơn nhiều để cards visible trên white bg */
+  --st-03: rgba(15, 27, 61, 0.07);
+  --st-04: rgba(15, 27, 61, 0.08);
+  --st-05: rgba(15, 27, 61, 0.10);
+  --st-06: rgba(15, 27, 61, 0.12);
+  --st-08: rgba(15, 27, 61, 0.14);
+  --st-10: rgba(15, 27, 61, 0.18);
+  --st-12: rgba(15, 27, 61, 0.22);
+  --st-15: rgba(15, 27, 61, 0.25);
+  --st-16: rgba(15, 27, 61, 0.28);
+}
+
+/* Navbar light theme: solid white bg + shadow thay vì glass */
+[data-theme="light"] nav > div > div {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-color: rgba(15, 27, 61, 0.10) !important;
+  box-shadow: 0 4px 18px rgba(29, 78, 216, 0.08) !important;
+}
+
+/* Modal/popover/dropdown trên light: solid white + visible shadow (không glass) */
+[data-theme="light"] [role="dialog"],
+[data-theme="light"] [role="menu"]:not(.dark-section [role="menu"]) {
+  background: #ffffff !important;
+  border-color: rgba(15, 27, 61, 0.12) !important;
+  box-shadow: 0 16px 48px rgba(29, 78, 216, 0.15) !important;
+}
+
+/* Analytics bar chart gradient: đậm hơn trên light */
+[data-theme="light"] [style*="linear-gradient(180deg, #146ef5, #4ad6ff)"] {
+  background: linear-gradient(180deg, #1e40af, #2563eb) !important;
+}
+[data-theme="light"] [style*="linear-gradient(180deg, #ff8a3d, #ffd479)"] {
+  background: linear-gradient(180deg, #c2410c, #ea580c) !important;
 }
 
 /* Smooth transition khi đổi theme */
@@ -407,7 +450,7 @@ body::before {
    CARDS - Glass on dark
    ───────────────────────────────────────── */
 .glass {
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--st-03);
   border: 1px solid var(--line);
   border-radius: var(--r-md);
   backdrop-filter: blur(16px);
@@ -416,14 +459,14 @@ body::before {
   position: relative;
 }
 .glass:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--st-06);
   border-color: var(--line-strong);
   transform: translateY(-4px);
   box-shadow: var(--shadow-card);
 }
 
 .glass-strong {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--st-06);
   border: 1px solid var(--line-strong);
   border-radius: var(--r-md);
   backdrop-filter: blur(20px);
@@ -432,12 +475,28 @@ body::before {
 /* Card with gradient border */
 .glass-grad {
   position: relative;
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--st-03);
   border-radius: var(--r-md);
   border: 1px solid transparent;
   background-clip: padding-box;
   backdrop-filter: blur(16px);
   transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s;
+}
+
+/* Light theme: glass cards solid white-ish thay vì transparent (chống chìm trên light bg) */
+[data-theme="light"] .glass,
+[data-theme="light"] .glass-strong,
+[data-theme="light"] .glass-grad {
+  background: #ffffff;
+  border-color: rgba(15, 27, 61, 0.10);
+  box-shadow: 0 4px 14px rgba(29, 78, 216, 0.06);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+[data-theme="light"] .glass:hover {
+  background: #ffffff;
+  border-color: rgba(29, 78, 216, 0.25);
+  box-shadow: 0 12px 28px rgba(29, 78, 216, 0.10);
 }
 .glass-grad::before {
   content: "";
