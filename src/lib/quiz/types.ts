@@ -83,12 +83,42 @@ export type MultiScoreResult = {
   dominant?: string;
 };
 
+/** Visual shape spec cho IQ test (matrix / spatial rotation) */
+export type ShapeSpec = {
+  shape: "circle" | "square" | "triangle" | "diamond" | "star" | "hex" | "plus" | "arrow" | "L" | "T" | "empty";
+  count?: number;        // 1-4 instances trong cell, mặc định 1
+  size?: "sm" | "md" | "lg";  // mặc định md
+  rotation?: number;     // 0 / 90 / 180 / 270 (deg)
+  fill?: "solid" | "outline" | "dotted";  // mặc định solid
+  color?: string;        // hex, mặc định currentColor
+};
+
+/** Visual data cho IQ matrix/spatial question */
+export type QuizVisual =
+  | {
+      type: "matrix";
+      /** 9 cells - cell index 8 = ? (last cell user phải đoán) */
+      grid: (ShapeSpec | null)[];
+      /** 4-6 shape options */
+      options: ShapeSpec[];
+    }
+  | {
+      type: "spatial";
+      source: ShapeSpec;
+      transform: string;   // mô tả vd "xoay 90° kim đồng hồ"
+      options: ShapeSpec[]; // 4 hình variants
+    };
+
 /** Knowledge quiz question - single correct answer + explanation */
 export type KnowledgeQuestion = {
   id: number;
   q: string;
   opts: string[];
-  /** Index 0..3 of correct answer */
+  /** Index 0..N of correct answer */
   ans: number;
   explain: string;
+  /** Optional visual cho IQ test matrix/spatial */
+  visual?: QuizVisual;
+  /** Category cho IQ test: matrix | spatial | verbal | quantitative | logic */
+  category?: "matrix" | "spatial" | "verbal" | "quantitative" | "logic";
 };

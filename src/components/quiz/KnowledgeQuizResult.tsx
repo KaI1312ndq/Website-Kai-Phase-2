@@ -49,6 +49,34 @@ function getTier(percent: number): Tier {
   return TIERS[2];
 }
 
+/** IQ test specific - 6 archetype levels theo IQ score chuẩn (mean=100, SD=15) */
+type IQTier = { name: string; iconName: IconName; color: string; feedback: string };
+const IQ_TIERS: Array<{ min: number; tier: IQTier }> = [
+  { min: 130, tier: { name: "Tài năng", iconName: "trophy", color: "#ffd479", feedback: "IQ ≥ 130 - top 2% dân số. Bạn có khả năng nhận diện pattern + suy luận tổng hợp xuất sắc. Lưu ý: IQ cao không tự động dẫn tới success - cần kết hợp emotional intelligence, ý chí, và networking. Hãy tận dụng tốt thay vì coi như identity." } },
+  { min: 115, tier: { name: "Nhạy bén", iconName: "trending-up", color: "#5fffaa", feedback: "IQ 115-130 - top 15% dân số (Superior). Khả năng học hỏi nhanh, xử lý thông tin phức tạp tốt. Phù hợp các role analyst, engineer, product, strategy. Tiếp tục thử thách bản thân với problems khó hơn." } },
+  { min: 105, tier: { name: "Sắc bén", iconName: "check", color: "#7da9ff", feedback: "IQ 105-115 - trên trung bình. Bạn xử lý tốt các vấn đề logic + pattern. Đủ năng lực cho hầu hết role chuyên môn. Tập trung phát triển skill chuyên sâu sẽ thấy hiệu quả nhanh." } },
+  { min: 95, tier: { name: "Cân bằng", iconName: "book-open", color: "#a78bff", feedback: "IQ 95-105 - trung bình (chiếm 50% dân số). IQ ở mức này không hề là điểm yếu - 80% career success đến từ chăm chỉ + EQ + chọn đúng môi trường, không phải IQ thuần. Tập trung vào kỹ năng cụ thể bạn yêu thích." } },
+  { min: 85, tier: { name: "Học hỏi", iconName: "book-open", color: "#ffd479", feedback: "IQ 85-95 - dưới trung bình một chút. Đây có thể do bài test không phù hợp pattern bạn quen (vd câu visual matrix cần luyện), không phải năng lực thật. Học kỹ năng + practice nhiều hơn sẽ thấy improvement nhanh." } },
+  { min: 0, tier: { name: "Khám phá", iconName: "book-open", color: "#ff5a72", feedback: "IQ < 85 - có thể do test này không phù hợp style tư duy của bạn, hoặc bạn làm vội. Test online KHÔNG chính xác như WAIS-IV lâm sàng - đừng tự gắn nhãn. Practice các loại câu hỏi này sẽ thấy điểm tăng đáng kể." } },
+];
+
+function getIQTier(iqScore: number): IQTier {
+  for (const { min, tier } of IQ_TIERS) {
+    if (iqScore >= min) return tier;
+  }
+  return IQ_TIERS[IQ_TIERS.length - 1].tier;
+}
+
+/** Map số câu đúng -> IQ score chuẩn (linear interpolation theo 6 bins) */
+function correctToIQ(correct: number): number {
+  if (correct <= 5) return Math.round(70 + (correct / 5) * 15);
+  if (correct <= 12) return Math.round(85 + ((correct - 5) / 7) * 10);
+  if (correct <= 18) return Math.round(95 + ((correct - 12) / 6) * 10);
+  if (correct <= 23) return Math.round(105 + ((correct - 18) / 5) * 10);
+  if (correct <= 27) return Math.round(115 + ((correct - 23) / 4) * 15);
+  return Math.round(130 + ((correct - 27) / 3) * 15);
+}
+
 export default function KnowledgeQuizResult({
   config,
   questions,
@@ -66,7 +94,9 @@ export default function KnowledgeQuizResult({
   const correctCount = Object.values(answers).filter((a) => a.correct).length;
   const wrongCount = total - correctCount;
   const percent = Math.round((correctCount / total) * 100);
-  const tier = getTier(percent);
+  const isIQ = config.slug === "test-iq";
+  const iqScore = isIQ ? correctToIQ(correctCount) : 0;
+  const tier = isIQ ? { id: "gold" as const, ...getIQTier(iqScore) } : getTier(percent);
   const [reviewMode, setReviewMode] = useState(false);
 
   // Save best score to localStorage
@@ -103,24 +133,42 @@ export default function KnowledgeQuizResult({
         </div>
 
         <div className="text-[0.7rem] font-bold uppercase tracking-[0.18em] mb-2" style={{ color: tier.color }}>
-          Tier kết quả
+          {isIQ ? "IQ Archetype" : "Tier kết quả"}
         </div>
         <h1 className="text-[2rem] md:text-[2.6rem] font-extrabold leading-tight tracking-tight text-white mb-4">
           {tier.name}
         </h1>
 
         {/* Score display */}
-        <div className="flex items-baseline justify-center gap-3 mb-2">
-          <span className="text-[3rem] md:text-[4rem] font-extrabold leading-none tabular-nums" style={{ color: tier.color }}>
-            {correctCount}
-          </span>
-          <span className="text-[1.5rem] font-bold" style={{ color: "var(--st-50)" }}>
-            / {total}
-          </span>
-        </div>
-        <div className="text-[1.05rem] font-semibold mb-5" style={{ color: tier.color }}>
-          {percent}%
-        </div>
+        {isIQ ? (
+          <>
+            <div className="flex items-baseline justify-center gap-3 mb-2">
+              <span className="text-[3.5rem] md:text-[5rem] font-extrabold leading-none tabular-nums" style={{ color: tier.color }}>
+                {iqScore}
+              </span>
+              <span className="text-[1.3rem] font-bold" style={{ color: "var(--st-50)" }}>
+                IQ
+              </span>
+            </div>
+            <div className="text-[0.92rem] font-semibold mb-2" style={{ color: tier.color }}>
+              {correctCount}/{total} câu đúng · chuẩn quốc tế mean=100, SD=15
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="flex items-baseline justify-center gap-3 mb-2">
+              <span className="text-[3rem] md:text-[4rem] font-extrabold leading-none tabular-nums" style={{ color: tier.color }}>
+                {correctCount}
+              </span>
+              <span className="text-[1.5rem] font-bold" style={{ color: "var(--st-50)" }}>
+                / {total}
+              </span>
+            </div>
+            <div className="text-[1.05rem] font-semibold mb-5" style={{ color: tier.color }}>
+              {percent}%
+            </div>
+          </>
+        )}
 
         <p className="text-[0.95rem] leading-[1.7] max-w-[600px] mx-auto" style={{ color: "var(--st-85)" }}>
           {tier.feedback}

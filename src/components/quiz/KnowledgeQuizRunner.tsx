@@ -4,6 +4,8 @@ import type { QuizConfig, KnowledgeQuestion } from "@/lib/quiz/types";
 import { trackEvent } from "@/lib/track";
 import Icon, { type IconName } from "@/components/icons/Icon";
 import KnowledgeQuizResult from "./KnowledgeQuizResult";
+import { VisualQuestion } from "./VisualQuestion";
+import { ShapeCell } from "./ShapeSVG";
 
 const STORAGE_KEY = (slug: string) => `knowledgequiz:progress:${slug}`;
 
@@ -312,6 +314,13 @@ function IntroScreen({
         <Stat label="Tổng" value={`~${Math.ceil((totalQuestions * secondsPerQ) / 60)}p`} color={config.color} />
       </div>
 
+      {/* Desktop recommendation cho IQ test (vì có matrix 3x3 + spatial cần màn rộng) */}
+      {config.slug === "test-iq" && (
+        <div className="md:hidden mb-6 rounded-lg px-4 py-3 text-left text-[0.85rem]" style={{ background: "rgba(255,212,121,0.10)", border: "1px solid rgba(255,212,121,0.35)", color: "#ffd479" }}>
+          <strong>Khuyến nghị làm trên desktop / tablet.</strong> Test IQ có nhiều câu ma trận 3×3 và hình học - màn hình điện thoại nhỏ sẽ khó nhìn rõ.
+        </div>
+      )}
+
       <div className="text-left max-w-[600px] mx-auto rounded-xl p-5 mb-7" style={{ background: "var(--st-03)", border: "1px solid var(--st-08)" }}>
         <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-3 text-center" style={{ color: config.color }}>
           Quy tắc bài test
@@ -460,11 +469,18 @@ function QuestionCard({
       <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-3" style={{ color }}>
         Câu {questionNumber} / {total}
       </div>
-      <h2 className="text-[1.15rem] md:text-[1.3rem] font-bold leading-snug text-white mb-6">
+      <h2 className="text-[1.15rem] md:text-[1.3rem] font-bold leading-snug text-white mb-4">
         {question.q}
       </h2>
 
-      <div className="flex flex-col gap-2.5">
+      {/* Visual content (matrix / spatial) */}
+      {question.visual && (
+        <div className="mb-5 flex justify-center">
+          <VisualQuestion visual={question.visual} color={color} />
+        </div>
+      )}
+
+      <div className={question.visual ? "grid grid-cols-2 md:grid-cols-3 gap-2.5" : "flex flex-col gap-2.5"}>
         {question.opts.map((opt, idx) => {
           const isCorrect = idx === question.ans;
           const isPicked = idx === pickedThisQ;
@@ -504,16 +520,21 @@ function QuestionCard({
               className={`text-left rounded-xl px-4 md:px-5 py-3.5 md:py-4 transition-all ${animClass} ${hasPicked ? "cursor-default" : "hover:translate-x-[3px]"}`}
               style={{ background: bg, border: `1.5px solid ${border}` }}
             >
-              <div className="flex items-start gap-3 md:gap-4">
+              {question.visual && question.visual.type !== "spatial" ? null : null}
+              <div className={question.visual ? "flex flex-col items-center gap-2" : "flex items-start gap-3 md:gap-4"}>
                 <span
                   className="w-7 h-7 md:w-8 md:h-8 rounded-full flex-shrink-0 flex items-center justify-center text-[0.85rem] font-bold transition-all"
                   style={{ background: badgeBg, color: badgeColor }}
                 >
                   {String.fromCharCode(65 + idx)}
                 </span>
-                <span className="text-[0.92rem] md:text-[0.96rem] leading-[1.55] flex-1 pt-0.5" style={{ color: textColor }}>
-                  {opt}
-                </span>
+                {question.visual && (question.visual.type === "matrix" || question.visual.type === "spatial") && question.visual.options[idx] ? (
+                  <ShapeCell spec={question.visual.options[idx]} sizePx={72} />
+                ) : (
+                  <span className="text-[0.92rem] md:text-[0.96rem] leading-[1.55] flex-1 pt-0.5" style={{ color: textColor }}>
+                    {opt}
+                  </span>
+                )}
                 {icon && <span className="flex-shrink-0 mt-1">{icon}</span>}
               </div>
             </button>

@@ -4,6 +4,7 @@ import { MBTI_TYPES } from "./data/mbti-types";
 import { MBTI_QUESTIONS as MBTI_QS_DATA } from "./data/mbti-questions";
 import { CAREER_QUESTIONS, CAREER_ARCHETYPES } from "./data/career";
 import { AD_METRICS_QUESTIONS } from "./data/ad-metrics";
+import { IQ_QUESTIONS } from "./data/iq";
 import { CONTENT_FRAMEWORK_QUESTIONS } from "./data/content-frameworks";
 import { DISC_QUESTIONS, DISC_ARCHETYPES } from "./data/disc";
 import { EQ_QUESTIONS, EQ_ARCHETYPES } from "./data/eq";
@@ -51,6 +52,21 @@ export const QUIZZES: QuizConfig[] = [
     gateResult: true,
     scoringType: "career",
     quizCategory: "huong-nghiep",
+  },
+  {
+    slug: "test-iq",
+    name: "Test IQ - Chỉ số thông minh tổng hợp",
+    shortDescription: "30 câu · 5 nhóm Matrix/Spatial/Verbal/Math/Logic · ~25 phút · cần email · 30s/câu",
+    longDescription: "Bài test IQ tổng hợp 30 câu chia 5 nhóm: 12 câu ma trận hình ảnh (Raven-style), 8 câu không gian (xoay/lật/khối hình), 5 câu ngôn ngữ (tương quan/đồng nghĩa), 3 câu số học, 2 câu logic. Điểm IQ chuẩn quốc tế (mean=100, SD=15) chia 6 mức từ 70-85 (Khám phá) đến 130+ (Tài năng). Lưu ý: test online KHÔNG thay thế WAIS-IV/Raven chuẩn lâm sàng - chỉ là tham khảo. Khuyến nghị làm trên màn hình desktop để xem matrix rõ.",
+    estimatedMinutes: 25,
+    questionCount: 30,
+    color: "#a78bff",
+    iconName: "brain",
+    gateResult: true,
+    scoringType: "knowledge",
+    format: "knowledge",
+    secondsPerQuestion: 30,
+    quizCategory: "kien-thuc",
   },
   {
     slug: "chi-so-quang-cao",
@@ -358,6 +374,7 @@ export function computeCareerResult(answers: Record<number, string>): {
  * Get knowledge quiz questions by slug.
  */
 export function getKnowledgeQuestions(slug: string): KnowledgeQuestion[] {
+  if (slug === "test-iq") return IQ_QUESTIONS;
   if (slug === "chi-so-quang-cao") return AD_METRICS_QUESTIONS;
   if (slug === "content-frameworks") return CONTENT_FRAMEWORK_QUESTIONS;
   return [];
