@@ -155,6 +155,7 @@ const links: NavLink[] = [
       { section: "Test bản thân", label: "Enneagram 9 kiểu", desc: "45 câu · 9 type + wing · ~10 phút", href: "/quiz/test-enneagram", badge: "Mới" },
       { section: "Test bản thân", label: "EQ - Trí tuệ cảm xúc", desc: "35 câu · 5 chiều Goleman · ~10 phút", href: "/quiz/test-eq", badge: "Mới" },
       { section: "Test bản thân", label: "Dark Triad - 3 trait tối", desc: "27 câu · giải trí · ~5 phút", href: "/quiz/test-dark-triad", badge: "Mới" },
+      { section: "Test bản thân", label: "Test IQ - Chỉ số thông minh", desc: "30 câu · 12 matrix + 8 spatial + 10 text · ~25 phút · desktop", href: "/quiz/test-iq", badge: "Mới" },
 
       // === Test Leadership (2 bài) ===
       { section: "Test Leadership", label: "DISC - Phong cách hành xử", desc: "24 câu · D/I/S/C · ~6 phút", href: "/quiz/test-disc", badge: "Mới" },
@@ -163,8 +164,7 @@ const links: NavLink[] = [
       // === Test hướng nghiệp (1 bài) ===
       { section: "Test hướng nghiệp", label: "Hướng Nghiệp Marketing & Ecom", desc: "12 câu · 5 archetype · ~5 phút", href: "/quiz/huong-nghiep-marketing" },
 
-      // === Test kiến thức (3 bài) ===
-      { section: "Test kiến thức", label: "Test IQ - Chỉ số thông minh", desc: "30 câu · 12 matrix + 8 spatial + 10 text · ~25 phút · desktop", href: "/quiz/test-iq", badge: "Mới" },
+      // === Test kiến thức (2 bài) ===
       { section: "Test kiến thức", label: "Chỉ Số Quảng Cáo", desc: "30 câu · ROAS, CPC, CPM, CIR · timer 30s", href: "/quiz/chi-so-quang-cao" },
       { section: "Test kiến thức", label: "Content Frameworks", desc: "30 câu · AIDA, PAS, Cialdini · timer 30s", href: "/quiz/content-frameworks" },
     ],

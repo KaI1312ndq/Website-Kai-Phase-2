@@ -66,7 +66,7 @@ export const QUIZZES: QuizConfig[] = [
     scoringType: "knowledge",
     format: "knowledge",
     secondsPerQuestion: 30,
-    quizCategory: "kien-thuc",
+    quizCategory: "ban-than",
   },
   {
     slug: "chi-so-quang-cao",
