@@ -35,6 +35,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const title = `${archetype.name} - ${quiz.name} | Phân tích chi tiết`;
   const description = `${archetype.tagline}. ${archetype.description[0].slice(0, 140)}...`;
 
+  const ogImage = `${SITE_URL}/api/quiz-cover?quiz=${encodeURIComponent(slug)}&type=${encodeURIComponent(type)}`;
+
   return {
     title,
     description,
@@ -45,8 +47,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       title,
       description,
       url: `${SITE_URL}/quiz/${slug}/result/${type}`,
+      images: [{ url: ogImage, width: 1200, height: 630, alt: `${archetype.name} - ${quiz.name}` }],
     },
-    twitter: { card: "summary_large_image", title, description },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImage],
+    },
   };
 }
 

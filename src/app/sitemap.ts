@@ -3,6 +3,7 @@ import { getPosts, getCaseStudies } from "@/lib/queries";
 import { QUIZZES, QUIZ_CATEGORIES, getQuizArchetypes, getQuizzesByCategory } from "@/lib/quiz/compute";
 import { PILLARS } from "@/lib/pillars/config";
 import { isPillarSlug } from "@/lib/blog/metadata";
+import { getAllSalaryRoles } from "@/lib/salary-data";
 
 // Force ISR with hourly refresh - keeps sitemap fast and reliable for crawlers
 export const revalidate = 3600;
@@ -24,6 +25,7 @@ async function safeFetch<T>(fn: () => Promise<T>, fallback: T): Promise<T> {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = await safeFetch(() => getPosts(100), [] as any[]);
   const caseStudies = await safeFetch(() => getCaseStudies(), [] as any[]);
+  const salaryRoles = getAllSalaryRoles();
 
   const postUrls = (posts || []).map((p: any) => {
     const slug = p.slug.current as string;
@@ -87,6 +89,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.7,
       }))
     ),
+    // Salary programmatic SEO pages
+    { url: `${baseUrl}/luong`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.85 },
+    ...salaryRoles.map((r) => ({
+      url: `${baseUrl}/luong/${r.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.72,
+    })),
     ...caseStudyUrls,
     ...postUrls,
   ];
