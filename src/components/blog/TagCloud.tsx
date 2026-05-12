@@ -45,7 +45,7 @@ export default function TagCloud({
           <button
             onClick={() => selectTag(undefined)}
             className="text-[0.78rem] font-medium px-2.5 py-1 rounded-md transition-all hover:bg-white/10"
-            style={{ background: "rgba(20,110,245,0.18)", border: "1px solid rgba(20,110,245,0.45)", color: "white" }}
+            style={{ background: "rgba(20,110,245,0.18)", border: "1px solid rgba(20,110,245,0.45)", color: "var(--ink)" }}
           >
             #{currentTag} <span style={{ opacity: 0.6, marginLeft: 4 }}>×</span>
           </button>

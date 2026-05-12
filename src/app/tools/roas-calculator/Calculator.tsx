@@ -40,7 +40,7 @@ function NumberInput({
         }}
         placeholder={placeholder}
         className="w-full px-4 py-2.5 pr-9 rounded-lg text-[0.95rem] outline-none transition-all"
-        style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white", fontFamily: "inherit" }}
+        style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "var(--ink)", fontFamily: "inherit" }}
       />
       {suffix && <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[0.82rem]" style={{ color: "var(--st-50)" }}>{suffix}</span>}
     </div>
@@ -59,7 +59,7 @@ function PercentInput({ value, onChange }: { value: number; onChange: (v: number
         }}
         step="0.5"
         className="w-full px-4 py-2.5 pr-9 rounded-lg text-[0.95rem] outline-none transition-all"
-        style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white", fontFamily: "inherit" }}
+        style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "var(--ink)", fontFamily: "inherit" }}
       />
       <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[0.82rem]" style={{ color: "var(--st-50)" }}>%</span>
     </div>

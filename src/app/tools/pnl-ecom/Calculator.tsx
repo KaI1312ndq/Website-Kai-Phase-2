@@ -107,7 +107,7 @@ function VNDInput({ value, onChange, placeholder }: { value: number; onChange: (
         }}
         placeholder={placeholder}
         className="w-full px-4 py-2.5 pr-9 rounded-lg text-[0.95rem] outline-none transition-all"
-        style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white", fontFamily: "inherit" }}
+        style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "var(--ink)", fontFamily: "inherit" }}
       />
       <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[0.82rem]" style={{ color: "var(--st-50)" }}>₫</span>
     </div>
@@ -126,7 +126,7 @@ function NumInput({ value, onChange, suffix, step }: { value: number; onChange: 
         }}
         step={step || "1"}
         className="w-full px-4 py-2.5 pr-9 rounded-lg text-[0.95rem] outline-none transition-all"
-        style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white", fontFamily: "inherit" }}
+        style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "var(--ink)", fontFamily: "inherit" }}
       />
       {suffix && <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[0.82rem]" style={{ color: "var(--st-50)" }}>{suffix}</span>}
     </div>
@@ -393,7 +393,7 @@ export default function PnLCalculator() {
             <button
               onClick={() => window.print()}
               className="text-[0.78rem] font-semibold px-4 py-2 rounded-lg transition-all hover:bg-white/10 print:hidden"
-              style={{ background: "var(--st-04)", border: "1px solid var(--st-12)", color: "white" }}
+              style={{ background: "var(--st-04)", border: "1px solid var(--st-12)", color: "var(--ink)" }}
             >
               ⎙ In / Xuất PDF
             </button>

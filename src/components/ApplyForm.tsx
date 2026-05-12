@@ -93,7 +93,7 @@ export default function ApplyForm() {
   const inputStyle = {
     border: "1px solid var(--st-10)",
     background: "var(--st-03)",
-    color: "white",
+    color: "var(--ink)",
     fontFamily: "inherit",
   } as const;
 

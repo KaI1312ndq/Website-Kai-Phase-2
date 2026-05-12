@@ -116,7 +116,7 @@ export async function GET(req: NextRequest) {
           justifyContent: "space-between",
           padding: "70px 80px",
           background: meta.bg,
-          color: "white",
+          color: "var(--ink)",
           fontFamily: "system-ui, sans-serif",
           position: "relative",
         }}
@@ -143,7 +143,7 @@ export async function GET(req: NextRequest) {
               fontWeight: 800,
               lineHeight: 1.08,
               letterSpacing: "-0.03em",
-              color: "white",
+              color: "var(--ink)",
               display: "flex",
               maxWidth: "92%",
             }}

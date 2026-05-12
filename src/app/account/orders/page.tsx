@@ -141,7 +141,7 @@ export default async function OrdersPage() {
                         <Link
                           href={`/shop/order/${o.orderNumber}`}
                           className="text-[0.82rem] font-semibold px-4 py-2 rounded-lg transition-colors"
-                          style={{ background: "var(--st-05)", border: "1px solid var(--line)", color: "white" }}
+                          style={{ background: "var(--st-05)", border: "1px solid var(--line)", color: "var(--ink)" }}
                         >
                           Chi tiết đơn
                         </Link>

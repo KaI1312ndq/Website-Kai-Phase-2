@@ -178,7 +178,7 @@ export default function LeadPopup() {
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                     placeholder="Họ và tên"
                     className="w-full px-4 py-3 rounded-lg text-[0.95rem] outline-none border"
-                    style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white", fontFamily: "inherit" }}
+                    style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "var(--ink)", fontFamily: "inherit" }}
                   />
                   <input
                     value={form.email}
@@ -186,7 +186,7 @@ export default function LeadPopup() {
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                     placeholder="email@gmail.com"
                     className="w-full px-4 py-3 rounded-lg text-[0.95rem] outline-none border"
-                    style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white", fontFamily: "inherit" }}
+                    style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "var(--ink)", fontFamily: "inherit" }}
                   />
                   <button
                     onClick={submit}

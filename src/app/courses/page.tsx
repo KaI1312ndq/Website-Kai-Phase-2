@@ -230,7 +230,7 @@ export default function CoursesPage() {
               <a href="#offline" className="px-6 py-3 rounded-xl text-[0.95rem] font-bold text-white" style={{ background: "var(--grad-primary)", boxShadow: "0 8px 24px rgba(20,110,245,0.35)" }}>
                 Cohort & Workshop 
               </a>
-              <a href="#online" className="px-6 py-3 rounded-xl text-[0.95rem] font-bold" style={{ background: "var(--st-04)", border: "1px solid var(--line)", color: "white" }}>
+              <a href="#online" className="px-6 py-3 rounded-xl text-[0.95rem] font-bold" style={{ background: "var(--st-04)", border: "1px solid var(--line)", color: "var(--ink)" }}>
                 Mini courses online
               </a>
               <Link href="/quiz/huong-nghiep-marketing" className="px-6 py-3 rounded-xl text-[0.95rem] font-bold" style={{ background: "transparent", color: "#7da9ff", textDecoration: "underline" }}>

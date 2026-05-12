@@ -12,7 +12,7 @@ export default function CartButton({ className }: { className?: string }) {
       style={{
         background: "var(--st-06)",
         border: "1px solid var(--st-10)",
-        color: "white",
+        color: "var(--ink)",
       }}
       onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--st-12)"; }}
       onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--st-06)"; }}

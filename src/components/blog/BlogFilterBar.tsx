@@ -51,7 +51,7 @@ export default function BlogFilterBar({
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Tìm bài viết theo từ khoá..."
             className="w-full pl-11 pr-4 py-3 rounded-xl text-[0.95rem] outline-none transition-all"
-            style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white" }}
+            style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "var(--ink)" }}
           />
           {search && (
             <button

@@ -45,7 +45,7 @@ function NumberInput({ value, onChange, suffix, placeholder }: { value: number; 
         }}
         placeholder={placeholder}
         className="w-full px-4 py-2.5 pr-9 rounded-lg text-[0.95rem] outline-none transition-all"
-        style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white", fontFamily: "inherit" }}
+        style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "var(--ink)", fontFamily: "inherit" }}
       />
       {suffix && <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[0.82rem]" style={{ color: "var(--st-50)" }}>{suffix}</span>}
     </div>
@@ -64,7 +64,7 @@ function PercentInput({ value, onChange, max = 100 }: { value: number; onChange:
         }}
         step="0.5"
         className="w-full px-4 py-2.5 pr-9 rounded-lg text-[0.95rem] outline-none transition-all"
-        style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white", fontFamily: "inherit" }}
+        style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "var(--ink)", fontFamily: "inherit" }}
       />
       <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[0.82rem]" style={{ color: "var(--st-50)" }}>%</span>
     </div>
@@ -210,7 +210,7 @@ function CategorySearch<T>({ selected, onSelect, search, renderPath, renderRate,
           onKeyDown={onKey}
           placeholder={placeholder}
           className="w-full pl-9 pr-3 py-2.5 rounded-lg text-[0.92rem] outline-none transition-all"
-          style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white", fontFamily: "inherit" }}
+          style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "var(--ink)", fontFamily: "inherit" }}
         />
       </div>
 
@@ -448,7 +448,7 @@ export default function Calculator() {
                     }
                   }}
                   className="flex-1 px-2.5 py-1 rounded-md text-[0.85rem] outline-none"
-                  style={{ background: "var(--st-03)", border: "1px solid var(--st-08)", color: "white" }}
+                  style={{ background: "var(--st-03)", border: "1px solid var(--st-08)", color: "var(--ink)" }}
                 />
               </div>
             </div>

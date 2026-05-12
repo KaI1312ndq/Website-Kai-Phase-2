@@ -32,7 +32,7 @@ const clerkAppearance = {
   },
   elements: {
     // Sign-in / Sign-up card
-    card: "shadow-2xl border border-white/10",
+    card: "dark-section shadow-2xl border border-white/10",
     headerTitle: "text-white",
     headerSubtitle: "text-white/75",
     socialButtonsBlockButton: "border-white/15 hover:bg-white/[0.06] text-white",
@@ -48,8 +48,8 @@ const clerkAppearance = {
     identityPreviewText: "text-white",
     identityPreviewEditButton: "text-[#7da9ff]",
 
-    // UserButton popover (avatar dropdown)
-    userButtonPopoverCard: "shadow-2xl border border-white/10",
+    // UserButton popover (avatar dropdown) - dark-section vì Clerk popover nền tối, text trắng
+    userButtonPopoverCard: "dark-section shadow-2xl border border-white/10",
     userButtonPopoverActionButton: "hover:bg-white/[0.06]",
     userButtonPopoverActionButtonText: "text-white",
     userButtonPopoverActionButtonIcon: "text-white/70",

@@ -119,7 +119,7 @@ export default function ResourceLeadGate({ resourceId, resourceTitle, buttonLabe
                     onChange={(e) => setName(e.target.value)}
                     required
                     className="w-full px-4 py-2.5 rounded-lg outline-none"
-                    style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white" }}
+                    style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "var(--ink)" }}
                     placeholder="Nguyễn Văn A"
                   />
                 </div>
@@ -131,7 +131,7 @@ export default function ResourceLeadGate({ resourceId, resourceTitle, buttonLabe
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     className="w-full px-4 py-2.5 rounded-lg outline-none"
-                    style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white" }}
+                    style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "var(--ink)" }}
                     placeholder="email@example.com"
                   />
                 </div>

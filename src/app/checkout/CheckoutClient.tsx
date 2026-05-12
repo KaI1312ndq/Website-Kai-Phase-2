@@ -179,7 +179,7 @@ export default function CheckoutClient() {
             onChange={(e) => setName(e.target.value)}
             required
             className="w-full px-4 py-3 rounded-lg outline-none focus:border-[#7da9ff] transition-colors"
-            style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white" }}
+            style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "var(--ink)" }}
             placeholder="Nguyễn Văn A"
           />
         </div>
@@ -194,7 +194,7 @@ export default function CheckoutClient() {
             onChange={(e) => setEmail(e.target.value)}
             required
             className="w-full px-4 py-3 rounded-lg outline-none focus:border-[#7da9ff] transition-colors"
-            style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white" }}
+            style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "var(--ink)" }}
             placeholder="email@example.com"
           />
           {user && email && (
@@ -215,7 +215,7 @@ export default function CheckoutClient() {
             onChange={(e) => setPhone(e.target.value)}
             required
             className="w-full px-4 py-3 rounded-lg outline-none focus:border-[#7da9ff] transition-colors"
-            style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white" }}
+            style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "var(--ink)" }}
             placeholder="0xxx xxx xxx"
           />
         </div>
@@ -322,7 +322,7 @@ export default function CheckoutClient() {
                   onChange={(e) => setVoucherInput(e.target.value.toUpperCase())}
                   placeholder="VD: BANBE100"
                   className="flex-1 min-w-0 px-3 py-2 rounded-lg outline-none uppercase font-mono text-[0.85rem]"
-                  style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white" }}
+                  style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "var(--ink)" }}
                 />
                 <button
                   type="button"
