@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "sanity": "sanity dev",
-    "migrate:sanity-supabase": "tsx scripts/migrate-sanity-to-supabase.ts"
+    "migrate:sanity-supabase": "node --env-file=.env.local --import tsx scripts/migrate-sanity-to-supabase.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^7.3.3",
