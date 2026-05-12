@@ -52,6 +52,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/ecom-foundation`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.95 },
     { url: `${baseUrl}/courses`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.92 },
     { url: `${baseUrl}/resources`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.88 },
+    { url: `${baseUrl}/tools/cv-builder`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.92 },
     { url: `${baseUrl}/tools/tinh-phi-san`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
     { url: `${baseUrl}/tools/roas-calculator`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.88 },
     { url: `${baseUrl}/tools/pnl-ecom`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.86 },
