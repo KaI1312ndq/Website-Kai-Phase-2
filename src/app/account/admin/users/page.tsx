@@ -83,7 +83,7 @@ export default async function AdminUsersPage({ searchParams }: { searchParams: P
                 <Td className="text-white">{String(u.industry || "-")}</Td>
                 <Td className="font-mono text-[0.7rem] text-white/40">{String(u.id).slice(0, 14)}...</Td>
                 <Td className="text-[0.74rem] text-white/60 whitespace-nowrap">
-                  {new Date(u.created_at as string).toLocaleDateString("vi-VN")}
+                  {new Date(u.created_at as string).toLocaleDateString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh" })}
                 </Td>
               </tr>
             ))}

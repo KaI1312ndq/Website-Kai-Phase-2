@@ -136,7 +136,7 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
                 <Td><PaymentBadge status={String(o.payment_status)} /></Td>
                 <Td><DeliveryBadge status={String(o.delivery_status)} /></Td>
                 <Td className="text-[0.74rem] text-white/60 whitespace-nowrap">
-                  {new Date(o.created_at as string).toLocaleString("vi-VN", { day: "2-digit", month: "2-digit", year: "2-digit", hour: "2-digit", minute: "2-digit" })}
+                  {new Date(o.created_at as string).toLocaleString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh", day: "2-digit", month: "2-digit", year: "2-digit", hour: "2-digit", minute: "2-digit" })}
                 </Td>
                 <Td>
                   <OrderActions orderId={o.id as string} paymentStatus={String(o.payment_status)} deliveryStatus={String(o.delivery_status)} />
