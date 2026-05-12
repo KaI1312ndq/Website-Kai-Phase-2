@@ -33,7 +33,7 @@ const CATEGORY_LABELS: Record<string, string> = {
 
 export const metadata = {
   title: "Blog & Insights - Nguyễn Đức Quảng",
-  description: "Góc nhìn thực tế về Ecommerce, Performance Marketing và Leadership cho seller TMĐT Việt Nam.",
+  description: "Bài viết về Ecommerce, Performance Marketing, P&L gian hàng, Team Building, tâm lý và phát triển bản thân.",
   alternates: {
     canonical: "/blog",
     types: { "application/rss+xml": [{ url: "/blog/feed.xml", title: "Blog & Insights RSS" }] },
@@ -128,11 +128,11 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
           ]} />
           <div className="relative max-w-[1300px] mx-auto px-6 md:px-10 pt-32 pb-12 md:pt-36 md:pb-16">
             <div className="section-tag">Blog & Insights</div>
-            <h1 className="t-display tracking-tight mb-5 max-w-[840px] text-white">
-              Góc nhìn từ<br /><span className="grad-text">thực chiến Ecom.</span>
+            <h1 className="t-display tracking-tight mb-5 max-w-[900px] text-white">
+              Mình viết về<br /><span className="grad-text">Ecom, Marketing & Mindset.</span>
             </h1>
-            <p className="t-body-lg max-w-[640px]">
-              Chia sẻ về Performance Marketing, P&L gian hàng, Team Building và cách tư duy trong thị trường TMĐT Việt Nam.
+            <p className="t-body-lg max-w-[680px]">
+              Tổng hợp bài viết chia sẻ từ Performance Marketing, P&L gian hàng, Team Building, đến tâm lý, hướng nghiệp và phát triển bản thân.
             </p>
           </div>
         </section>

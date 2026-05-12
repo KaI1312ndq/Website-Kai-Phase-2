@@ -116,7 +116,7 @@ export async function GET(req: NextRequest) {
           justifyContent: "space-between",
           padding: "70px 80px",
           background: meta.bg,
-          color: "var(--ink)",
+          color: "#ffffff",
           fontFamily: "system-ui, sans-serif",
           position: "relative",
         }}
@@ -143,7 +143,7 @@ export async function GET(req: NextRequest) {
               fontWeight: 800,
               lineHeight: 1.08,
               letterSpacing: "-0.03em",
-              color: "var(--ink)",
+              color: "#ffffff",
               display: "flex",
               maxWidth: "92%",
             }}
@@ -153,7 +153,7 @@ export async function GET(req: NextRequest) {
         </div>
 
         {/* Bottom strip */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: "20px", color: "var(--st-55)" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: "20px", color: "rgba(255,255,255,0.55)" }}>
           <div>nguyenducquang.website/blog</div>
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: meta.accent }} />
