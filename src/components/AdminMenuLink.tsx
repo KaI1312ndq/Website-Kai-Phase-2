@@ -20,7 +20,7 @@ export default function AdminMenuLink({ mobile = false }: { mobile?: boolean }) 
       <Link
         href="/account/admin"
         className="block px-4 py-3 text-[0.95rem] font-semibold text-white border-t"
-        style={{ borderColor: "rgba(255,255,255,0.08)", background: "rgba(122,169,255,0.08)" }}
+        style={{ borderColor: "var(--st-08)", background: "rgba(122,169,255,0.08)" }}
       >
         Admin Dashboard
       </Link>

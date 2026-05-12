@@ -171,8 +171,8 @@ export default function Navbar() {
           <div
             className="flex items-center justify-between rounded-2xl px-4 md:px-5 h-[60px] transition-all duration-300"
             style={{
-              background: scrolled ? "rgba(8,16,43,0.78)" : "rgba(255,255,255,0.04)",
-              border: `1px solid ${scrolled ? "rgba(255,255,255,0.10)" : "rgba(255,255,255,0.08)"}`,
+              background: scrolled ? "var(--db-78)" : "var(--st-04)",
+              border: `1px solid ${scrolled ? "var(--st-10)" : "var(--st-08)"}`,
               backdropFilter: "blur(20px) saturate(180%)",
               WebkitBackdropFilter: "blur(20px) saturate(180%)",
               boxShadow: scrolled ? "0 12px 40px rgba(5,10,31,0.45)" : "none",
@@ -182,7 +182,7 @@ export default function Navbar() {
             <Link href="/" className="flex items-center gap-2.5 text-white group">
               <span className="relative w-9 h-9 rounded-[10px] flex items-center justify-center text-white font-bold text-[1rem] overflow-hidden transition-transform group-hover:scale-[1.05]" style={{ background: "var(--grad-primary)", boxShadow: "0 4px 14px rgba(20,110,245,0.45)" }}>
                 <span className="relative z-10">K</span>
-                <span className="absolute inset-0" style={{ background: "radial-gradient(circle at 30% 20%, rgba(255,255,255,0.4), transparent 60%)" }} />
+                <span className="absolute inset-0" style={{ background: "radial-gradient(circle at 30% 20%, var(--st-40), transparent 60%)" }} />
               </span>
               <span className="text-[1.05rem] font-bold tracking-tight leading-none">
                 Kai<span className="grad-text">.</span>
@@ -190,15 +190,15 @@ export default function Navbar() {
             </Link>
 
             {/* Right-aligned links */}
-            <ul className="hidden md:flex items-center gap-0.5 list-none px-1.5 py-1.5 rounded-full ml-auto" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", boxShadow: "0 2px 12px rgba(0,0,0,0.2)" }}>
+            <ul className="hidden md:flex items-center gap-0.5 list-none px-1.5 py-1.5 rounded-full ml-auto" style={{ background: "var(--st-04)", border: "1px solid var(--st-08)", boxShadow: "0 2px 12px rgba(0,0,0,0.2)" }}>
               {links.map((l) => (
                 <li key={l.label} className="relative group">
                   <Link
                     href={l.href}
                     className="flex items-center gap-1 px-4 py-1.5 text-[0.86rem] font-medium rounded-full transition-all"
-                    style={{ color: "rgba(255,255,255,0.72)" }}
-                    onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.06)"; (e.currentTarget as HTMLElement).style.color = "white"; }}
-                    onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.72)"; }}
+                    style={{ color: "var(--st-72)" }}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--st-06)"; (e.currentTarget as HTMLElement).style.color = "white"; }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.color = "var(--st-72)"; }}
                   >
                     {l.label}
                     {l.submenu && (
@@ -212,7 +212,7 @@ export default function Navbar() {
                     <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-200">
                       <div className="rounded-xl p-2 min-w-[340px]" style={{
                         background: "rgba(8,16,43,0.96)",
-                        border: "1px solid rgba(255,255,255,0.10)",
+                        border: "1px solid var(--st-10)",
                         boxShadow: "0 24px 60px rgba(5,10,31,0.55)",
                         backdropFilter: "blur(20px) saturate(180%)",
                       }}>
@@ -232,8 +232,8 @@ export default function Navbar() {
                             groups.get(key)!.push(s);
                           }
                           return Array.from(groups.entries()).map(([section, items], gi) => (
-                            <div key={section} className={gi > 0 ? "mt-2 pt-2" : ""} style={gi > 0 ? { borderTop: "1px solid rgba(255,255,255,0.06)" } : undefined}>
-                              <div className="px-3 pt-1 pb-1.5 text-[0.62rem] font-bold uppercase tracking-[0.16em]" style={{ color: "rgba(255,255,255,0.42)" }}>
+                            <div key={section} className={gi > 0 ? "mt-2 pt-2" : ""} style={gi > 0 ? { borderTop: "1px solid var(--st-06)" } : undefined}>
+                              <div className="px-3 pt-1 pb-1.5 text-[0.62rem] font-bold uppercase tracking-[0.16em]" style={{ color: "var(--st-42)" }}>
                                 {section}
                               </div>
                               {items.map((s) => (
@@ -242,11 +242,11 @@ export default function Navbar() {
                             </div>
                           ));
                         })()}
-                        <div className="border-t mt-1 pt-1" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+                        <div className="border-t mt-1 pt-1" style={{ borderColor: "var(--st-06)" }}>
                           <Link href={l.href} className="flex items-center justify-between px-3 py-2 rounded-lg transition-colors text-[0.78rem] font-semibold"
-                            style={{ color: "rgba(255,255,255,0.6)" }}
-                            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.04)"; (e.currentTarget as HTMLElement).style.color = "white"; }}
-                            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)"; }}
+                            style={{ color: "var(--st-60)" }}
+                            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--st-04)"; (e.currentTarget as HTMLElement).style.color = "white"; }}
+                            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.color = "var(--st-60)"; }}
                           >
                             <span>{l.viewAllText || `Xem tất cả ${l.label.toLowerCase()}`}</span>
                             <span></span>
@@ -353,7 +353,7 @@ export default function Navbar() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.05 }}
                   className="mb-6 flex items-center justify-between p-3 rounded-2xl"
-                  style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.10)" }}
+                  style={{ background: "var(--st-04)", border: "1px solid var(--st-10)" }}
                 >
                   <Link
                     href="/account"
@@ -382,7 +382,7 @@ export default function Navbar() {
                     {l.submenu ? (
                       <div
                         className="rounded-2xl overflow-hidden"
-                        style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)" }}
+                        style={{ background: "var(--st-03)", border: "1px solid var(--st-08)" }}
                       >
                         <Link
                           href={l.href}
@@ -393,11 +393,11 @@ export default function Navbar() {
                             <Icon name={(l.submenuIcon || "tool") as IconName} size={16} />
                           </span>
                           <span className="text-[1rem] font-bold text-white">{l.label}</span>
-                          <span className="ml-auto text-[0.7rem] uppercase tracking-[0.14em] font-semibold" style={{ color: "rgba(255,255,255,0.45)" }}>
+                          <span className="ml-auto text-[0.7rem] uppercase tracking-[0.14em] font-semibold" style={{ color: "var(--st-45)" }}>
                             {l.submenu.length} mục
                           </span>
                         </Link>
-                        <div className="px-2 pb-2 flex flex-col gap-1" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+                        <div className="px-2 pb-2 flex flex-col gap-1" style={{ borderTop: "1px solid var(--st-05)" }}>
                           {(() => {
                             const hasSections = l.submenu!.some((s) => s.section);
                             const items = l.submenu!;
@@ -413,8 +413,8 @@ export default function Navbar() {
                               groups.get(key)!.push(s);
                             }
                             return Array.from(groups.entries()).map(([section, gi], idx) => (
-                              <div key={section} className={idx > 0 ? "mt-2 pt-2" : ""} style={idx > 0 ? { borderTop: "1px solid rgba(255,255,255,0.05)" } : undefined}>
-                                <div className="px-3 pt-1 pb-1 text-[0.62rem] font-bold uppercase tracking-[0.16em]" style={{ color: "rgba(255,255,255,0.42)" }}>
+                              <div key={section} className={idx > 0 ? "mt-2 pt-2" : ""} style={idx > 0 ? { borderTop: "1px solid var(--st-05)" } : undefined}>
+                                <div className="px-3 pt-1 pb-1 text-[0.62rem] font-bold uppercase tracking-[0.16em]" style={{ color: "var(--st-42)" }}>
                                   {section}
                                 </div>
                                 {gi.map((s) => (
@@ -430,10 +430,10 @@ export default function Navbar() {
                         href={l.href}
                         onClick={() => setMobileOpen(false)}
                         className="flex items-center justify-between px-4 py-3.5 rounded-2xl"
-                        style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)" }}
+                        style={{ background: "var(--st-03)", border: "1px solid var(--st-08)" }}
                       >
                         <span className="text-[1rem] font-bold text-white">{l.label}</span>
-                        <Icon name="arrow-right" size={14} color="rgba(255,255,255,0.4)" />
+                        <Icon name="arrow-right" size={14} color="var(--st-40)" />
                       </Link>
                     )}
                   </motion.li>
@@ -463,7 +463,7 @@ function SubmenuItem({ s, icon }: { s: Submenu; icon: IconName }) {
           <span className="text-[0.88rem] font-semibold text-white">{s.label}</span>
           {s.badge && <span className="text-[0.6rem] font-bold uppercase tracking-[0.14em] px-1.5 py-0.5 rounded-md whitespace-nowrap flex-shrink-0" style={{ background: "rgba(0,215,34,0.15)", color: "#5fffaa", border: "1px solid rgba(0,215,34,0.3)" }}>{s.badge}</span>}
         </div>
-        {s.desc && <div className="text-[0.75rem] mt-0.5 leading-snug" style={{ color: "rgba(255,255,255,0.55)" }}>{s.desc}</div>}
+        {s.desc && <div className="text-[0.75rem] mt-0.5 leading-snug" style={{ color: "var(--st-55)" }}>{s.desc}</div>}
       </div>
     </Link>
   );
@@ -486,12 +486,12 @@ function MobileSubmenuItem({ s, onClose }: { s: Submenu; onClose: () => void }) 
           )}
         </div>
         {s.desc && (
-          <div className="text-[0.72rem] mt-0.5 leading-snug truncate" style={{ color: "rgba(255,255,255,0.5)" }}>
+          <div className="text-[0.72rem] mt-0.5 leading-snug truncate" style={{ color: "var(--st-50)" }}>
             {s.desc}
           </div>
         )}
       </div>
-      <Icon name="arrow-right" size={14} color="rgba(255,255,255,0.4)" />
+      <Icon name="arrow-right" size={14} color="var(--st-40)" />
     </Link>
   );
 }

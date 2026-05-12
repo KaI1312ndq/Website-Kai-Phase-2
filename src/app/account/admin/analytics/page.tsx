@@ -105,7 +105,7 @@ export default async function AdminAnalyticsPage({ searchParams }: { searchParam
                 href={`/account/admin/analytics?range=${key}`}
                 className="px-3 py-1.5 rounded-md text-[0.8rem] font-semibold"
                 style={{
-                  background: active ? "var(--grad-primary)" : "rgba(255,255,255,0.06)",
+                  background: active ? "var(--grad-primary)" : "var(--st-06)",
                   color: active ? "white" : "var(--ink-mute)",
                 }}
               >
@@ -128,7 +128,7 @@ export default async function AdminAnalyticsPage({ searchParams }: { searchParam
         <h2 className="text-[0.74rem] uppercase tracking-[0.16em] font-semibold mb-3" style={{ color: "var(--ink-mute)" }}>
           Pageviews theo ngày ({a.rangeLabel})
         </h2>
-        <div className="rounded-xl border p-5" style={{ background: "rgba(8,16,43,0.55)", borderColor: "rgba(255,255,255,0.08)" }}>
+        <div className="rounded-xl border p-5" style={{ background: "var(--db-55)", borderColor: "var(--st-08)" }}>
           {a.dailyList.length === 0 ? (
             <div className="py-8 text-center text-[0.9rem]" style={{ color: "var(--ink-mute)" }}>Chưa có data.</div>
           ) : (
@@ -159,7 +159,7 @@ export default async function AdminAnalyticsPage({ searchParams }: { searchParam
       </section>
 
       {/* ─── GA4 SECTION ─── */}
-      <section className="pt-6 border-t" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+      <section className="pt-6 border-t" style={{ borderColor: "var(--st-08)" }}>
         <div className="flex items-center justify-between mb-4 gap-3 flex-wrap">
           <div>
             <h2 className="text-[1.15rem] font-bold text-white">Google Analytics 4</h2>
@@ -181,7 +181,7 @@ export default async function AdminAnalyticsPage({ searchParams }: { searchParam
               <Metric label="Pages / session" value={ga4.sessions > 0 ? (ga4.pageviews / ga4.sessions).toFixed(1) : "0"} sub="Sâu vào site" />
             </div>
 
-            <div className="rounded-xl border p-5 mb-5" style={{ background: "rgba(8,16,43,0.55)", borderColor: "rgba(255,255,255,0.08)" }}>
+            <div className="rounded-xl border p-5 mb-5" style={{ background: "var(--db-55)", borderColor: "var(--st-08)" }}>
               <div className="text-[0.78rem] uppercase tracking-wider font-semibold mb-3" style={{ color: "var(--ink-mute)" }}>Daily (GA4)</div>
               {ga4.daily.length === 0 ? (
                 <div className="py-6 text-center text-[0.85rem]" style={{ color: "var(--ink-mute)" }}>Chưa có data GA4.</div>
@@ -212,7 +212,7 @@ export default async function AdminAnalyticsPage({ searchParams }: { searchParam
         )}
 
         {!ga4.enabled && (
-          <div className="rounded-xl border p-5 text-[0.85rem] space-y-2.5" style={{ background: "rgba(8,16,43,0.5)", borderColor: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.85)" }}>
+          <div className="rounded-xl border p-5 text-[0.85rem] space-y-2.5" style={{ background: "var(--db-50)", borderColor: "var(--st-08)", color: "var(--st-85)" }}>
             <div className="font-semibold text-white">Setup GA4 Data API (1 lần, ~10 phút)</div>
             <ol className="list-decimal list-inside space-y-1.5" style={{ color: "var(--ink-mute)" }}>
               <li>Vào <a href="https://console.cloud.google.com/" target="_blank" rel="noopener" className="underline" style={{ color: "#7da9ff" }}>Google Cloud Console</a> -&gt; tạo project mới hoặc dùng project có sẵn</li>
@@ -262,7 +262,7 @@ export default async function AdminAnalyticsPage({ searchParams }: { searchParam
 
 function Metric({ label, value, sub }: { label: string; value: string; sub: string }) {
   return (
-    <div className="p-5 rounded-xl border" style={{ background: "linear-gradient(180deg, rgba(20,40,90,0.5), rgba(8,16,43,0.85))", borderColor: "rgba(255,255,255,0.10)" }}>
+    <div className="p-5 rounded-xl border" style={{ background: "linear-gradient(180deg, var(--dg-50), var(--db-85))", borderColor: "var(--st-10)" }}>
       <div className="text-[0.78rem] font-medium mb-2" style={{ color: "var(--ink-mute)" }}>{label}</div>
       <div className="text-[1.8rem] font-bold text-white leading-tight">{value}</div>
       <div className="text-[0.75rem] mt-1.5" style={{ color: "var(--ink-mute)" }}>{sub}</div>
@@ -274,8 +274,8 @@ function ListCard({ title, rows: inputRows, formatLabel }: { title: string; rows
   const rows: Array<[string, number]> = (inputRows as Array<[string, number | string]>).map(([k, v]) => [k, Number(v) || 0]);
   const total = rows.reduce((s, [, n]) => s + n, 0) || 1;
   return (
-    <div className="rounded-xl border" style={{ background: "rgba(8,16,43,0.55)", borderColor: "rgba(255,255,255,0.08)" }}>
-      <div className="px-5 py-3.5 border-b" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+    <div className="rounded-xl border" style={{ background: "var(--db-55)", borderColor: "var(--st-08)" }}>
+      <div className="px-5 py-3.5 border-b" style={{ borderColor: "var(--st-06)" }}>
         <h3 className="font-bold text-white text-[0.98rem]">{title}</h3>
       </div>
       {rows.length === 0 ? (
@@ -285,7 +285,7 @@ function ListCard({ title, rows: inputRows, formatLabel }: { title: string; rows
           {rows.map(([label, count], i) => {
             const pct = (count / total) * 100;
             return (
-              <li key={i} className="px-5 py-2 border-b last:border-b-0 relative" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
+              <li key={i} className="px-5 py-2 border-b last:border-b-0 relative" style={{ borderColor: "var(--st-04)" }}>
                 <div className="absolute inset-0 left-0" style={{ width: `${pct}%`, background: "rgba(122,169,255,0.06)" }} />
                 <div className="relative flex items-center justify-between gap-3 text-[0.82rem]">
                   <span className="text-white truncate" style={{ maxWidth: "70%" }}>{formatLabel ? formatLabel(label) : label}</span>
@@ -303,7 +303,7 @@ function ListCard({ title, rows: inputRows, formatLabel }: { title: string; rows
 function ExtLink({ title, desc, href }: { title: string; desc: string; href: string }) {
   return (
     <a href={href} target="_blank" rel="noopener" className="block p-4 rounded-xl border transition hover:bg-white/5"
-      style={{ background: "rgba(8,16,43,0.55)", borderColor: "rgba(255,255,255,0.08)" }}>
+      style={{ background: "var(--db-55)", borderColor: "var(--st-08)" }}>
       <div className="text-[0.95rem] font-bold text-white mb-1">{title} <span className="text-[0.72rem] opacity-50">↗</span></div>
       <div className="text-[0.78rem]" style={{ color: "var(--ink-mute)" }}>{desc}</div>
     </a>

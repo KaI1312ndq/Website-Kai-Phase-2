@@ -12,11 +12,11 @@ export default function Footer() {
           <Link href="/" className="inline-flex items-center gap-2.5 text-[1.3rem] font-bold tracking-tight text-white">
             <span className="relative w-9 h-9 rounded-[10px] flex items-center justify-center text-white font-bold text-[1rem] overflow-hidden" style={{ background: "var(--grad-primary)", boxShadow: "0 4px 14px rgba(20,110,245,0.45)" }}>
               <span className="relative z-10">K</span>
-              <span className="absolute inset-0" style={{ background: "radial-gradient(circle at 30% 20%, rgba(255,255,255,0.4), transparent 60%)" }} />
+              <span className="absolute inset-0" style={{ background: "radial-gradient(circle at 30% 20%, var(--st-40), transparent 60%)" }} />
             </span>
             Kai<span className="grad-text">.</span>
           </Link>
-          <p className="text-[0.92rem] leading-[1.7] max-w-[380px] mt-5" style={{ color: "rgba(255,255,255,0.55)" }}>
+          <p className="text-[0.92rem] leading-[1.7] max-w-[380px] mt-5" style={{ color: "var(--st-55)" }}>
             Ecom Growth Expert & Team Builder. Giúp thương hiệu tăng trưởng bền vững trên TMĐT - TikTok Shop, Shopee, Meta, Google.
           </p>
           <div className="flex gap-2 mt-6">
@@ -27,7 +27,7 @@ export default function Footer() {
             ].map((s) => (
               <a key={s.label} href={s.href} target="_blank" rel="noreferrer" aria-label={s.label}
                 className="w-10 h-10 rounded-wf flex items-center justify-center transition-all hover:bg-white/15 hover:-translate-y-0.5"
-                style={{ background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.7)" }}>
+                style={{ background: "var(--st-06)", color: "var(--st-70)" }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">{s.svg}</svg>
               </a>
             ))}
@@ -36,7 +36,7 @@ export default function Footer() {
 
         {/* Columns */}
         <div className="col-span-1 md:col-span-2 md:col-start-5">
-          <h4 className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] mb-4" style={{ color: "rgba(255,255,255,0.45)" }}>Khám phá</h4>
+          <h4 className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] mb-4" style={{ color: "var(--st-45)" }}>Khám phá</h4>
           <ul className="flex flex-col gap-2.5">
             {[
               { label: "Về tôi", href: "/#about" },
@@ -46,7 +46,7 @@ export default function Footer() {
               { label: "Blog", href: "/blog" },
             ].map((l) => (
               <li key={l.href}>
-                <Link href={l.href} className="text-[0.88rem] transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.55)" }}>
+                <Link href={l.href} className="text-[0.88rem] transition-colors hover:text-white" style={{ color: "var(--st-55)" }}>
                   {l.label}
                 </Link>
               </li>
@@ -55,7 +55,7 @@ export default function Footer() {
         </div>
 
         <div className="col-span-1 md:col-span-2">
-          <h4 className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] mb-4" style={{ color: "rgba(255,255,255,0.45)" }}>Dịch vụ</h4>
+          <h4 className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] mb-4" style={{ color: "var(--st-45)" }}>Dịch vụ</h4>
           <ul className="flex flex-col gap-2.5">
             {[
               { label: "Ecom Consulting", href: "/#contact" },
@@ -65,7 +65,7 @@ export default function Footer() {
               { label: "Ecom Foundation", href: "/ecom-foundation" },
             ].map((l) => (
               <li key={l.label}>
-                <Link href={l.href} className="text-[0.88rem] transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.55)" }}>
+                <Link href={l.href} className="text-[0.88rem] transition-colors hover:text-white" style={{ color: "var(--st-55)" }}>
                   {l.label}
                 </Link>
               </li>
@@ -74,16 +74,16 @@ export default function Footer() {
         </div>
 
         <div className="col-span-1 md:col-span-2">
-          <h4 className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] mb-4" style={{ color: "rgba(255,255,255,0.45)" }}>Tools</h4>
+          <h4 className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] mb-4" style={{ color: "var(--st-45)" }}>Tools</h4>
           <ul className="flex flex-col gap-2.5">
             <li>
-              <Link href="/tools/tinh-phi-san" className="text-[0.88rem] transition-colors hover:text-white inline-flex items-center gap-2" style={{ color: "rgba(255,255,255,0.55)" }}>
+              <Link href="/tools/tinh-phi-san" className="text-[0.88rem] transition-colors hover:text-white inline-flex items-center gap-2" style={{ color: "var(--st-55)" }}>
                 Tính phí sàn TikTok & Shopee
                 <span className="text-[0.6rem] font-bold uppercase tracking-[0.14em] px-1.5 py-0.5 rounded" style={{ background: "rgba(0,215,34,0.15)", color: "#5fffaa", border: "1px solid rgba(0,215,34,0.3)" }}>Mới</span>
               </Link>
             </li>
             <li>
-              <Link href="/tools" className="text-[0.88rem] transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.55)" }}>
+              <Link href="/tools" className="text-[0.88rem] transition-colors hover:text-white" style={{ color: "var(--st-55)" }}>
                 Tất cả tools
               </Link>
             </li>
@@ -91,11 +91,11 @@ export default function Footer() {
         </div>
 
         <div className="col-span-2 md:col-span-3">
-          <h4 className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] mb-4" style={{ color: "rgba(255,255,255,0.45)" }}>Liên hệ</h4>
+          <h4 className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] mb-4" style={{ color: "var(--st-45)" }}>Liên hệ</h4>
           <ul className="flex flex-col gap-2.5">
-            <li><a href="mailto:qforwork13@gmail.com" className="text-[0.88rem] transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.55)" }}>qforwork13@gmail.com</a></li>
-            <li><a href="https://zalo.me/0868464658" className="text-[0.88rem] transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.55)" }}>Zalo: 0868 464 658</a></li>
-            <li className="inline-flex items-center gap-1.5 text-[0.78rem] mt-2" style={{ color: "rgba(255,255,255,0.35)" }}>
+            <li><a href="mailto:qforwork13@gmail.com" className="text-[0.88rem] transition-colors hover:text-white" style={{ color: "var(--st-55)" }}>qforwork13@gmail.com</a></li>
+            <li><a href="https://zalo.me/0868464658" className="text-[0.88rem] transition-colors hover:text-white" style={{ color: "var(--st-55)" }}>Zalo: 0868 464 658</a></li>
+            <li className="inline-flex items-center gap-1.5 text-[0.78rem] mt-2" style={{ color: "var(--st-35)" }}>
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
                 <circle cx="12" cy="10" r="3" />
@@ -106,12 +106,12 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+      <div className="border-t" style={{ borderColor: "var(--st-08)" }}>
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-5 flex flex-col md:flex-row justify-between items-center gap-3">
-          <p className="text-[0.78rem]" style={{ color: "rgba(255,255,255,0.35)" }}>© 2026 Nguyễn Đức Quảng. All rights reserved.</p>
+          <p className="text-[0.78rem]" style={{ color: "var(--st-35)" }}>© 2026 Nguyễn Đức Quảng. All rights reserved.</p>
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "var(--wf-blue)" }} />
-            <span className="text-[0.78rem]" style={{ color: "rgba(255,255,255,0.45)" }}>Sẵn sàng nhận dự án & mentoring</span>
+            <span className="text-[0.78rem]" style={{ color: "var(--st-45)" }}>Sẵn sàng nhận dự án & mentoring</span>
           </div>
         </div>
       </div>

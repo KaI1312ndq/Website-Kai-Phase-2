@@ -76,7 +76,7 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
       </header>
 
       {/* Filter bar */}
-      <form method="get" action="/account/admin/orders" className="rounded-xl border p-4 space-y-3" style={{ background: "rgba(8,16,43,0.55)", borderColor: "rgba(255,255,255,0.08)" }}>
+      <form method="get" action="/account/admin/orders" className="rounded-xl border p-4 space-y-3" style={{ background: "var(--db-55)", borderColor: "var(--st-08)" }}>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
           <Field label="Tìm kiếm">
             <input name="q" defaultValue={sp.q || ""} placeholder="Mã đơn / email / tên..." className="input-dark" />
@@ -99,16 +99,16 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
           <button className="px-4 py-2 rounded-md text-[0.85rem] font-semibold text-white" style={{ background: "var(--grad-primary)" }}>
             Áp dụng
           </button>
-          <Link href="/account/admin/orders" className="px-4 py-2 rounded-md text-[0.85rem] font-medium text-white/80 border" style={{ borderColor: "rgba(255,255,255,0.15)" }}>
+          <Link href="/account/admin/orders" className="px-4 py-2 rounded-md text-[0.85rem] font-medium text-white/80 border" style={{ borderColor: "var(--st-15)" }}>
             Reset
           </Link>
         </div>
       </form>
 
       {/* Table */}
-      <div className="rounded-xl border overflow-x-auto" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+      <div className="rounded-xl border overflow-x-auto" style={{ borderColor: "var(--st-08)" }}>
         <table className="w-full text-[0.85rem]">
-          <thead style={{ background: "rgba(255,255,255,0.04)" }}>
+          <thead style={{ background: "var(--st-04)" }}>
             <tr>
               <Th>Mã đơn</Th>
               <Th>Khách hàng</Th>
@@ -121,7 +121,7 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
           </thead>
           <tbody>
             {rows.map((o) => (
-              <tr key={o.id as string} className="border-t hover:bg-white/[0.02]" style={{ borderColor: "rgba(255,255,255,0.05)" }}>
+              <tr key={o.id as string} className="border-t hover:bg-white/[0.02]" style={{ borderColor: "var(--st-05)" }}>
                 <Td>
                   <Link href={`/shop/order/${o.order_number}`} target="_blank" className="font-mono text-[0.78rem]" style={{ color: "#7da9ff" }}>
                     {String(o.order_number)}
@@ -164,7 +164,7 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
             return (
               <Link key={p} href={`/account/admin/orders?${params.toString()}`}
                 className="w-9 h-9 inline-flex items-center justify-center rounded text-[0.85rem] font-semibold"
-                style={{ background: active ? "var(--grad-primary)" : "rgba(255,255,255,0.06)", color: active ? "white" : "var(--ink-mute)" }}>
+                style={{ background: active ? "var(--grad-primary)" : "var(--st-06)", color: active ? "white" : "var(--ink-mute)" }}>
                 {p}
               </Link>
             );
