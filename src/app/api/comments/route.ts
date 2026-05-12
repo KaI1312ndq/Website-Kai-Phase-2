@@ -1,17 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@sanity/client";
+import { getSupabaseAdmin } from "@/lib/supabase/admin";
+import { auth } from "@clerk/nextjs/server";
 
 /**
  * Submit comment on a blog post.
  *   POST /api/comments
  *   { postId: string, authorName: string, authorEmail?: string, content: string, parentId?: string }
  *
- * Comment is created with approved=false - Quảng review trong Sanity Studio rồi mới hiện.
- *
- * Anti-abuse:
- *   - Min 1 char, max 3000 chars content
- *   - Min 1 char, max 80 chars name
- *   - Simple rate-limit by IP (in-memory, naive - for serious anti-spam dùng upstash)
+ * Auto-approve - moderate sau qua Supabase Studio nếu cần.
  */
 
 const RATE_LIMIT = new Map<string, { count: number; resetAt: number }>();
@@ -50,37 +46,31 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Nội dung không hợp lệ" }, { status: 400 });
     }
 
-    const token = process.env.SANITY_API_WRITE_TOKEN;
-    const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
-    if (!token || !projectId || projectId === "placeholder") {
-      return NextResponse.json({ error: "Cấu hình Sanity chưa sẵn sàng" }, { status: 500 });
+    let userId: string | null = null;
+    try {
+      const { userId: uid } = await auth();
+      userId = uid;
+    } catch {}
+
+    const sb = getSupabaseAdmin();
+    const { error } = await sb.from("comments").insert({
+      post_sanity_id: postId,
+      user_id: userId,
+      guest_name: userId ? null : authorName.trim(),
+      guest_email:
+        !userId && typeof authorEmail === "string" && authorEmail.includes("@")
+          ? authorEmail.trim()
+          : null,
+      parent_id: typeof parentId === "string" && parentId ? parentId : null,
+      body: content.trim(),
+      approved: true,
+    });
+
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    const sanity = createClient({
-      projectId,
-      dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
-      apiVersion: "2024-01-01",
-      token,
-      useCdn: false,
-    });
-
-    const doc: any = {
-      _type: "comment",
-      post: { _type: "reference", _ref: postId },
-      authorName: authorName.trim(),
-      content: content.trim(),
-      approved: true, // auto-approve - Quảng moderate sau (xoá nếu cần) trong Sanity
-      createdAt: new Date().toISOString(),
-    };
-    if (typeof authorEmail === "string" && authorEmail.includes("@")) doc.authorEmail = authorEmail.trim();
-    if (typeof parentId === "string" && parentId) doc.parent = { _type: "reference", _ref: parentId };
-
-    await sanity.create(doc);
-
-    return NextResponse.json({
-      ok: true,
-      message: "Cảm ơn bạn đã bình luận! Bình luận sẽ hiện sau khi được duyệt.",
-    });
+    return NextResponse.json({ ok: true, message: "Cảm ơn bạn đã bình luận!" });
   } catch (e) {
     return NextResponse.json({ error: e instanceof Error ? e.message : "Lỗi không xác định" }, { status: 500 });
   }

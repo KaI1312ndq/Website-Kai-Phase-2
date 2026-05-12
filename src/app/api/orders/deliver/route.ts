@@ -1,27 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@sanity/client";
 import { sendDeliveryEmail } from "@/lib/email/send-delivery";
+import { getSupabaseAdmin } from "@/lib/supabase/admin";
 
 /**
  * Confirm payment + send file delivery email.
- * Quảng tick "đã thanh toán" trong Sanity Studio -> API này trigger gửi email.
+ * Quảng trigger qua /account/admin hoặc curl với ?secret.
  *
  * POST /api/orders/deliver?secret=<SEED_SECRET>
- *   body: { orderId: string }
- *
- * Effect:
- *   1. Fetch order from Sanity
- *   2. Generate downloadExpiresAt = now + 30 days
- *   3. Send email via Resend with download link
- *   4. Update Sanity: paymentStatus=paid, deliveryStatus=delivered, paidAt, deliveredAt
+ *   body: { orderId: string }  (Supabase uuid của orders.id)
  */
 
-/**
- * Auth: accept either
- *   1. ?secret=<SEED_SECRET> (for cURL / external admin)
- *   2. Origin or Referer matches NEXT_PUBLIC_SITE_URL (for Sanity Studio actions)
- *      - Studio is protected by Sanity login so this is acceptable.
- */
 function checkAuth(req: NextRequest): boolean {
   const url = new URL(req.url);
   const secret = url.searchParams.get("secret");
@@ -32,7 +20,6 @@ function checkAuth(req: NextRequest): boolean {
   const referer = req.headers.get("referer") || "";
   if (origin === siteUrl) return true;
   if (referer.startsWith(siteUrl)) return true;
-
   return false;
 }
 
@@ -48,72 +35,58 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing orderId" }, { status: 400 });
     }
 
-    const token = process.env.SANITY_API_WRITE_TOKEN;
-    const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
-    if (!token || !projectId) {
-      return NextResponse.json({ error: "Sanity not configured" }, { status: 500 });
-    }
-
-    const sanity = createClient({
-      projectId,
-      dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
-      apiVersion: "2024-01-01",
-      token,
-      useCdn: false,
-    });
-
-    // Fetch order
-    const order = await sanity.fetch(
-      `*[_type == "order" && _id == $id][0] {
-        _id, orderNumber, customer, items, total, downloadToken,
-        paymentStatus, deliveryStatus
-      }`,
-      { id: orderId }
-    );
-
-    if (!order) {
+    const sb = getSupabaseAdmin();
+    const { data: order, error: fetchErr } = await sb
+      .from("orders")
+      .select("*")
+      .eq("id", orderId)
+      .maybeSingle();
+    if (fetchErr || !order) {
       return NextResponse.json({ error: "Order not found" }, { status: 404 });
     }
 
-    if (order.deliveryStatus === "delivered") {
+    if (order.delivery_status === "delivered") {
       return NextResponse.json({ ok: true, alreadyDelivered: true, message: "Already delivered" });
     }
 
-    // Calculate expiry - 30 days from now
+    const { data: items } = await sb
+      .from("order_items")
+      .select("title_snapshot")
+      .eq("order_id", orderId);
+
     const now = new Date();
     const expiresAt = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
 
-    // Send email
     const emailResult = await sendDeliveryEmail({
-      to: order.customer.email,
-      customerName: order.customer.name,
-      orderNumber: order.orderNumber,
-      total: order.total,
-      items: order.items.map((it: any) => ({ title: it.title })),
-      downloadToken: order.downloadToken,
+      to: String(order.customer_email),
+      customerName: String(order.customer_name),
+      orderNumber: String(order.order_number),
+      total: Number(order.total),
+      items: (items || []).map((it) => ({ title: String(it.title_snapshot) })),
+      downloadToken: String(order.download_token),
       expiresAt: expiresAt.toISOString(),
     });
 
-    // Update Sanity
-    const patches: any = {
-      deliveryStatus: emailResult.ok ? "delivered" : "failed",
-      downloadExpiresAt: expiresAt.toISOString(),
+    const patches: Record<string, unknown> = {
+      delivery_status: emailResult.ok ? "delivered" : "failed",
+      download_expires_at: expiresAt.toISOString(),
     };
     if (emailResult.ok) {
-      patches.deliveredAt = now.toISOString();
-      if (emailResult.emailId) patches.resendEmailId = emailResult.emailId;
+      patches.delivered_at = now.toISOString();
+      if (emailResult.emailId) patches.resend_email_id = emailResult.emailId;
     }
-    if (order.paymentStatus !== "paid") {
-      patches.paymentStatus = "paid";
-      patches.paidAt = now.toISOString();
+    if (order.payment_status !== "paid") {
+      patches.payment_status = "paid";
+      patches.status = "paid";
+      patches.paid_at = now.toISOString();
     }
 
-    await sanity.patch(orderId).set(patches).commit();
+    await sb.from("orders").update(patches).eq("id", orderId);
 
     return NextResponse.json({
       ok: emailResult.ok,
-      orderNumber: order.orderNumber,
-      email: order.customer.email,
+      orderNumber: order.order_number,
+      email: order.customer_email,
       error: emailResult.error,
     });
   } catch (e) {

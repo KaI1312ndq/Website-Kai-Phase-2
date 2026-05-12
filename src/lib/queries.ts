@@ -139,15 +139,71 @@ export async function getAllProductSlugs() {
   return client.fetch(`*[_type == "product" && active == true].slug.current`);
 }
 
+// ── Orders (Supabase) ──
+export type OrderShape = {
+  _id: string;
+  orderNumber: string;
+  customer: { name: string; email: string; phone: string };
+  items: Array<{ _key: string; product: { _ref: string }; title: string; price: number }>;
+  subtotal: number;
+  discount: number;
+  total: number;
+  voucherCode: string | null;
+  voucherDiscount: number;
+  paymentStatus: string;
+  deliveryStatus: string;
+  downloadToken: string | null;
+  downloadExpiresAt: string | null;
+  createdAt: string;
+  paidAt: string | null;
+  deliveredAt: string | null;
+};
+
+function rowToOrder(o: Record<string, unknown>, items: Array<Record<string, unknown>> = []): OrderShape | null {
+  if (!o) return null;
+  return {
+    _id: String(o.id),
+    orderNumber: String(o.order_number),
+    customer: {
+      name: String(o.customer_name || ""),
+      email: String(o.customer_email || ""),
+      phone: String(o.customer_phone || ""),
+    },
+    items: items.map((it) => ({
+      _key: String(it.id),
+      product: { _ref: String(it.product_sanity_id) },
+      title: String(it.title_snapshot),
+      price: Number(it.price_snapshot),
+    })),
+    subtotal: Number(o.subtotal || 0),
+    discount: Number(o.discount || 0),
+    total: Number(o.total || 0),
+    voucherCode: o.voucher_code ? String(o.voucher_code) : null,
+    voucherDiscount: Number(o.voucher_discount || 0),
+    paymentStatus: String(o.payment_status || "unpaid"),
+    deliveryStatus: String(o.delivery_status || "pending"),
+    downloadToken: o.download_token ? String(o.download_token) : null,
+    downloadExpiresAt: o.download_expires_at ? String(o.download_expires_at) : null,
+    createdAt: String(o.created_at),
+    paidAt: o.paid_at ? String(o.paid_at) : null,
+    deliveredAt: o.delivered_at ? String(o.delivered_at) : null,
+  };
+}
+
 export async function getOrderByNumber(orderNumber: string) {
-  return client.fetch(`
-    *[_type == "order" && orderNumber == $orderNumber][0] {
-      _id, orderNumber, customer, items, subtotal, discount, total,
-      voucherCode, voucherDiscount,
-      paymentStatus, deliveryStatus, downloadToken, downloadExpiresAt,
-      createdAt, paidAt, deliveredAt
-    }
-  `, { orderNumber });
+  const { getSupabaseAdmin } = await import("@/lib/supabase/admin");
+  const sb = getSupabaseAdmin();
+  const { data: order } = await sb
+    .from("orders")
+    .select("*")
+    .eq("order_number", orderNumber)
+    .maybeSingle();
+  if (!order) return null;
+  const { data: items } = await sb
+    .from("order_items")
+    .select("id, product_sanity_id, title_snapshot, price_snapshot, qty")
+    .eq("order_id", order.id as string);
+  return rowToOrder(order, items || []);
 }
 
 // ── Vouchers ──
@@ -173,42 +229,102 @@ export async function getPublicVouchers() {
 }
 
 export async function getOrdersForUser({ clerkUserId, email }: { clerkUserId?: string | null; email?: string | null }) {
-  // Match by Clerk userId (preferred - set on orders placed while signed in)
-  // OR by lowercased email (catches orders placed as guest before signing in)
-  return client.fetch(`
-    *[_type == "order" && (
-      ($cuid != null && clerkUserId == $cuid) ||
-      ($em != null && customer.email == $em)
-    )] | order(createdAt desc) {
-      _id, orderNumber, customer, items, subtotal, discount, total,
-      paymentStatus, deliveryStatus, downloadToken, downloadExpiresAt,
-      createdAt, paidAt, deliveredAt
-    }
-  `, { cuid: clerkUserId || null, em: email ? email.toLowerCase() : null });
+  const { getSupabaseAdmin } = await import("@/lib/supabase/admin");
+  const sb = getSupabaseAdmin();
+  // Match by Clerk userId hoặc lowercased email (catch guest orders)
+  let query = sb.from("orders").select("*").order("created_at", { ascending: false });
+  if (clerkUserId && email) {
+    query = query.or(`user_id.eq.${clerkUserId},customer_email.eq.${email.toLowerCase()}`);
+  } else if (clerkUserId) {
+    query = query.eq("user_id", clerkUserId);
+  } else if (email) {
+    query = query.eq("customer_email", email.toLowerCase());
+  } else {
+    return [];
+  }
+  const { data: orders } = await query;
+  if (!orders || orders.length === 0) return [];
+
+  const orderIds = orders.map((o) => o.id as string);
+  const { data: items } = await sb
+    .from("order_items")
+    .select("id, order_id, product_sanity_id, title_snapshot, price_snapshot, qty")
+    .in("order_id", orderIds);
+
+  return orders.map((o) =>
+    rowToOrder(
+      o,
+      (items || []).filter((it) => it.order_id === o.id),
+    ),
+  );
 }
 
 export async function getOrderByDownloadToken(downloadToken: string) {
-  return client.fetch(`
-    *[_type == "order" && downloadToken == $downloadToken][0] {
-      _id, orderNumber, customer, items, paymentStatus, deliveryStatus,
-      downloadExpiresAt,
-      "files": items[]{
-        title,
-        "masterFileUrl": product->masterFile.asset->url,
-        "masterFileName": product->masterFile.asset->originalFilename
-      }
-    }
-  `, { downloadToken });
+  const { getSupabaseAdmin } = await import("@/lib/supabase/admin");
+  const sb = getSupabaseAdmin();
+  const { data: order } = await sb
+    .from("orders")
+    .select("*")
+    .eq("download_token", downloadToken)
+    .maybeSingle();
+  if (!order) return null;
+
+  const { data: items } = await sb
+    .from("order_items")
+    .select("product_sanity_id, title_snapshot")
+    .eq("order_id", order.id as string);
+
+  // Fetch master file URLs từ Sanity (products still ở Sanity)
+  const productIds = (items || []).map((it) => it.product_sanity_id);
+  let files: Array<{ title: string; masterFileUrl?: string; masterFileName?: string }> = [];
+  if (productIds.length > 0) {
+    const products = (await client.fetch(
+      `*[_type == "product" && _id in $ids] {
+        _id,
+        "masterFileUrl": masterFile.asset->url,
+        "masterFileName": masterFile.asset->originalFilename
+      }`,
+      { ids: productIds },
+    )) as Array<{ _id: string; masterFileUrl?: string; masterFileName?: string }>;
+    files = (items || []).map((it) => {
+      const p = products.find((pp) => pp._id === it.product_sanity_id);
+      return {
+        title: String(it.title_snapshot),
+        masterFileUrl: p?.masterFileUrl,
+        masterFileName: p?.masterFileName,
+      };
+    });
+  }
+
+  return {
+    _id: order.id,
+    orderNumber: order.order_number,
+    customer: { name: order.customer_name, email: order.customer_email, phone: order.customer_phone },
+    items: (items || []).map((it) => ({ title: it.title_snapshot })),
+    paymentStatus: order.payment_status,
+    deliveryStatus: order.delivery_status,
+    downloadExpiresAt: order.download_expires_at,
+    files,
+  };
 }
 
-// ── Comments ──
+// ── Comments (Supabase) ──
 export async function getCommentsForPost(postId: string) {
-  return client.fetch(`
-    *[_type == "comment" && approved == true && post._ref == $postId] | order(createdAt asc) {
-      _id, authorName, content, createdAt,
-      "parentId": parent._ref
-    }
-  `, { postId });
+  const { getSupabaseAdmin } = await import("@/lib/supabase/admin");
+  const sb = getSupabaseAdmin();
+  const { data } = await sb
+    .from("comments")
+    .select("id, guest_name, user_id, body, created_at, parent_id")
+    .eq("post_sanity_id", postId)
+    .eq("approved", true)
+    .order("created_at", { ascending: true });
+  return (data || []).map((c: any) => ({
+    _id: c.id,
+    authorName: c.guest_name || "User",
+    content: c.body,
+    createdAt: c.created_at,
+    parentId: c.parent_id,
+  }));
 }
 
 export async function getMostReadPosts(limit = 5) {
