@@ -8,6 +8,7 @@ import SmoothScroll from "@/components/SmoothScroll";
 import NoiseOverlay from "@/components/NoiseOverlay";
 import Analytics from "@/components/Analytics";
 import PageviewTracker from "@/components/PageviewTracker";
+import ThemeProvider, { THEME_INIT_SCRIPT } from "@/components/theme/ThemeProvider";
 import LeadPopup from "@/components/LeadPopup";
 import PageTransition from "@/components/PageTransition";
 import { CartProvider } from "@/components/cart/CartContext";
@@ -226,8 +227,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personLd) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }} />
+
+        {/* Theme init script - chạy TRƯỚC React để set data-theme, tránh FOUC */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
       <body className="font-sans antialiased">
+        <ThemeProvider>
         <ClerkProvider appearance={clerkAppearance}>
           <NextTopLoader
             color="#7da9ff"
@@ -248,6 +253,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Analytics />
           <PageviewTracker />
         </ClerkProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
