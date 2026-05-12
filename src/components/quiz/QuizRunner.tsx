@@ -355,7 +355,7 @@ function IntroScreen({ config, onStart, onResume }: { config: QuizConfig; onStar
         </div>
       )}
 
-      <div className="rounded-2xl p-8 md:p-12 text-center" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+      <div className="rounded-2xl p-8 md:p-12 text-center" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
         <div
           className="inline-flex items-center justify-center w-20 h-20 rounded-2xl mb-5"
           style={{ background: `${config.color}18`, border: `1px solid ${config.color}55`, color: config.color }}
@@ -385,7 +385,7 @@ function IntroScreen({ config, onStart, onResume }: { config: QuizConfig; onStar
 
         {/* Benefits */}
         {benefits.length > 0 && (
-          <div className="mb-8 text-left max-w-[600px] mx-auto rounded-xl p-5" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--st-08)" }}>
+          <div className="mb-8 text-left max-w-[600px] mx-auto rounded-xl p-5" style={{ background: "var(--st-03)", border: "1px solid var(--st-08)" }}>
             <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-3 text-center" style={{ color: config.color }}>
               Bạn sẽ nhận được
             </div>
@@ -445,7 +445,7 @@ function QuestionCard({
       <div
         key={animKey}
         className="rounded-2xl p-6 md:p-10 quiz-card-enter"
-        style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}
+        style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}
       >
         <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-3" style={{ color }}>
           Câu {questionIndex + 1} / {totalQuestions}

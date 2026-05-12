@@ -77,7 +77,7 @@ export default async function OrdersPage() {
             </p>
 
             {list.length === 0 ? (
-              <div className="rounded-2xl p-10 text-center" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+              <div className="rounded-2xl p-10 text-center" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
                 <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: "var(--st-04)", border: "1px solid var(--line)" }}>
                   <Icon name="shopping-cart" size={28} color="var(--st-40)" />
                 </div>
@@ -104,7 +104,7 @@ export default async function OrdersPage() {
                     <div
                       key={o._id}
                       className="rounded-2xl p-5 md:p-6"
-                      style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}
+                      style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}
                     >
                       <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
                         <div>

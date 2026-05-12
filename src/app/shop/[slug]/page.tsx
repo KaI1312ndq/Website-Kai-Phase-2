@@ -215,7 +215,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               <h2 className="t-h2 mb-8 text-white">Bạn nhận được <span className="grad-text">cụ thể.</span></h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {product.bullets.map((b: string, i: number) => (
-                  <div key={i} className="flex items-start gap-3 p-4 rounded-xl" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+                  <div key={i} className="flex items-start gap-3 p-4 rounded-xl" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
                     <span className="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center" style={{ background: "rgba(95,255,170,0.15)", color: "#5fffaa" }}>
                       <Icon name="check" size={14} strokeWidth={3} />
                     </span>
@@ -280,7 +280,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {reviews.map((r: any) => (
-                  <div key={r._id} className="rounded-2xl p-6" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+                  <div key={r._id} className="rounded-2xl p-6" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
                     <div className="flex items-center gap-3 mb-4">
                       <div className="w-11 h-11 rounded-full flex-shrink-0 flex items-center justify-center font-bold text-white" style={{ background: "var(--grad-primary)" }}>
                         {r.reviewerAvatar ? (
@@ -325,7 +325,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               <h2 className="t-h2 mb-8 text-white">Sản phẩm <span className="grad-text">khác.</span></h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 {relatedProducts.map((p: any) => (
-                  <Link key={p._id} href={`/shop/${p.slug.current}`} className="rounded-2xl overflow-hidden flex flex-col group" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+                  <Link key={p._id} href={`/shop/${p.slug.current}`} className="rounded-2xl overflow-hidden flex flex-col group" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
                     <div className="aspect-[4/3] overflow-hidden" style={{ background: "var(--grad-primary-soft)" }}>
                       {p.coverImage ? (
                         <img src={urlFor(p.coverImage).width(600).url()} alt={p.title} className="w-full h-full object-cover transition-transform group-hover:scale-105" />
@@ -365,7 +365,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
 function TrustBadge({ icon, color, title, desc }: { icon: any; color: string; title: string; desc: string }) {
   return (
-    <div className="flex items-start gap-2.5 p-3 rounded-lg" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--line)" }}>
+    <div className="flex items-start gap-2.5 p-3 rounded-lg" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
       <span className="w-8 h-8 rounded-lg flex-shrink-0 flex items-center justify-center" style={{ background: `${color}18`, color }}>
         <Icon name={icon} size={16} />
       </span>
@@ -379,7 +379,7 @@ function TrustBadge({ icon, color, title, desc }: { icon: any; color: string; ti
 
 function USPCard({ number, title, desc }: { number: string; title: string; desc: string }) {
   return (
-    <div className="rounded-2xl p-6" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+    <div className="rounded-2xl p-6" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
       <div className="text-[1.6rem] font-extrabold grad-text leading-none mb-3">{number}</div>
       <h3 className="text-[1.05rem] font-bold text-white mb-2">{title}</h3>
       <p className="text-[0.9rem] leading-[1.6]" style={{ color: "var(--st-70)" }}>{desc}</p>

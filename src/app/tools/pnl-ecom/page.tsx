@@ -225,7 +225,7 @@ export default function PnLEcomPage() {
                 { name: "4. Marketing Profit", formula: "Contribution Margin − Ads spend", note: "Phần dư sau khi trừ ads - biểu thị hiệu quả paid marketing." },
                 { name: "5. EBITDA", formula: "Marketing Profit − Nhân sự − Kho − Marketing khác − Chi khác", note: "Lãi vận hành thật sự (chưa thuế và khấu hao). Đây là số cuối phản ánh sức khoẻ business." },
               ].map((t, i) => (
-                <div key={i} className="rounded-xl p-5 flex flex-col md:flex-row md:items-center gap-3 md:gap-6" style={{ background: t.highlight ? "rgba(95,255,170,0.06)" : "rgba(255,255,255,0.025)", border: `1px solid ${t.highlight ? "rgba(95,255,170,0.25)" : "var(--line)"}` }}>
+                <div key={i} className="rounded-xl p-5 flex flex-col md:flex-row md:items-center gap-3 md:gap-6" style={{ background: t.highlight ? "rgba(95,255,170,0.06)" : "var(--st-03)", border: `1px solid ${t.highlight ? "rgba(95,255,170,0.25)" : "var(--line)"}` }}>
                   <div className="text-[0.95rem] font-bold text-white md:w-44 flex-shrink-0">{t.name}</div>
                   <div className="font-mono text-[0.88rem] md:w-[420px] flex-shrink-0" style={{ color: t.highlight ? "#5fffaa" : "var(--st-85)" }}>= {t.formula}</div>
                   <div className="text-[0.84rem] leading-[1.6]" style={{ color: "var(--ink-mute)" }}>{t.note}</div>
@@ -281,7 +281,7 @@ export default function PnLEcomPage() {
                 <details
                   key={f.q}
                   className="group rounded-xl overflow-hidden"
-                  style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--line)" }}
+                  style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}
                 >
                   <summary className="flex items-center justify-between gap-4 px-5 py-4 cursor-pointer list-none">
                     <span className="text-[0.95rem] font-semibold text-white">{f.q}</span>

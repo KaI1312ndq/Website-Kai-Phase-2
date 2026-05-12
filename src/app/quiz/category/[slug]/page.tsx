@@ -174,7 +174,7 @@ export default async function QuizCategoryPage({ params }: { params: Promise<{ s
                       href={`/quiz/category/${c.slug}`}
                       className="group rounded-2xl p-6 transition-all hover:scale-[1.02]"
                       style={{
-                        background: `linear-gradient(135deg, ${c.color}12 0%, rgba(255,255,255,0.02) 100%)`,
+                        background: `linear-gradient(135deg, ${c.color}12 0%, var(--st-03) 100%)`,
                         border: `1px solid ${c.color}33`,
                       }}
                     >

@@ -58,7 +58,7 @@ export default function Calculator() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-6 items-start">
       {/* INPUT FORM */}
-      <aside className="rounded-2xl p-6 lg:sticky lg:top-24" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+      <aside className="rounded-2xl p-6 lg:sticky lg:top-24" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
         <div className="section-tag">Nhập thông tin</div>
         <h2 className="text-[1.15rem] font-bold text-white mb-1 mt-2">Lương Gross/tháng</h2>
         <p className="text-[0.82rem] mb-5" style={{ color: "var(--ink-mute)" }}>
@@ -116,7 +116,7 @@ export default function Calculator() {
         </div>
 
         <div className="mb-3">
-          <label className="flex items-center justify-between gap-3 cursor-pointer p-3 rounded-lg" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+          <label className="flex items-center justify-between gap-3 cursor-pointer p-3 rounded-lg" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
             <div>
               <div className="text-[0.88rem] font-semibold text-white">Đóng bảo hiểm bắt buộc</div>
               <div className="text-[0.72rem] mt-0.5" style={{ color: "var(--ink-mute)" }}>
@@ -166,7 +166,7 @@ export default function Calculator() {
       {/* RESULT */}
       <div>
         {!result ? (
-          <div className="rounded-2xl p-10 text-center" style={{ background: "rgba(255,255,255,0.025)", border: "1px dashed var(--line)" }}>
+          <div className="rounded-2xl p-10 text-center" style={{ background: "var(--st-03)", border: "1px dashed var(--line)" }}>
             <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: "rgba(20,110,245,0.10)", color: "#7da9ff" }}>
               <Icon name="trending-up" size={24} />
             </div>
@@ -195,7 +195,7 @@ function ResultView({ c, hasInsurance }: { c: ReturnType<typeof compareYears>; h
         style={{
           background: isBetter
             ? "linear-gradient(135deg, rgba(95,255,170,0.10) 0%, rgba(20,110,245,0.10) 100%)"
-            : "rgba(255,255,255,0.025)",
+            : "var(--st-03)",
           border: `1px solid ${isBetter ? "rgba(95,255,170,0.35)" : "var(--line)"}`,
         }}
       >
@@ -250,7 +250,7 @@ function YearCard({ label, data, accent, hasInsurance, subtle, highlight }: { la
     <div
       className="rounded-2xl p-5 md:p-6"
       style={{
-        background: highlight ? `${accent}08` : "rgba(255,255,255,0.025)",
+        background: highlight ? `${accent}08` : "var(--st-03)",
         border: `1px solid ${highlight ? accent + "55" : "var(--line)"}`,
         boxShadow: highlight ? `0 8px 28px ${accent}18` : "none",
         opacity: subtle ? 0.92 : 1,
@@ -279,14 +279,14 @@ function YearCard({ label, data, accent, hasInsurance, subtle, highlight }: { la
 function BracketTable({ label, data, accent, subtle }: { label: string; data: TaxBreakdown; accent: string; subtle?: boolean }) {
   if (data.brackets.length === 0) {
     return (
-      <div className="rounded-2xl p-5" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)", opacity: subtle ? 0.85 : 1 }}>
+      <div className="rounded-2xl p-5" style={{ background: "var(--st-03)", border: "1px solid var(--line)", opacity: subtle ? 0.85 : 1 }}>
         <div className="text-[0.72rem] font-bold uppercase tracking-[0.16em] mb-3" style={{ color: accent }}>{label}</div>
         <p className="text-[0.85rem]" style={{ color: "var(--ink-soft)" }}>Không phải đóng thuế ở mức lương này.</p>
       </div>
     );
   }
   return (
-    <div className="rounded-2xl p-5" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)", opacity: subtle ? 0.92 : 1 }}>
+    <div className="rounded-2xl p-5" style={{ background: "var(--st-03)", border: "1px solid var(--line)", opacity: subtle ? 0.92 : 1 }}>
       <div className="text-[0.72rem] font-bold uppercase tracking-[0.16em] mb-3" style={{ color: accent }}>{label}</div>
       <div className="flex flex-col gap-2">
         {data.brackets.map((b, i) => (

@@ -35,7 +35,7 @@ export default function CartDrawer() {
       {/* Drawer */}
       <aside
         className={`fixed top-0 right-0 bottom-0 z-[61] w-full max-w-[440px] flex flex-col transition-transform duration-300 ease-out ${drawerOpen ? "translate-x-0" : "translate-x-full"}`}
-        style={{ background: "rgba(8,16,43,0.98)", borderLeft: "1px solid var(--line)", boxShadow: "-24px 0 60px rgba(0,0,0,0.5)" }}
+        style={{ background: "var(--db-95)", borderLeft: "1px solid var(--line)", boxShadow: "-24px 0 60px rgba(0,0,0,0.5)" }}
         role="dialog"
         aria-label="Giỏ hàng"
       >
@@ -89,7 +89,7 @@ export default function CartDrawer() {
                 <li
                   key={item.id}
                   className="flex items-start gap-3 p-3 rounded-xl"
-                  style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}
+                  style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}
                 >
                   <div className="w-14 h-14 rounded-lg flex-shrink-0 overflow-hidden" style={{ background: "var(--grad-primary-soft)" }}>
                     {item.image ? (
@@ -135,7 +135,7 @@ export default function CartDrawer() {
 
         {/* Footer */}
         {items.length > 0 && pricing && (
-          <div className="px-5 py-4 flex flex-col gap-3" style={{ borderTop: "1px solid var(--line)", background: "rgba(255,255,255,0.015)" }}>
+          <div className="px-5 py-4 flex flex-col gap-3" style={{ borderTop: "1px solid var(--line)", background: "var(--st-03)" }}>
             <div className="flex items-baseline justify-between">
               <span className="text-[0.85rem]" style={{ color: "var(--ink-mute)" }}>Tổng</span>
               <div className="flex items-baseline gap-2">

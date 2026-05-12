@@ -54,7 +54,7 @@ export default function PortableTextWithIds({ value }: { value: any }) {
         const rows: Array<{ cells: string[] }> = Array.isArray(value?.rows) ? value.rows : [];
         if (rows.length === 0) return null;
         return (
-          <figure className="my-7 overflow-x-auto rounded-xl border" style={{ borderColor: "var(--line)", background: "rgba(255,255,255,0.025)" }}>
+          <figure className="my-7 overflow-x-auto rounded-xl border" style={{ borderColor: "var(--line)", background: "var(--st-03)" }}>
             <table className="w-full text-[0.92rem] border-collapse">
               {headers.length > 0 && (
                 <thead>
@@ -69,7 +69,7 @@ export default function PortableTextWithIds({ value }: { value: any }) {
               )}
               <tbody>
                 {rows.map((row, ri) => (
-                  <tr key={ri} style={{ background: ri % 2 === 0 ? "transparent" : "rgba(255,255,255,0.02)", borderTop: "1px solid var(--st-06)" }}>
+                  <tr key={ri} style={{ background: ri % 2 === 0 ? "transparent" : "var(--st-03)", borderTop: "1px solid var(--st-06)" }}>
                     {(Array.isArray(row.cells) ? row.cells : []).map((cell, ci) => (
                       <td key={ci} className="px-4 py-2.5 align-top" style={{ color: ci === 0 ? "var(--st-90)" : "var(--st-80)" }}>
                         {cell}

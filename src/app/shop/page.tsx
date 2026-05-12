@@ -84,7 +84,7 @@ export default async function ShopPage() {
         <section className="relative">
           <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-12 md:py-16">
             {products.length === 0 ? (
-              <div className="rounded-2xl p-10 text-center" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+              <div className="rounded-2xl p-10 text-center" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
                 <h2 className="text-[1.2rem] font-bold text-white mb-2">Sản phẩm đang được chuẩn bị</h2>
                 <p className="text-[0.92rem]" style={{ color: "var(--ink-mute)" }}>
                   Quay lại sớm - Quảng đang upload templates lên.

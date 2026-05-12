@@ -326,7 +326,7 @@ export default function Page() {
                 { t: "COGS - Cost of Goods Sold", d: "Giá vốn của sản phẩm. Tính trực tiếp vào lợi nhuận, không liên quan phí sàn." },
                 { t: "Margin (% lợi nhuận)", d: "Tỷ lệ lợi nhuận trên giá bán. Margin tối thiểu nên đạt 10% - dưới đó dễ âm khi có biến động phí hoặc cost ads." },
               ].map((g, i) => (
-                <div key={i} className="rounded-xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--line)" }}>
+                <div key={i} className="rounded-xl p-5" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
                   <div className="text-[1rem] font-semibold text-white mb-2">{g.t}</div>
                   <div className="text-[0.88rem] leading-[1.65]" style={{ color: "var(--ink-mute)" }}>{g.d}</div>
                 </div>

@@ -211,7 +211,7 @@ export default function Navbar() {
                     // Dropdown panel - shows on hover. pt-3 below trigger creates a hoverable bridge so the panel doesn't disappear when cursor moves down.
                     <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-200">
                       <div className="rounded-xl p-2 min-w-[340px]" style={{
-                        background: "rgba(8,16,43,0.96)",
+                        background: "var(--db-95)",
                         border: "1px solid var(--st-10)",
                         boxShadow: "0 24px 60px rgba(5,10,31,0.55)",
                         backdropFilter: "blur(20px) saturate(180%)",

@@ -78,7 +78,7 @@ export default function ResourceLeadGate({ resourceId, resourceTitle, buttonLabe
 
       {open && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4" style={{ background: "rgba(5,10,31,0.85)", backdropFilter: "blur(8px)" }} onClick={() => setOpen(false)}>
-          <div className="rounded-2xl max-w-[440px] w-full p-7" style={{ background: "rgba(8,16,43,0.98)", border: "1px solid var(--line)" }} onClick={(e) => e.stopPropagation()}>
+          <div className="rounded-2xl max-w-[440px] w-full p-7" style={{ background: "var(--db-95)", border: "1px solid var(--line)" }} onClick={(e) => e.stopPropagation()}>
             <div className="flex items-start justify-between mb-4">
               <div>
                 <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-1" style={{ color: buttonColor }}>Tài liệu miễn phí</div>

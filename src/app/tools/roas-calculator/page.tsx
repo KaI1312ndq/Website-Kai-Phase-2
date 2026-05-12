@@ -374,7 +374,7 @@ export default function ROASCalculatorPage() {
                   def: "Gross margin − Phí sàn − Ops cost. Đây là phần 'có thể chi cho ads và còn lãi'.",
                 },
               ].map((g) => (
-                <div key={g.term} className="flex gap-4 p-4 rounded-xl" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--line)" }}>
+                <div key={g.term} className="flex gap-4 p-4 rounded-xl" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
                   <div className="text-[0.78rem] font-bold uppercase tracking-[0.1em] w-28 flex-shrink-0 mt-0.5 grad-text leading-[1.4]">{g.term}</div>
                   <div className="text-[0.87rem] leading-[1.65]" style={{ color: "var(--ink-soft)" }}>{g.def}</div>
                 </div>
@@ -393,7 +393,7 @@ export default function ROASCalculatorPage() {
                 <details
                   key={f.q}
                   className="group rounded-xl overflow-hidden"
-                  style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--line)" }}
+                  style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}
                 >
                   <summary className="flex items-center justify-between gap-4 px-5 py-4 cursor-pointer list-none">
                     <span className="text-[0.95rem] font-semibold text-white">{f.q}</span>

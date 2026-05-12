@@ -162,7 +162,7 @@ export default function KnowledgeQuizResult({
 
       {/* Review mode - show all questions with answers */}
       {reviewMode && (
-        <div className="rounded-2xl p-6 md:p-8 mb-8" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+        <div className="rounded-2xl p-6 md:p-8 mb-8" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
           <h2 className="text-[1.2rem] font-bold text-white mb-5">Review {total} câu</h2>
           <div className="flex flex-col gap-5">
             {questions.map((q, qIdx) => {
@@ -170,7 +170,7 @@ export default function KnowledgeQuizResult({
               const isCorrect = answer?.correct;
               const timedOut = answer?.timedOut;
               return (
-                <div key={q.id} className="rounded-xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${isCorrect ? "rgba(95,255,170,0.3)" : "rgba(255,90,114,0.3)"}` }}>
+                <div key={q.id} className="rounded-xl p-5" style={{ background: "var(--st-03)", border: `1px solid ${isCorrect ? "rgba(95,255,170,0.3)" : "rgba(255,90,114,0.3)"}` }}>
                   <div className="flex items-start gap-3 mb-3">
                     <span
                       className="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-[0.78rem] font-bold"
@@ -256,7 +256,7 @@ export default function KnowledgeQuizResult({
 
 function StatCard({ label, value, color, icon }: { label: string; value: number | string; color: string; icon: IconName }) {
   return (
-    <div className="rounded-xl p-4" style={{ background: "rgba(255,255,255,0.025)", border: `1px solid ${color}25` }}>
+    <div className="rounded-xl p-4" style={{ background: "var(--st-03)", border: `1px solid ${color}25` }}>
       <div className="flex items-center gap-1.5 text-[0.66rem] font-bold uppercase tracking-[0.13em] mb-1.5" style={{ color: "var(--st-50)" }}>
         <Icon name={icon} size={11} color={color} />
         <span>{label}</span>

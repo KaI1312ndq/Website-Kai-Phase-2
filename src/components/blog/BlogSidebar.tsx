@@ -45,14 +45,14 @@ export default function BlogSidebar({
     <aside className="lg:sticky lg:top-24 flex flex-col gap-7 self-start">
       {/* TOC */}
       {headings.length >= 2 && (
-        <div className="rounded-xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--line)" }}>
+        <div className="rounded-xl p-5" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
           <BlogTOC headings={headings} />
         </div>
       )}
 
       {/* Relevant Tools (top 2 - context-aware) */}
       {relevantTools.length > 0 && (
-        <div className="rounded-xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--line)" }}>
+        <div className="rounded-xl p-5" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
           <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-3" style={{ color: "var(--st-50)" }}>
             Tools liên quan
           </div>
@@ -62,7 +62,7 @@ export default function BlogSidebar({
                 key={t.href}
                 href={t.href}
                 className="flex items-start gap-3 p-3 rounded-lg transition-all hover:bg-white/5"
-                style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--st-05)" }}
+                style={{ background: "var(--st-03)", border: "1px solid var(--st-05)" }}
               >
                 <span
                   className="w-9 h-9 rounded-lg flex-shrink-0 flex items-center justify-center"
@@ -105,7 +105,7 @@ export default function BlogSidebar({
       )}
 
       {/* All tools fallback (always shown for discoverability) */}
-      <div className="rounded-xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--line)" }}>
+      <div className="rounded-xl p-5" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
         <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-3" style={{ color: "var(--st-50)" }}>
           Tất cả tools
         </div>
@@ -115,7 +115,7 @@ export default function BlogSidebar({
               key={t.href}
               href={t.href}
               className="flex items-center justify-between gap-2 p-2.5 rounded-lg transition-all"
-              style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--st-05)" }}
+              style={{ background: "var(--st-03)", border: "1px solid var(--st-05)" }}
             >
               <span className="flex items-center gap-2.5">
                 <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: t.color }} />
@@ -146,7 +146,7 @@ export default function BlogSidebar({
 
       {/* Most read */}
       {mostReadPosts.length > 0 && (
-        <div className="rounded-xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--line)" }}>
+        <div className="rounded-xl p-5" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
           <div className="flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-3" style={{ color: "var(--st-50)" }}>
             <Icon name="fire" size={13} />
             <span>Đọc nhiều nhất</span>
@@ -175,7 +175,7 @@ export default function BlogSidebar({
 
       {/* Related posts */}
       {relatedPosts.length > 0 && (
-        <div className="rounded-xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--line)" }}>
+        <div className="rounded-xl p-5" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
           <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-3" style={{ color: "var(--st-50)" }}>
             Bài liên quan
           </div>
@@ -200,7 +200,7 @@ export default function BlogSidebar({
       )}
 
       {/* Social / Author block */}
-      <div className="rounded-xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--line)" }}>
+      <div className="rounded-xl p-5" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
         <div className="flex items-center gap-3 mb-3">
           <div className="w-11 h-11 rounded-full flex items-center justify-center font-bold text-white" style={{ background: "var(--grad-primary)" }}>NQ</div>
           <div>

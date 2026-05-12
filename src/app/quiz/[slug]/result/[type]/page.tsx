@@ -142,7 +142,7 @@ export default async function QuizResultPage({ params }: { params: Promise<{ slu
             <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_320px] gap-10 xl:gap-14">
               <article className="min-w-0 flex flex-col gap-7">
                 {/* Description */}
-                <div className="rounded-2xl p-6 md:p-8" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+                <div className="rounded-2xl p-6 md:p-8" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
                   <h2 className="text-[1.25rem] font-bold text-white mb-4">Bạn là ai?</h2>
                   <div className="flex flex-col gap-3">
                     {archetype.description.map((p, i) => (
@@ -184,7 +184,7 @@ export default async function QuizResultPage({ params }: { params: Promise<{ slu
                 </div>
 
                 {/* Context */}
-                <div className="rounded-2xl p-6 md:p-8" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+                <div className="rounded-2xl p-6 md:p-8" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
                   <h2 className="text-[1.1rem] font-bold text-white mb-4">
                     {quiz.scoringType === "leadership" ? "Phù hợp nhất với" : quiz.scoringType === "career" ? "Career path + Lương VN" : "Công việc phù hợp"}
                   </h2>
@@ -233,7 +233,7 @@ export default async function QuizResultPage({ params }: { params: Promise<{ slu
 
               {/* Sidebar */}
               <aside className="lg:sticky lg:top-24 flex flex-col gap-5 self-start">
-                <div className="rounded-xl p-5" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+                <div className="rounded-xl p-5" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
                   <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-3" style={{ color: "var(--st-50)" }}>
                     Các kiểu khác
                   </div>
@@ -243,7 +243,7 @@ export default async function QuizResultPage({ params }: { params: Promise<{ slu
                         key={a.id}
                         href={`/quiz/${slug}/result/${a.id}`}
                         className="flex items-center gap-3 p-2.5 rounded-lg transition-all hover:bg-white/5"
-                        style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--st-05)" }}
+                        style={{ background: "var(--st-03)", border: "1px solid var(--st-05)" }}
                       >
                         <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: a.color }} />
                         <span className="text-[0.84rem] font-medium text-white">{a.name}</span>

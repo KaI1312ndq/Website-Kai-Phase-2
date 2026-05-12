@@ -45,7 +45,7 @@ export default function PersonalCard() {
         transition={{ duration: 0.8, delay: 0.25, ease: [0.2, 0.8, 0.2, 1] }}
         className="relative rounded-3xl overflow-hidden"
         style={{
-          background: "linear-gradient(180deg, rgba(20,40,90,0.55) 0%, var(--db-85) 100%)",
+          background: "linear-gradient(180deg, var(--dg-50) 0%, var(--db-85) 100%)",
           border: "1px solid var(--st-10)",
           boxShadow: "0 30px 80px rgba(5,10,31,0.6), 0 1px 0 var(--st-08) inset",
           backdropFilter: "blur(20px)",
@@ -144,7 +144,7 @@ export default function PersonalCard() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.85 + i * 0.06 }}
                 className="flex items-center gap-2.5 rounded-md px-2.5 py-1.5"
-                style={{ background: "rgba(255,255,255,0.02)" }}
+                style={{ background: "var(--st-03)" }}
               >
                 <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: "var(--grad-primary)" }} />
                 <span className="text-[0.82rem] font-semibold text-white">{s.label}</span>

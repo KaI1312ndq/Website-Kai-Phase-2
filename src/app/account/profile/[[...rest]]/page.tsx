@@ -36,7 +36,7 @@ export default function ProfilePage() {
                   elements: {
                     rootBox: "w-full",
                     cardBox: "w-full max-w-none shadow-2xl",
-                    card: "bg-[rgba(255,255,255,0.025)] border border-[var(--line)]",
+                    card: "bg-[var(--st-03)] border border-[var(--line)]",
                     navbar: "bg-transparent border-r border-[var(--line)]",
                     pageScrollBox: "bg-transparent",
                   },

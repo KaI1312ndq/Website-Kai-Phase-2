@@ -75,7 +75,7 @@ function CheckboxRow({ checked, onChange, label, hint }: { checked: boolean; onC
   return (
     <label className="flex items-center justify-between gap-2 py-2.5 px-3 rounded-lg cursor-pointer transition-all"
       style={{
-        background: checked ? "rgba(20,110,245,0.10)" : "rgba(255,255,255,0.02)",
+        background: checked ? "rgba(20,110,245,0.10)" : "var(--st-03)",
         border: `1px solid ${checked ? "rgba(20,110,245,0.45)" : "var(--st-08)"}`,
       }}>
       <div className="flex items-center gap-2.5">
@@ -121,7 +121,7 @@ function SegmentedControl<T extends string>({ value, onChange, options }: { valu
 
 function Section({ title, accent, children }: { title: string; accent: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-2xl p-5 md:p-6" style={{ background: "linear-gradient(180deg, rgba(20,40,90,0.40), rgba(8,16,43,0.75))", border: "1px solid var(--st-10)" }}>
+    <div className="rounded-2xl p-5 md:p-6" style={{ background: "linear-gradient(180deg, var(--dg-50), var(--db-78))", border: "1px solid var(--st-10)" }}>
       <h3 className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-4 flex items-center gap-2" style={{ color: accent }}>
         <span className="w-1.5 h-1.5 rounded-full" style={{ background: accent }} />
         {title}
@@ -216,7 +216,7 @@ function CategorySearch<T>({ selected, onSelect, search, renderPath, renderRate,
 
       {open && q.trim().length >= 1 && (
         <div className="absolute z-30 mt-1.5 w-full rounded-lg overflow-hidden"
-          style={{ background: "rgba(8,16,43,0.98)", border: "1px solid var(--st-12)", boxShadow: "0 16px 40px rgba(5,10,31,0.6)" }}>
+          style={{ background: "var(--db-95)", border: "1px solid var(--st-12)", boxShadow: "0 16px 40px rgba(5,10,31,0.6)" }}>
           {results.length === 0 ? (
             <div className="px-3 py-4 text-[0.85rem] text-center" style={{ color: "var(--st-50)" }}>
               Không tìm thấy ngành phù hợp
@@ -414,7 +414,7 @@ export default function Calculator() {
       <Section title="Chi phí khác · trên 1 đơn" accent="#a78bff">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
           {extras.map((c) => (
-            <div key={c.id} className="rounded-lg p-3 group" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--st-08)" }}>
+            <div key={c.id} className="rounded-lg p-3 group" style={{ background: "var(--st-03)", border: "1px solid var(--st-08)" }}>
               <div className="flex items-center gap-2 mb-2">
                 <input
                   value={c.label}
@@ -454,7 +454,7 @@ export default function Calculator() {
             </div>
           ))}
           <button onClick={addExtra} className="rounded-lg p-3 text-[0.85rem] font-semibold transition-colors flex items-center justify-center gap-2"
-            style={{ background: "rgba(255,255,255,0.02)", border: "1px dashed var(--st-10)", color: "var(--st-60)", minHeight: "78px" }}>
+            style={{ background: "var(--st-03)", border: "1px dashed var(--st-10)", color: "var(--st-60)", minHeight: "78px" }}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
             </svg>
@@ -487,7 +487,7 @@ export default function Calculator() {
                 style={{
                   background: isBest
                     ? "linear-gradient(160deg, rgba(0,215,34,0.10) 0%, rgba(20,110,245,0.10) 60%, var(--db-85) 100%)"
-                    : "linear-gradient(180deg, rgba(20,40,90,0.42), var(--db-78))",
+                    : "linear-gradient(180deg, var(--dg-50), var(--db-78))",
                   border: isBest ? "1px solid rgba(0,215,34,0.40)" : "1px solid var(--st-10)",
                   boxShadow: isBest ? "0 28px 70px rgba(0,215,34,0.20), 0 0 0 1px rgba(0,215,34,0.20) inset" : "0 18px 44px rgba(5,10,31,0.45)",
                 }}>
@@ -578,7 +578,7 @@ export default function Calculator() {
       </div>
 
       {/* Lưu ý - đẩy xuống dưới */}
-      <div className="rounded-xl p-4 text-[0.82rem] leading-[1.65]" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--st-06)", color: "var(--st-60)" }}>
+      <div className="rounded-xl p-4 text-[0.82rem] leading-[1.65]" style={{ background: "var(--st-03)", border: "1px solid var(--st-06)", color: "var(--st-60)" }}>
         <strong className="text-white">Lưu ý:</strong> Tất cả phí trong tool đã bao gồm thuế GTGT và <strong className="text-white">tính cho 1 đơn hàng</strong>. Phí TikTok Shop áp dụng từ 09/05/2026, Shopee từ 08/05/2026. Default rate khi chưa chọn ngành: TikTok 12.5% / 15.5% · Shopee 10.5% / 13.5%. Nếu bạn không tìm thấy ngành chính xác trong ô tìm kiếm, chọn ngành gần nhất hoặc để trống - tool sẽ dùng default rate trung bình.
       </div>
     </div>

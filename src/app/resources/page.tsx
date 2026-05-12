@@ -178,7 +178,7 @@ export default function ResourcesPage() {
                     key={m.id}
                     className="rounded-2xl p-6 flex flex-col"
                     style={{
-                      background: "rgba(255,255,255,0.025)",
+                      background: "var(--st-03)",
                       border: "1px solid var(--line)",
                     }}
                   >
@@ -238,7 +238,7 @@ export default function ResourcesPage() {
                       <Link
                         href={t.href}
                         className="flex items-center gap-3 p-3 rounded-xl transition-colors group"
-                        style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}
+                        style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}
                       >
                         <span className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: `${t.color}18`, border: `1px solid ${t.color}40`, color: t.color }}>
                           <Icon name={t.icon} size={16} />
@@ -264,7 +264,7 @@ export default function ResourcesPage() {
                       <Link
                         href={q.href}
                         className="flex items-center gap-3 p-3 rounded-xl transition-colors"
-                        style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}
+                        style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}
                       >
                         <span className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "rgba(20,110,245,0.12)", border: "1px solid rgba(20,110,245,0.22)", color: "#7da9ff" }}>
                           <Icon name="test-tube" size={16} />
