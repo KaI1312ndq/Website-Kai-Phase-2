@@ -156,7 +156,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                 </time>
               )}
             </div>
-            <h1 className="t-h1 leading-[1.1] text-white max-w-[920px] mb-5">{post.title}</h1>
+            <h1 className="t-h1 leading-[1.1] grad-text max-w-[920px] mb-5">{post.title}</h1>
             {post.excerpt && (
               <p className="t-body-lg max-w-[760px]" style={{ color: "var(--ink-soft)" }}>
                 {post.excerpt}

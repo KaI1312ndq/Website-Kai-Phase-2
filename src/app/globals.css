@@ -645,10 +645,17 @@ body::before {
 /* ─────────────────────────────────────────
    PROSE
    ───────────────────────────────────────── */
-.prose-ndq h2 { font-size: 1.6rem; font-weight: 700; margin: 2.2rem 0 1rem; letter-spacing: -0.02em; color: white; }
-.prose-ndq h3 { font-size: 1.2rem; font-weight: 600; margin: 1.6rem 0 0.75rem; color: white; }
+.prose-ndq h2 {
+  font-size: 1.6rem; font-weight: 700; margin: 2.2rem 0 1rem; letter-spacing: -0.02em;
+  background: var(--grad-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.prose-ndq h3 { font-size: 1.2rem; font-weight: 600; margin: 1.6rem 0 0.75rem; color: var(--ink); }
 .prose-ndq p { line-height: 1.8; margin-bottom: 1.1rem; color: var(--ink-soft); font-size: 1.05rem; }
-.prose-ndq strong { color: white; font-weight: 600; }
+.prose-ndq strong { color: var(--ink); font-weight: 600; }
 .prose-ndq ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
 .prose-ndq li { line-height: 1.8; color: var(--ink-soft); margin-bottom: 0.4rem; }
 .prose-ndq a { color: var(--wf-blue-400); text-decoration: underline; text-underline-offset: 3px; }

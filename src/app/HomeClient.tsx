@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { useTheme } from "@/components/theme/ThemeProvider";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Reveal, { RevealText } from "@/components/Reveal";
@@ -134,6 +135,10 @@ type Props = {
 };
 
 export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sanityTimeline, sanityBrands }: Props = {}) {
+  const { resolved: themeResolved } = useTheme();
+  const tone = themeResolved === "light"
+    ? { bgA: "2e", borderA: "60" }   // hex 0x2e = 46/255 ≈ 18%, 0x60 = 96/255 ≈ 38%
+    : { bgA: "15", borderA: "25" };  // hex 0x15 = 21/255 ≈ 8%, 0x25 = 37/255 ≈ 15%
   // Map Sanity  display shape, fall back to hardcoded if empty
   const caseStudyList = sanityCaseStudies && sanityCaseStudies.length
     ? sanityCaseStudies.map((c) => ({
@@ -692,7 +697,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
                           </div>
                           <div className="flex flex-wrap gap-1.5">
                             {m.items.map((item, j) => (
-                              <span key={j} className="text-[0.7rem] px-2 py-0.5 rounded-md" style={{ background: `${m.color}15`, color: m.color, border: `1px solid ${m.color}25` }}>
+                              <span key={j} className="text-[0.7rem] px-2 py-0.5 rounded-md" style={{ background: `${m.color}${tone.bgA}`, color: m.color, border: `1px solid ${m.color}${tone.borderA}` }}>
                                 {item}
                               </span>
                             ))}

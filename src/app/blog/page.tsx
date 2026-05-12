@@ -260,7 +260,7 @@ function FeaturedPostsGrid({ posts }: { posts: any[] }) {
                 </span>
               )}
             </div>
-            <h3 className="text-[1.05rem] md:text-[1.1rem] font-bold mb-2.5 leading-snug tracking-tight text-white group-hover:text-[#7da9ff] transition-colors line-clamp-2">
+            <h3 className="text-[1.05rem] md:text-[1.1rem] font-bold mb-2.5 leading-snug tracking-tight grad-text line-clamp-2">
               {p.title}
             </h3>
             {p.excerpt && (
