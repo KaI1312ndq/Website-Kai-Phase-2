@@ -256,9 +256,26 @@ export default async function QuizResultPage({ params }: { params: Promise<{ slu
                   </div>
                 )}
 
-                {/* Share */}
-                <div>
-                  <ShareButtons url={pageUrl} title={`${archetype.name} - ${quiz.name}`} />
+                {/* Share - prominent card */}
+                <div className="rounded-2xl p-6 md:p-7" style={{ background: "linear-gradient(135deg, rgba(74,214,255,0.10) 0%, rgba(122,61,255,0.10) 100%)", border: "1px solid var(--st-15)" }}>
+                  <div className="flex items-start justify-between gap-4 flex-wrap mb-4">
+                    <div>
+                      <div className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] mb-1" style={{ color: "#4ad6ff" }}>
+                        Chia sẻ kết quả
+                      </div>
+                      <h3 className="text-[1.15rem] md:text-[1.3rem] font-bold text-white leading-tight">
+                        Khoe {archetype.name} của bạn cho bạn bè
+                      </h3>
+                    </div>
+                    <span className="text-[2rem]" aria-hidden>✨</span>
+                  </div>
+                  <p className="text-[0.88rem] mb-5" style={{ color: "var(--ink-soft)" }}>
+                    Link share kèm preview card cá nhân hóa - tag bạn bè thử test cùng nhé!
+                  </p>
+                  <ShareButtons
+                    url={`${pageUrl}?utm_source=share&utm_medium=quiz-result&utm_campaign=${slug}`}
+                    title={`Mình là ${archetype.name} trong ${quiz.name} - bạn thử test xem nhé!`}
+                  />
                 </div>
 
                 {/* Retake CTA */}

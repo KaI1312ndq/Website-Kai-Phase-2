@@ -123,7 +123,7 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
             {rows.map((o) => (
               <tr key={o.id as string} className="border-t hover:bg-white/[0.02]" style={{ borderColor: "var(--st-05)" }}>
                 <Td>
-                  <Link href={`/shop/order/${o.order_number}`} target="_blank" className="font-mono text-[0.78rem]" style={{ color: "#7da9ff" }}>
+                  <Link href={`/account/admin/orders/${o.id}`} className="font-mono text-[0.78rem] hover:underline" style={{ color: "#7da9ff" }}>
                     {String(o.order_number)}
                   </Link>
                 </Td>
