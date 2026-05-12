@@ -53,7 +53,7 @@ export default function BlogSidebar({
       {/* Relevant Tools (top 2 - context-aware) */}
       {relevantTools.length > 0 && (
         <div className="rounded-xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--line)" }}>
-          <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-3" style={{ color: "rgba(255,255,255,0.5)" }}>
+          <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-3" style={{ color: "var(--st-50)" }}>
             Tools liên quan
           </div>
           <div className="flex flex-col gap-2">
@@ -62,7 +62,7 @@ export default function BlogSidebar({
                 key={t.href}
                 href={t.href}
                 className="flex items-start gap-3 p-3 rounded-lg transition-all hover:bg-white/5"
-                style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}
+                style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--st-05)" }}
               >
                 <span
                   className="w-9 h-9 rounded-lg flex-shrink-0 flex items-center justify-center"
@@ -72,7 +72,7 @@ export default function BlogSidebar({
                 </span>
                 <div className="flex-1 min-w-0">
                   <div className="text-[0.86rem] font-semibold text-white leading-snug">{t.title}</div>
-                  <div className="text-[0.74rem] mt-0.5 line-clamp-2" style={{ color: "rgba(255,255,255,0.5)" }}>{t.description}</div>
+                  <div className="text-[0.74rem] mt-0.5 line-clamp-2" style={{ color: "var(--st-50)" }}>{t.description}</div>
                 </div>
               </Link>
             ))}
@@ -95,7 +95,7 @@ export default function BlogSidebar({
             </span>
             <div className="flex-1 min-w-0">
               <div className="text-[0.92rem] font-bold text-white leading-snug mb-1">{relevantQuiz.title}</div>
-              <div className="text-[0.78rem] mb-3" style={{ color: "rgba(255,255,255,0.65)" }}>{relevantQuiz.description}</div>
+              <div className="text-[0.78rem] mb-3" style={{ color: "var(--st-65)" }}>{relevantQuiz.description}</div>
               <Link href={relevantQuiz.href} className="text-[0.82rem] font-bold inline-flex items-center gap-1" style={{ color: relevantQuiz.color }}>
                 Làm test ngay <span></span>
               </Link>
@@ -106,7 +106,7 @@ export default function BlogSidebar({
 
       {/* All tools fallback (always shown for discoverability) */}
       <div className="rounded-xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--line)" }}>
-        <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-3" style={{ color: "rgba(255,255,255,0.5)" }}>
+        <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-3" style={{ color: "var(--st-50)" }}>
           Tất cả tools
         </div>
         <div className="flex flex-col gap-1.5">
@@ -115,13 +115,13 @@ export default function BlogSidebar({
               key={t.href}
               href={t.href}
               className="flex items-center justify-between gap-2 p-2.5 rounded-lg transition-all"
-              style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}
+              style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--st-05)" }}
             >
               <span className="flex items-center gap-2.5">
                 <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: t.color }} />
                 <span className="text-[0.85rem] font-medium text-white">{t.label}</span>
               </span>
-              <span className="text-[0.78rem]" style={{ color: "rgba(255,255,255,0.4)" }}></span>
+              <span className="text-[0.78rem]" style={{ color: "var(--st-40)" }}></span>
             </Link>
           ))}
         </div>
@@ -135,7 +135,7 @@ export default function BlogSidebar({
         <div className="text-[1.05rem] font-bold mb-2 leading-tight text-white">
           Ecom Foundation - 12 buổi build P&L thực chiến.
         </div>
-        <div className="text-[0.82rem] leading-[1.55] mb-4" style={{ color: "rgba(255,255,255,0.7)" }}>
+        <div className="text-[0.82rem] leading-[1.55] mb-4" style={{ color: "var(--st-70)" }}>
           Từ cơ cấu chi phí, P&L gian hàng, tối ưu ROAS đến scale team - kinh nghiệm 60+ project Ecom.
         </div>
         <Link href="/ecom-foundation" className="block w-full text-center py-2.5 rounded-lg text-[0.85rem] font-bold transition-all"
@@ -147,7 +147,7 @@ export default function BlogSidebar({
       {/* Most read */}
       {mostReadPosts.length > 0 && (
         <div className="rounded-xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--line)" }}>
-          <div className="flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-3" style={{ color: "rgba(255,255,255,0.5)" }}>
+          <div className="flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-3" style={{ color: "var(--st-50)" }}>
             <Icon name="fire" size={13} />
             <span>Đọc nhiều nhất</span>
           </div>
@@ -161,7 +161,7 @@ export default function BlogSidebar({
                   <div className="flex-1 min-w-0">
                     <div className="text-[0.84rem] font-medium leading-snug text-white group-hover:text-[#7da9ff] transition-colors line-clamp-2">{p.title}</div>
                     {typeof p.viewCount === "number" && p.viewCount > 0 && (
-                      <div className="text-[0.7rem] mt-0.5" style={{ color: "rgba(255,255,255,0.4)" }}>
+                      <div className="text-[0.7rem] mt-0.5" style={{ color: "var(--st-40)" }}>
                         {p.viewCount.toLocaleString("vi-VN")} lượt xem
                       </div>
                     )}
@@ -176,7 +176,7 @@ export default function BlogSidebar({
       {/* Related posts */}
       {relatedPosts.length > 0 && (
         <div className="rounded-xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--line)" }}>
-          <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-3" style={{ color: "rgba(255,255,255,0.5)" }}>
+          <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-3" style={{ color: "var(--st-50)" }}>
             Bài liên quan
           </div>
           <div className="flex flex-col gap-3">
@@ -190,7 +190,7 @@ export default function BlogSidebar({
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="text-[0.82rem] font-medium leading-snug text-white group-hover:text-[#7da9ff] transition-colors line-clamp-2">{p.title}</div>
-                    {p.readTime && <div className="text-[0.7rem] mt-0.5" style={{ color: "rgba(255,255,255,0.4)" }}>{p.readTime} phút đọc</div>}
+                    {p.readTime && <div className="text-[0.7rem] mt-0.5" style={{ color: "var(--st-40)" }}>{p.readTime} phút đọc</div>}
                   </div>
                 </Link>
               );
@@ -209,7 +209,7 @@ export default function BlogSidebar({
           </div>
         </div>
         <Link href="/#contact" className="block text-center py-2 rounded-lg text-[0.82rem] font-semibold transition-all"
-          style={{ border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.85)" }}>
+          style={{ border: "1px solid var(--st-15)", color: "var(--st-85)" }}>
           Liên hệ Quảng
         </Link>
       </div>

@@ -87,7 +87,7 @@ function Field({ label, hint, children }: { label: string; hint?: string; childr
     <div className="min-w-0">
       <label className="block mb-1.5">
         <span className="block text-[0.78rem] font-semibold text-white">{label}</span>
-        {hint && <span className="block text-[0.72rem] mt-0.5" style={{ color: "rgba(255,255,255,0.42)" }}>{hint}</span>}
+        {hint && <span className="block text-[0.72rem] mt-0.5" style={{ color: "var(--st-42)" }}>{hint}</span>}
       </label>
       {children}
     </div>
@@ -107,9 +107,9 @@ function VNDInput({ value, onChange, placeholder }: { value: number; onChange: (
         }}
         placeholder={placeholder}
         className="w-full px-4 py-2.5 pr-9 rounded-lg text-[0.95rem] outline-none transition-all"
-        style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)", color: "white", fontFamily: "inherit" }}
+        style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white", fontFamily: "inherit" }}
       />
-      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[0.82rem]" style={{ color: "rgba(255,255,255,0.5)" }}>₫</span>
+      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[0.82rem]" style={{ color: "var(--st-50)" }}>₫</span>
     </div>
   );
 }
@@ -126,9 +126,9 @@ function NumInput({ value, onChange, suffix, step }: { value: number; onChange: 
         }}
         step={step || "1"}
         className="w-full px-4 py-2.5 pr-9 rounded-lg text-[0.95rem] outline-none transition-all"
-        style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)", color: "white", fontFamily: "inherit" }}
+        style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white", fontFamily: "inherit" }}
       />
-      {suffix && <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[0.82rem]" style={{ color: "rgba(255,255,255,0.5)" }}>{suffix}</span>}
+      {suffix && <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[0.82rem]" style={{ color: "var(--st-50)" }}>{suffix}</span>}
     </div>
   );
 }
@@ -153,7 +153,7 @@ function ToggledCost({
     <div className="min-w-0">
       <div className="flex items-center justify-between mb-1.5 gap-2">
         <span className="block text-[0.78rem] font-semibold text-white truncate">{label}</span>
-        <div className="flex items-center rounded-md p-0.5 flex-shrink-0" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)" }}>
+        <div className="flex items-center rounded-md p-0.5 flex-shrink-0" style={{ background: "var(--st-05)", border: "1px solid var(--st-08)" }}>
           {(["vnd", "pct"] as FixedCostMode[]).map((m) => (
             <button
               key={m}
@@ -162,7 +162,7 @@ function ToggledCost({
               className="px-2 py-0.5 rounded text-[0.68rem] font-bold transition-all"
               style={{
                 background: mode === m ? "rgba(20,110,245,0.5)" : "transparent",
-                color: mode === m ? "white" : "rgba(255,255,255,0.5)",
+                color: mode === m ? "white" : "var(--st-50)",
               }}
             >{m === "vnd" ? "₫" : "%"}</button>
           ))}
@@ -173,7 +173,7 @@ function ToggledCost({
       ) : (
         <>
           <PctInput value={value} onChange={onChange} />
-          <div className="text-[0.7rem] mt-1" style={{ color: "rgba(255,255,255,0.4)" }}>
+          <div className="text-[0.7rem] mt-1" style={{ color: "var(--st-40)" }}>
             ≈ {fmtVND(computed)}₫ / tháng
           </div>
         </>
@@ -244,7 +244,7 @@ export default function PnLCalculator() {
 
         {/* Scenarios */}
         <div>
-          <div className="text-[0.7rem] font-semibold uppercase tracking-[0.12em] mb-2" style={{ color: "rgba(255,255,255,0.55)" }}>Kịch bản mẫu</div>
+          <div className="text-[0.7rem] font-semibold uppercase tracking-[0.12em] mb-2" style={{ color: "var(--st-55)" }}>Kịch bản mẫu</div>
           <div className="flex flex-col gap-1.5">
             {SCENARIOS.map((sc, i) => {
               const active = activeScenario === i;
@@ -254,9 +254,9 @@ export default function PnLCalculator() {
                   onClick={() => applyScenario(i)}
                   className="px-3 py-2 rounded-lg text-[0.78rem] font-semibold text-left transition-all flex items-center justify-between gap-2"
                   style={{
-                    background: active ? "rgba(20,110,245,0.18)" : "rgba(255,255,255,0.03)",
-                    border: `1px solid ${active ? "rgba(20,110,245,0.55)" : "rgba(255,255,255,0.08)"}`,
-                    color: active ? "white" : "rgba(255,255,255,0.7)",
+                    background: active ? "rgba(20,110,245,0.18)" : "var(--st-03)",
+                    border: `1px solid ${active ? "rgba(20,110,245,0.55)" : "var(--st-08)"}`,
+                    color: active ? "white" : "var(--st-70)",
                   }}
                 >
                   <span>{sc.label}</span>
@@ -297,16 +297,16 @@ export default function PnLCalculator() {
                   onClick={() => applyPlatform(i)}
                   className="px-3 py-2 rounded-lg text-[0.72rem] font-semibold text-left transition-all"
                   style={{
-                    background: active ? "rgba(20,110,245,0.18)" : "rgba(255,255,255,0.04)",
-                    border: `1px solid ${active ? "rgba(20,110,245,0.55)" : "rgba(255,255,255,0.08)"}`,
-                    color: active ? "white" : "rgba(255,255,255,0.65)",
+                    background: active ? "rgba(20,110,245,0.18)" : "var(--st-04)",
+                    border: `1px solid ${active ? "rgba(20,110,245,0.55)" : "var(--st-08)"}`,
+                    color: active ? "white" : "var(--st-65)",
                   }}
                 >
                   <div className="flex items-center justify-between gap-1">
                     <span>{p.label}</span>
                     {active && <span style={{ color: "#7da9ff" }}>✓</span>}
                   </div>
-                  <div className="text-[0.66rem] font-normal mt-0.5" style={{ color: active ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.35)" }}>{p.hint}</div>
+                  <div className="text-[0.66rem] font-normal mt-0.5" style={{ color: active ? "var(--st-60)" : "var(--st-35)" }}>{p.hint}</div>
                 </button>
               );
             })}
@@ -336,10 +336,10 @@ export default function PnLCalculator() {
         {/* Fixed costs with toggle */}
         <div className="pt-4 border-t" style={{ borderColor: "var(--line)" }}>
           <div className="flex items-center justify-between mb-3">
-            <div className="text-[0.7rem] font-semibold uppercase tracking-[0.12em]" style={{ color: "rgba(255,255,255,0.55)" }}>
+            <div className="text-[0.7rem] font-semibold uppercase tracking-[0.12em]" style={{ color: "var(--st-55)" }}>
               Chi phí cố định / tháng
             </div>
-            <div className="text-[0.66rem]" style={{ color: "rgba(255,255,255,0.4)" }}>nhập ₫ hoặc % Net</div>
+            <div className="text-[0.66rem]" style={{ color: "var(--st-40)" }}>nhập ₫ hoặc % Net</div>
           </div>
           <div className="flex flex-col gap-3">
             <ToggledCost label="Ads spend" mode={state.adsMode} value={state.adsValue} baseRevenue={netRevenue}
@@ -366,19 +366,19 @@ export default function PnLCalculator() {
         {/* Headline metrics */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="glass p-5 min-w-0">
-            <div className="text-[0.68rem] font-bold uppercase tracking-[0.14em] mb-2" style={{ color: "rgba(255,255,255,0.5)" }}>Net Revenue</div>
-            <div className="text-[1.5rem] md:text-[1.7rem] font-extrabold leading-none text-white whitespace-nowrap" title={fmtVND(result.netRevenue) + "đ"}>{fmtVNDCompact(result.netRevenue)}<span className="text-[0.78rem] ml-1 font-semibold" style={{ color: "rgba(255,255,255,0.5)" }}>₫</span></div>
+            <div className="text-[0.68rem] font-bold uppercase tracking-[0.14em] mb-2" style={{ color: "var(--st-50)" }}>Net Revenue</div>
+            <div className="text-[1.5rem] md:text-[1.7rem] font-extrabold leading-none text-white whitespace-nowrap" title={fmtVND(result.netRevenue) + "đ"}>{fmtVNDCompact(result.netRevenue)}<span className="text-[0.78rem] ml-1 font-semibold" style={{ color: "var(--st-50)" }}>₫</span></div>
           </div>
           <div className="glass p-5">
-            <div className="text-[0.68rem] font-bold uppercase tracking-[0.14em] mb-2" style={{ color: "rgba(255,255,255,0.5)" }}>Gross Margin</div>
+            <div className="text-[0.68rem] font-bold uppercase tracking-[0.14em] mb-2" style={{ color: "var(--st-50)" }}>Gross Margin</div>
             <div className="text-[1.4rem] md:text-[1.6rem] font-extrabold leading-none" style={{ color: result.grossMarginPct >= 40 ? "#5fffaa" : result.grossMarginPct >= 20 ? "#ffd479" : "#ff5a72" }}>{fmtPct(result.grossMarginPct)}</div>
           </div>
           <div className="glass p-5">
-            <div className="text-[0.68rem] font-bold uppercase tracking-[0.14em] mb-2" style={{ color: "rgba(255,255,255,0.5)" }}>Contribution</div>
+            <div className="text-[0.68rem] font-bold uppercase tracking-[0.14em] mb-2" style={{ color: "var(--st-50)" }}>Contribution</div>
             <div className="text-[1.4rem] md:text-[1.6rem] font-extrabold leading-none" style={{ color: result.contributionMarginPct >= 20 ? "#5fffaa" : result.contributionMarginPct >= 5 ? "#ffd479" : "#ff5a72" }}>{fmtPct(result.contributionMarginPct)}</div>
           </div>
           <div className="glass p-5" style={{ borderColor: result.operatingProfit < 0 ? "rgba(255,90,114,0.35)" : undefined }}>
-            <div className="text-[0.68rem] font-bold uppercase tracking-[0.14em] mb-2" style={{ color: "rgba(255,255,255,0.5)" }}>EBITDA · {marginLabel}</div>
+            <div className="text-[0.68rem] font-bold uppercase tracking-[0.14em] mb-2" style={{ color: "var(--st-50)" }}>EBITDA · {marginLabel}</div>
             <div className="text-[1.4rem] md:text-[1.6rem] font-extrabold leading-none" style={{ color: profitColor }}>{fmtPct(margin)}</div>
           </div>
         </div>
@@ -387,13 +387,13 @@ export default function PnLCalculator() {
         <div className="glass overflow-hidden" id="pnl-statement">
           <div className="px-6 py-4 border-b flex items-center justify-between flex-wrap gap-3" style={{ borderColor: "var(--line)" }}>
             <div>
-              <div className="text-[0.7rem] font-bold uppercase tracking-[0.15em]" style={{ color: "rgba(255,255,255,0.5)" }}>Báo cáo P&L · 1 tháng</div>
+              <div className="text-[0.7rem] font-bold uppercase tracking-[0.15em]" style={{ color: "var(--st-50)" }}>Báo cáo P&L · 1 tháng</div>
               <div className="text-[1rem] font-semibold text-white mt-0.5">Gian hàng TMĐT - {result.grossRevenue > 0 ? `${Math.round(state.orders).toLocaleString("vi-VN")} đơn` : "-"}</div>
             </div>
             <button
               onClick={() => window.print()}
               className="text-[0.78rem] font-semibold px-4 py-2 rounded-lg transition-all hover:bg-white/10 print:hidden"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.12)", color: "white" }}
+              style={{ background: "var(--st-04)", border: "1px solid var(--st-12)", color: "white" }}
             >
               ⎙ In / Xuất PDF
             </button>
@@ -401,23 +401,23 @@ export default function PnLCalculator() {
           <div className="overflow-x-auto">
             <table className="w-full text-[0.9rem]">
               <thead>
-                <tr style={{ background: "rgba(255,255,255,0.03)" }}>
-                  <th className="text-left px-5 py-3 font-semibold w-[55%]" style={{ color: "rgba(255,255,255,0.6)" }}>Hạng mục</th>
-                  <th className="text-right px-5 py-3 font-semibold" style={{ color: "rgba(255,255,255,0.6)" }}>VND</th>
-                  <th className="text-right px-5 py-3 font-semibold" style={{ color: "rgba(255,255,255,0.6)" }}>% Net</th>
+                <tr style={{ background: "var(--st-03)" }}>
+                  <th className="text-left px-5 py-3 font-semibold w-[55%]" style={{ color: "var(--st-60)" }}>Hạng mục</th>
+                  <th className="text-right px-5 py-3 font-semibold" style={{ color: "var(--st-60)" }}>VND</th>
+                  <th className="text-right px-5 py-3 font-semibold" style={{ color: "var(--st-60)" }}>% Net</th>
                 </tr>
               </thead>
               <tbody>
                 {result.lines.map((l, i) => {
                   const isPositive = l.amount >= 0;
-                  const rowBg = l.isFinal ? (l.amount >= 0 ? "rgba(95,255,170,0.06)" : "rgba(255,90,114,0.06)") : l.isSubtotal ? "rgba(255,255,255,0.03)" : "transparent";
-                  const labelColor = l.isFinal ? "#fff" : l.isSubtotal ? "#fff" : "rgba(255,255,255,0.85)";
-                  const amountColor = l.isFinal ? (l.amount >= 0 ? "#5fffaa" : "#ff5a72") : l.isSubtotal ? "#fff" : isPositive ? "rgba(255,255,255,0.9)" : "rgba(255,180,180,0.85)";
+                  const rowBg = l.isFinal ? (l.amount >= 0 ? "rgba(95,255,170,0.06)" : "rgba(255,90,114,0.06)") : l.isSubtotal ? "var(--st-03)" : "transparent";
+                  const labelColor = l.isFinal ? "#fff" : l.isSubtotal ? "#fff" : "var(--st-85)";
+                  const amountColor = l.isFinal ? (l.amount >= 0 ? "#5fffaa" : "#ff5a72") : l.isSubtotal ? "#fff" : isPositive ? "var(--st-90)" : "rgba(255,180,180,0.85)";
                   return (
                     <tr key={i} style={{ borderTop: "1px solid var(--line)", background: rowBg }}>
                       <td className="px-5 py-3" style={{ color: labelColor }}>
                         <div className={l.isFinal || l.isSubtotal ? "font-bold" : "font-medium"}>{l.label}</div>
-                        {l.hint && <div className="text-[0.74rem] mt-0.5" style={{ color: "rgba(255,255,255,0.4)" }}>{l.hint}</div>}
+                        {l.hint && <div className="text-[0.74rem] mt-0.5" style={{ color: "var(--st-40)" }}>{l.hint}</div>}
                       </td>
                       <td className="px-5 py-3 text-right font-mono" style={{ color: amountColor, fontWeight: l.isFinal || l.isSubtotal ? 700 : 500 }}>
                         {fmtVND(l.amount)}
@@ -436,20 +436,20 @@ export default function PnLCalculator() {
         {/* Unit economics */}
         {state.orders > 0 && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="rounded-xl p-4 min-w-0" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid var(--line)" }}>
-              <div className="text-[0.7rem] font-bold uppercase tracking-[0.13em] mb-1.5" style={{ color: "rgba(255,255,255,0.5)" }}>Profit/đơn</div>
+            <div className="rounded-xl p-4 min-w-0" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
+              <div className="text-[0.7rem] font-bold uppercase tracking-[0.13em] mb-1.5" style={{ color: "var(--st-50)" }}>Profit/đơn</div>
               <div className="text-[1.05rem] font-bold whitespace-nowrap" style={{ color: profitColor }} title={fmtVND(result.profitPerOrder) + "đ"}>{fmtVNDCompact(result.profitPerOrder)}<span className="text-[0.72rem] ml-1 font-medium opacity-60">₫</span></div>
             </div>
-            <div className="rounded-xl p-4 min-w-0" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid var(--line)" }}>
-              <div className="text-[0.7rem] font-bold uppercase tracking-[0.13em] mb-1.5" style={{ color: "rgba(255,255,255,0.5)" }}>CPA (ads/đơn)</div>
+            <div className="rounded-xl p-4 min-w-0" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
+              <div className="text-[0.7rem] font-bold uppercase tracking-[0.13em] mb-1.5" style={{ color: "var(--st-50)" }}>CPA (ads/đơn)</div>
               <div className="text-[1.05rem] font-bold text-white whitespace-nowrap" title={fmtVND(result.cpa) + "đ"}>{fmtVNDCompact(result.cpa)}<span className="text-[0.72rem] ml-1 font-medium opacity-60">₫</span></div>
             </div>
-            <div className="rounded-xl p-4" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid var(--line)" }}>
-              <div className="text-[0.7rem] font-bold uppercase tracking-[0.13em] mb-1.5" style={{ color: "rgba(255,255,255,0.5)" }}>ROAS</div>
+            <div className="rounded-xl p-4" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
+              <div className="text-[0.7rem] font-bold uppercase tracking-[0.13em] mb-1.5" style={{ color: "var(--st-50)" }}>ROAS</div>
               <div className="text-[1.05rem] font-bold text-white">{result.roas > 0 ? `${result.roas.toFixed(1)}x` : "-"}</div>
             </div>
-            <div className="rounded-xl p-4" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid var(--line)" }}>
-              <div className="text-[0.7rem] font-bold uppercase tracking-[0.13em] mb-1.5" style={{ color: "rgba(255,255,255,0.5)" }}>Tổng phí sàn %</div>
+            <div className="rounded-xl p-4" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
+              <div className="text-[0.7rem] font-bold uppercase tracking-[0.13em] mb-1.5" style={{ color: "var(--st-50)" }}>Tổng phí sàn %</div>
               <div className="text-[1.05rem] font-bold text-white">{fmtPct(result.netRevenue > 0 ? (result.platformFeesTotal / result.netRevenue) * 100 : 0)}</div>
             </div>
           </div>
@@ -457,7 +457,7 @@ export default function PnLCalculator() {
 
         {/* Diagnosis */}
         {state.orders > 0 && (
-          <div className="rounded-xl px-5 py-4 text-[0.88rem] leading-[1.7]" style={{ background: result.operatingProfit < 0 ? "rgba(255,90,114,0.08)" : result.operatingMarginPct < 5 ? "rgba(255,212,121,0.08)" : "rgba(95,255,170,0.07)", border: `1px solid ${result.operatingProfit < 0 ? "rgba(255,90,114,0.25)" : result.operatingMarginPct < 5 ? "rgba(255,212,121,0.25)" : "rgba(95,255,170,0.25)"}`, color: "rgba(255,255,255,0.78)" }}>
+          <div className="rounded-xl px-5 py-4 text-[0.88rem] leading-[1.7]" style={{ background: result.operatingProfit < 0 ? "rgba(255,90,114,0.08)" : result.operatingMarginPct < 5 ? "rgba(255,212,121,0.08)" : "rgba(95,255,170,0.07)", border: `1px solid ${result.operatingProfit < 0 ? "rgba(255,90,114,0.25)" : result.operatingMarginPct < 5 ? "rgba(255,212,121,0.25)" : "rgba(95,255,170,0.25)"}`, color: "var(--st-78)" }}>
             <strong className="text-white">Chẩn đoán nhanh: </strong>
             {result.operatingProfit < 0 ? (
               <>Đang lỗ {fmtVND(Math.abs(result.operatingProfit))}đ/tháng. Vấn đề lớn nhất thường là: gross margin {fmtPct(result.grossMarginPct)} {result.grossMarginPct < 35 ? "quá mỏng - cần giảm COGS hoặc tăng AOV" : "ổn - vấn đề ở chi phí cố định hoặc ads quá lớn so với volume"}.</>

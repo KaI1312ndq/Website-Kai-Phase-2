@@ -37,7 +37,7 @@ export default function AuthorBio() {
           <h3 className="text-[1.25rem] md:text-[1.4rem] font-bold tracking-tight text-white mb-2">
             Nguyễn Đức Quảng
           </h3>
-          <div className="text-[0.88rem] font-medium mb-4" style={{ color: "rgba(255,255,255,0.7)" }}>
+          <div className="text-[0.88rem] font-medium mb-4" style={{ color: "var(--st-70)" }}>
             Ecom Growth Expert · Team Builder · 60+ project Ecom
           </div>
           <p className="text-[0.92rem] leading-[1.7] mb-5" style={{ color: "var(--ink-soft)" }}>
@@ -50,7 +50,7 @@ export default function AuthorBio() {
             <Link href="/ecom-foundation" className="btn btn-primary text-[0.85rem] py-2 px-4">
               Xem khoá học
             </Link>
-            <Link href="/#contact" className="text-[0.85rem] font-semibold px-4 py-2 rounded-lg transition-all" style={{ border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.85)" }}>
+            <Link href="/#contact" className="text-[0.85rem] font-semibold px-4 py-2 rounded-lg transition-all" style={{ border: "1px solid var(--st-15)", color: "var(--st-85)" }}>
               Liên hệ Quảng
             </Link>
             <div className="flex items-center gap-2 ml-auto">
@@ -62,7 +62,7 @@ export default function AuthorBio() {
                   rel="noreferrer"
                   aria-label={s.label}
                   className="w-9 h-9 rounded-full flex items-center justify-center transition-all"
-                  style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)", color: "rgba(255,255,255,0.7)" }}
+                  style={{ background: "var(--st-05)", border: "1px solid var(--st-10)", color: "var(--st-70)" }}
                 >
                   {s.icon}
                 </a>

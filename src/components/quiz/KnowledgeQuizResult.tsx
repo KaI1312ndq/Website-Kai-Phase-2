@@ -114,7 +114,7 @@ export default function KnowledgeQuizResult({
           <span className="text-[3rem] md:text-[4rem] font-extrabold leading-none tabular-nums" style={{ color: tier.color }}>
             {correctCount}
           </span>
-          <span className="text-[1.5rem] font-bold" style={{ color: "rgba(255,255,255,0.5)" }}>
+          <span className="text-[1.5rem] font-bold" style={{ color: "var(--st-50)" }}>
             / {total}
           </span>
         </div>
@@ -122,7 +122,7 @@ export default function KnowledgeQuizResult({
           {percent}%
         </div>
 
-        <p className="text-[0.95rem] leading-[1.7] max-w-[600px] mx-auto" style={{ color: "rgba(255,255,255,0.85)" }}>
+        <p className="text-[0.95rem] leading-[1.7] max-w-[600px] mx-auto" style={{ color: "var(--st-85)" }}>
           {tier.feedback}
         </p>
       </div>
@@ -148,7 +148,7 @@ export default function KnowledgeQuizResult({
         <button
           onClick={() => setReviewMode((r) => !r)}
           className="inline-flex items-center gap-2 text-[0.95rem] font-semibold px-5 py-3 rounded-xl transition-all"
-          style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.10)", color: "white" }}
+          style={{ background: "var(--st-04)", border: "1px solid var(--st-10)", color: "white" }}
         >
           <Icon name="book-open" size={16} />
           {reviewMode ? "Ẩn review" : "Xem lại tất cả câu"}
@@ -193,10 +193,10 @@ export default function KnowledgeQuizResult({
                             border: isCorrectOpt ? "1px solid rgba(95,255,170,0.3)" : isPicked ? "1px solid rgba(255,90,114,0.3)" : "1px solid transparent",
                           }}
                         >
-                          <span className="font-bold flex-shrink-0" style={{ color: isCorrectOpt ? "#5fffaa" : isPicked ? "#ff5a72" : "rgba(255,255,255,0.5)" }}>
+                          <span className="font-bold flex-shrink-0" style={{ color: isCorrectOpt ? "#5fffaa" : isPicked ? "#ff5a72" : "var(--st-50)" }}>
                             {String.fromCharCode(65 + oIdx)}.
                           </span>
-                          <span style={{ color: isCorrectOpt ? "white" : "rgba(255,255,255,0.75)" }}>{opt}</span>
+                          <span style={{ color: isCorrectOpt ? "white" : "var(--st-70)" }}>{opt}</span>
                           {isCorrectOpt && <Icon name="check" size={14} color="#5fffaa" strokeWidth={3} />}
                           {isPicked && !isCorrectOpt && <Icon name="x-circle" size={14} color="#ff5a72" />}
                         </div>
@@ -208,7 +208,7 @@ export default function KnowledgeQuizResult({
                       <Icon name="clock" size={12} /> Hết giờ
                     </div>
                   )}
-                  <div className="ml-10 text-[0.85rem] leading-[1.6] rounded-lg px-3 py-2" style={{ background: "rgba(125,169,255,0.06)", border: "1px solid rgba(125,169,255,0.15)", color: "rgba(255,255,255,0.85)" }}>
+                  <div className="ml-10 text-[0.85rem] leading-[1.6] rounded-lg px-3 py-2" style={{ background: "rgba(125,169,255,0.06)", border: "1px solid rgba(125,169,255,0.15)", color: "var(--st-85)" }}>
                     <Icon name="info" size={12} color="#7da9ff" /> {q.explain}
                   </div>
                 </div>
@@ -226,15 +226,15 @@ export default function KnowledgeQuizResult({
         <h3 className="text-[1.2rem] font-bold leading-tight text-white mb-3">
           Muốn nắm vững metrics + áp dụng thực chiến?
         </h3>
-        <p className="text-[0.92rem] leading-[1.6] mb-5" style={{ color: "rgba(255,255,255,0.75)" }}>
+        <p className="text-[0.92rem] leading-[1.6] mb-5" style={{ color: "var(--st-70)" }}>
           Đọc thêm blog Marketing Index - benchmarks ROAS/CPA thực tế VN từ 60+ project. Hoặc dùng ROAS Calculator để tính break-even cho shop của bạn.
         </p>
         <div className="flex flex-wrap gap-3">
           <Link href="/index" className="btn btn-primary">Vào Marketing Index</Link>
-          <Link href="/tools/roas-calculator" className="text-[0.88rem] font-semibold px-4 py-2.5 rounded-lg transition-all" style={{ border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.85)" }}>
+          <Link href="/tools/roas-calculator" className="text-[0.88rem] font-semibold px-4 py-2.5 rounded-lg transition-all" style={{ border: "1px solid var(--st-15)", color: "var(--st-85)" }}>
             ROAS Calculator
           </Link>
-          <Link href="/quiz" className="text-[0.88rem] font-semibold px-4 py-2.5 rounded-lg transition-all" style={{ border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.85)" }}>
+          <Link href="/quiz" className="text-[0.88rem] font-semibold px-4 py-2.5 rounded-lg transition-all" style={{ border: "1px solid var(--st-15)", color: "var(--st-85)" }}>
             Test khác
           </Link>
         </div>
@@ -257,7 +257,7 @@ export default function KnowledgeQuizResult({
 function StatCard({ label, value, color, icon }: { label: string; value: number | string; color: string; icon: IconName }) {
   return (
     <div className="rounded-xl p-4" style={{ background: "rgba(255,255,255,0.025)", border: `1px solid ${color}25` }}>
-      <div className="flex items-center gap-1.5 text-[0.66rem] font-bold uppercase tracking-[0.13em] mb-1.5" style={{ color: "rgba(255,255,255,0.5)" }}>
+      <div className="flex items-center gap-1.5 text-[0.66rem] font-bold uppercase tracking-[0.13em] mb-1.5" style={{ color: "var(--st-50)" }}>
         <Icon name={icon} size={11} color={color} />
         <span>{label}</span>
       </div>

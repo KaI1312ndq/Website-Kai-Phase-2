@@ -41,7 +41,7 @@ export default function CohortStatus({ variant = "default" }: { variant?: "defau
 
   if (variant === "inline") {
     return (
-      <span className="inline-flex items-center gap-2 text-[0.78rem]" style={{ color: "rgba(255,255,255,0.7)" }}>
+      <span className="inline-flex items-center gap-2 text-[0.78rem]" style={{ color: "var(--st-70)" }}>
         <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#5fffaa" }} />
         Đang nhận application · khai giảng dự kiến <strong className="text-white">{month || "T7/2026"}</strong>
       </span>
@@ -54,7 +54,7 @@ export default function CohortStatus({ variant = "default" }: { variant?: "defau
         <span className="w-2 h-2 rounded-full animate-pulse flex-shrink-0" style={{ background: "#5fffaa" }} />
         <div className="flex-1 min-w-0">
           <div className="text-[0.62rem] font-bold uppercase tracking-[0.14em]" style={{ color: "#5fffaa" }}>Đang nhận application</div>
-          <div className="text-[0.78rem] mt-0.5" style={{ color: "rgba(255,255,255,0.78)" }}>
+          <div className="text-[0.78rem] mt-0.5" style={{ color: "var(--st-78)" }}>
             Khai giảng <strong className="text-white">{month || "T7/2026"}</strong> · 7–10 PM ngoài giờ hành chính
           </div>
         </div>
@@ -78,7 +78,7 @@ export default function CohortStatus({ variant = "default" }: { variant?: "defau
             </svg>
           </span>
           <div>
-            <div className="text-[0.62rem] font-semibold uppercase tracking-[0.14em] mb-0.5" style={{ color: "rgba(255,255,255,0.5)" }}>Lịch học</div>
+            <div className="text-[0.62rem] font-semibold uppercase tracking-[0.14em] mb-0.5" style={{ color: "var(--st-50)" }}>Lịch học</div>
             <div className="text-[0.88rem] font-semibold text-white">7 – 10 PM · ngoài giờ hành chính</div>
           </div>
         </div>
@@ -90,11 +90,11 @@ export default function CohortStatus({ variant = "default" }: { variant?: "defau
             </svg>
           </span>
           <div>
-            <div className="text-[0.62rem] font-semibold uppercase tracking-[0.14em] mb-0.5" style={{ color: "rgba(255,255,255,0.5)" }}>Khai giảng</div>
+            <div className="text-[0.62rem] font-semibold uppercase tracking-[0.14em] mb-0.5" style={{ color: "var(--st-50)" }}>Khai giảng</div>
             <div className="text-[0.88rem] font-semibold text-white">
               Dự kiến <span className="grad-text">{month || "T7/2026"}</span>
             </div>
-            <div className="text-[0.74rem] mt-0.5" style={{ color: "rgba(255,255,255,0.55)" }}>
+            <div className="text-[0.74rem] mt-0.5" style={{ color: "var(--st-55)" }}>
               Đủ 5 học viên sẽ đóng nhận đơn
             </div>
           </div>
@@ -107,9 +107,9 @@ export default function CohortStatus({ variant = "default" }: { variant?: "defau
             </svg>
           </span>
           <div>
-            <div className="text-[0.62rem] font-semibold uppercase tracking-[0.14em] mb-0.5" style={{ color: "rgba(255,255,255,0.5)" }}>Khoá tiếp theo</div>
+            <div className="text-[0.62rem] font-semibold uppercase tracking-[0.14em] mb-0.5" style={{ color: "var(--st-50)" }}>Khoá tiếp theo</div>
             <div className="text-[0.88rem] font-semibold text-white">
-              {nextMonth || "T8/2026"} <span className="font-normal" style={{ color: "rgba(255,255,255,0.55)" }}>(đợt sau hàng tháng)</span>
+              {nextMonth || "T8/2026"} <span className="font-normal" style={{ color: "var(--st-55)" }}>(đợt sau hàng tháng)</span>
             </div>
           </div>
         </div>

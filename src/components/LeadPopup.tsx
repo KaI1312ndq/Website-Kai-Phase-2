@@ -120,7 +120,7 @@ export default function LeadPopup() {
             style={{
               background: "linear-gradient(180deg, rgba(20,40,90,0.95) 0%, rgba(8,16,43,0.98) 100%)",
               border: "1px solid rgba(74,214,255,0.30)",
-              boxShadow: "0 30px 80px rgba(5,10,31,0.7), 0 1px 0 rgba(255,255,255,0.08) inset",
+              boxShadow: "0 30px 80px rgba(5,10,31,0.7), 0 1px 0 var(--st-08) inset",
             }}
           >
             {/* Glow blob */}
@@ -131,9 +131,9 @@ export default function LeadPopup() {
               onClick={() => close("x")}
               aria-label="Đóng"
               className="absolute top-4 right-4 z-10 w-8 h-8 rounded-md flex items-center justify-center transition-colors"
-              style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.10)" }}
+              style={{ background: "var(--st-06)", border: "1px solid var(--st-10)" }}
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--st-70)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18" />
                 <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
@@ -147,7 +147,7 @@ export default function LeadPopup() {
                   </svg>
                 </div>
                 <h3 className="text-[1.2rem] font-bold mb-2 text-white tracking-tight">Đã nhận thông tin!</h3>
-                <p className="text-[0.9rem] leading-[1.65]" style={{ color: "rgba(255,255,255,0.7)" }}>
+                <p className="text-[0.9rem] leading-[1.65]" style={{ color: "var(--st-70)" }}>
                   Mình sẽ liên hệ trong <strong className="text-white">24 giờ</strong> để đặt lịch tư vấn 15 phút qua Zalo.
                 </p>
               </div>
@@ -163,7 +163,7 @@ export default function LeadPopup() {
                   <span className="grad-text">Để mình tư vấn 15 phút.</span>
                 </h3>
 
-                <p className="text-[0.92rem] leading-[1.65] mb-5" style={{ color: "rgba(255,255,255,0.7)" }}>
+                <p className="text-[0.92rem] leading-[1.65] mb-5" style={{ color: "var(--st-70)" }}>
                   Để lại email - mình sẽ inbox Zalo để đặt lịch quick meet 15 phút. 2 bên cùng đánh giá phù hợp trước khi quyết định gì.
                 </p>
 
@@ -178,7 +178,7 @@ export default function LeadPopup() {
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                     placeholder="Họ và tên"
                     className="w-full px-4 py-3 rounded-lg text-[0.95rem] outline-none border"
-                    style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)", color: "white", fontFamily: "inherit" }}
+                    style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white", fontFamily: "inherit" }}
                   />
                   <input
                     value={form.email}
@@ -186,7 +186,7 @@ export default function LeadPopup() {
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                     placeholder="email@gmail.com"
                     className="w-full px-4 py-3 rounded-lg text-[0.95rem] outline-none border"
-                    style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)", color: "white", fontFamily: "inherit" }}
+                    style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white", fontFamily: "inherit" }}
                   />
                   <button
                     onClick={submit}
@@ -202,7 +202,7 @@ export default function LeadPopup() {
                   )}
                 </div>
 
-                <p className="text-center text-[0.72rem] mt-4" style={{ color: "rgba(255,255,255,0.4)" }}>
+                <p className="text-center text-[0.72rem] mt-4" style={{ color: "var(--st-40)" }}>
                   Apply không phải nộp tiền - quick meet rồi mới quyết.
                 </p>
               </div>

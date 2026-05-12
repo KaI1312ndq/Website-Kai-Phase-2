@@ -43,7 +43,7 @@ export default function NewsletterCTA({ source }: { source?: string }) {
       <div className="text-[1.25rem] md:text-[1.4rem] font-bold mb-3 leading-tight text-white">
         Nhận insight mới nhất về Ads, P&L và Unit Economics ecom
       </div>
-      <p className="text-[0.92rem] leading-[1.7] mb-5" style={{ color: "rgba(255,255,255,0.72)" }}>
+      <p className="text-[0.92rem] leading-[1.7] mb-5" style={{ color: "var(--st-72)" }}>
         Mỗi thứ 5 hàng tuần - 1 bài deep + 2-3 link đáng đọc. Không spam, huỷ bất cứ lúc nào.
       </p>
 
@@ -64,7 +64,7 @@ export default function NewsletterCTA({ source }: { source?: string }) {
             required
             disabled={state === "loading"}
             className="flex-1 px-4 py-3 rounded-xl text-[0.95rem] outline-none transition-all"
-            style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(0,0,0,0.25)", color: "white" }}
+            style={{ border: "1px solid var(--st-10)", background: "rgba(0,0,0,0.25)", color: "white" }}
           />
           <button
             type="submit"

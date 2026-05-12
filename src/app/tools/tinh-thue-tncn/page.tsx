@@ -144,7 +144,7 @@ export default function TaxCalcPage() {
                         <th className="text-right pb-2 font-semibold">Thuế suất</th>
                       </tr>
                     </thead>
-                    <tbody style={{ color: "rgba(255,255,255,0.85)" }}>
+                    <tbody style={{ color: "var(--st-85)" }}>
                       <tr><td className="py-1">Đến 5.000.000</td><td className="text-right tabular-nums">5%</td></tr>
                       <tr><td className="py-1">5.000.000 – 10.000.000</td><td className="text-right tabular-nums">10%</td></tr>
                       <tr><td className="py-1">10.000.000 – 18.000.000</td><td className="text-right tabular-nums">15%</td></tr>
@@ -154,7 +154,7 @@ export default function TaxCalcPage() {
                       <tr><td className="py-1">Trên 80.000.000</td><td className="text-right tabular-nums">35%</td></tr>
                     </tbody>
                   </table>
-                  <div className="mt-4 text-[0.82rem]" style={{ color: "rgba(255,255,255,0.75)" }}>
+                  <div className="mt-4 text-[0.82rem]" style={{ color: "var(--st-70)" }}>
                     <strong>Giảm trừ:</strong> Bản thân 11.000.000 · Phụ thuộc 4.400.000/người/tháng
                   </div>
                 </div>
@@ -171,7 +171,7 @@ export default function TaxCalcPage() {
                         <th className="text-right pb-2 font-semibold">Thuế suất</th>
                       </tr>
                     </thead>
-                    <tbody style={{ color: "rgba(255,255,255,0.92)" }}>
+                    <tbody style={{ color: "var(--st-90)" }}>
                       <tr><td className="py-1">Đến 10.000.000</td><td className="text-right tabular-nums">5%</td></tr>
                       <tr><td className="py-1">10.000.000 – 30.000.000</td><td className="text-right tabular-nums">10%</td></tr>
                       <tr><td className="py-1">30.000.000 – 60.000.000</td><td className="text-right tabular-nums">20%</td></tr>
@@ -179,7 +179,7 @@ export default function TaxCalcPage() {
                       <tr><td className="py-1">Trên 100.000.000</td><td className="text-right tabular-nums">35%</td></tr>
                     </tbody>
                   </table>
-                  <div className="mt-4 text-[0.82rem]" style={{ color: "rgba(255,255,255,0.85)" }}>
+                  <div className="mt-4 text-[0.82rem]" style={{ color: "var(--st-85)" }}>
                     <strong>Giảm trừ:</strong> Bản thân <strong className="text-white">15.500.000</strong> · Phụ thuộc <strong className="text-white">6.200.000</strong>/người/tháng (<span style={{ color: "#5fffaa" }}>+41% so với 2025</span>)
                   </div>
                 </div>
@@ -189,7 +189,7 @@ export default function TaxCalcPage() {
             <Reveal>
               <div className="rounded-2xl p-6" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
                 <h3 className="text-[1.05rem] font-bold text-white mb-4">Công thức tính step-by-step</h3>
-                <ol className="flex flex-col gap-2.5 list-none" style={{ color: "rgba(255,255,255,0.88)" }}>
+                <ol className="flex flex-col gap-2.5 list-none" style={{ color: "var(--st-80)" }}>
                   {[
                     "Lấy Lương Gross/tháng (lương trên hợp đồng, trước trừ BH + thuế)",
                     "Trừ BHXH 8% + BHYT 1.5% + BHTN 1% = 10.5% (cap tại 46.800.000 cho BHXH + BHYT)",

@@ -150,7 +150,7 @@ export default function ResourcesPage() {
               <a href="#downloads" className="px-6 py-3 rounded-xl text-[0.95rem] font-bold text-white" style={{ background: "var(--grad-primary)", boxShadow: "0 8px 24px rgba(20,110,245,0.35)" }}>
                 Xem tài liệu tải về 
               </a>
-              <a href="#tools" className="px-6 py-3 rounded-xl text-[0.95rem] font-bold" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid var(--line)", color: "white" }}>
+              <a href="#tools" className="px-6 py-3 rounded-xl text-[0.95rem] font-bold" style={{ background: "var(--st-04)", border: "1px solid var(--line)", color: "white" }}>
                 Tools + Quizzes
               </a>
             </div>
@@ -244,7 +244,7 @@ export default function ResourcesPage() {
                           <Icon name={t.icon} size={16} />
                         </span>
                         <span className="text-[0.92rem] font-semibold text-white flex-1">{t.title}</span>
-                        <Icon name="arrow-right" size={14} color="rgba(255,255,255,0.4)" />
+                        <Icon name="arrow-right" size={14} color="var(--st-40)" />
                       </Link>
                     </li>
                   ))}
@@ -273,7 +273,7 @@ export default function ResourcesPage() {
                           <div className="text-[0.92rem] font-semibold text-white truncate">{q.title}</div>
                           <div className="text-[0.74rem]" style={{ color: "var(--ink-mute)" }}>{q.subtitle}</div>
                         </div>
-                        <Icon name="arrow-right" size={14} color="rgba(255,255,255,0.4)" />
+                        <Icon name="arrow-right" size={14} color="var(--st-40)" />
                       </Link>
                     </li>
                   ))}

@@ -27,7 +27,7 @@ export default function HeroDashboard() {
         animate={{ opacity: 1, y: 0, x: 0 }}
         transition={{ duration: 0.7, delay: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
         className="absolute -top-6 -right-2 md:-right-6 z-20 rounded-xl px-4 py-2.5 flex items-center gap-3"
-        style={{ background: "rgba(8,16,43,0.85)", border: "1px solid rgba(74,214,255,0.3)", boxShadow: "0 8px 28px rgba(20,110,245,0.25)", backdropFilter: "blur(12px)" }}
+        style={{ background: "var(--db-85)", border: "1px solid rgba(74,214,255,0.3)", boxShadow: "0 8px 28px rgba(20,110,245,0.25)", backdropFilter: "blur(12px)" }}
       >
         <span className="w-7 h-7 rounded-md flex items-center justify-center" style={{ background: "rgba(74,214,255,0.15)" }}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4ad6ff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -36,7 +36,7 @@ export default function HeroDashboard() {
           </svg>
         </span>
         <div>
-          <div className="text-[0.6rem] font-semibold uppercase tracking-[0.14em]" style={{ color: "rgba(255,255,255,0.45)" }}>NMV Total</div>
+          <div className="text-[0.6rem] font-semibold uppercase tracking-[0.14em]" style={{ color: "var(--st-45)" }}>NMV Total</div>
           <div className="text-[0.92rem] font-bold text-white leading-none mt-0.5">356B <span style={{ color: "#4ad6ff" }}>↑</span></div>
         </div>
       </motion.div>
@@ -48,9 +48,9 @@ export default function HeroDashboard() {
         transition={{ duration: 0.8, delay: 0.3, ease: [0.2, 0.8, 0.2, 1] }}
         className="relative rounded-2xl p-5 md:p-6 overflow-hidden"
         style={{
-          background: "linear-gradient(180deg, rgba(20,40,90,0.6) 0%, rgba(8,16,43,0.85) 100%)",
-          border: "1px solid rgba(255,255,255,0.10)",
-          boxShadow: "0 24px 60px rgba(5,10,31,0.55), 0 1px 0 rgba(255,255,255,0.08) inset",
+          background: "linear-gradient(180deg, rgba(20,40,90,0.6) 0%, var(--db-85) 100%)",
+          border: "1px solid var(--st-10)",
+          boxShadow: "0 24px 60px rgba(5,10,31,0.55), 0 1px 0 var(--st-08) inset",
           backdropFilter: "blur(20px)",
         }}
       >
@@ -80,9 +80,9 @@ export default function HeroDashboard() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.5 + i * 0.08 }}
               className="rounded-lg p-3"
-              style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)" }}
+              style={{ background: "var(--st-03)", border: "1px solid rgba(255,255,255,0.07)" }}
             >
-              <div className="text-[0.6rem] font-semibold uppercase tracking-[0.14em] mb-1.5" style={{ color: "rgba(255,255,255,0.45)" }}>{m.label}</div>
+              <div className="text-[0.6rem] font-semibold uppercase tracking-[0.14em] mb-1.5" style={{ color: "var(--st-45)" }}>{m.label}</div>
               <div className="text-[1.4rem] font-bold tracking-tight text-white leading-none">{m.value}</div>
               <div className="text-[0.7rem] mt-1.5" style={{ color: m.color }}>{m.trend}</div>
             </motion.div>
@@ -90,9 +90,9 @@ export default function HeroDashboard() {
         </div>
 
         {/* Chart */}
-        <div className="rounded-lg p-4 mb-4" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}>
+        <div className="rounded-lg p-4 mb-4" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--st-05)" }}>
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[0.65rem] font-semibold uppercase tracking-[0.14em]" style={{ color: "rgba(255,255,255,0.4)" }}>Growth · 6 tháng</span>
+            <span className="text-[0.65rem] font-semibold uppercase tracking-[0.14em]" style={{ color: "var(--st-40)" }}>Growth · 6 tháng</span>
             <span className="text-[0.7rem] font-semibold" style={{ color: "#4ad6ff" }}>+248%</span>
           </div>
           <svg viewBox="0 0 320 70" className="w-full h-[70px]" preserveAspectRatio="none">
@@ -109,7 +109,7 @@ export default function HeroDashboard() {
             </defs>
             {/* Grid lines */}
             {[15, 30, 45].map((y) => (
-              <line key={y} x1="0" y1={y} x2="320" y2={y} stroke="rgba(255,255,255,0.05)" strokeDasharray="2 4" />
+              <line key={y} x1="0" y1={y} x2="320" y2={y} stroke="var(--st-05)" strokeDasharray="2 4" />
             ))}
             {/* Filled area */}
             <path
@@ -153,10 +153,10 @@ export default function HeroDashboard() {
                 {p.svg}
               </div>
             ))}
-            <span className="ml-2 text-[0.7rem] font-semibold px-2 py-1 rounded-md" style={{ background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.6)" }}>+40 shops</span>
+            <span className="ml-2 text-[0.7rem] font-semibold px-2 py-1 rounded-md" style={{ background: "var(--st-05)", color: "var(--st-60)" }}>+40 shops</span>
           </div>
           <div className="text-right">
-            <div className="text-[0.6rem] font-semibold uppercase tracking-[0.14em]" style={{ color: "rgba(255,255,255,0.4)" }}>Active brands</div>
+            <div className="text-[0.6rem] font-semibold uppercase tracking-[0.14em]" style={{ color: "var(--st-40)" }}>Active brands</div>
             <div className="text-[0.92rem] font-bold text-white leading-tight">60+</div>
           </div>
         </div>
@@ -168,7 +168,7 @@ export default function HeroDashboard() {
         animate={{ opacity: 1, y: 0, x: 0 }}
         transition={{ duration: 0.7, delay: 0.9, ease: [0.2, 0.8, 0.2, 1] }}
         className="absolute -bottom-5 left-2 md:-left-4 z-20 rounded-xl px-4 py-2.5 flex items-center gap-3"
-        style={{ background: "rgba(8,16,43,0.85)", border: "1px solid rgba(122,61,255,0.3)", boxShadow: "0 8px 28px rgba(122,61,255,0.25)", backdropFilter: "blur(12px)" }}
+        style={{ background: "var(--db-85)", border: "1px solid rgba(122,61,255,0.3)", boxShadow: "0 8px 28px rgba(122,61,255,0.25)", backdropFilter: "blur(12px)" }}
       >
         <span className="w-7 h-7 rounded-md flex items-center justify-center" style={{ background: "rgba(122,61,255,0.15)" }}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a78bff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -177,7 +177,7 @@ export default function HeroDashboard() {
           </svg>
         </span>
         <div>
-          <div className="text-[0.6rem] font-semibold uppercase tracking-[0.14em]" style={{ color: "rgba(255,255,255,0.45)" }}>ROAS Trung bình</div>
+          <div className="text-[0.6rem] font-semibold uppercase tracking-[0.14em]" style={{ color: "var(--st-45)" }}>ROAS Trung bình</div>
           <div className="text-[0.92rem] font-bold text-white leading-none mt-0.5">&gt;7x</div>
         </div>
       </motion.div>

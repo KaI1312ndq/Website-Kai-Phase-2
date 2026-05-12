@@ -84,7 +84,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
                 <span className="wf-badge">{CATEGORY_LABEL[cs.category]}</span>
               )}
               {platforms.map((p) => (
-                <span key={p} className="wf-badge-soft text-[0.72rem] px-2.5 py-1 rounded-md" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid var(--line)", color: "var(--ink-soft)" }}>
+                <span key={p} className="wf-badge-soft text-[0.72rem] px-2.5 py-1 rounded-md" style={{ background: "var(--st-04)", border: "1px solid var(--line)", color: "var(--ink-soft)" }}>
                   {p}
                 </span>
               ))}
@@ -95,7 +95,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
             </h1>
 
             {cs.description && (
-              <p className="t-body-lg max-w-[760px] mb-7" style={{ color: "rgba(255,255,255,0.78)" }}>
+              <p className="t-body-lg max-w-[760px] mb-7" style={{ color: "var(--st-78)" }}>
                 {cs.description}
               </p>
             )}
@@ -117,19 +117,19 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
             <div className="flex flex-wrap items-center gap-x-8 gap-y-3 mt-8 pt-6 border-t" style={{ borderColor: "var(--line)" }}>
               {cs.brand && (
                 <div>
-                  <div className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] mb-0.5" style={{ color: "rgba(255,255,255,0.45)" }}>Brand</div>
+                  <div className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] mb-0.5" style={{ color: "var(--st-45)" }}>Brand</div>
                   <div className="text-[0.95rem] font-semibold text-white">{cs.brand}</div>
                 </div>
               )}
               {cs.role && (
                 <div>
-                  <div className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] mb-0.5" style={{ color: "rgba(255,255,255,0.45)" }}>Vai trò</div>
+                  <div className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] mb-0.5" style={{ color: "var(--st-45)" }}>Vai trò</div>
                   <div className="text-[0.95rem] font-semibold text-white">{cs.role}</div>
                 </div>
               )}
               {cs.award && (
                 <div>
-                  <div className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] mb-0.5" style={{ color: "rgba(255,255,255,0.45)" }}>Award</div>
+                  <div className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] mb-0.5" style={{ color: "var(--st-45)" }}>Award</div>
                   <div className="text-[0.95rem] font-semibold grad-text">{cs.award}</div>
                 </div>
               )}
@@ -163,7 +163,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
 
             {tags.length > 0 && (
               <div className="mt-10 pt-6 border-t" style={{ borderColor: "var(--line)" }}>
-                <div className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] mb-3" style={{ color: "rgba(255,255,255,0.45)" }}>Tags</div>
+                <div className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] mb-3" style={{ color: "var(--st-45)" }}>Tags</div>
                 <div className="flex flex-wrap gap-2">
                   {tags.map((t) => (
                     <span key={t} className="wf-badge text-[0.75rem]">{t}</span>

@@ -153,7 +153,7 @@ export default function CommentSection({
               required
               placeholder="Chia sẻ suy nghĩ của bạn..."
               className="w-full px-4 py-2.5 rounded-lg text-[0.95rem] outline-none transition-all resize-y"
-              style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)", color: "white", fontFamily: "inherit", minHeight: 120 }}
+              style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white", fontFamily: "inherit", minHeight: 120 }}
             />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -168,19 +168,19 @@ export default function CommentSection({
                 maxLength={80}
                 required
                 className="w-full px-4 py-2.5 rounded-lg text-[0.95rem] outline-none transition-all"
-                style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)", color: "white", fontFamily: "inherit" }}
+                style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white", fontFamily: "inherit" }}
               />
             </div>
             <div>
               <label className="block text-[0.78rem] font-semibold mb-1.5 text-white">
-                Email <span className="font-normal" style={{ color: "rgba(255,255,255,0.45)" }}>(không bắt buộc)</span>
+                Email <span className="font-normal" style={{ color: "var(--st-45)" }}>(không bắt buộc)</span>
               </label>
               <input
                 type="email"
                 value={authorEmail}
                 onChange={(e) => setAuthorEmail(e.target.value)}
                 className="w-full px-4 py-2.5 rounded-lg text-[0.95rem] outline-none transition-all"
-                style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)", color: "white", fontFamily: "inherit" }}
+                style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white", fontFamily: "inherit" }}
               />
             </div>
           </div>
@@ -226,7 +226,7 @@ function CommentCard({
       <div className="w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center font-bold text-white text-[0.8rem]" style={{ background: "var(--grad-primary)" }}>
         {avatarInitial(comment.authorName)}
       </div>
-      <div className="flex-1 min-w-0 rounded-xl px-4 py-3" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid var(--line)" }}>
+      <div className="flex-1 min-w-0 rounded-xl px-4 py-3" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
         <div className="flex items-center gap-2 flex-wrap mb-1.5">
           <span className="text-[0.88rem] font-bold text-white">{comment.authorName}</span>
           <span className="text-[0.72rem]" style={{ color: "var(--ink-mute)" }}>

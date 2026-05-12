@@ -180,13 +180,13 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             {/* Tags */}
             {Array.isArray(post.tags) && post.tags.length > 0 && (
               <div className="mt-5 flex items-center gap-2 flex-wrap">
-                <span className="text-[0.72rem] font-semibold uppercase tracking-[0.14em]" style={{ color: "rgba(255,255,255,0.45)" }}>Tags:</span>
+                <span className="text-[0.72rem] font-semibold uppercase tracking-[0.14em]" style={{ color: "var(--st-45)" }}>Tags:</span>
                 {post.tags.map((t: string) => (
                   <Link
                     key={t}
                     href={`/blog?tag=${encodeURIComponent(t)}`}
                     className="text-[0.78rem] font-medium px-2.5 py-1 rounded-md transition-all hover:bg-white/10"
-                    style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.75)" }}
+                    style={{ background: "var(--st-04)", border: "1px solid var(--st-08)", color: "var(--st-70)" }}
                   >
                     #{t}
                   </Link>
@@ -237,7 +237,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                   <div className="text-[1.4rem] md:text-[1.6rem] font-bold mb-3 leading-tight text-white">
                     Muốn build P&L thực chiến + scale shop từ kinh nghiệm 60+ project?
                   </div>
-                  <p className="text-[0.95rem] leading-[1.7] mb-5" style={{ color: "rgba(255,255,255,0.75)" }}>
+                  <p className="text-[0.95rem] leading-[1.7] mb-5" style={{ color: "var(--st-70)" }}>
                     Khoá Ecom Foundation - 12 buổi từ cơ cấu chi phí, P&L gian hàng, đến tối ưu ROAS và build team.
                   </p>
                   <Link href="/ecom-foundation" className="btn btn-primary">

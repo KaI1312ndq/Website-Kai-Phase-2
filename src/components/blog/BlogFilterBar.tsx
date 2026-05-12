@@ -42,7 +42,7 @@ export default function BlogFilterBar({
       {/* Search bar */}
       <form onSubmit={onSearchSubmit} className="flex gap-2">
         <div className="relative flex-1">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute left-3.5 top-1/2 -translate-y-1/2" style={{ color: "rgba(255,255,255,0.4)" }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute left-3.5 top-1/2 -translate-y-1/2" style={{ color: "var(--st-40)" }}>
             <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
           </svg>
           <input
@@ -51,14 +51,14 @@ export default function BlogFilterBar({
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Tìm bài viết theo từ khoá..."
             className="w-full pl-11 pr-4 py-3 rounded-xl text-[0.95rem] outline-none transition-all"
-            style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)", color: "white" }}
+            style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white" }}
           />
           {search && (
             <button
               type="button"
               onClick={() => { setSearch(""); navigate({ q: undefined }); }}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-[0.78rem] px-2 py-1 rounded-md transition-all"
-              style={{ background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.7)" }}
+              style={{ background: "var(--st-05)", color: "var(--st-70)" }}
             >
               Xoá
             </button>
@@ -71,7 +71,7 @@ export default function BlogFilterBar({
 
       {/* Category chips */}
       <div className="flex items-center gap-2 flex-wrap">
-        <span className="text-[0.74rem] font-semibold uppercase tracking-[0.14em] mr-1" style={{ color: "rgba(255,255,255,0.45)" }}>Chủ đề:</span>
+        <span className="text-[0.74rem] font-semibold uppercase tracking-[0.14em] mr-1" style={{ color: "var(--st-45)" }}>Chủ đề:</span>
         {categories.map((c) => {
           const isActive = currentCategory === c.value;
           return (
@@ -80,14 +80,14 @@ export default function BlogFilterBar({
               onClick={() => navigate({ category: c.value })}
               className="px-3.5 py-1.5 rounded-full text-[0.82rem] font-semibold transition-all"
               style={{
-                background: isActive ? "rgba(20,110,245,0.20)" : "rgba(255,255,255,0.04)",
-                border: `1px solid ${isActive ? "rgba(20,110,245,0.5)" : "rgba(255,255,255,0.08)"}`,
-                color: isActive ? "white" : "rgba(255,255,255,0.7)",
+                background: isActive ? "rgba(20,110,245,0.20)" : "var(--st-04)",
+                border: `1px solid ${isActive ? "rgba(20,110,245,0.5)" : "var(--st-08)"}`,
+                color: isActive ? "white" : "var(--st-70)",
               }}
             >
               {c.label}
               {c.count > 0 && (
-                <span className="ml-1.5 text-[0.72rem]" style={{ color: isActive ? "rgba(255,255,255,0.65)" : "rgba(255,255,255,0.4)" }}>
+                <span className="ml-1.5 text-[0.72rem]" style={{ color: isActive ? "var(--st-65)" : "var(--st-40)" }}>
                   {c.count}
                 </span>
               )}

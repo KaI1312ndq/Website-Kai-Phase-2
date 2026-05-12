@@ -125,9 +125,9 @@ export default async function QuizResultPage({ params }: { params: Promise<{ slu
               {isMBTI && (
                 <div className="mt-7 grid grid-cols-4 gap-3 max-w-[480px]">
                   {mbtiLetters.map((letter) => (
-                    <div key={letter} className="rounded-xl p-3 text-center" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)" }}>
+                    <div key={letter} className="rounded-xl p-3 text-center" style={{ background: "var(--st-05)", border: "1px solid var(--st-10)" }}>
                       <div className="text-[1.6rem] font-extrabold leading-none mb-1" style={{ color: archetype.color }}>{letter}</div>
-                      <div className="text-[0.66rem] font-semibold uppercase tracking-[0.1em]" style={{ color: "rgba(255,255,255,0.5)" }}>{DICH_LABELS[letter]}</div>
+                      <div className="text-[0.66rem] font-semibold uppercase tracking-[0.1em]" style={{ color: "var(--st-50)" }}>{DICH_LABELS[letter]}</div>
                     </div>
                   ))}
                 </div>
@@ -160,7 +160,7 @@ export default async function QuizResultPage({ params }: { params: Promise<{ slu
                     </div>
                     <ul className="flex flex-col gap-2 list-none">
                       {archetype.strengths.map((s) => (
-                        <li key={s} className="text-[0.9rem] flex items-start gap-2" style={{ color: "rgba(255,255,255,0.9)" }}>
+                        <li key={s} className="text-[0.9rem] flex items-start gap-2" style={{ color: "var(--st-90)" }}>
                           <span style={{ color: "#5fffaa" }}>•</span>
                           <span>{s}</span>
                         </li>
@@ -174,7 +174,7 @@ export default async function QuizResultPage({ params }: { params: Promise<{ slu
                     </div>
                     <ul className="flex flex-col gap-2 list-none">
                       {archetype.weaknesses.map((s) => (
-                        <li key={s} className="text-[0.9rem] flex items-start gap-2" style={{ color: "rgba(255,255,255,0.9)" }}>
+                        <li key={s} className="text-[0.9rem] flex items-start gap-2" style={{ color: "var(--st-90)" }}>
                           <span style={{ color: "#ffd479" }}>•</span>
                           <span>{s}</span>
                         </li>
@@ -190,7 +190,7 @@ export default async function QuizResultPage({ params }: { params: Promise<{ slu
                   </h2>
                   <div className="flex flex-wrap gap-2">
                     {archetype.context.map((c) => (
-                      <span key={c} className="text-[0.85rem] px-3 py-1.5 rounded-lg" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.85)" }}>
+                      <span key={c} className="text-[0.85rem] px-3 py-1.5 rounded-lg" style={{ background: "var(--st-04)", border: "1px solid var(--st-08)", color: "var(--st-85)" }}>
                         {c}
                       </span>
                     ))}
@@ -222,7 +222,7 @@ export default async function QuizResultPage({ params }: { params: Promise<{ slu
 
                 {/* Retake CTA */}
                 <div className="rounded-2xl p-6 md:p-8 text-center" style={{ background: "linear-gradient(135deg, rgba(20,110,245,0.10) 0%, rgba(122,61,255,0.10) 100%)", border: "1px solid rgba(20,110,245,0.28)" }}>
-                  <p className="text-[0.95rem] mb-4" style={{ color: "rgba(255,255,255,0.85)" }}>
+                  <p className="text-[0.95rem] mb-4" style={{ color: "var(--st-85)" }}>
                     Đây là kết quả {archetype.name} - bạn có muốn tự làm bài test để kiểm tra mình không?
                   </p>
                   <Link href={`/quiz/${slug}`} className="btn btn-primary">
@@ -234,7 +234,7 @@ export default async function QuizResultPage({ params }: { params: Promise<{ slu
               {/* Sidebar */}
               <aside className="lg:sticky lg:top-24 flex flex-col gap-5 self-start">
                 <div className="rounded-xl p-5" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
-                  <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-3" style={{ color: "rgba(255,255,255,0.5)" }}>
+                  <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-3" style={{ color: "var(--st-50)" }}>
                     Các kiểu khác
                   </div>
                   <div className="flex flex-col gap-2">
@@ -243,7 +243,7 @@ export default async function QuizResultPage({ params }: { params: Promise<{ slu
                         key={a.id}
                         href={`/quiz/${slug}/result/${a.id}`}
                         className="flex items-center gap-3 p-2.5 rounded-lg transition-all hover:bg-white/5"
-                        style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}
+                        style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--st-05)" }}
                       >
                         <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: a.color }} />
                         <span className="text-[0.84rem] font-medium text-white">{a.name}</span>
@@ -259,7 +259,7 @@ export default async function QuizResultPage({ params }: { params: Promise<{ slu
                   <div className="text-[1rem] font-bold mb-2 leading-tight text-white">
                     Ecom Foundation
                   </div>
-                  <p className="text-[0.82rem] leading-[1.55] mb-4" style={{ color: "rgba(255,255,255,0.7)" }}>
+                  <p className="text-[0.82rem] leading-[1.55] mb-4" style={{ color: "var(--st-70)" }}>
                     12 buổi build P&L thực chiến + scale shop từ 60+ project.
                   </p>
                   <Link href="/ecom-foundation" className="block w-full text-center py-2.5 rounded-lg text-[0.85rem] font-bold"

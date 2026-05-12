@@ -77,7 +77,7 @@ export default function Calculator() {
               onChange={(e) => onGrossChange(e.target.value)}
               placeholder="20.000.000"
               className="w-full px-4 py-3.5 rounded-lg outline-none text-[1.05rem] font-semibold tabular-nums"
-              style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)", color: "white" }}
+              style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white" }}
             />
             <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[0.85rem] font-semibold pointer-events-none" style={{ color: "var(--ink-mute)" }}>
               VND
@@ -108,7 +108,7 @@ export default function Calculator() {
             value={dependents}
             onChange={(e) => setDependents(e.target.value)}
             className="w-full px-4 py-3 rounded-lg outline-none tabular-nums"
-            style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)", color: "white" }}
+            style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white" }}
           />
           <div className="text-[0.72rem] mt-1" style={{ color: "var(--ink-mute)" }}>
             Mặc định 0. Mỗi người phụ thuộc giảm trừ {deps > 0 ? "6.200.000 (2026)" : "4.400.000 – 6.200.000"} /tháng.
@@ -146,7 +146,7 @@ export default function Calculator() {
                 onChange={(e) => onInsuranceBaseChange(e.target.value)}
                 placeholder={gross > 0 ? `Mặc định = ${gross.toLocaleString("vi-VN")} (Gross)` : "VD: 10.000.000"}
                 className="w-full px-4 py-3 rounded-lg outline-none tabular-nums"
-                style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)", color: "white" }}
+                style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white" }}
               />
               <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[0.8rem] font-semibold pointer-events-none" style={{ color: "var(--ink-mute)" }}>
                 VND
@@ -237,7 +237,7 @@ function ResultView({ c, hasInsurance }: { c: ReturnType<typeof compareYears>; h
       </div>
 
       {/* DISCLAIMER */}
-      <div className="rounded-xl p-4 text-[0.78rem] leading-relaxed" style={{ background: "rgba(255,212,121,0.05)", border: "1px solid rgba(255,212,121,0.22)", color: "rgba(255,255,255,0.85)" }}>
+      <div className="rounded-xl p-4 text-[0.78rem] leading-relaxed" style={{ background: "rgba(255,212,121,0.05)", border: "1px solid rgba(255,212,121,0.22)", color: "var(--st-85)" }}>
         <strong style={{ color: "#ffd479" }}>Lưu ý:</strong> Tool tính theo Nghị quyết 110/2025/UBTVQH15 (hiệu lực từ 1/1/2026) cho thu nhập từ <strong>tiền lương cá nhân cư trú</strong>. Chưa bao gồm thưởng Tết (tính riêng theo tháng), thu nhập từ kinh doanh/đầu tư/chuyển nhượng. Tham khảo cơ quan thuế cho trường hợp đặc thù.
       </div>
     </div>
@@ -291,7 +291,7 @@ function BracketTable({ label, data, accent, subtle }: { label: string; data: Ta
       <div className="flex flex-col gap-2">
         {data.brackets.map((b, i) => (
           <div key={i} className="flex items-center justify-between text-[0.85rem]">
-            <span className="flex items-center gap-2" style={{ color: "rgba(255,255,255,0.85)" }}>
+            <span className="flex items-center gap-2" style={{ color: "var(--st-85)" }}>
               <span className="text-[0.65rem] font-bold px-1.5 py-0.5 rounded tabular-nums" style={{ background: `${accent}20`, color: accent }}>
                 {Math.round(b.rate * 100)}%
               </span>
@@ -308,12 +308,12 @@ function BracketTable({ label, data, accent, subtle }: { label: string; data: Ta
 function Row({ label, value, bold, big, negative, subtle, highlight, color }: { label: string; value: number; bold?: boolean; big?: boolean; negative?: boolean; subtle?: boolean; highlight?: boolean; color?: string }) {
   return (
     <div className={`flex items-baseline justify-between ${big ? "py-1" : "py-0.5"}`}>
-      <span className={`${big ? "text-[0.92rem] font-semibold" : "text-[0.82rem]"}`} style={{ color: subtle ? "var(--ink-mute)" : "rgba(255,255,255,0.85)" }}>
+      <span className={`${big ? "text-[0.92rem] font-semibold" : "text-[0.82rem]"}`} style={{ color: subtle ? "var(--ink-mute)" : "var(--st-85)" }}>
         {label}
       </span>
       <span
         className={`tabular-nums ${big ? "text-[1.25rem] font-extrabold" : bold ? "text-[0.9rem] font-bold" : "text-[0.86rem] font-semibold"}`}
-        style={{ color: color || (negative ? (highlight ? "#ff5a72" : "rgba(255,255,255,0.75)") : "white") }}
+        style={{ color: color || (negative ? (highlight ? "#ff5a72" : "var(--st-70)") : "white") }}
       >
         {negative && value !== 0 ? "−" : ""}{fmtAbs(value)}đ
       </span>
@@ -322,5 +322,5 @@ function Row({ label, value, bold, big, negative, subtle, highlight, color }: { 
 }
 
 function Divider() {
-  return <div className="my-2 h-px" style={{ background: "rgba(255,255,255,0.06)" }} />;
+  return <div className="my-2 h-px" style={{ background: "var(--st-06)" }} />;
 }

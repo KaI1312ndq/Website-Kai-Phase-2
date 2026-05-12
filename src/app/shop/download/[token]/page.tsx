@@ -125,7 +125,7 @@ export default async function DownloadPage({ params }: { params: Promise<{ token
               <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-2" style={{ color: "#ffd479" }}>
                 Quan trọng
               </div>
-              <ul className="flex flex-col gap-1.5 text-[0.85rem]" style={{ color: "rgba(255,255,255,0.85)" }}>
+              <ul className="flex flex-col gap-1.5 text-[0.85rem]" style={{ color: "var(--st-85)" }}>
                 <li className="flex items-start gap-2"><Icon name="check" size={12} color="#ffd479" strokeWidth={3} /><span>Lưu file về máy ngay để dùng lâu dài (link có thời hạn)</span></li>
                 <li className="flex items-start gap-2"><Icon name="check" size={12} color="#ffd479" strokeWidth={3} /><span>Bookmark trang này - quay lại tải lại bất kỳ lúc nào (đến {new Date(order.downloadExpiresAt!).toLocaleDateString("vi-VN")})</span></li>
                 <li className="flex items-start gap-2"><Icon name="check" size={12} color="#ffd479" strokeWidth={3} /><span>Link cũng đã được gửi vào email {order.customer.email}</span></li>

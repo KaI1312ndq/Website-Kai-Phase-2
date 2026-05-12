@@ -63,7 +63,7 @@ export default function ShopClient({ products }: { products: Product[] }) {
                 {Array.isArray(p.bullets) && p.bullets.length > 0 && (
                   <ul className="flex flex-col gap-1.5 mb-5 list-none">
                     {p.bullets.slice(0, 4).map((b, i) => (
-                      <li key={i} className="flex items-start gap-2 text-[0.85rem]" style={{ color: "rgba(255,255,255,0.85)" }}>
+                      <li key={i} className="flex items-start gap-2 text-[0.85rem]" style={{ color: "var(--st-85)" }}>
                         <Icon name="check" size={12} color="#5fffaa" strokeWidth={3} />
                         <span>{b}</span>
                       </li>
@@ -73,7 +73,7 @@ export default function ShopClient({ products }: { products: Product[] }) {
 
                 <div className="mt-auto pt-4 flex items-end justify-between gap-3">
                   <div>
-                    <div className="text-[0.7rem] uppercase tracking-[0.14em] font-bold" style={{ color: "rgba(255,255,255,0.5)" }}>Giá</div>
+                    <div className="text-[0.7rem] uppercase tracking-[0.14em] font-bold" style={{ color: "var(--st-50)" }}>Giá</div>
                     <div className="text-[1.4rem] font-extrabold grad-text">{p.price.toLocaleString("vi-VN")}đ</div>
                   </div>
                   <button
@@ -116,7 +116,7 @@ export default function ShopClient({ products }: { products: Product[] }) {
       {/* Sticky checkout bar */}
       {items.length > 0 && pricing && (
         <div className="sticky bottom-4 z-30 rounded-2xl p-5 flex items-center justify-between gap-4 flex-wrap backdrop-blur-md"
-          style={{ background: "rgba(8,16,43,0.85)", border: "1px solid rgba(20,110,245,0.32)", boxShadow: "0 12px 40px rgba(0,0,0,0.4)" }}>
+          style={{ background: "var(--db-85)", border: "1px solid rgba(20,110,245,0.32)", boxShadow: "0 12px 40px rgba(0,0,0,0.4)" }}>
           <div>
             <div className="text-[0.78rem]" style={{ color: "var(--ink-mute)" }}>
               {items.length} sản phẩm trong giỏ
@@ -125,7 +125,7 @@ export default function ShopClient({ products }: { products: Product[] }) {
               <span className="text-[1.6rem] font-extrabold grad-text">{pricing.total.toLocaleString("vi-VN")}đ</span>
               {pricing.discount > 0 && (
                 <>
-                  <span className="text-[0.85rem] line-through" style={{ color: "rgba(255,255,255,0.4)" }}>
+                  <span className="text-[0.85rem] line-through" style={{ color: "var(--st-40)" }}>
                     {pricing.subtotal.toLocaleString("vi-VN")}đ
                   </span>
                   <span className="text-[0.78rem] font-bold px-2 py-0.5 rounded" style={{ background: "rgba(95,255,170,0.15)", color: "#5fffaa" }}>
@@ -153,14 +153,14 @@ function PriceTier({ count, price, label, current }: { count: number; price: str
     <div
       className="rounded-lg py-3 px-3 transition-all"
       style={{
-        background: current ? "rgba(95,255,170,0.15)" : "rgba(255,255,255,0.03)",
-        border: `1px solid ${current ? "rgba(95,255,170,0.4)" : "rgba(255,255,255,0.06)"}`,
+        background: current ? "rgba(95,255,170,0.15)" : "var(--st-03)",
+        border: `1px solid ${current ? "rgba(95,255,170,0.4)" : "var(--st-06)"}`,
       }}
     >
       <div className="text-[1.2rem] font-extrabold mb-0.5" style={{ color: current ? "#5fffaa" : "white" }}>
         {price}
       </div>
-      <div className="text-[0.7rem]" style={{ color: "rgba(255,255,255,0.55)" }}>{label}</div>
+      <div className="text-[0.7rem]" style={{ color: "var(--st-55)" }}>{label}</div>
     </div>
   );
 }

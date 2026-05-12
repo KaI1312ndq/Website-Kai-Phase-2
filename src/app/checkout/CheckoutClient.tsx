@@ -133,8 +133,8 @@ export default function CheckoutClient() {
   if (cartHydrated && items.length === 0) {
     return (
       <div className="rounded-2xl p-10 text-center" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
-        <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid var(--line)" }}>
-          <Icon name="shopping-cart" size={28} color="rgba(255,255,255,0.4)" />
+        <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: "var(--st-04)", border: "1px solid var(--line)" }}>
+          <Icon name="shopping-cart" size={28} color="var(--st-40)" />
         </div>
         <h2 className="text-[1.1rem] font-bold text-white mb-2">Giỏ hàng trống</h2>
         <p className="text-[0.92rem] mb-5" style={{ color: "var(--ink-mute)" }}>
@@ -179,7 +179,7 @@ export default function CheckoutClient() {
             onChange={(e) => setName(e.target.value)}
             required
             className="w-full px-4 py-3 rounded-lg outline-none focus:border-[#7da9ff] transition-colors"
-            style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)", color: "white" }}
+            style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white" }}
             placeholder="Nguyễn Văn A"
           />
         </div>
@@ -194,7 +194,7 @@ export default function CheckoutClient() {
             onChange={(e) => setEmail(e.target.value)}
             required
             className="w-full px-4 py-3 rounded-lg outline-none focus:border-[#7da9ff] transition-colors"
-            style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)", color: "white" }}
+            style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white" }}
             placeholder="email@example.com"
           />
           {user && email && (
@@ -215,7 +215,7 @@ export default function CheckoutClient() {
             onChange={(e) => setPhone(e.target.value)}
             required
             className="w-full px-4 py-3 rounded-lg outline-none focus:border-[#7da9ff] transition-colors"
-            style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)", color: "white" }}
+            style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white" }}
             placeholder="0xxx xxx xxx"
           />
         </div>
@@ -226,7 +226,7 @@ export default function CheckoutClient() {
           </div>
         )}
 
-        <div className="text-[0.75rem]" style={{ color: "rgba(255,255,255,0.45)" }}>
+        <div className="text-[0.75rem]" style={{ color: "var(--st-45)" }}>
           Bằng việc thanh toán, bạn đồng ý chính sách <strong className="text-white">không hoàn tiền</strong> với sản phẩm số.
         </div>
 
@@ -271,7 +271,7 @@ export default function CheckoutClient() {
           ))}
         </ul>
 
-        <div className="border-t pt-4 flex flex-col gap-2 text-[0.85rem]" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+        <div className="border-t pt-4 flex flex-col gap-2 text-[0.85rem]" style={{ borderColor: "var(--st-08)" }}>
           <div className="flex justify-between" style={{ color: "var(--ink-mute)" }}>
             <span>Tạm tính ({items.length} SP)</span>
             <span>{pricing.subtotal.toLocaleString("vi-VN")}đ</span>
@@ -290,8 +290,8 @@ export default function CheckoutClient() {
           )}
 
           {/* Voucher input - applies directly to total below */}
-          <div className="mt-3 pt-3" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
-            <div className="text-[0.72rem] font-semibold uppercase tracking-[0.14em] mb-2" style={{ color: "rgba(255,255,255,0.5)" }}>
+          <div className="mt-3 pt-3" style={{ borderTop: "1px solid var(--st-08)" }}>
+            <div className="text-[0.72rem] font-semibold uppercase tracking-[0.14em] mb-2" style={{ color: "var(--st-50)" }}>
               Mã voucher
             </div>
             {voucher ? (
@@ -309,7 +309,7 @@ export default function CheckoutClient() {
                   type="button"
                   onClick={clearVoucher}
                   className="text-[0.72rem] font-semibold flex-shrink-0"
-                  style={{ color: "rgba(255,255,255,0.55)" }}
+                  style={{ color: "var(--st-55)" }}
                 >
                   Bỏ
                 </button>
@@ -322,7 +322,7 @@ export default function CheckoutClient() {
                   onChange={(e) => setVoucherInput(e.target.value.toUpperCase())}
                   placeholder="VD: BANBE100"
                   className="flex-1 min-w-0 px-3 py-2 rounded-lg outline-none uppercase font-mono text-[0.85rem]"
-                  style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)", color: "white" }}
+                  style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white" }}
                 />
                 <button
                   type="button"
@@ -347,7 +347,7 @@ export default function CheckoutClient() {
             )}
           </div>
 
-          <div className="flex items-baseline justify-between mt-3 pt-3 border-t" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+          <div className="flex items-baseline justify-between mt-3 pt-3 border-t" style={{ borderColor: "var(--st-08)" }}>
             <span className="text-white font-semibold">Tổng</span>
             <span className="text-[1.4rem] font-extrabold grad-text">
               {finalTotal.toLocaleString("vi-VN")}đ

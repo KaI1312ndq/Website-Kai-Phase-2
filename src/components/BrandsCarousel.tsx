@@ -50,8 +50,8 @@ function CarouselRow({ items, reverse = false }: { items: DisplayBrand[]; revers
             key={i}
             className="flex items-center justify-center px-6 py-3 rounded-xl flex-shrink-0"
             style={{
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid rgba(255,255,255,0.10)",
+              background: "var(--st-04)",
+              border: "1px solid var(--st-10)",
               minWidth: "120px",
               height: "56px",
               backdropFilter: "blur(10px)",

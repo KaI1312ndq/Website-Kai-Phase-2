@@ -230,7 +230,7 @@ export default function CoursesPage() {
               <a href="#offline" className="px-6 py-3 rounded-xl text-[0.95rem] font-bold text-white" style={{ background: "var(--grad-primary)", boxShadow: "0 8px 24px rgba(20,110,245,0.35)" }}>
                 Cohort & Workshop 
               </a>
-              <a href="#online" className="px-6 py-3 rounded-xl text-[0.95rem] font-bold" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid var(--line)", color: "white" }}>
+              <a href="#online" className="px-6 py-3 rounded-xl text-[0.95rem] font-bold" style={{ background: "var(--st-04)", border: "1px solid var(--line)", color: "white" }}>
                 Mini courses online
               </a>
               <Link href="/quiz/huong-nghiep-marketing" className="px-6 py-3 rounded-xl text-[0.95rem] font-bold" style={{ background: "transparent", color: "#7da9ff", textDecoration: "underline" }}>
@@ -282,26 +282,26 @@ export default function CoursesPage() {
                     <p className="text-[0.88rem] font-semibold mb-3" style={{ color: c.color }}>{c.subtitle}</p>
 
                     <div className="flex flex-wrap gap-2 mb-4 text-[0.74rem]">
-                      <span className="px-2 py-0.5 rounded" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.75)" }}>{c.format}</span>
-                      <span className="px-2 py-0.5 rounded" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.75)" }}>{c.duration}</span>
+                      <span className="px-2 py-0.5 rounded" style={{ background: "var(--st-04)", border: "1px solid var(--st-08)", color: "var(--st-70)" }}>{c.format}</span>
+                      <span className="px-2 py-0.5 rounded" style={{ background: "var(--st-04)", border: "1px solid var(--st-08)", color: "var(--st-70)" }}>{c.duration}</span>
                     </div>
 
-                    <div className="text-[0.72rem] font-bold uppercase tracking-[0.14em] mb-1.5" style={{ color: "rgba(255,255,255,0.5)" }}>Phù hợp với</div>
-                    <p className="text-[0.84rem] mb-4 leading-snug" style={{ color: "rgba(255,255,255,0.82)" }}>{c.audience}</p>
+                    <div className="text-[0.72rem] font-bold uppercase tracking-[0.14em] mb-1.5" style={{ color: "var(--st-50)" }}>Phù hợp với</div>
+                    <p className="text-[0.84rem] mb-4 leading-snug" style={{ color: "var(--st-80)" }}>{c.audience}</p>
 
-                    <div className="text-[0.72rem] font-bold uppercase tracking-[0.14em] mb-2" style={{ color: "rgba(255,255,255,0.5)" }}>Bạn sẽ học được</div>
+                    <div className="text-[0.72rem] font-bold uppercase tracking-[0.14em] mb-2" style={{ color: "var(--st-50)" }}>Bạn sẽ học được</div>
                     <ul className="flex flex-col gap-1.5 mb-5 list-none">
                       {c.highlights.map((h) => (
-                        <li key={h} className="flex items-start gap-2 text-[0.84rem]" style={{ color: "rgba(255,255,255,0.88)" }}>
+                        <li key={h} className="flex items-start gap-2 text-[0.84rem]" style={{ color: "var(--st-80)" }}>
                           <Icon name="check" size={12} color="#5fffaa" strokeWidth={3} />
                           <span className="leading-snug">{h}</span>
                         </li>
                       ))}
                     </ul>
 
-                    <div className="mt-auto pt-4 flex items-end justify-between gap-3" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                    <div className="mt-auto pt-4 flex items-end justify-between gap-3" style={{ borderTop: "1px solid var(--st-06)" }}>
                       <div>
-                        <div className="text-[0.7rem] uppercase tracking-[0.14em] font-bold" style={{ color: "rgba(255,255,255,0.5)" }}>Học phí</div>
+                        <div className="text-[0.7rem] uppercase tracking-[0.14em] font-bold" style={{ color: "var(--st-50)" }}>Học phí</div>
                         <div className="text-[1.1rem] font-extrabold text-white mt-0.5">{c.price}</div>
                       </div>
                       {isAvailable ? (
@@ -374,26 +374,26 @@ export default function CoursesPage() {
                     <p className="text-[0.88rem] font-semibold mb-3" style={{ color: c.color }}>{c.subtitle}</p>
 
                     <div className="flex flex-wrap gap-2 mb-4 text-[0.74rem]">
-                      <span className="px-2 py-0.5 rounded" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.75)" }}>{c.format}</span>
-                      <span className="px-2 py-0.5 rounded" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.75)" }}>{c.duration}</span>
+                      <span className="px-2 py-0.5 rounded" style={{ background: "var(--st-04)", border: "1px solid var(--st-08)", color: "var(--st-70)" }}>{c.format}</span>
+                      <span className="px-2 py-0.5 rounded" style={{ background: "var(--st-04)", border: "1px solid var(--st-08)", color: "var(--st-70)" }}>{c.duration}</span>
                     </div>
 
-                    <div className="text-[0.72rem] font-bold uppercase tracking-[0.14em] mb-1.5" style={{ color: "rgba(255,255,255,0.5)" }}>Phù hợp với</div>
-                    <p className="text-[0.84rem] mb-4 leading-snug" style={{ color: "rgba(255,255,255,0.82)" }}>{c.audience}</p>
+                    <div className="text-[0.72rem] font-bold uppercase tracking-[0.14em] mb-1.5" style={{ color: "var(--st-50)" }}>Phù hợp với</div>
+                    <p className="text-[0.84rem] mb-4 leading-snug" style={{ color: "var(--st-80)" }}>{c.audience}</p>
 
-                    <div className="text-[0.72rem] font-bold uppercase tracking-[0.14em] mb-2" style={{ color: "rgba(255,255,255,0.5)" }}>Bạn sẽ học được</div>
+                    <div className="text-[0.72rem] font-bold uppercase tracking-[0.14em] mb-2" style={{ color: "var(--st-50)" }}>Bạn sẽ học được</div>
                     <ul className="flex flex-col gap-1.5 mb-5 list-none">
                       {c.highlights.map((h) => (
-                        <li key={h} className="flex items-start gap-2 text-[0.84rem]" style={{ color: "rgba(255,255,255,0.88)" }}>
+                        <li key={h} className="flex items-start gap-2 text-[0.84rem]" style={{ color: "var(--st-80)" }}>
                           <Icon name="check" size={12} color="#5fffaa" strokeWidth={3} />
                           <span className="leading-snug">{h}</span>
                         </li>
                       ))}
                     </ul>
 
-                    <div className="mt-auto pt-4 flex items-end justify-between gap-3" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                    <div className="mt-auto pt-4 flex items-end justify-between gap-3" style={{ borderTop: "1px solid var(--st-06)" }}>
                       <div>
-                        <div className="text-[0.7rem] uppercase tracking-[0.14em] font-bold" style={{ color: "rgba(255,255,255,0.5)" }}>Học phí</div>
+                        <div className="text-[0.7rem] uppercase tracking-[0.14em] font-bold" style={{ color: "var(--st-50)" }}>Học phí</div>
                         <div className="text-[1.1rem] font-extrabold text-white mt-0.5">{c.price}</div>
                       </div>
                       {isAvailable ? (

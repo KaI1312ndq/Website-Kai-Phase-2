@@ -232,10 +232,10 @@ export default function Page() {
             <h2 className="t-h2 mb-3 text-white">TikTok Shop và Shopee - <span className="grad-text">sàn nào phí cao hơn?</span></h2>
             <p className="t-body mb-10 max-w-[680px]">Tổng quan các loại phí cố định và option giữa 2 sàn, cập nhật bảng phí mới nhất 05/2026.</p>
 
-            <div className="overflow-x-auto rounded-2xl" style={{ background: "rgba(20,40,90,0.30)", border: "1px solid var(--line)" }}>
+            <div className="overflow-x-auto rounded-2xl" style={{ background: "var(--dg-30)", border: "1px solid var(--line)" }}>
               <table className="w-full text-[0.88rem]">
                 <thead>
-                  <tr style={{ background: "rgba(255,255,255,0.04)" }}>
+                  <tr style={{ background: "var(--st-04)" }}>
                     <th className="text-left px-4 py-3 font-semibold text-white">Loại phí</th>
                     <th className="text-left px-4 py-3 font-semibold" style={{ color: "#EE4D2D" }}>Shopee Non-Mall</th>
                     <th className="text-left px-4 py-3 font-semibold" style={{ color: "#EE4D2D" }}>Shopee Mall</th>
@@ -269,7 +269,7 @@ export default function Page() {
               </table>
             </div>
 
-            <div className="mt-6 rounded-xl p-5 text-[0.92rem] leading-[1.7]" style={{ background: "rgba(20,110,245,0.06)", border: "1px solid rgba(20,110,245,0.22)", color: "rgba(255,255,255,0.78)" }}>
+            <div className="mt-6 rounded-xl p-5 text-[0.92rem] leading-[1.7]" style={{ background: "rgba(20,110,245,0.06)", border: "1px solid rgba(20,110,245,0.22)", color: "var(--st-78)" }}>
               <strong className="text-white">Kết luận tổng quan:</strong> TikTok Shop có phí hoa hồng <em>cao hơn</em> Shopee 1-3% ở hầu hết ngành. Bù lại, TikTok có sức mạnh live commerce và content viral mà Shopee không có. Quyết định "sàn nào tốt hơn" phụ thuộc <em>sản phẩm, ngành hàng, kênh traffic chính</em> - dùng tool ở trên để test với case cụ thể của bạn.
             </div>
           </div>
@@ -370,25 +370,25 @@ export default function Page() {
             <div className="space-y-4">
               <div className="rounded-xl p-5" style={{ background: "rgba(20,110,245,0.06)", border: "1px solid rgba(20,110,245,0.22)" }}>
                 <div className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] mb-2" style={{ color: "#9bb6ff" }}>1. Phí hoa hồng nền tảng</div>
-                <code className="text-[0.95rem] block" style={{ color: "rgba(255,255,255,0.85)" }}>
+                <code className="text-[0.95rem] block" style={{ color: "var(--st-85)" }}>
                   Phí HH = (Giá bán − Voucher seller) × % theo ngành
                 </code>
               </div>
               <div className="rounded-xl p-5" style={{ background: "rgba(20,110,245,0.06)", border: "1px solid rgba(20,110,245,0.22)" }}>
                 <div className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] mb-2" style={{ color: "#9bb6ff" }}>2. Phí giao dịch (6%)</div>
-                <code className="text-[0.95rem] block" style={{ color: "rgba(255,255,255,0.85)" }}>
+                <code className="text-[0.95rem] block" style={{ color: "var(--st-85)" }}>
                   Phí GD = (Giá bán + Phí ship buyer trả − Voucher seller) × 6%
                 </code>
               </div>
               <div className="rounded-xl p-5" style={{ background: "rgba(20,110,245,0.06)", border: "1px solid rgba(20,110,245,0.22)" }}>
                 <div className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] mb-2" style={{ color: "#9bb6ff" }}>3. Voucher Extra / Extra Plus</div>
-                <code className="text-[0.95rem] block" style={{ color: "rgba(255,255,255,0.85)" }}>
+                <code className="text-[0.95rem] block" style={{ color: "var(--st-85)" }}>
                   Phí VE = MIN(Giá bán × %, cap)
                 </code>
               </div>
               <div className="rounded-xl p-5" style={{ background: "rgba(0,215,34,0.05)", border: "1px solid rgba(0,215,34,0.22)" }}>
                 <div className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] mb-2" style={{ color: "#5fffaa" }}>4. Lợi nhuận / đơn</div>
-                <code className="text-[0.95rem] block" style={{ color: "rgba(255,255,255,0.85)" }}>
+                <code className="text-[0.95rem] block" style={{ color: "var(--st-85)" }}>
                   Lợi nhuận = Doanh thu thực − Tổng phí sàn − Chi phí khác − COGS
                 </code>
               </div>

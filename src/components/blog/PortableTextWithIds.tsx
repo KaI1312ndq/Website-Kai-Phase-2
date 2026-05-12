@@ -69,9 +69,9 @@ export default function PortableTextWithIds({ value }: { value: any }) {
               )}
               <tbody>
                 {rows.map((row, ri) => (
-                  <tr key={ri} style={{ background: ri % 2 === 0 ? "transparent" : "rgba(255,255,255,0.02)", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                  <tr key={ri} style={{ background: ri % 2 === 0 ? "transparent" : "rgba(255,255,255,0.02)", borderTop: "1px solid var(--st-06)" }}>
                     {(Array.isArray(row.cells) ? row.cells : []).map((cell, ci) => (
-                      <td key={ci} className="px-4 py-2.5 align-top" style={{ color: ci === 0 ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.82)" }}>
+                      <td key={ci} className="px-4 py-2.5 align-top" style={{ color: ci === 0 ? "var(--st-90)" : "var(--st-80)" }}>
                         {cell}
                       </td>
                     ))}
@@ -80,7 +80,7 @@ export default function PortableTextWithIds({ value }: { value: any }) {
               </tbody>
             </table>
             {value?.caption && (
-              <figcaption className="px-4 py-2.5 text-[0.78rem] italic" style={{ color: "var(--ink-mute)", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+              <figcaption className="px-4 py-2.5 text-[0.78rem] italic" style={{ color: "var(--ink-mute)", borderTop: "1px solid var(--st-04)" }}>
                 {value.caption}
               </figcaption>
             )}

@@ -96,13 +96,13 @@ function CourseHero() {
           <h1 className="t-display tracking-tight mb-6 text-white">
             <RevealText instant text="Foundation" className="block" />
             <RevealText instant text="Ecommerce." className="block grad-text" />
-            <span className="block text-[0.55em] font-semibold mt-3" style={{ color: "rgba(255,255,255,0.65)" }}>
+            <span className="block text-[0.55em] font-semibold mt-3" style={{ color: "var(--st-65)" }}>
               <RevealText instant text="Tư duy thật, Thực chiến thật." />
             </span>
           </h1>
 
           <Reveal instant>
-            <p className="t-body-lg max-w-[520px] mb-8" style={{ color: "rgba(255,255,255,0.72)" }}>
+            <p className="t-body-lg max-w-[520px] mb-8" style={{ color: "var(--st-72)" }}>
               Khoá foundation về thương mại điện tử cho người mới và marketer trẻ - không dạy tool lẻ, không hứa hẹn ngắn hạn. Xây tư duy đúng từ đầu để bước vào ngành làm thật.
             </p>
           </Reveal>
@@ -143,8 +143,8 @@ function CohortCard() {
         transition={{ duration: 0.8, ease: [0.2, 0.8, 0.2, 1] }}
         className="rounded-2xl overflow-hidden relative"
         style={{
-          background: "linear-gradient(180deg, rgba(20,40,90,0.6), rgba(8,16,43,0.85))",
-          border: "1px solid rgba(255,255,255,0.10)",
+          background: "linear-gradient(180deg, rgba(20,40,90,0.6), var(--db-85))",
+          border: "1px solid var(--st-10)",
           boxShadow: "0 30px 80px rgba(5,10,31,0.6)",
           backdropFilter: "blur(20px)",
         }}
@@ -158,7 +158,7 @@ function CohortCard() {
               <span className="text-[0.62rem] font-bold uppercase tracking-[0.16em]" style={{ color: "#5fffaa" }}>Đang nhận application</span>
             </div>
             <div className="text-[1.6rem] font-bold tracking-tight text-white leading-tight mb-1">{COURSE.cohort.label}</div>
-            <div className="text-[0.85rem]" style={{ color: "rgba(255,255,255,0.65)" }}>{COURSE.name} - Khoá đầu tiên</div>
+            <div className="text-[0.85rem]" style={{ color: "var(--st-65)" }}>{COURSE.name} - Khoá đầu tiên</div>
           </div>
         </div>
 
@@ -175,7 +175,7 @@ function CohortCard() {
                 {it.icon}
               </span>
               <div>
-                <div className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] mb-0.5" style={{ color: "rgba(255,255,255,0.45)" }}>{it.label}</div>
+                <div className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] mb-0.5" style={{ color: "var(--st-45)" }}>{it.label}</div>
                 <div className="text-[0.92rem] font-semibold text-white">{it.val}</div>
               </div>
             </div>
@@ -187,7 +187,7 @@ function CohortCard() {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4ad6ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M9 18h6M10 22h4" /><path d="M2 9a10 10 0 0120 0c0 4-3 6-3 9H5c0-3-3-5-3-9z" />
               </svg>
-              <span className="text-[0.78rem]" style={{ color: "rgba(255,255,255,0.78)" }}>
+              <span className="text-[0.78rem]" style={{ color: "var(--st-78)" }}>
                 Lớp nhỏ giữ chất lượng - <strong className="text-white">tối đa 7</strong>, chốt khi đủ ít nhất <strong className="text-white">5</strong>.
               </span>
             </div>
@@ -222,7 +222,7 @@ function FitForSection() {
               </div>
               <ul className="space-y-3">
                 {FIT_FOR.map((it, i) => (
-                  <li key={i} className="flex items-start gap-3 text-[0.95rem]" style={{ color: "rgba(255,255,255,0.78)" }}>
+                  <li key={i} className="flex items-start gap-3 text-[0.95rem]" style={{ color: "var(--st-78)" }}>
                     <span className="flex-shrink-0 mt-1"><IconCheck /></span>
                     <span>{it}</span>
                   </li>
@@ -240,7 +240,7 @@ function FitForSection() {
               </div>
               <ul className="space-y-3">
                 {NOT_FIT_FOR.map((it, i) => (
-                  <li key={i} className="flex items-start gap-3 text-[0.95rem]" style={{ color: "rgba(255,255,255,0.78)" }}>
+                  <li key={i} className="flex items-start gap-3 text-[0.95rem]" style={{ color: "var(--st-78)" }}>
                     <span className="flex-shrink-0 mt-1"><IconX /></span>
                     <span>{it}</span>
                   </li>
@@ -322,9 +322,9 @@ function CurriculumSection() {
               onClick={() => setActiveModule("ALL")}
               className="px-3.5 py-1.5 rounded-md text-[0.78rem] font-semibold transition-all border"
               style={{
-                borderColor: activeModule === "ALL" ? "#146ef5" : "rgba(255,255,255,0.10)",
+                borderColor: activeModule === "ALL" ? "#146ef5" : "var(--st-10)",
                 background: activeModule === "ALL" ? "rgba(20,110,245,0.15)" : "rgba(255,255,255,0.02)",
-                color: activeModule === "ALL" ? "#9bb6ff" : "rgba(255,255,255,0.65)",
+                color: activeModule === "ALL" ? "#9bb6ff" : "var(--st-65)",
               }}
             >
               Tất cả ({SESSIONS.length})
@@ -338,9 +338,9 @@ function CurriculumSection() {
                   onClick={() => setActiveModule(k)}
                   className="px-3.5 py-1.5 rounded-md text-[0.78rem] font-semibold transition-all border"
                   style={{
-                    borderColor: active ? MODULES[k].color : "rgba(255,255,255,0.10)",
+                    borderColor: active ? MODULES[k].color : "var(--st-10)",
                     background: active ? `${MODULES[k].color}15` : "rgba(255,255,255,0.02)",
-                    color: active ? MODULES[k].color : "rgba(255,255,255,0.65)",
+                    color: active ? MODULES[k].color : "var(--st-65)",
                   }}
                 >
                   {MODULES[k].name} ({count})
@@ -361,8 +361,8 @@ function CurriculumSection() {
                   layout
                   className="rounded-xl overflow-hidden"
                   style={{
-                    background: "rgba(255,255,255,0.03)",
-                    border: `1px solid ${open ? moduleColor + "40" : "rgba(255,255,255,0.08)"}`,
+                    background: "var(--st-03)",
+                    border: `1px solid ${open ? moduleColor + "40" : "var(--st-08)"}`,
                   }}
                 >
                   <button
@@ -378,7 +378,7 @@ function CurriculumSection() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap mb-1">
                         <span className="text-[0.68rem] font-semibold uppercase tracking-[0.14em]" style={{ color: moduleColor }}>{MODULES[s.module].name}</span>
-                        <span className="text-[0.68rem]" style={{ color: "rgba(255,255,255,0.4)" }}>· {s.week}</span>
+                        <span className="text-[0.68rem]" style={{ color: "var(--st-40)" }}>· {s.week}</span>
                         {s.isPresentation && (
                           <span className="text-[0.62rem] font-bold uppercase tracking-[0.12em] px-2 py-0.5 rounded" style={{ background: "rgba(255,174,19,0.12)", color: "#ffd479", border: "1px solid rgba(255,174,19,0.25)" }}>
                             Presentation
@@ -401,7 +401,7 @@ function CurriculumSection() {
                     >
                       <ul className="space-y-2">
                         {s.bullets.map((b, j) => (
-                          <li key={j} className="flex items-start gap-2.5 text-[0.9rem]" style={{ color: "rgba(255,255,255,0.72)" }}>
+                          <li key={j} className="flex items-start gap-2.5 text-[0.9rem]" style={{ color: "var(--st-72)" }}>
                             <span className="w-1 h-1 rounded-full flex-shrink-0 mt-2.5" style={{ background: moduleColor }} />
                             <span>{b}</span>
                           </li>
@@ -437,7 +437,7 @@ function ToolCallout() {
             <div className="relative flex-1">
               <div className="text-[0.62rem] font-bold uppercase tracking-[0.16em] mb-1.5" style={{ color: "#7ee2ff" }}>Tool miễn phí · Practice ngay</div>
               <div className="text-[1.1rem] md:text-[1.2rem] font-bold tracking-tight text-white mb-1.5">Tính phí sàn TikTok Shop & Shopee</div>
-              <p className="text-[0.88rem] leading-[1.6]" style={{ color: "rgba(255,255,255,0.7)" }}>
+              <p className="text-[0.88rem] leading-[1.6]" style={{ color: "var(--st-70)" }}>
                 Học xong B5 (Tư duy giá · Tồn kho · Điểm gian hàng), thực hành ngay với tool tính phí sàn - so sánh đồng thời 4 phương án Mall vs Non-Mall. Bảng phí 2026 mới nhất.
               </p>
             </div>
@@ -542,16 +542,16 @@ function TrainerSection() {
         <div className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-10 lg:gap-16 items-start">
           <Reveal>
             <div className="rounded-2xl overflow-hidden relative" style={{
-              background: "linear-gradient(180deg, rgba(20,40,90,0.5), rgba(8,16,43,0.85))",
-              border: "1px solid rgba(255,255,255,0.10)",
+              background: "linear-gradient(180deg, var(--dg-50), var(--db-85))",
+              border: "1px solid var(--st-10)",
               boxShadow: "0 24px 60px rgba(5,10,31,0.55)",
             }}>
               <div className="relative" style={{ background: "linear-gradient(135deg, #0d1c52 0%, #1e2c7a 50%, #2a1c6a 100%)" }}>
                 <div className="absolute inset-0 z-0" style={{ backgroundImage: "radial-gradient(rgba(125,169,255,0.18) 1.2px, transparent 1.2px)", backgroundSize: "20px 20px", opacity: 0.5 }} />
                 <Image src="/kai-photo.webp" alt={`${COURSE.trainer.name} - Trainer Foundation Ecommerce`} width={600} height={750} className="relative z-10 w-full h-auto block object-cover object-top" style={{ aspectRatio: "4/5" }} sizes="(max-width: 768px) 90vw, 360px" />
-                <div className="absolute inset-0 z-20" style={{ background: "linear-gradient(180deg, transparent 50%, rgba(8,16,43,0.85) 100%)" }} />
+                <div className="absolute inset-0 z-20" style={{ background: "linear-gradient(180deg, transparent 50%, var(--db-85) 100%)" }} />
               </div>
-              <div className="px-5 py-4 border-t" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+              <div className="px-5 py-4 border-t" style={{ borderColor: "var(--st-08)" }}>
                 <div className="text-[1rem] font-bold text-white tracking-tight">{COURSE.trainer.name}</div>
                 <div className="text-[0.8rem]" style={{ color: "var(--ink-mute)" }}>{COURSE.trainer.role}</div>
               </div>
@@ -586,9 +586,9 @@ function TrainerSection() {
                   { val: "10B+", label: "Ngân sách/tháng" },
                   { val: "12", label: "Người trong team" },
                 ].map((s) => (
-                  <div key={s.label} className="rounded-lg p-3.5" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                  <div key={s.label} className="rounded-lg p-3.5" style={{ background: "var(--st-03)", border: "1px solid var(--st-08)" }}>
                     <div className="text-[1.4rem] font-bold tracking-tight grad-text leading-none">{s.val}</div>
-                    <div className="text-[0.72rem] mt-1" style={{ color: "rgba(255,255,255,0.5)" }}>{s.label}</div>
+                    <div className="text-[0.72rem] mt-1" style={{ color: "var(--st-50)" }}>{s.label}</div>
                   </div>
                 ))}
               </div>
@@ -645,9 +645,9 @@ function PricingSection() {
                 className="relative rounded-2xl p-6 md:p-7 h-full overflow-hidden flex flex-col"
                 style={{
                   background: t.featured
-                    ? "linear-gradient(160deg, rgba(20,110,245,0.18) 0%, rgba(122,61,255,0.18) 60%, rgba(8,16,43,0.85) 100%)"
-                    : "linear-gradient(180deg, rgba(20,40,90,0.45), rgba(8,16,43,0.7))",
-                  border: t.featured ? "1px solid rgba(74,214,255,0.35)" : "1px solid rgba(255,255,255,0.10)",
+                    ? "linear-gradient(160deg, rgba(20,110,245,0.18) 0%, rgba(122,61,255,0.18) 60%, var(--db-85) 100%)"
+                    : "linear-gradient(180deg, rgba(20,40,90,0.45), var(--db-70))",
+                  border: t.featured ? "1px solid rgba(74,214,255,0.35)" : "1px solid var(--st-10)",
                   boxShadow: t.featured ? "0 24px 60px rgba(20,110,245,0.25), 0 0 0 1px rgba(74,214,255,0.15) inset" : "0 16px 40px rgba(5,10,31,0.4)",
                 }}>
                 {t.featured && (
@@ -671,9 +671,9 @@ function PricingSection() {
                   </div>
                   <div className="text-[0.85rem] mb-6" style={{ color: "var(--ink-mute)" }}>{t.desc}</div>
 
-                  <ul className="space-y-2.5 mb-7 pb-6 border-b" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+                  <ul className="space-y-2.5 mb-7 pb-6 border-b" style={{ borderColor: "var(--st-08)" }}>
                     {t.bullets.map((b) => (
-                      <li key={b} className="flex items-start gap-2 text-[0.88rem]" style={{ color: "rgba(255,255,255,0.78)" }}>
+                      <li key={b} className="flex items-start gap-2 text-[0.88rem]" style={{ color: "var(--st-78)" }}>
                         <IconCheck color={t.featured ? "#4ad6ff" : "#7da9ff"} />
                         <span>{b}</span>
                       </li>

@@ -76,16 +76,16 @@ export default async function OrderStatusPage({ params }: { params: Promise<{ or
             <div className="rounded-2xl p-6 md:p-7 mb-6" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
               <div className="flex items-center justify-between mb-4 pb-4 border-b" style={{ borderColor: "var(--line)" }}>
                 <div>
-                  <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em]" style={{ color: "rgba(255,255,255,0.5)" }}>Mã đơn</div>
+                  <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em]" style={{ color: "var(--st-50)" }}>Mã đơn</div>
                   <div className="text-[1.05rem] font-bold text-white tabular-nums">{order.orderNumber}</div>
                 </div>
                 <StatusBadge paid={isPaid} delivered={isDelivered} />
               </div>
 
-              <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-2" style={{ color: "rgba(255,255,255,0.5)" }}>Sản phẩm</div>
+              <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-2" style={{ color: "var(--st-50)" }}>Sản phẩm</div>
               <ul className="flex flex-col gap-1.5 mb-4 list-none">
                 {order.items.map((it: any, i: number) => (
-                  <li key={i} className="text-[0.92rem] flex items-start gap-2" style={{ color: "rgba(255,255,255,0.85)" }}>
+                  <li key={i} className="text-[0.92rem] flex items-start gap-2" style={{ color: "var(--st-85)" }}>
                     <Icon name="check" size={12} color="#5fffaa" strokeWidth={3} />
                     {it.title} <span style={{ color: "var(--ink-mute)" }}>· {(it.price || 0).toLocaleString("vi-VN")}đ</span>
                   </li>
@@ -105,7 +105,7 @@ export default async function OrderStatusPage({ params }: { params: Promise<{ or
                 <span className="text-[0.85rem]" style={{ color: "var(--ink-mute)" }}>Tổng phải trả</span>
                 <div className="flex items-baseline gap-2">
                   {(order.discount > 0 || (order.voucherDiscount || 0) > 0) && (
-                    <span className="text-[0.78rem] line-through" style={{ color: "rgba(255,255,255,0.4)" }}>
+                    <span className="text-[0.78rem] line-through" style={{ color: "var(--st-40)" }}>
                       {order.subtotal.toLocaleString("vi-VN")}đ
                     </span>
                   )}
@@ -130,17 +130,17 @@ export default async function OrderStatusPage({ params }: { params: Promise<{ or
 
                   {/* Manual transfer info */}
                   <div className="flex-1 w-full">
-                    <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-3" style={{ color: "rgba(255,255,255,0.5)" }}>
+                    <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-3" style={{ color: "var(--st-50)" }}>
                       Hoặc chuyển khoản thủ công
                     </div>
-                    <div className="rounded-xl p-4 flex flex-col gap-3" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                    <div className="rounded-xl p-4 flex flex-col gap-3" style={{ background: "var(--st-03)", border: "1px solid var(--st-08)" }}>
                       <Detail label="Ngân hàng" value={BANK_CONFIG.bankName} />
                       <Detail label="Số tài khoản" value={BANK_CONFIG.accountNumber} copy />
                       <Detail label="Tên" value={BANK_CONFIG.accountName} />
                       <Detail label="Số tiền" value={`${order.total.toLocaleString("vi-VN")}đ`} highlight />
                       <Detail label="Nội dung CK" value={order.orderNumber} copy highlight />
                     </div>
-                    <div className="mt-3 rounded-lg px-3 py-2 text-[0.78rem]" style={{ background: "rgba(255,212,121,0.08)", border: "1px solid rgba(255,212,121,0.25)", color: "rgba(255,255,255,0.85)" }}>
+                    <div className="mt-3 rounded-lg px-3 py-2 text-[0.78rem]" style={{ background: "rgba(255,212,121,0.08)", border: "1px solid rgba(255,212,121,0.25)", color: "var(--st-85)" }}>
                       <strong style={{ color: "#ffd479" }}>Quan trọng:</strong> nhập đúng nội dung <strong>{order.orderNumber}</strong> để mình match đơn nhanh.
                     </div>
                   </div>
@@ -193,20 +193,20 @@ function Pill({ icon, color, text }: { icon: any; color: string; text: string })
 function Detail({ label, value, copy, highlight }: { label: string; value: string; copy?: boolean; highlight?: boolean }) {
   return (
     <div className="flex items-center justify-between gap-3">
-      <span className="text-[0.78rem]" style={{ color: "rgba(255,255,255,0.55)" }}>{label}</span>
+      <span className="text-[0.78rem]" style={{ color: "var(--st-55)" }}>{label}</span>
       <span className="text-[0.92rem] font-mono font-bold" style={{ color: highlight ? "#7da9ff" : "white" }}>{value}</span>
     </div>
   );
 }
 
 function Step({ n, done, active, text }: { n: number; done?: boolean; active?: boolean; text: string }) {
-  const color = done ? "#5fffaa" : active ? "#7da9ff" : "rgba(255,255,255,0.25)";
+  const color = done ? "#5fffaa" : active ? "#7da9ff" : "var(--st-25)";
   return (
     <div className="flex items-center gap-3">
-      <span className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-[0.78rem] font-bold" style={{ background: done ? color : "rgba(255,255,255,0.06)", color: done ? "#0a1438" : color, border: !done ? `1px solid ${color}` : "none" }}>
+      <span className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-[0.78rem] font-bold" style={{ background: done ? color : "var(--st-06)", color: done ? "#0a1438" : color, border: !done ? `1px solid ${color}` : "none" }}>
         {done ? <Icon name="check" size={12} strokeWidth={3} /> : n}
       </span>
-      <span className="text-[0.92rem]" style={{ color: done ? "rgba(255,255,255,0.85)" : active ? "white" : "rgba(255,255,255,0.5)", fontWeight: active ? 600 : 400 }}>
+      <span className="text-[0.92rem]" style={{ color: done ? "var(--st-85)" : active ? "white" : "var(--st-50)", fontWeight: active ? 600 : 400 }}>
         {text}
       </span>
     </div>

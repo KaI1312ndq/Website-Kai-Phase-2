@@ -37,7 +37,7 @@ export default function Pagination({
         <Link
           href={urlForPage(currentPage - 1)}
           className="px-3.5 py-2 rounded-lg text-[0.85rem] font-semibold transition-all"
-          style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.85)" }}
+          style={{ background: "var(--st-04)", border: "1px solid var(--st-08)", color: "var(--st-85)" }}
         >
           ← Trước
         </Link>
@@ -45,16 +45,16 @@ export default function Pagination({
 
       {pages.map((p, i) =>
         p === "..." ? (
-          <span key={`e${i}`} className="px-2 text-[0.85rem]" style={{ color: "rgba(255,255,255,0.4)" }}>...</span>
+          <span key={`e${i}`} className="px-2 text-[0.85rem]" style={{ color: "var(--st-40)" }}>...</span>
         ) : (
           <Link
             key={p}
             href={urlForPage(p)}
             className="min-w-[40px] h-10 flex items-center justify-center rounded-lg text-[0.88rem] font-semibold transition-all"
             style={{
-              background: p === currentPage ? "rgba(20,110,245,0.20)" : "rgba(255,255,255,0.04)",
-              border: `1px solid ${p === currentPage ? "rgba(20,110,245,0.5)" : "rgba(255,255,255,0.08)"}`,
-              color: p === currentPage ? "white" : "rgba(255,255,255,0.7)",
+              background: p === currentPage ? "rgba(20,110,245,0.20)" : "var(--st-04)",
+              border: `1px solid ${p === currentPage ? "rgba(20,110,245,0.5)" : "var(--st-08)"}`,
+              color: p === currentPage ? "white" : "var(--st-70)",
             }}
           >
             {p}
@@ -66,7 +66,7 @@ export default function Pagination({
         <Link
           href={urlForPage(currentPage + 1)}
           className="px-3.5 py-2 rounded-lg text-[0.85rem] font-semibold transition-all"
-          style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.85)" }}
+          style={{ background: "var(--st-04)", border: "1px solid var(--st-08)", color: "var(--st-85)" }}
         >
           Sau 
         </Link>

@@ -49,7 +49,7 @@ export default function NotFound() {
 
             {/* Popular links */}
             <div>
-              <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-4 text-center" style={{ color: "rgba(255,255,255,0.5)" }}>
+              <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-4 text-center" style={{ color: "var(--st-50)" }}>
                 Đang phổ biến
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
@@ -75,7 +75,7 @@ export default function NotFound() {
               </div>
 
               {/* Pillars */}
-              <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-3 text-center" style={{ color: "rgba(255,255,255,0.5)" }}>
+              <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-3 text-center" style={{ color: "var(--st-50)" }}>
                 Hoặc khám phá theo chủ đề
               </div>
               <div className="flex items-center justify-center gap-2 flex-wrap mb-10">
@@ -84,7 +84,7 @@ export default function NotFound() {
                     key={p.href}
                     href={p.href}
                     className="px-4 py-2 rounded-lg text-[0.85rem] font-semibold transition-all"
-                    style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.10)", color: "rgba(255,255,255,0.85)" }}
+                    style={{ background: "var(--st-04)", border: "1px solid var(--st-10)", color: "var(--st-85)" }}
                   >
                     {p.label}
                   </Link>
