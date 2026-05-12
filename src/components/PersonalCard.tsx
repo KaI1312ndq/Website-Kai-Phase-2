@@ -32,7 +32,7 @@ export default function PersonalCard() {
         animate={{ opacity: 1, y: 0, x: 0 }}
         transition={{ duration: 0.6, delay: 0.6, ease: [0.2, 0.8, 0.2, 1] }}
         className="absolute -top-5 -right-2 md:-right-5 z-20 rounded-xl px-3.5 py-2 flex items-center gap-2.5"
-        style={{ background: "rgba(8,16,43,0.85)", border: "1px solid rgba(0,215,34,0.3)", boxShadow: "0 8px 24px rgba(5,10,31,0.45)", backdropFilter: "blur(12px)" }}
+        style={{ background: "var(--db-85)", border: "1px solid rgba(0,215,34,0.3)", boxShadow: "0 8px 24px rgba(5,10,31,0.45)", backdropFilter: "blur(12px)" }}
       >
         <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#00d722" }} />
         <span className="text-[0.7rem] font-semibold tracking-[0.1em]" style={{ color: "#5fffaa" }}>Available · Hà Nội</span>
@@ -45,9 +45,9 @@ export default function PersonalCard() {
         transition={{ duration: 0.8, delay: 0.25, ease: [0.2, 0.8, 0.2, 1] }}
         className="relative rounded-3xl overflow-hidden"
         style={{
-          background: "linear-gradient(180deg, rgba(20,40,90,0.55) 0%, rgba(8,16,43,0.85) 100%)",
-          border: "1px solid rgba(255,255,255,0.10)",
-          boxShadow: "0 30px 80px rgba(5,10,31,0.6), 0 1px 0 rgba(255,255,255,0.08) inset",
+          background: "linear-gradient(180deg, rgba(20,40,90,0.55) 0%, var(--db-85) 100%)",
+          border: "1px solid var(--st-10)",
+          boxShadow: "0 30px 80px rgba(5,10,31,0.6), 0 1px 0 var(--st-08) inset",
           backdropFilter: "blur(20px)",
         }}
       >
@@ -73,20 +73,20 @@ export default function PersonalCard() {
           }}>K</div>
 
           {/* Top-left badge */}
-          <div className="absolute top-4 left-4 z-30 flex items-center gap-2 px-3 py-1.5 rounded-md" style={{ background: "rgba(8,16,43,0.7)", border: "1px solid rgba(255,255,255,0.12)", backdropFilter: "blur(8px)" }}>
-            <span className="text-[0.6rem] font-semibold uppercase tracking-[0.16em]" style={{ color: "rgba(255,255,255,0.55)" }}>Profile</span>
-            <span className="w-px h-2.5" style={{ background: "rgba(255,255,255,0.2)" }} />
+          <div className="absolute top-4 left-4 z-30 flex items-center gap-2 px-3 py-1.5 rounded-md" style={{ background: "var(--db-70)", border: "1px solid var(--st-12)", backdropFilter: "blur(8px)" }}>
+            <span className="text-[0.6rem] font-semibold uppercase tracking-[0.16em]" style={{ color: "var(--st-55)" }}>Profile</span>
+            <span className="w-px h-2.5" style={{ background: "var(--st-20)" }} />
             <span className="text-[0.6rem] font-semibold uppercase tracking-[0.16em] grad-text">2025</span>
           </div>
 
           {/* Bottom-left tagline */}
           <div className="absolute bottom-5 left-5 z-30">
-            <div className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] mb-1" style={{ color: "rgba(255,255,255,0.5)" }}>Personal stack</div>
+            <div className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] mb-1" style={{ color: "var(--st-50)" }}>Personal stack</div>
             <div className="text-[1rem] font-bold tracking-tight text-white">Marketer · Leader · Mentor</div>
           </div>
 
           {/* Vignette */}
-          <div className="absolute inset-x-0 bottom-0 h-20 z-20" style={{ background: "linear-gradient(180deg, transparent, rgba(8,16,43,0.95))" }} />
+          <div className="absolute inset-x-0 bottom-0 h-20 z-20" style={{ background: "linear-gradient(180deg, transparent, var(--db-95))" }} />
         </div>
 
         {/* Body */}
@@ -95,7 +95,7 @@ export default function PersonalCard() {
           <div className="mb-5">
             <div className="text-[1.4rem] font-bold tracking-tight text-white leading-none mb-1.5">Nguyễn Đức Quảng</div>
             <div className="flex items-center gap-2">
-              <span className="text-[0.78rem]" style={{ color: "rgba(255,255,255,0.55)" }}>Currently:</span>
+              <span className="text-[0.78rem]" style={{ color: "var(--st-55)" }}>Currently:</span>
               <div className="relative h-5 overflow-hidden">
                 {roles.map((r, i) => (
                   <motion.span
@@ -126,9 +126,9 @@ export default function PersonalCard() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.6 + i * 0.06 }}
                 className="rounded-lg px-3 py-2.5"
-                style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
+                style={{ background: "var(--st-03)", border: "1px solid var(--st-06)" }}
               >
-                <div className="text-[0.6rem] font-semibold uppercase tracking-[0.14em] mb-1" style={{ color: "rgba(255,255,255,0.45)" }}>{s.label}</div>
+                <div className="text-[0.6rem] font-semibold uppercase tracking-[0.14em] mb-1" style={{ color: "var(--st-45)" }}>{s.label}</div>
                 <div className="text-[1.15rem] font-bold tracking-tight leading-none" style={{ color: s.color }}>{s.val}</div>
               </motion.div>
             ))}
@@ -136,7 +136,7 @@ export default function PersonalCard() {
 
           {/* Stack list */}
           <div className="space-y-1.5 mb-4">
-            <div className="text-[0.6rem] font-semibold uppercase tracking-[0.16em] mb-2" style={{ color: "rgba(255,255,255,0.4)" }}>Stack</div>
+            <div className="text-[0.6rem] font-semibold uppercase tracking-[0.16em] mb-2" style={{ color: "var(--st-40)" }}>Stack</div>
             {stack.map((s, i) => (
               <motion.div
                 key={s.label}
@@ -148,7 +148,7 @@ export default function PersonalCard() {
               >
                 <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: "var(--grad-primary)" }} />
                 <span className="text-[0.82rem] font-semibold text-white">{s.label}</span>
-                <span className="text-[0.72rem]" style={{ color: "rgba(255,255,255,0.45)" }}>{s.sub}</span>
+                <span className="text-[0.72rem]" style={{ color: "var(--st-45)" }}>{s.sub}</span>
               </motion.div>
             ))}
           </div>
@@ -167,7 +167,7 @@ export default function PersonalCard() {
               </svg>
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-[0.6rem] font-semibold uppercase tracking-[0.14em]" style={{ color: "rgba(255,255,255,0.55)" }}>Now building</div>
+              <div className="text-[0.6rem] font-semibold uppercase tracking-[0.14em]" style={{ color: "var(--st-55)" }}>Now building</div>
               <div className="text-[0.85rem] font-semibold text-white truncate">Ecom Foundation · K1</div>
             </div>
             <div className="text-[0.7rem] font-bold grad-text">SOON</div>
@@ -181,7 +181,7 @@ export default function PersonalCard() {
         animate={{ opacity: 1, y: 0, x: 0 }}
         transition={{ duration: 0.6, delay: 0.95, ease: [0.2, 0.8, 0.2, 1] }}
         className="absolute -bottom-4 left-2 md:-left-5 z-20 rounded-xl px-3.5 py-2.5 flex items-center gap-3"
-        style={{ background: "rgba(8,16,43,0.85)", border: "1px solid rgba(122,61,255,0.3)", boxShadow: "0 8px 24px rgba(122,61,255,0.25)", backdropFilter: "blur(12px)" }}
+        style={{ background: "var(--db-85)", border: "1px solid rgba(122,61,255,0.3)", boxShadow: "0 8px 24px rgba(122,61,255,0.25)", backdropFilter: "blur(12px)" }}
       >
         <div className="flex -space-x-2">
           {[0, 1, 2].map((i) => (
@@ -192,8 +192,8 @@ export default function PersonalCard() {
           ))}
         </div>
         <div>
-          <div className="text-[0.62rem] font-semibold uppercase tracking-[0.14em]" style={{ color: "rgba(255,255,255,0.5)" }}>Mentees</div>
-          <div className="text-[0.85rem] font-bold text-white leading-none mt-0.5">20+ <span className="text-[0.7rem] font-normal" style={{ color: "rgba(255,255,255,0.55)" }}>marketers</span></div>
+          <div className="text-[0.62rem] font-semibold uppercase tracking-[0.14em]" style={{ color: "var(--st-50)" }}>Mentees</div>
+          <div className="text-[0.85rem] font-bold text-white leading-none mt-0.5">20+ <span className="text-[0.7rem] font-normal" style={{ color: "var(--st-55)" }}>marketers</span></div>
         </div>
       </motion.div>
     </div>

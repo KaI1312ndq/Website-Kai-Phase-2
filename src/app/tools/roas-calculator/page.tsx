@@ -275,11 +275,11 @@ export default function ROASCalculatorPage() {
               </div>
             </div>
 
-            <div className="rounded-xl p-6 text-[0.9rem] leading-[1.75]" style={{ background: "rgba(20,110,245,0.06)", border: "1px solid rgba(20,110,245,0.22)", color: "rgba(255,255,255,0.78)" }}>
+            <div className="rounded-xl p-6 text-[0.9rem] leading-[1.75]" style={{ background: "rgba(20,110,245,0.06)", border: "1px solid rgba(20,110,245,0.22)", color: "var(--st-78)" }}>
               <strong className="text-white">Ví dụ thực tế:</strong> Sản phẩm Beauty giá 300.000đ, COGS 90.000đ (GM 70%), phí TikTok Non-Mall 18.5%, ops 8%, target margin 15%.<br />
               Break-even ROAS = 1 ÷ (70% − 18.5% − 8%) = 1 ÷ 43.5% ≈ <strong className="text-white">2.3x</strong> (chỉ để không lỗ)<br />
               Target ROAS = 1 ÷ (70% − 18.5% − 8% − 15%) = 1 ÷ 28.5% ≈ <strong className="text-white">3.5x</strong> (để lãi 15%).<br />
-              <span style={{ color: "rgba(255,255,255,0.55)" }}> Đây là sản phẩm có cấu trúc tốt. Fashion hay F&B sẽ cần target ROAS cao hơn nhiều.</span>
+              <span style={{ color: "var(--st-55)" }}> Đây là sản phẩm có cấu trúc tốt. Fashion hay F&B sẽ cần target ROAS cao hơn nhiều.</span>
             </div>
           </div>
         </section>
@@ -295,10 +295,10 @@ export default function ROASCalculatorPage() {
               Benchmark tính với phí TikTok Non-Mall ~18.5% + chi phí vận hành 8% điển hình. Nhập số thực của sản phẩm vào tool để có kết quả chính xác.
             </p>
 
-            <div className="overflow-x-auto rounded-2xl mb-6" style={{ background: "rgba(20,40,90,0.30)", border: "1px solid var(--line)" }}>
+            <div className="overflow-x-auto rounded-2xl mb-6" style={{ background: "var(--dg-30)", border: "1px solid var(--line)" }}>
               <table className="w-full text-[0.88rem]">
                 <thead>
-                  <tr style={{ background: "rgba(255,255,255,0.04)" }}>
+                  <tr style={{ background: "var(--st-04)" }}>
                     <th className="text-left px-4 py-3 font-semibold text-white">Ngành hàng</th>
                     <th className="text-left px-4 py-3 font-semibold" style={{ color: "var(--ink-soft)" }}>Gross Margin điển hình</th>
                     <th className="text-left px-4 py-3 font-semibold" style={{ color: "#4ad6ff" }}>Break-even ROAS</th>
@@ -320,7 +320,7 @@ export default function ROASCalculatorPage() {
                       <td className="px-4 py-3 font-semibold" style={{ color: "#4ad6ff" }}>{r.be}</td>
                       <td className="px-4 py-3">
                         <span className="font-semibold" style={{ color: r.warn ? "#ffd479" : "#5fffaa" }}>{r.target}</span>
-                        {r.warn && <span className="ml-2 text-[0.72rem]" style={{ color: "rgba(255,255,255,0.4)" }}>⚠ khó scale ads</span>}
+                        {r.warn && <span className="ml-2 text-[0.72rem]" style={{ color: "var(--st-40)" }}>⚠ khó scale ads</span>}
                       </td>
                     </tr>
                   ))}
@@ -328,7 +328,7 @@ export default function ROASCalculatorPage() {
               </table>
             </div>
 
-            <div className="rounded-xl px-5 py-4 text-[0.85rem] leading-[1.7]" style={{ background: "rgba(255,212,121,0.06)", border: "1px solid rgba(255,212,121,0.22)", color: "rgba(255,255,255,0.7)" }}>
+            <div className="rounded-xl px-5 py-4 text-[0.85rem] leading-[1.7]" style={{ background: "rgba(255,212,121,0.06)", border: "1px solid rgba(255,212,121,0.22)", color: "var(--st-70)" }}>
               <strong className="text-white">Lưu ý Electronics:</strong> ROAS break-even 15–25x không có nghĩa là không thể chạy ads - seller Electronics thường build từ repeat purchase (accessory, consumable) và upsell warranty, không thuần profit per đơn đầu. Nếu chỉ bán 1 đơn, ads gần như không có lãi.
             </div>
           </div>

@@ -16,7 +16,7 @@ function Field({ label, hint, children }: { label: string; hint?: string; childr
     <div>
       <label className="block text-[0.78rem] font-semibold mb-1.5 text-white">
         {label}
-        {hint && <span className="ml-1.5 font-normal" style={{ color: "rgba(255,255,255,0.45)" }}>{hint}</span>}
+        {hint && <span className="ml-1.5 font-normal" style={{ color: "var(--st-45)" }}>{hint}</span>}
       </label>
       {children}
     </div>
@@ -40,9 +40,9 @@ function NumberInput({
         }}
         placeholder={placeholder}
         className="w-full px-4 py-2.5 pr-9 rounded-lg text-[0.95rem] outline-none transition-all"
-        style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)", color: "white", fontFamily: "inherit" }}
+        style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white", fontFamily: "inherit" }}
       />
-      {suffix && <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[0.82rem]" style={{ color: "rgba(255,255,255,0.5)" }}>{suffix}</span>}
+      {suffix && <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[0.82rem]" style={{ color: "var(--st-50)" }}>{suffix}</span>}
     </div>
   );
 }
@@ -59,9 +59,9 @@ function PercentInput({ value, onChange }: { value: number; onChange: (v: number
         }}
         step="0.5"
         className="w-full px-4 py-2.5 pr-9 rounded-lg text-[0.95rem] outline-none transition-all"
-        style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)", color: "white", fontFamily: "inherit" }}
+        style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white", fontFamily: "inherit" }}
       />
-      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[0.82rem]" style={{ color: "rgba(255,255,255,0.5)" }}>%</span>
+      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[0.82rem]" style={{ color: "var(--st-50)" }}>%</span>
     </div>
   );
 }
@@ -76,7 +76,7 @@ function ROASCard({
       className="glass p-6 flex flex-col gap-2"
       style={{ borderColor: isError ? "rgba(255,90,114,0.3)" : undefined }}
     >
-      <div className="text-[0.7rem] font-bold uppercase tracking-[0.15em]" style={{ color: "rgba(255,255,255,0.5)" }}>
+      <div className="text-[0.7rem] font-bold uppercase tracking-[0.15em]" style={{ color: "var(--st-50)" }}>
         {label}
       </div>
       {value ? (
@@ -87,7 +87,7 @@ function ROASCard({
         <div className="text-[1.2rem] font-semibold" style={{ color: "#ff5a72" }}>Không khả thi</div>
       )}
       {sub && (
-        <div className="text-[0.8rem] leading-snug mt-1" style={{ color: "rgba(255,255,255,0.5)" }}>{sub}</div>
+        <div className="text-[0.8rem] leading-snug mt-1" style={{ color: "var(--st-50)" }}>{sub}</div>
       )}
     </div>
   );
@@ -144,7 +144,7 @@ export default function ROASCalculator() {
         <Field label="Giá vốn (COGS)" hint="xuất xưởng + bao bì + vận chuyển về kho">
           <NumberInput value={cogs} onChange={setCogs} suffix="₫" placeholder="0" />
           {price > 0 && (
-            <div className="mt-1.5 text-[0.78rem]" style={{ color: "rgba(255,255,255,0.5)" }}>
+            <div className="mt-1.5 text-[0.78rem]" style={{ color: "var(--st-50)" }}>
               Gross margin: <span className="font-semibold" style={{ color: result.grossMarginPct >= 40 ? "#5fffaa" : result.grossMarginPct >= 20 ? "#ffd479" : "#ff5a72" }}>
                 {fmtPct(result.grossMarginPct)}
               </span>
@@ -155,7 +155,7 @@ export default function ROASCalculator() {
         {/* Platform fee */}
         <div>
           <label className="block text-[0.78rem] font-semibold mb-1.5 text-white">
-            Phí sàn tổng <span className="font-normal ml-1" style={{ color: "rgba(255,255,255,0.45)" }}>(hoa hồng + giao dịch)</span>
+            Phí sàn tổng <span className="font-normal ml-1" style={{ color: "var(--st-45)" }}>(hoa hồng + giao dịch)</span>
           </label>
           <div className="grid grid-cols-2 gap-1.5 mb-2.5">
             {PRESETS.map((p, i) => (
@@ -164,18 +164,18 @@ export default function ROASCalculator() {
                 onClick={() => applyPreset(i)}
                 className="px-3 py-2 rounded-lg text-[0.72rem] font-semibold text-left transition-all"
                 style={{
-                  background: activePreset === i ? "rgba(20,110,245,0.18)" : "rgba(255,255,255,0.04)",
-                  border: `1px solid ${activePreset === i ? "rgba(20,110,245,0.5)" : "rgba(255,255,255,0.08)"}`,
-                  color: activePreset === i ? "white" : "rgba(255,255,255,0.65)",
+                  background: activePreset === i ? "rgba(20,110,245,0.18)" : "var(--st-04)",
+                  border: `1px solid ${activePreset === i ? "rgba(20,110,245,0.5)" : "var(--st-08)"}`,
+                  color: activePreset === i ? "white" : "var(--st-65)",
                 }}
               >
                 <div>{p.label}</div>
-                <div className="text-[0.66rem] font-normal mt-0.5" style={{ color: activePreset === i ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.35)" }}>{p.hint}</div>
+                <div className="text-[0.66rem] font-normal mt-0.5" style={{ color: activePreset === i ? "var(--st-60)" : "var(--st-35)" }}>{p.hint}</div>
               </button>
             ))}
           </div>
           <PercentInput value={platformFeePct} onChange={handlePlatformFeeChange} />
-          <div className="mt-1.5 text-[0.75rem]" style={{ color: "rgba(255,255,255,0.4)" }}>
+          <div className="mt-1.5 text-[0.75rem]" style={{ color: "var(--st-40)" }}>
             Hoặc nhập tay - lấy số chính xác từ{" "}
             <a href="/tools/tinh-phi-san" className="underline" style={{ color: "#7da9ff" }}>Tool tính phí sàn </a>
           </div>
@@ -183,7 +183,7 @@ export default function ROASCalculator() {
 
         <Field label="Chi phí vận hành" hint="fulfillment, nhân sự, marketing khác (không tính ads)">
           <PercentInput value={operatingPct} onChange={setOperatingPct} />
-          <div className="mt-1.5 text-[0.75rem]" style={{ color: "rgba(255,255,255,0.4)" }}>
+          <div className="mt-1.5 text-[0.75rem]" style={{ color: "var(--st-40)" }}>
             Thường 5–15% (logistics 3–8% + nhân sự 2–10%)
           </div>
         </Field>
@@ -226,7 +226,7 @@ export default function ROASCalculator() {
         {/* Revenue breakdown bar */}
         {result.isViable && result.targetROAS && (
           <div className="glass p-6">
-            <div className="text-[0.7rem] font-bold uppercase tracking-[0.15em] mb-4" style={{ color: "rgba(255,255,255,0.5)" }}>
+            <div className="text-[0.7rem] font-bold uppercase tracking-[0.15em] mb-4" style={{ color: "var(--st-50)" }}>
               Phân bổ doanh thu - tại target ROAS {result.targetROAS.toFixed(1)}x
             </div>
             <div className="flex h-8 rounded-lg overflow-hidden mb-4">
@@ -244,7 +244,7 @@ export default function ROASCalculator() {
               {breakdownBars.map((b) => (
                 <div key={b.label} className="flex items-center gap-1.5 text-[0.78rem]">
                   <span className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ background: b.color }} />
-                  <span style={{ color: "rgba(255,255,255,0.65)" }}>{b.label}</span>
+                  <span style={{ color: "var(--st-65)" }}>{b.label}</span>
                   <span className="font-semibold text-white">{fmtPct(b.pct)}</span>
                 </div>
               ))}
@@ -255,19 +255,19 @@ export default function ROASCalculator() {
         {/* Profit scenario table */}
         <div className="glass overflow-hidden">
           <div className="px-6 py-4 border-b" style={{ borderColor: "var(--line)" }}>
-            <div className="text-[0.7rem] font-bold uppercase tracking-[0.15em]" style={{ color: "rgba(255,255,255,0.5)" }}>
+            <div className="text-[0.7rem] font-bold uppercase tracking-[0.15em]" style={{ color: "var(--st-50)" }}>
               Bảng kịch bản ROAS - lợi nhuận/đơn theo ROAS
             </div>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-[0.85rem]">
               <thead>
-                <tr style={{ background: "rgba(255,255,255,0.03)" }}>
-                  <th className="text-left px-4 py-3 font-semibold" style={{ color: "rgba(255,255,255,0.6)" }}>ROAS</th>
-                  <th className="text-right px-4 py-3 font-semibold" style={{ color: "rgba(255,255,255,0.6)" }}>Ads/đơn</th>
-                  <th className="text-right px-4 py-3 font-semibold" style={{ color: "rgba(255,255,255,0.6)" }}>Lợi nhuận/đơn</th>
-                  <th className="text-right px-4 py-3 font-semibold" style={{ color: "rgba(255,255,255,0.6)" }}>Margin</th>
-                  <th className="px-4 py-3 font-semibold" style={{ color: "rgba(255,255,255,0.6)" }}>Trạng thái</th>
+                <tr style={{ background: "var(--st-03)" }}>
+                  <th className="text-left px-4 py-3 font-semibold" style={{ color: "var(--st-60)" }}>ROAS</th>
+                  <th className="text-right px-4 py-3 font-semibold" style={{ color: "var(--st-60)" }}>Ads/đơn</th>
+                  <th className="text-right px-4 py-3 font-semibold" style={{ color: "var(--st-60)" }}>Lợi nhuận/đơn</th>
+                  <th className="text-right px-4 py-3 font-semibold" style={{ color: "var(--st-60)" }}>Margin</th>
+                  <th className="px-4 py-3 font-semibold" style={{ color: "var(--st-60)" }}>Trạng thái</th>
                 </tr>
               </thead>
               <tbody>
@@ -295,7 +295,7 @@ export default function ROASCalculator() {
                       }}
                     >
                       <td className="px-4 py-3 font-bold text-white">{row.roas}x</td>
-                      <td className="px-4 py-3 text-right" style={{ color: "rgba(255,255,255,0.65)" }}>
+                      <td className="px-4 py-3 text-right" style={{ color: "var(--st-65)" }}>
                         {fmtVND(row.adSpendPerOrder)}₫
                       </td>
                       <td className="px-4 py-3 text-right font-semibold" style={{ color: statusColor }}>
@@ -325,7 +325,7 @@ export default function ROASCalculator() {
         </div>
 
         {/* Formula note */}
-        <div className="rounded-xl px-5 py-4 text-[0.82rem] leading-[1.7]" style={{ background: "rgba(20,110,245,0.06)", border: "1px solid rgba(20,110,245,0.20)", color: "rgba(255,255,255,0.65)" }}>
+        <div className="rounded-xl px-5 py-4 text-[0.82rem] leading-[1.7]" style={{ background: "rgba(20,110,245,0.06)", border: "1px solid rgba(20,110,245,0.20)", color: "var(--st-65)" }}>
           <strong className="text-white">Công thức:</strong>{" "}
           Break-even ROAS = 1 ÷ (Gross margin − Phí sàn% − Ops%) ·{" "}
           Ads/đơn = Giá bán ÷ ROAS · Phí sàn trong tool là tổng <em>(hoa hồng + giao dịch)</em>.{" "}

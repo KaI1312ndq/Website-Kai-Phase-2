@@ -129,9 +129,9 @@ export default function ToolsPage() {
                         {t.icon}
                       </div>
                       <span className="text-[0.62rem] font-bold uppercase tracking-[0.16em] px-2.5 py-1 rounded-md" style={{
-                        background: t.available ? "rgba(0,215,34,0.10)" : "rgba(255,255,255,0.04)",
-                        color: t.available ? "#5fffaa" : "rgba(255,255,255,0.5)",
-                        border: t.available ? "1px solid rgba(0,215,34,0.25)" : "1px solid rgba(255,255,255,0.08)",
+                        background: t.available ? "rgba(0,215,34,0.10)" : "var(--st-04)",
+                        color: t.available ? "#5fffaa" : "var(--st-50)",
+                        border: t.available ? "1px solid rgba(0,215,34,0.25)" : "1px solid var(--st-08)",
                       }}>
                         {t.badge}
                       </span>
@@ -144,7 +144,7 @@ export default function ToolsPage() {
                     {t.available ? (
                       <div className="text-[0.85rem] font-semibold grad-text group-hover:underline">Mở tool </div>
                     ) : (
-                      <div className="text-[0.85rem] font-semibold" style={{ color: "rgba(255,255,255,0.4)" }}>Sắp ra mắt</div>
+                      <div className="text-[0.85rem] font-semibold" style={{ color: "var(--st-40)" }}>Sắp ra mắt</div>
                     )}
                   </div>
                 );

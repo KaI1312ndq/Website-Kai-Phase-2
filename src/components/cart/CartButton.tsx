@@ -10,12 +10,12 @@ export default function CartButton({ className }: { className?: string }) {
       aria-label={`Mở giỏ hàng (${count} sản phẩm)`}
       className={`relative w-9 h-9 rounded-full flex items-center justify-center transition-all ${className || ""}`}
       style={{
-        background: "rgba(255,255,255,0.06)",
-        border: "1px solid rgba(255,255,255,0.10)",
+        background: "var(--st-06)",
+        border: "1px solid var(--st-10)",
         color: "white",
       }}
-      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.12)"; }}
-      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.06)"; }}
+      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--st-12)"; }}
+      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--st-06)"; }}
     >
       <Icon name="shopping-cart" size={16} />
       {count > 0 && (

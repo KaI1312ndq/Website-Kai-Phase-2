@@ -34,10 +34,10 @@ export default function BlogTOC({ headings }: { headings: Heading[] }) {
 
   return (
     <nav aria-label="Mục lục bài viết">
-      <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-3" style={{ color: "rgba(255,255,255,0.5)" }}>
+      <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em] mb-3" style={{ color: "var(--st-50)" }}>
         Mục lục
       </div>
-      <ul className="flex flex-col gap-0.5 list-none border-l" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+      <ul className="flex flex-col gap-0.5 list-none border-l" style={{ borderColor: "var(--st-08)" }}>
         {headings.map((h) => {
           const isActive = h.id === activeId;
           return (
@@ -57,7 +57,7 @@ export default function BlogTOC({ headings }: { headings: Heading[] }) {
                   paddingLeft: h.level === 3 ? "1.5rem" : "0.85rem",
                   marginLeft: "-1px",
                   borderLeft: isActive ? "2px solid #7da9ff" : "2px solid transparent",
-                  color: isActive ? "white" : "rgba(255,255,255,0.55)",
+                  color: isActive ? "white" : "var(--st-55)",
                   fontWeight: isActive ? 600 : 400,
                 }}
               >

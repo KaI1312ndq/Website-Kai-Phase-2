@@ -75,9 +75,9 @@ export default function EngagementBar({
         aria-label={liked ? "Bỏ thích" : "Thích bài viết"}
         className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-[0.85rem] font-semibold transition-all"
         style={{
-          background: liked ? "rgba(255,90,114,0.15)" : "rgba(255,255,255,0.04)",
-          border: `1px solid ${liked ? "rgba(255,90,114,0.4)" : "rgba(255,255,255,0.10)"}`,
-          color: liked ? "#ff5a72" : "rgba(255,255,255,0.85)",
+          background: liked ? "rgba(255,90,114,0.15)" : "var(--st-04)",
+          border: `1px solid ${liked ? "rgba(255,90,114,0.4)" : "var(--st-10)"}`,
+          color: liked ? "#ff5a72" : "var(--st-85)",
           transform: animating ? "scale(1.08)" : "scale(1)",
         }}
       >
@@ -93,9 +93,9 @@ export default function EngagementBar({
         aria-label={bookmarked ? "Bỏ lưu" : "Lưu để đọc sau"}
         className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-[0.85rem] font-semibold transition-all"
         style={{
-          background: bookmarked ? "rgba(255,212,121,0.15)" : "rgba(255,255,255,0.04)",
-          border: `1px solid ${bookmarked ? "rgba(255,212,121,0.4)" : "rgba(255,255,255,0.10)"}`,
-          color: bookmarked ? "#ffd479" : "rgba(255,255,255,0.85)",
+          background: bookmarked ? "rgba(255,212,121,0.15)" : "var(--st-04)",
+          border: `1px solid ${bookmarked ? "rgba(255,212,121,0.4)" : "var(--st-10)"}`,
+          color: bookmarked ? "#ffd479" : "var(--st-85)",
         }}
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill={bookmarked ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -108,7 +108,7 @@ export default function EngagementBar({
       <a
         href="#comments"
         className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-[0.85rem] font-semibold transition-all"
-        style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.10)", color: "rgba(255,255,255,0.85)" }}
+        style={{ background: "var(--st-04)", border: "1px solid var(--st-10)", color: "var(--st-85)" }}
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
@@ -119,7 +119,7 @@ export default function EngagementBar({
       {/* View count display */}
       <div
         className="inline-flex items-center gap-2 px-3.5 py-2 ml-auto text-[0.82rem]"
-        style={{ color: "rgba(255,255,255,0.5)" }}
+        style={{ color: "var(--st-50)" }}
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" />

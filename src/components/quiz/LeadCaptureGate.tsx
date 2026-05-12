@@ -70,7 +70,7 @@ export default function LeadCaptureGate({ config, result, onComplete }: Props) {
         <p className="text-[0.95rem] leading-[1.7]" style={{ color: "var(--ink-soft)" }}>
           Để nhận <strong className="text-white">phân tích chi tiết tính cách</strong> của bạn - bao gồm điểm mạnh, điểm yếu, công việc phù hợp và cách phát triển - vui lòng để lại thông tin liên hệ.
         </p>
-        <p className="text-[0.78rem] mt-3" style={{ color: "rgba(255,255,255,0.45)" }}>
+        <p className="text-[0.78rem] mt-3" style={{ color: "var(--st-45)" }}>
           Thông tin của bạn được bảo mật, không spam.
         </p>
       </div>
@@ -86,7 +86,7 @@ export default function LeadCaptureGate({ config, result, onComplete }: Props) {
             onChange={(e) => setName(e.target.value)}
             required
             className="w-full px-4 py-3 rounded-lg text-[0.95rem] outline-none"
-            style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)", color: "white" }}
+            style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white" }}
             placeholder="Nguyễn Văn A"
           />
         </div>
@@ -101,7 +101,7 @@ export default function LeadCaptureGate({ config, result, onComplete }: Props) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-3 rounded-lg text-[0.95rem] outline-none"
-              style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)", color: "white" }}
+              style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white" }}
               placeholder="email@example.com"
             />
           </div>
@@ -114,12 +114,12 @@ export default function LeadCaptureGate({ config, result, onComplete }: Props) {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               className="w-full px-4 py-3 rounded-lg text-[0.95rem] outline-none"
-              style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)", color: "white" }}
+              style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white" }}
               placeholder="0xxx xxx xxx"
             />
           </div>
         </div>
-        <div className="text-[0.75rem]" style={{ color: "rgba(255,255,255,0.45)" }}>
+        <div className="text-[0.75rem]" style={{ color: "var(--st-45)" }}>
           Cần ít nhất 1 trong 2: email hoặc số điện thoại.
         </div>
 

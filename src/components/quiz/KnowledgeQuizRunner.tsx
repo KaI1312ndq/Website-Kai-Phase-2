@@ -273,7 +273,7 @@ export default function KnowledgeQuizRunner({
       />
 
       {/* Anti-cheat banner */}
-      <div className="mt-5 rounded-lg px-4 py-2.5 text-[0.78rem] flex items-center gap-2" style={{ background: "rgba(255,212,121,0.08)", border: "1px solid rgba(255,212,121,0.25)", color: "rgba(255,255,255,0.7)" }}>
+      <div className="mt-5 rounded-lg px-4 py-2.5 text-[0.78rem] flex items-center gap-2" style={{ background: "rgba(255,212,121,0.08)", border: "1px solid rgba(255,212,121,0.25)", color: "var(--st-70)" }}>
         <Icon name="info" size={14} color="#ffd479" />
         <span>Bài đang chấm điểm - tránh đóng tab hoặc rời trang giữa chừng. Tiến độ tự động lưu.</span>
       </div>
@@ -312,11 +312,11 @@ function IntroScreen({
         <Stat label="Tổng" value={`~${Math.ceil((totalQuestions * secondsPerQ) / 60)}p`} color={config.color} />
       </div>
 
-      <div className="text-left max-w-[600px] mx-auto rounded-xl p-5 mb-7" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.08)" }}>
+      <div className="text-left max-w-[600px] mx-auto rounded-xl p-5 mb-7" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--st-08)" }}>
         <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-3 text-center" style={{ color: config.color }}>
           Quy tắc bài test
         </div>
-        <ul className="flex flex-col gap-2 text-[0.88rem]" style={{ color: "rgba(255,255,255,0.85)" }}>
+        <ul className="flex flex-col gap-2 text-[0.88rem]" style={{ color: "var(--st-85)" }}>
           <li className="flex items-start gap-2"><Icon name="clock" size={14} color={config.color} /><span>Mỗi câu có {secondsPerQ} giây để chọn - hết giờ tự đánh sai</span></li>
           <li className="flex items-start gap-2"><Icon name="check" size={14} color="#5fffaa" /><span>Sau khi chọn: hiện đáp án đúng + giải thích, tự chuyển câu</span></li>
           <li className="flex items-start gap-2"><Icon name="alert-triangle" size={14} color="#ffd479" /><span>Đã chọn rồi không sửa được - chọn cẩn thận</span></li>
@@ -337,8 +337,8 @@ function IntroScreen({
 
 function Stat({ label, value, color }: { label: string; value: string; color: string }) {
   return (
-    <div className="rounded-xl py-3 px-3" style={{ background: "rgba(255,255,255,0.04)" }}>
-      <div className="text-[0.66rem] font-bold uppercase tracking-[0.13em]" style={{ color: "rgba(255,255,255,0.45)" }}>{label}</div>
+    <div className="rounded-xl py-3 px-3" style={{ background: "var(--st-04)" }}>
+      <div className="text-[0.66rem] font-bold uppercase tracking-[0.13em]" style={{ color: "var(--st-45)" }}>{label}</div>
       <div className="text-[1.4rem] font-bold mt-1" style={{ color }}>{value}</div>
     </div>
   );
@@ -361,9 +361,9 @@ function TopBar({
   const timerProgress = (timeLeft / secondsPerQ) * 100;
 
   return (
-    <div className="sticky top-[80px] z-40 mb-6 rounded-2xl p-4 backdrop-blur-md" style={{ background: "rgba(8,16,43,0.80)", border: "1px solid rgba(255,255,255,0.10)" }}>
+    <div className="sticky top-[80px] z-40 mb-6 rounded-2xl p-4 backdrop-blur-md" style={{ background: "rgba(8,16,43,0.80)", border: "1px solid var(--st-10)" }}>
       {/* Progress bar */}
-      <div className="rounded-full overflow-hidden h-1.5 mb-3" style={{ background: "rgba(255,255,255,0.06)" }}>
+      <div className="rounded-full overflow-hidden h-1.5 mb-3" style={{ background: "var(--st-06)" }}>
         <div
           className="h-full transition-all duration-300"
           style={{ width: `${progress}%`, background: "linear-gradient(90deg, #22d3ee, #7a3dff)" }}
@@ -380,7 +380,7 @@ function TopBar({
         <div className="relative flex items-center gap-2">
           <div className="relative w-12 h-12 flex items-center justify-center">
             <svg className="absolute inset-0 -rotate-90" viewBox="0 0 36 36">
-              <circle cx="18" cy="18" r="15" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="3" />
+              <circle cx="18" cy="18" r="15" fill="none" stroke="var(--st-08)" strokeWidth="3" />
               <circle
                 cx="18" cy="18" r="15" fill="none"
                 stroke={timerColor} strokeWidth="3" strokeLinecap="round"
@@ -471,11 +471,11 @@ function QuestionCard({
           const showAsCorrect = hasPicked && isCorrect;
           const showAsWrong = hasPicked && isPicked && !isCorrect;
 
-          let bg = "rgba(255,255,255,0.03)";
-          let border = "rgba(255,255,255,0.08)";
-          let textColor = "rgba(255,255,255,0.85)";
-          let badgeBg = "rgba(255,255,255,0.06)";
-          let badgeColor = "rgba(255,255,255,0.7)";
+          let bg = "var(--st-03)";
+          let border = "var(--st-08)";
+          let textColor = "var(--st-85)";
+          let badgeBg = "var(--st-06)";
+          let badgeColor = "var(--st-70)";
           let icon = null;
 
           if (showAsCorrect) {
@@ -544,10 +544,10 @@ function QuestionCard({
               <div className="text-[0.85rem] font-bold mb-1" style={{ color: timedOut ? "#ffd479" : pickedThisQ === question.ans ? COLORS.correct : COLORS.wrong }}>
                 {timedOut ? "Hết giờ" : pickedThisQ === question.ans ? "Chính xác!" : "Sai rồi"}
                 {!timedOut && pickedThisQ !== question.ans && (
-                  <span className="font-normal" style={{ color: "rgba(255,255,255,0.7)" }}> - đáp án đúng là <strong style={{ color: COLORS.correct }}>{String.fromCharCode(65 + question.ans)}</strong></span>
+                  <span className="font-normal" style={{ color: "var(--st-70)" }}> - đáp án đúng là <strong style={{ color: COLORS.correct }}>{String.fromCharCode(65 + question.ans)}</strong></span>
                 )}
               </div>
-              <div className="text-[0.88rem] leading-[1.6]" style={{ color: "rgba(255,255,255,0.85)" }}>
+              <div className="text-[0.88rem] leading-[1.6]" style={{ color: "var(--st-85)" }}>
                 {question.explain}
               </div>
             </div>
@@ -557,7 +557,7 @@ function QuestionCard({
               <button
                 onClick={onSkipWait}
                 className="text-[0.78rem] font-semibold px-3 py-1.5 rounded-md transition-all"
-                style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)", color: "rgba(255,255,255,0.85)" }}
+                style={{ background: "var(--st-05)", border: "1px solid var(--st-10)", color: "var(--st-85)" }}
               >
                 Bỏ qua chờ <Icon name="arrow-right" size={12} />
               </button>

@@ -227,7 +227,7 @@ export default function PnLEcomPage() {
               ].map((t, i) => (
                 <div key={i} className="rounded-xl p-5 flex flex-col md:flex-row md:items-center gap-3 md:gap-6" style={{ background: t.highlight ? "rgba(95,255,170,0.06)" : "rgba(255,255,255,0.025)", border: `1px solid ${t.highlight ? "rgba(95,255,170,0.25)" : "var(--line)"}` }}>
                   <div className="text-[0.95rem] font-bold text-white md:w-44 flex-shrink-0">{t.name}</div>
-                  <div className="font-mono text-[0.88rem] md:w-[420px] flex-shrink-0" style={{ color: t.highlight ? "#5fffaa" : "rgba(255,255,255,0.85)" }}>= {t.formula}</div>
+                  <div className="font-mono text-[0.88rem] md:w-[420px] flex-shrink-0" style={{ color: t.highlight ? "#5fffaa" : "var(--st-85)" }}>= {t.formula}</div>
                   <div className="text-[0.84rem] leading-[1.6]" style={{ color: "var(--ink-mute)" }}>{t.note}</div>
                 </div>
               ))}
@@ -241,10 +241,10 @@ export default function PnLEcomPage() {
             <div className="section-tag">Benchmark</div>
             <h2 className="t-h2 mb-3 text-white">EBITDA bao nhiêu là <span className="grad-text">khoẻ?</span></h2>
             <p className="t-body mb-8 max-w-[680px]">Mức EBITDA % nên đạt theo growth stage của shop:</p>
-            <div className="overflow-x-auto rounded-2xl" style={{ background: "rgba(20,40,90,0.30)", border: "1px solid var(--line)" }}>
+            <div className="overflow-x-auto rounded-2xl" style={{ background: "var(--dg-30)", border: "1px solid var(--line)" }}>
               <table className="w-full text-[0.88rem]">
                 <thead>
-                  <tr style={{ background: "rgba(255,255,255,0.04)" }}>
+                  <tr style={{ background: "var(--st-04)" }}>
                     <th className="text-left px-4 py-3 font-semibold text-white">Stage</th>
                     <th className="text-left px-4 py-3 font-semibold" style={{ color: "var(--ink-soft)" }}>Đặc điểm</th>
                     <th className="text-left px-4 py-3 font-semibold" style={{ color: "#4ad6ff" }}>EBITDA target</th>

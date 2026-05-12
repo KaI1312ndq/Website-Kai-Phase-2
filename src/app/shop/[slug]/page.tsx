@@ -128,7 +128,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                 {Array.isArray(product.mockupImages) && product.mockupImages.length > 0 && (
                   <div className="grid grid-cols-4 gap-2">
                     {product.mockupImages.slice(0, 4).map((img: any, i: number) => (
-                      <div key={i} className="rounded-lg overflow-hidden aspect-square" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid var(--line)" }}>
+                      <div key={i} className="rounded-lg overflow-hidden aspect-square" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
                         <img src={urlFor(img).width(300).url()} alt={`${product.title} mockup ${i + 1}`} className="w-full h-full object-cover" />
                       </div>
                     ))}
@@ -146,7 +146,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                   <div className="flex items-center gap-2">
                     <span className="text-[1rem] font-bold" style={{ color: "#ffd479" }}>
                       {"★".repeat(Math.round(avgRating))}
-                      <span style={{ color: "rgba(255,255,255,0.2)" }}>{"★".repeat(5 - Math.round(avgRating))}</span>
+                      <span style={{ color: "var(--st-20)" }}>{"★".repeat(5 - Math.round(avgRating))}</span>
                     </span>
                     <span className="text-[0.9rem] font-semibold text-white">{avgRating.toFixed(1)}/5</span>
                     <span className="text-[0.85rem]" style={{ color: "var(--ink-mute)" }}>· {reviews.length} đánh giá</span>
@@ -219,7 +219,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                     <span className="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center" style={{ background: "rgba(95,255,170,0.15)", color: "#5fffaa" }}>
                       <Icon name="check" size={14} strokeWidth={3} />
                     </span>
-                    <span className="text-[0.95rem] leading-[1.6]" style={{ color: "rgba(255,255,255,0.9)" }}>{b}</span>
+                    <span className="text-[0.95rem] leading-[1.6]" style={{ color: "var(--st-90)" }}>{b}</span>
                   </div>
                 ))}
               </div>
@@ -307,7 +307,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                         {"★".repeat(r.rating)}
                       </div>
                     </div>
-                    <p className="text-[0.92rem] leading-[1.65]" style={{ color: "rgba(255,255,255,0.85)" }}>
+                    <p className="text-[0.92rem] leading-[1.65]" style={{ color: "var(--st-85)" }}>
                       {r.content}
                     </p>
                   </div>
@@ -350,7 +350,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             <div className="rounded-2xl p-8 md:p-10" style={{ background: "linear-gradient(135deg, rgba(20,110,245,0.10) 0%, rgba(122,61,255,0.10) 100%)", border: "1px solid rgba(20,110,245,0.25)" }}>
               <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-2" style={{ color: "#7da9ff" }}>Combo tiết kiệm</div>
               <h3 className="text-[1.4rem] font-bold text-white mb-3">Mua combo 3 - chỉ 199k</h3>
-              <p className="text-[0.95rem] mb-5" style={{ color: "rgba(255,255,255,0.8)" }}>
+              <p className="text-[0.95rem] mb-5" style={{ color: "var(--st-80)" }}>
                 Mua từng cái 297k. Combo 3 chỉ 199k (-98k). Khuyến mãi giới hạn.
               </p>
               <Link href="/shop" className="btn btn-primary">Xem combo 3 sản phẩm </Link>
@@ -371,7 +371,7 @@ function TrustBadge({ icon, color, title, desc }: { icon: any; color: string; ti
       </span>
       <div className="min-w-0">
         <div className="text-[0.82rem] font-bold text-white">{title}</div>
-        <div className="text-[0.72rem]" style={{ color: "rgba(255,255,255,0.55)" }}>{desc}</div>
+        <div className="text-[0.72rem]" style={{ color: "var(--st-55)" }}>{desc}</div>
       </div>
     </div>
   );
@@ -382,7 +382,7 @@ function USPCard({ number, title, desc }: { number: string; title: string; desc:
     <div className="rounded-2xl p-6" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
       <div className="text-[1.6rem] font-extrabold grad-text leading-none mb-3">{number}</div>
       <h3 className="text-[1.05rem] font-bold text-white mb-2">{title}</h3>
-      <p className="text-[0.9rem] leading-[1.6]" style={{ color: "rgba(255,255,255,0.7)" }}>{desc}</p>
+      <p className="text-[0.9rem] leading-[1.6]" style={{ color: "var(--st-70)" }}>{desc}</p>
     </div>
   );
 }

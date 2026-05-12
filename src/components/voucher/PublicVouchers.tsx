@@ -42,7 +42,7 @@ export default async function PublicVouchers({ product }: { product?: CartItem }
           <li
             key={v._id}
             className="flex items-center justify-between gap-3 p-3 rounded-lg"
-            style={{ background: "rgba(255,255,255,0.03)", border: "1px dashed rgba(255,255,255,0.15)" }}
+            style={{ background: "var(--st-03)", border: "1px dashed var(--st-15)" }}
           >
             <div className="min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
@@ -61,7 +61,7 @@ export default async function PublicVouchers({ product }: { product?: CartItem }
                   {v.displayName || v.description}
                 </div>
               )}
-              <div className="flex gap-3 text-[0.7rem] mt-1" style={{ color: "rgba(255,255,255,0.45)" }}>
+              <div className="flex gap-3 text-[0.7rem] mt-1" style={{ color: "var(--st-45)" }}>
                 {typeof v.minOrderValue === "number" && v.minOrderValue > 0 && (
                   <span>Đơn từ {v.minOrderValue.toLocaleString("vi-VN")}đ</span>
                 )}
@@ -72,7 +72,7 @@ export default async function PublicVouchers({ product }: { product?: CartItem }
           </li>
         ))}
       </ul>
-      <div className="mt-2 text-[0.7rem]" style={{ color: "rgba(255,255,255,0.4)" }}>
+      <div className="mt-2 text-[0.7rem]" style={{ color: "var(--st-40)" }}>
         Nhập mã ở bước checkout - có thể dùng cùng với combo giảm giá.
       </div>
     </div>

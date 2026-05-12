@@ -38,7 +38,7 @@ export default function TagCloud({
   return (
     <div className="flex flex-col gap-2.5">
       <div className="flex items-center gap-2 flex-wrap">
-        <span className="text-[0.74rem] font-semibold uppercase tracking-[0.14em] mr-1" style={{ color: "rgba(255,255,255,0.45)" }}>
+        <span className="text-[0.74rem] font-semibold uppercase tracking-[0.14em] mr-1" style={{ color: "var(--st-45)" }}>
           Hashtag:
         </span>
         {currentTag && (
@@ -63,9 +63,9 @@ export default function TagCloud({
               className="font-medium px-2.5 py-1 rounded-md transition-all hover:bg-white/10"
               style={{
                 fontSize: `${fontSize}rem`,
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                color: "rgba(255,255,255,0.75)",
+                background: "var(--st-04)",
+                border: "1px solid var(--st-08)",
+                color: "var(--st-70)",
               }}
             >
               #{t.tag}
@@ -77,7 +77,7 @@ export default function TagCloud({
           <button
             onClick={() => setExpanded(true)}
             className="text-[0.78rem] font-medium px-2.5 py-1 rounded-md transition-all hover:bg-white/10"
-            style={{ background: "rgba(255,255,255,0.04)", border: "1px dashed rgba(255,255,255,0.18)", color: "rgba(255,255,255,0.55)" }}
+            style={{ background: "var(--st-04)", border: "1px dashed var(--st-10)", color: "var(--st-55)" }}
           >
             +{hidden} hashtag khác
           </button>

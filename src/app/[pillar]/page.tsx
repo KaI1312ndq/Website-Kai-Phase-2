@@ -301,7 +301,7 @@ export default async function PillarPage({ params }: { params: Promise<{ pillar:
                   Test miễn phí · {quiz.questionCount} câu · {quiz.estimatedMinutes} phút
                 </div>
                 <h2 className="text-[1.6rem] md:text-[2rem] font-bold leading-tight text-white mb-4">{quiz.name}</h2>
-                <p className="text-[0.95rem] leading-[1.7] mb-6 max-w-[680px]" style={{ color: "rgba(255,255,255,0.8)" }}>
+                <p className="text-[0.95rem] leading-[1.7] mb-6 max-w-[680px]" style={{ color: "var(--st-80)" }}>
                   {quiz.shortDescription}
                 </p>
                 <Link href={`/quiz/${quiz.slug}`} className="btn btn-primary">

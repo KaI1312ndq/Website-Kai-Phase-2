@@ -84,7 +84,7 @@ export default function ResourceLeadGate({ resourceId, resourceTitle, buttonLabe
                 <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-1" style={{ color: buttonColor }}>Tài liệu miễn phí</div>
                 <h2 className="text-[1.15rem] font-bold text-white leading-tight">{resourceTitle}</h2>
               </div>
-              <button onClick={() => setOpen(false)} className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.7)" }} aria-label="Đóng">
+              <button onClick={() => setOpen(false)} className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: "var(--st-06)", color: "var(--st-70)" }} aria-label="Đóng">
                 <Icon name="x" size={16} />
               </button>
             </div>
@@ -119,7 +119,7 @@ export default function ResourceLeadGate({ resourceId, resourceTitle, buttonLabe
                     onChange={(e) => setName(e.target.value)}
                     required
                     className="w-full px-4 py-2.5 rounded-lg outline-none"
-                    style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)", color: "white" }}
+                    style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white" }}
                     placeholder="Nguyễn Văn A"
                   />
                 </div>
@@ -131,7 +131,7 @@ export default function ResourceLeadGate({ resourceId, resourceTitle, buttonLabe
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     className="w-full px-4 py-2.5 rounded-lg outline-none"
-                    style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)", color: "white" }}
+                    style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white" }}
                     placeholder="email@example.com"
                   />
                 </div>

@@ -212,7 +212,7 @@ export default function QuizRunner({ config, questions, archetypes }: Props) {
       {/* Progress bar - only during running */}
       {phase === "running" && (
         <div className="sticky top-[80px] z-40 mb-6 -mx-4">
-          <div className="rounded-full overflow-hidden h-1.5" style={{ background: "rgba(255,255,255,0.06)" }}>
+          <div className="rounded-full overflow-hidden h-1.5" style={{ background: "var(--st-06)" }}>
             <div
               className="h-full transition-all duration-300 ease-out"
               style={{ width: `${progress}%`, background: `linear-gradient(90deg, ${config.color}, #7a3dff)` }}
@@ -333,7 +333,7 @@ function IntroScreen({ config, onStart, onResume }: { config: QuizConfig; onStar
             </div>
             <div>
               <div className="text-[0.95rem] font-bold text-white mb-1">Bạn đang làm dở bài này</div>
-              <div className="text-[0.82rem]" style={{ color: "rgba(255,255,255,0.7)" }}>Tiếp tục từ chỗ đã dừng hay bắt đầu lại?</div>
+              <div className="text-[0.82rem]" style={{ color: "var(--st-70)" }}>Tiếp tục từ chỗ đã dừng hay bắt đầu lại?</div>
             </div>
           </div>
           <div className="flex items-center gap-2 flex-wrap">
@@ -347,7 +347,7 @@ function IntroScreen({ config, onStart, onResume }: { config: QuizConfig; onStar
             <button
               onClick={onStart}
               className="px-4 py-2 rounded-lg text-[0.85rem] font-semibold transition-all"
-              style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)", color: "rgba(255,255,255,0.85)" }}
+              style={{ background: "var(--st-05)", border: "1px solid var(--st-10)", color: "var(--st-85)" }}
             >
               Làm lại
             </button>
@@ -369,29 +369,29 @@ function IntroScreen({ config, onStart, onResume }: { config: QuizConfig; onStar
 
         {/* Stats */}
         <div className="grid grid-cols-3 gap-3 max-w-[520px] mx-auto mb-8">
-          <div className="rounded-xl py-3 px-3" style={{ background: "rgba(255,255,255,0.04)" }}>
-            <div className="text-[0.66rem] font-bold uppercase tracking-[0.13em]" style={{ color: "rgba(255,255,255,0.45)" }}>Số câu</div>
+          <div className="rounded-xl py-3 px-3" style={{ background: "var(--st-04)" }}>
+            <div className="text-[0.66rem] font-bold uppercase tracking-[0.13em]" style={{ color: "var(--st-45)" }}>Số câu</div>
             <div className="text-[1.4rem] font-bold mt-1" style={{ color: config.color }}>{config.questionCount}</div>
           </div>
-          <div className="rounded-xl py-3 px-3" style={{ background: "rgba(255,255,255,0.04)" }}>
-            <div className="text-[0.66rem] font-bold uppercase tracking-[0.13em]" style={{ color: "rgba(255,255,255,0.45)" }}>Thời gian</div>
+          <div className="rounded-xl py-3 px-3" style={{ background: "var(--st-04)" }}>
+            <div className="text-[0.66rem] font-bold uppercase tracking-[0.13em]" style={{ color: "var(--st-45)" }}>Thời gian</div>
             <div className="text-[1.4rem] font-bold mt-1" style={{ color: config.color }}>~{config.estimatedMinutes}p</div>
           </div>
-          <div className="rounded-xl py-3 px-3" style={{ background: "rgba(255,255,255,0.04)" }}>
-            <div className="text-[0.66rem] font-bold uppercase tracking-[0.13em]" style={{ color: "rgba(255,255,255,0.45)" }}>Phí</div>
+          <div className="rounded-xl py-3 px-3" style={{ background: "var(--st-04)" }}>
+            <div className="text-[0.66rem] font-bold uppercase tracking-[0.13em]" style={{ color: "var(--st-45)" }}>Phí</div>
             <div className="text-[1.4rem] font-bold mt-1" style={{ color: "#5fffaa" }}>Free</div>
           </div>
         </div>
 
         {/* Benefits */}
         {benefits.length > 0 && (
-          <div className="mb-8 text-left max-w-[600px] mx-auto rounded-xl p-5" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.08)" }}>
+          <div className="mb-8 text-left max-w-[600px] mx-auto rounded-xl p-5" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--st-08)" }}>
             <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-3 text-center" style={{ color: config.color }}>
               Bạn sẽ nhận được
             </div>
             <ul className="flex flex-col gap-2.5 list-none">
               {benefits.map((b, i) => (
-                <li key={i} className="flex items-start gap-2.5 text-[0.9rem] leading-[1.55]" style={{ color: "rgba(255,255,255,0.85)" }}>
+                <li key={i} className="flex items-start gap-2.5 text-[0.9rem] leading-[1.55]" style={{ color: "var(--st-85)" }}>
                   <span className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center mt-0.5" style={{ background: `${config.color}30`, color: config.color }}>
                     <Icon name="check" size={12} strokeWidth={3} />
                   </span>
@@ -410,7 +410,7 @@ function IntroScreen({ config, onStart, onResume }: { config: QuizConfig; onStar
           Bắt đầu test ngay <span></span>
         </button>
 
-        <p className="text-[0.78rem] mt-6 inline-flex items-center justify-center gap-1.5 flex-wrap" style={{ color: "rgba(255,255,255,0.4)" }}>
+        <p className="text-[0.78rem] mt-6 inline-flex items-center justify-center gap-1.5 flex-wrap" style={{ color: "var(--st-40)" }}>
           <span>Không cần đăng ký · Kết quả ngay sau khi hoàn thành{config.gateResult && " · Cần email/sđt"}</span>
           <span className="hidden sm:inline">·</span>
           <span className="inline-flex items-center gap-1">
@@ -463,28 +463,28 @@ function QuestionCard({
                 onClick={() => onAnswer(opt.key)}
                 className="text-left rounded-xl px-4 md:px-5 py-3.5 md:py-4 transition-all hover:scale-[1.01]"
                 style={{
-                  background: isSelected ? `${color}28` : "rgba(255,255,255,0.03)",
-                  border: `1px solid ${isSelected ? color : "rgba(255,255,255,0.08)"}`,
+                  background: isSelected ? `${color}28` : "var(--st-03)",
+                  border: `1px solid ${isSelected ? color : "var(--st-08)"}`,
                 }}
                 onMouseEnter={(e) => {
-                  if (!isSelected) (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.06)";
+                  if (!isSelected) (e.currentTarget as HTMLElement).style.background = "var(--st-06)";
                 }}
                 onMouseLeave={(e) => {
-                  if (!isSelected) (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.03)";
+                  if (!isSelected) (e.currentTarget as HTMLElement).style.background = "var(--st-03)";
                 }}
               >
                 <div className="flex items-start gap-3 md:gap-4">
                   <span
                     className="w-7 h-7 md:w-8 md:h-8 rounded-full flex-shrink-0 flex items-center justify-center text-[0.85rem] font-bold transition-colors"
                     style={{
-                      background: isSelected ? color : "rgba(255,255,255,0.06)",
-                      color: isSelected ? "white" : "rgba(255,255,255,0.7)",
-                      border: isSelected ? "none" : "1px solid rgba(255,255,255,0.1)",
+                      background: isSelected ? color : "var(--st-06)",
+                      color: isSelected ? "white" : "var(--st-70)",
+                      border: isSelected ? "none" : "1px solid var(--st-10)",
                     }}
                   >
                     {opt.key}
                   </span>
-                  <span className="text-[0.92rem] md:text-[0.96rem] leading-[1.55] flex-1 pt-0.5" style={{ color: isSelected ? "white" : "rgba(255,255,255,0.85)" }}>
+                  <span className="text-[0.92rem] md:text-[0.96rem] leading-[1.55] flex-1 pt-0.5" style={{ color: isSelected ? "white" : "var(--st-85)" }}>
                     {opt.text}
                   </span>
                 </div>

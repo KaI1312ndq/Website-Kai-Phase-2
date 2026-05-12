@@ -84,7 +84,7 @@ export default function ShareButtons({ url, title, variant = "horizontal" }: Pro
           onClick={copyLink}
           aria-label="Copy link"
           className="w-9 h-9 rounded-full flex items-center justify-center transition-transform hover:scale-110"
-          style={{ background: copied ? "#5fffaa" : "rgba(255,255,255,0.08)", color: copied ? "#0a1438" : "white", border: "1px solid rgba(255,255,255,0.12)" }}
+          style={{ background: copied ? "#5fffaa" : "var(--st-08)", color: copied ? "#0a1438" : "white", border: "1px solid var(--st-12)" }}
         >
           {copied ? (
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
@@ -100,7 +100,7 @@ export default function ShareButtons({ url, title, variant = "horizontal" }: Pro
 
   return (
     <div className="flex items-center gap-3 flex-wrap">
-      <span className="text-[0.78rem] font-semibold uppercase tracking-[0.14em] mr-1" style={{ color: "rgba(255,255,255,0.5)" }}>
+      <span className="text-[0.78rem] font-semibold uppercase tracking-[0.14em] mr-1" style={{ color: "var(--st-50)" }}>
         Chia sẻ:
       </span>
       {shares.map((s) => (
@@ -120,8 +120,8 @@ export default function ShareButtons({ url, title, variant = "horizontal" }: Pro
         onClick={copyLink}
         className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-[0.82rem] font-semibold transition-all"
         style={{
-          background: copied ? "rgba(95,255,170,0.15)" : "rgba(255,255,255,0.04)",
-          border: `1px solid ${copied ? "rgba(95,255,170,0.4)" : "rgba(255,255,255,0.12)"}`,
+          background: copied ? "rgba(95,255,170,0.15)" : "var(--st-04)",
+          border: `1px solid ${copied ? "rgba(95,255,170,0.4)" : "var(--st-12)"}`,
           color: copied ? "#5fffaa" : "white",
         }}
       >

@@ -12,7 +12,7 @@ const IconCap = () => <Ic d={<><path d="M22 10v6M2 10l10-5 10 5-10 5z" /><path d
 const IconBriefcase = () => <Ic d={<><rect x="2" y="7" width="20" height="14" rx="2" ry="2" /><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16" /></>} />;
 const IconBars = () => <Ic d={<><line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" /></>} />;
 const IconSparkle = () => <Ic d={<><path d="M12 3v18M3 12h18" /><path d="M5.5 5.5l13 13M18.5 5.5l-13 13" /></>} />;
-const IconLock = () => <Ic d={<><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0110 0v4" /></>} w={13} color="rgba(255,255,255,0.5)" />;
+const IconLock = () => <Ic d={<><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0110 0v4" /></>} w={13} color="var(--st-50)" />;
 const IconLaptop = () => <Ic d={<><rect x="2" y="3" width="20" height="14" rx="2" ry="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" /></>} />;
 const IconMonitor = () => <Ic d={<><rect x="2" y="3" width="20" height="14" rx="2" ry="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" /></>} />;
 const IconUserCircle = () => <Ic d={<><circle cx="12" cy="12" r="10" /><circle cx="12" cy="10" r="3" /><path d="M6.6 18a6 6 0 0110.8 0" /></>} />;
@@ -78,22 +78,22 @@ export default function ContactForm() {
 
   const inputClass = "w-full px-4 py-3 rounded-lg text-[0.95rem] outline-none transition-all border";
   const inputStyle = {
-    border: "1px solid rgba(255,255,255,0.10)",
-    background: "rgba(255,255,255,0.03)",
+    border: "1px solid var(--st-10)",
+    background: "var(--st-03)",
     color: "white",
     fontFamily: "inherit",
   } as const;
 
   if (state === "success") {
     return (
-      <div className="rounded-2xl p-10 text-center" style={{ background: "linear-gradient(180deg, rgba(20,40,90,0.5), rgba(8,16,43,0.85))", border: "1px solid rgba(255,255,255,0.10)", boxShadow: "0 24px 60px rgba(5,10,31,0.55)" }}>
+      <div className="rounded-2xl p-10 text-center" style={{ background: "linear-gradient(180deg, var(--dg-50), var(--db-85))", border: "1px solid var(--st-10)", boxShadow: "0 24px 60px rgba(5,10,31,0.55)" }}>
         <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5" style={{ background: "var(--grad-primary)" }}>
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="20 6 9 17 4 12" />
           </svg>
         </div>
         <h3 className="text-[1.25rem] font-bold mb-2 tracking-tight text-white">Đã nhận thông tin!</h3>
-        <p className="text-[0.92rem] leading-[1.7]" style={{ color: "rgba(255,255,255,0.7)" }}>Mình sẽ liên hệ trong vòng 24 giờ qua email hoặc Zalo.</p>
+        <p className="text-[0.92rem] leading-[1.7]" style={{ color: "var(--st-70)" }}>Mình sẽ liên hệ trong vòng 24 giờ qua email hoặc Zalo.</p>
       </div>
     );
   }
@@ -111,7 +111,7 @@ export default function ContactForm() {
   ];
 
   return (
-    <div className="rounded-2xl p-7 md:p-8" style={{ background: "linear-gradient(180deg, rgba(20,40,90,0.5), rgba(8,16,43,0.85))", border: "1px solid rgba(255,255,255,0.10)", boxShadow: "0 24px 60px rgba(5,10,31,0.55)" }}>
+    <div className="rounded-2xl p-7 md:p-8" style={{ background: "linear-gradient(180deg, var(--dg-50), var(--db-85))", border: "1px solid var(--st-10)", boxShadow: "0 24px 60px rgba(5,10,31,0.55)" }}>
       <div className="flex flex-col gap-5">
         <div>
           <label className="block text-[0.8rem] font-semibold mb-1.5 text-white">Họ và tên <span className="grad-text">*</span></label>
@@ -136,9 +136,9 @@ export default function ContactForm() {
                 <button key={opt.val} onClick={() => setForm(p => ({ ...p, interest: opt.val }))}
                   className="flex flex-col items-center gap-2 py-3.5 px-2 rounded-lg text-[0.78rem] font-semibold transition-all border whitespace-pre-line leading-snug"
                   style={{
-                    borderColor: active ? "#146ef5" : "rgba(255,255,255,0.10)",
+                    borderColor: active ? "#146ef5" : "var(--st-10)",
                     background: active ? "rgba(20,110,245,0.12)" : "rgba(255,255,255,0.02)",
-                    color: active ? "#9bb6ff" : "rgba(255,255,255,0.65)",
+                    color: active ? "#9bb6ff" : "var(--st-65)",
                   }}>
                   {opt.icon}
                   <span>{opt.label}</span>
@@ -156,9 +156,9 @@ export default function ContactForm() {
                 <button key={opt.val} onClick={() => setForm(p => ({ ...p, who: opt.val }))}
                   className="inline-flex items-center gap-2.5 py-3 px-3 rounded-lg text-[0.85rem] font-medium text-left transition-all border"
                   style={{
-                    borderColor: active ? "#146ef5" : "rgba(255,255,255,0.10)",
+                    borderColor: active ? "#146ef5" : "var(--st-10)",
                     background: active ? "rgba(20,110,245,0.12)" : "rgba(255,255,255,0.02)",
-                    color: active ? "#9bb6ff" : "rgba(255,255,255,0.65)",
+                    color: active ? "#9bb6ff" : "var(--st-65)",
                   }}>
                   {opt.icon}
                   <span>{opt.label}</span>
@@ -168,7 +168,7 @@ export default function ContactForm() {
           </div>
         </div>
         <div>
-          <label className="block text-[0.8rem] font-semibold mb-1.5 text-white">Lời nhắn <span className="font-normal" style={{ color: "rgba(255,255,255,0.5)" }}>(không bắt buộc)</span></label>
+          <label className="block text-[0.8rem] font-semibold mb-1.5 text-white">Lời nhắn <span className="font-normal" style={{ color: "var(--st-50)" }}>(không bắt buộc)</span></label>
           <textarea name="message" value={form.message} onChange={handleChange} placeholder="Bạn muốn học gì, đang gặp vấn đề gì..." rows={3} className={inputClass} style={{ ...inputStyle, resize: "none" }} />
         </div>
         <button onClick={handleSubmit} disabled={state === "loading" || !form.name || !form.email || !form.phone}
@@ -176,7 +176,7 @@ export default function ContactForm() {
           {state === "loading" ? "Đang gửi..." : <>Gửi thông tin</>}
         </button>
         {state === "error" && <p className="text-center text-[0.82rem]" style={{ color: "#ee1d36" }}>Có lỗi. Vui lòng nhắn Zalo hoặc Email trực tiếp.</p>}
-        <p className="text-center text-[0.78rem] inline-flex items-center justify-center gap-1.5" style={{ color: "rgba(255,255,255,0.5)" }}>
+        <p className="text-center text-[0.78rem] inline-flex items-center justify-center gap-1.5" style={{ color: "var(--st-50)" }}>
           <IconLock />
           Thông tin của bạn được bảo mật hoàn toàn
         </p>

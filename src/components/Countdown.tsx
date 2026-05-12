@@ -29,7 +29,7 @@ export default function Countdown({ compact = false }: { compact?: boolean }) {
   if (!mounted) {
     return (
       <div className="flex items-center gap-2">
-        <div className="h-[42px] w-[180px] rounded-lg" style={{ background: "rgba(255,255,255,0.04)" }} />
+        <div className="h-[42px] w-[180px] rounded-lg" style={{ background: "var(--st-04)" }} />
       </div>
     );
   }
@@ -40,11 +40,11 @@ export default function Countdown({ compact = false }: { compact?: boolean }) {
     return (
       <span className="inline-flex items-baseline gap-1.5 font-mono font-bold tracking-tight">
         <span className="grad-text">{t.d}</span>
-        <span className="text-[0.7em]" style={{ color: "rgba(255,255,255,0.4)" }}>ngày</span>
+        <span className="text-[0.7em]" style={{ color: "var(--st-40)" }}>ngày</span>
         <span className="grad-text">{pad(t.h)}</span>
-        <span className="text-[0.7em]" style={{ color: "rgba(255,255,255,0.4)" }}>:</span>
+        <span className="text-[0.7em]" style={{ color: "var(--st-40)" }}>:</span>
         <span className="grad-text">{pad(t.m)}</span>
-        <span className="text-[0.7em]" style={{ color: "rgba(255,255,255,0.4)" }}>:</span>
+        <span className="text-[0.7em]" style={{ color: "var(--st-40)" }}>:</span>
         <span className="grad-text">{pad(t.s)}</span>
       </span>
     );
@@ -65,13 +65,13 @@ export default function Countdown({ compact = false }: { compact?: boolean }) {
             style={{
               background: "rgba(20,40,90,0.6)",
               border: "1px solid rgba(74,214,255,0.25)",
-              boxShadow: "0 1px 0 rgba(255,255,255,0.06) inset",
+              boxShadow: "0 1px 0 var(--st-06) inset",
             }}>
             <span className="text-[1.4rem] font-bold tracking-tight grad-text font-mono leading-none">
               {pad(b.val)}
             </span>
           </div>
-          <span className="text-[0.6rem] mt-1.5 font-semibold uppercase tracking-[0.14em]" style={{ color: "rgba(255,255,255,0.45)" }}>
+          <span className="text-[0.6rem] mt-1.5 font-semibold uppercase tracking-[0.14em]" style={{ color: "var(--st-45)" }}>
             {b.label}
           </span>
         </div>

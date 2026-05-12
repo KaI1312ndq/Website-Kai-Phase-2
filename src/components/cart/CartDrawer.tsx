@@ -50,14 +50,14 @@ export default function CartDrawer() {
               </span>
             )}
             {syncing && (
-              <span className="text-[0.7rem]" style={{ color: "rgba(255,255,255,0.4)" }}>đang đồng bộ…</span>
+              <span className="text-[0.7rem]" style={{ color: "var(--st-40)" }}>đang đồng bộ…</span>
             )}
           </div>
           <button
             onClick={closeDrawer}
             aria-label="Đóng giỏ hàng"
             className="w-8 h-8 rounded-full flex items-center justify-center"
-            style={{ background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.7)" }}
+            style={{ background: "var(--st-06)", color: "var(--st-70)" }}
           >
             <Icon name="x" size={16} />
           </button>
@@ -67,8 +67,8 @@ export default function CartDrawer() {
         <div className="flex-1 overflow-y-auto">
           {items.length === 0 ? (
             <div className="flex flex-col items-center justify-center text-center px-6 py-16 h-full">
-              <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid var(--line)" }}>
-                <Icon name="shopping-cart" size={28} color="rgba(255,255,255,0.4)" />
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ background: "var(--st-04)", border: "1px solid var(--line)" }}>
+                <Icon name="shopping-cart" size={28} color="var(--st-40)" />
               </div>
               <h3 className="text-[1rem] font-semibold text-white mb-1.5">Giỏ hàng trống</h3>
               <p className="text-[0.85rem] mb-5" style={{ color: "var(--ink-mute)" }}>
@@ -124,7 +124,7 @@ export default function CartDrawer() {
                 <button
                   onClick={clear}
                   className="text-[0.78rem] mt-1 mx-3 font-medium self-start"
-                  style={{ color: "rgba(255,255,255,0.5)" }}
+                  style={{ color: "var(--st-50)" }}
                 >
                   Xoá toàn bộ
                 </button>
@@ -140,7 +140,7 @@ export default function CartDrawer() {
               <span className="text-[0.85rem]" style={{ color: "var(--ink-mute)" }}>Tổng</span>
               <div className="flex items-baseline gap-2">
                 {pricing.discount > 0 && (
-                  <span className="text-[0.8rem] line-through" style={{ color: "rgba(255,255,255,0.4)" }}>
+                  <span className="text-[0.8rem] line-through" style={{ color: "var(--st-40)" }}>
                     {pricing.subtotal.toLocaleString("vi-VN")}đ
                   </span>
                 )}
@@ -167,7 +167,7 @@ export default function CartDrawer() {
               href="/shop"
               onClick={closeDrawer}
               className="text-center text-[0.82rem] font-semibold py-1"
-              style={{ color: "rgba(255,255,255,0.6)" }}
+              style={{ color: "var(--st-60)" }}
             >
               Tiếp tục mua sắm
             </Link>

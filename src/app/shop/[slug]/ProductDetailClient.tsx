@@ -51,8 +51,8 @@ export default function ProductDetailClient({
         onClick={handleAddToCart}
         className="w-full inline-flex items-center justify-center gap-2 font-bold text-[0.95rem] px-6 py-3.5 rounded-xl transition-all"
         style={{
-          background: inCart ? "rgba(95,255,170,0.10)" : "rgba(255,255,255,0.04)",
-          border: `1px solid ${inCart ? "rgba(95,255,170,0.35)" : "rgba(255,255,255,0.15)"}`,
+          background: inCart ? "rgba(95,255,170,0.10)" : "var(--st-04)",
+          border: `1px solid ${inCart ? "rgba(95,255,170,0.35)" : "var(--st-15)"}`,
           color: inCart ? "#5fffaa" : "white",
         }}
       >

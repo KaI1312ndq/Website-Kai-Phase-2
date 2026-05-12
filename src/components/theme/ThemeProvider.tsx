@@ -33,14 +33,15 @@ function applyTheme(resolved: ResolvedTheme, animate = false) {
 }
 
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [mode, setModeState] = useState<ThemeMode>("auto");
+  // Default: dark - user phải explicit chọn Sáng hoặc Tự động
+  const [mode, setModeState] = useState<ThemeMode>("dark");
   const [resolved, setResolved] = useState<ResolvedTheme>("dark");
   const [mounted, setMounted] = useState(false);
 
-  // Initial load - đọc từ localStorage
+  // Initial load - đọc từ localStorage; fallback "dark" nếu chưa có
   useEffect(() => {
     setMounted(true);
-    let stored: ThemeMode = "auto";
+    let stored: ThemeMode = "dark";
     try {
       const v = localStorage.getItem(STORAGE_KEY);
       if (v === "light" || v === "dark" || v === "auto") stored = v;
@@ -92,18 +93,21 @@ export function useTheme(): Ctx {
 }
 
 // Inline script chạy TRƯỚC khi React hydrate để set data-theme và tránh FOUC.
-// Dùng dangerouslySetInnerHTML trong <head>.
+// Default = "dark". User phải explicit toggle qua UserButton dropdown.
 export const THEME_INIT_SCRIPT = `
 (function(){
   try {
     var m = localStorage.getItem('${STORAGE_KEY}');
-    if (m !== 'light' && m !== 'dark' && m !== 'auto') m = 'auto';
+    if (m !== 'light' && m !== 'dark' && m !== 'auto') m = 'dark';
     var r = m;
     if (m === 'auto') {
       r = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
     }
     document.documentElement.setAttribute('data-theme', r);
     document.documentElement.style.colorScheme = r;
-  } catch (e) {}
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.style.colorScheme = 'dark';
+  }
 })();
 `.trim();
