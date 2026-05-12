@@ -5,18 +5,11 @@ import { calculatePrice, generateOrderNumber, generateDownloadToken } from "@/li
 import { getVoucherByCode } from "@/lib/queries";
 import { normalizeCode, validateVoucher } from "@/lib/voucher";
 import { sendDeliveryEmail } from "@/lib/email/send-delivery";
+import { getSupabaseAdmin } from "@/lib/supabase/admin";
 
 /**
  * Create new order with selected products.
- * POST /api/orders/create
- *   body: {
- *     productIds: string[],
- *     customer: { name, email, phone },
- *     voucherCode?: string,
- *   }
- * Returns: { orderNumber, total, redirectUrl, isFree }
- *
- * If voucher reduces total to 0 -> mark paid + delivered immediately, send file email, skip QR.
+ * Products vẫn ở Sanity (editorial). Order ghi vào Supabase.
  */
 
 const RATE_LIMIT = new Map<string, { count: number; resetAt: number }>();
@@ -61,38 +54,34 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "SĐT không hợp lệ" }, { status: 400 });
     }
 
-    const token = process.env.SANITY_API_WRITE_TOKEN;
+    // Fetch products từ Sanity (vẫn ở Sanity vì là editorial content)
     const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
-    if (!token || !projectId || projectId === "placeholder") {
+    if (!projectId || projectId === "placeholder") {
       return NextResponse.json({ error: "Sanity not configured" }, { status: 500 });
     }
-
     const sanity = createClient({
       projectId,
       dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
       apiVersion: "2024-01-01",
-      token,
+      token: process.env.SANITY_API_WRITE_TOKEN,
       useCdn: false,
     });
 
-    // Fetch products to validate + lock prices
     const products = (await sanity.fetch(
       `*[_type == "product" && active == true && _id in $ids] { _id, title, price }`,
-      { ids: productIds }
+      { ids: productIds },
     )) as Array<{ _id: string; title: string; price: number }>;
 
     if (products.length !== productIds.length) {
       return NextResponse.json({ error: "Một số sản phẩm không tồn tại hoặc đã hết bán" }, { status: 400 });
     }
 
-    // Bundle pricing
     const bundle = calculatePrice(products.length);
     let total = bundle.total;
     let voucherDiscount = 0;
     let appliedCode: string | null = null;
     let voucherDocId: string | null = null;
 
-    // Voucher (re-validate server-side)
     if (voucherCode && typeof voucherCode === "string" && voucherCode.trim()) {
       const code = normalizeCode(voucherCode);
       const voucher = await getVoucherByCode(code);
@@ -106,17 +95,22 @@ export async function POST(req: NextRequest) {
       voucherDocId = check.voucher._id;
     }
 
-    // Attach Clerk userId if signed in
     let clerkUserId: string | null = null;
     try {
       const { userId } = await auth();
       clerkUserId = userId || null;
     } catch {}
 
-    // Generate unique order number
+    const sb = getSupabaseAdmin();
+
+    // Unique order_number (Supabase enforces unique via constraint, retry on collision)
     let orderNumber = generateOrderNumber();
     for (let i = 0; i < 5; i++) {
-      const existing = await sanity.fetch(`*[_type == "order" && orderNumber == $on][0]._id`, { on: orderNumber });
+      const { data: existing } = await sb
+        .from("orders")
+        .select("id")
+        .eq("order_number", orderNumber)
+        .maybeSingle();
       if (!existing) break;
       orderNumber = generateOrderNumber();
     }
@@ -125,42 +119,65 @@ export async function POST(req: NextRequest) {
     const now = new Date();
     const isFree = total === 0;
 
-    const doc: any = {
-      _type: "order",
-      orderNumber,
-      ...(clerkUserId ? { clerkUserId } : {}),
-      customer: {
-        name: name.trim(),
-        email: email.trim().toLowerCase(),
-        phone: phoneClean,
-      },
-      items: products.map((p) => ({
-        _key: p._id,
-        product: { _type: "reference", _ref: p._id },
-        title: p.title,
-        price: p.price,
-      })),
-      subtotal: bundle.subtotal,
-      discount: bundle.discount,
-      ...(appliedCode ? { voucherCode: appliedCode, voucherDiscount } : { voucherDiscount: 0 }),
-      total,
-      paymentStatus: isFree ? "paid" : "pending",
-      deliveryStatus: "pending",
-      downloadToken,
-      createdAt: now.toISOString(),
-      ...(isFree ? { paidAt: now.toISOString() } : {}),
-    };
+    // Insert order
+    const { data: created, error: orderErr } = await sb
+      .from("orders")
+      .insert({
+        order_number: orderNumber,
+        user_id: clerkUserId,
+        customer_name: name.trim(),
+        customer_email: email.trim().toLowerCase(),
+        customer_phone: phoneClean,
+        subtotal: bundle.subtotal,
+        discount: bundle.discount,
+        voucher_code: appliedCode,
+        voucher_discount: voucherDiscount,
+        total,
+        payment_status: isFree ? "paid" : "unpaid",
+        delivery_status: "pending",
+        download_token: downloadToken,
+        status: isFree ? "paid" : "pending",
+        paid_at: isFree ? now.toISOString() : null,
+      })
+      .select("id")
+      .single();
 
-    const created = await sanity.create(doc);
-
-    // If voucher applied, bump usedCount (best-effort)
-    if (voucherDocId) {
-      try {
-        await sanity.patch(voucherDocId).inc({ usedCount: 1 }).commit();
-      } catch {}
+    if (orderErr || !created) {
+      return NextResponse.json({ error: orderErr?.message || "Tạo đơn thất bại" }, { status: 500 });
     }
 
-    // Free order -> auto-send delivery email immediately
+    // Insert order_items
+    const { error: itemsErr } = await sb.from("order_items").insert(
+      products.map((p) => ({
+        order_id: created.id,
+        product_sanity_id: p._id,
+        title_snapshot: p.title,
+        price_snapshot: p.price,
+        qty: 1,
+      })),
+    );
+    if (itemsErr) {
+      // Rollback order nếu items insert fail
+      await sb.from("orders").delete().eq("id", created.id);
+      return NextResponse.json({ error: itemsErr.message }, { status: 500 });
+    }
+
+    // Log voucher usage + bump usedCount in Sanity
+    if (voucherDocId && appliedCode) {
+      try {
+        await sb.from("voucher_usage").insert({
+          voucher_code: appliedCode,
+          user_id: clerkUserId,
+          order_id: created.id,
+          discount_amount: voucherDiscount,
+        });
+        await sanity.patch(voucherDocId).inc({ usedCount: 1 }).commit();
+      } catch (e) {
+        console.warn("[orders/create] voucher_usage log failed:", e);
+      }
+    }
+
+    // Free order -> auto-deliver
     if (isFree) {
       try {
         const expiresAt = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
@@ -173,23 +190,23 @@ export async function POST(req: NextRequest) {
           downloadToken,
           expiresAt: expiresAt.toISOString(),
         });
-        const patches: any = {
-          deliveryStatus: emailResult.ok ? "delivered" : "failed",
-          downloadExpiresAt: expiresAt.toISOString(),
+        const patches: Record<string, unknown> = {
+          delivery_status: emailResult.ok ? "delivered" : "failed",
+          download_expires_at: expiresAt.toISOString(),
         };
         if (emailResult.ok) {
-          patches.deliveredAt = now.toISOString();
-          if (emailResult.emailId) patches.resendEmailId = emailResult.emailId;
+          patches.delivered_at = now.toISOString();
+          if (emailResult.emailId) patches.resend_email_id = emailResult.emailId;
         }
-        await sanity.patch(created._id).set(patches).commit();
+        await sb.from("orders").update(patches).eq("id", created.id);
       } catch {
-        // Email failure shouldn't block order creation; Quảng can re-send from Studio
+        // Email failure không block order creation
       }
     }
 
     return NextResponse.json({
       ok: true,
-      orderId: created._id,
+      orderId: created.id,
       orderNumber,
       total,
       isFree,

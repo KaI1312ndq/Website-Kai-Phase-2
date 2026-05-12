@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@sanity/client";
 import { createHmac, timingSafeEqual } from "crypto";
+import { getSupabaseAdmin } from "@/lib/supabase/admin";
 
 /**
  * Resend webhook endpoint - track email events (delivered / opened / clicked / bounced).
@@ -70,57 +70,43 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: true, skipped: "missing type or email_id" });
     }
 
-    const token = process.env.SANITY_API_WRITE_TOKEN;
-    const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
-    if (!token || !projectId) {
-      return NextResponse.json({ error: "Sanity not configured" }, { status: 500 });
-    }
-
-    const sanity = createClient({
-      projectId,
-      dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
-      apiVersion: "2024-01-01",
-      token,
-      useCdn: false,
-    });
-
-    // Find order by resendEmailId
-    const order = await sanity.fetch(
-      `*[_type == "order" && resendEmailId == $emailId][0] { _id, orderNumber }`,
-      { emailId }
-    );
+    const sb = getSupabaseAdmin();
+    const { data: order } = await sb
+      .from("orders")
+      .select("id, order_number")
+      .eq("resend_email_id", emailId)
+      .maybeSingle();
 
     if (!order) {
-      // Email not tied to any order - ignore (might be a different email sent via Resend)
       return NextResponse.json({ ok: true, skipped: "order not found" });
     }
 
     const now = new Date().toISOString();
-    const patches: Record<string, any> = {};
+    const patches: Record<string, unknown> = {};
 
     switch (type) {
       case "email.delivered":
-        patches.emailDelivered = true;
+        patches.email_delivered = true;
         break;
       case "email.opened":
-        patches.emailOpened = true;
-        patches.emailOpenedAt = now;
+        patches.email_opened = true;
+        patches.email_opened_at = now;
         break;
       case "email.clicked":
-        patches.emailClicked = true;
-        patches.emailClickedAt = now;
+        patches.email_clicked = true;
+        patches.email_clicked_at = now;
         break;
       case "email.bounced":
-        patches.emailBounced = true;
-        patches.deliveryStatus = "failed";
+        patches.email_bounced = true;
+        patches.delivery_status = "failed";
         break;
     }
 
     if (Object.keys(patches).length > 0) {
-      await sanity.patch(order._id).set(patches).commit();
+      await sb.from("orders").update(patches).eq("id", order.id as string);
     }
 
-    return NextResponse.json({ ok: true, orderNumber: order.orderNumber, event: type });
+    return NextResponse.json({ ok: true, orderNumber: order.order_number, event: type });
   } catch (e) {
     return NextResponse.json({ error: e instanceof Error ? e.message : "Unknown" }, { status: 500 });
   }
