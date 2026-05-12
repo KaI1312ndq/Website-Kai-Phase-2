@@ -132,7 +132,7 @@ export default function CheckoutClient() {
   // Empty cart state
   if (cartHydrated && items.length === 0) {
     return (
-      <div className="rounded-2xl p-10 text-center" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+      <div className="rounded-2xl p-10 text-center" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
         <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: "var(--st-04)", border: "1px solid var(--line)" }}>
           <Icon name="shopping-cart" size={28} color="var(--st-40)" />
         </div>
@@ -160,7 +160,7 @@ export default function CheckoutClient() {
       <form
         onSubmit={handleSubmit}
         className="rounded-2xl p-6 md:p-7 flex flex-col gap-5"
-        style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}
+        style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}
       >
         <div>
           <h2 className="text-[1.05rem] font-bold text-white mb-1">Thông tin nhận file</h2>
@@ -241,7 +241,7 @@ export default function CheckoutClient() {
       </form>
 
       {/* Right - order summary */}
-      <aside className="rounded-2xl p-6 lg:sticky lg:top-24" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+      <aside className="rounded-2xl p-6 lg:sticky lg:top-24" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
         <h2 className="text-[1rem] font-bold text-white mb-4">Đơn hàng của bạn</h2>
 
         <ul className="flex flex-col gap-3 mb-4 list-none">

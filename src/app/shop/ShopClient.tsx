@@ -32,7 +32,7 @@ export default function ShopClient({ products }: { products: Product[] }) {
               key={p._id}
               className="rounded-2xl overflow-hidden flex flex-col transition-all"
               style={{
-                background: "rgba(255,255,255,0.025)",
+                background: "var(--st-03)",
                 border: `1px solid ${isSelected ? "rgba(20,110,245,0.55)" : "var(--line)"}`,
                 boxShadow: isSelected ? "0 8px 30px rgba(20,110,245,0.15)" : "none",
               }}

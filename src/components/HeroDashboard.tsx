@@ -48,7 +48,7 @@ export default function HeroDashboard() {
         transition={{ duration: 0.8, delay: 0.3, ease: [0.2, 0.8, 0.2, 1] }}
         className="relative rounded-2xl p-5 md:p-6 overflow-hidden"
         style={{
-          background: "linear-gradient(180deg, rgba(20,40,90,0.6) 0%, var(--db-85) 100%)",
+          background: "linear-gradient(180deg, var(--dg-70) 0%, var(--db-85) 100%)",
           border: "1px solid var(--st-10)",
           boxShadow: "0 24px 60px rgba(5,10,31,0.55), 0 1px 0 var(--st-08) inset",
           backdropFilter: "blur(20px)",
@@ -80,7 +80,7 @@ export default function HeroDashboard() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.5 + i * 0.08 }}
               className="rounded-lg p-3"
-              style={{ background: "var(--st-03)", border: "1px solid rgba(255,255,255,0.07)" }}
+              style={{ background: "var(--st-03)", border: "1px solid var(--st-08)" }}
             >
               <div className="text-[0.6rem] font-semibold uppercase tracking-[0.14em] mb-1.5" style={{ color: "var(--st-45)" }}>{m.label}</div>
               <div className="text-[1.4rem] font-bold tracking-tight text-white leading-none">{m.value}</div>
@@ -90,7 +90,7 @@ export default function HeroDashboard() {
         </div>
 
         {/* Chart */}
-        <div className="rounded-lg p-4 mb-4" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--st-05)" }}>
+        <div className="rounded-lg p-4 mb-4" style={{ background: "var(--st-03)", border: "1px solid var(--st-05)" }}>
           <div className="flex items-center justify-between mb-2">
             <span className="text-[0.65rem] font-semibold uppercase tracking-[0.14em]" style={{ color: "var(--st-40)" }}>Growth · 6 tháng</span>
             <span className="text-[0.7rem] font-semibold" style={{ color: "#4ad6ff" }}>+248%</span>

@@ -264,7 +264,7 @@ export default function CoursesPage() {
                     key={c.id}
                     className="rounded-2xl p-6 md:p-7 flex flex-col"
                     style={{
-                      background: isAvailable ? `${c.color}08` : "rgba(255,255,255,0.025)",
+                      background: isAvailable ? `${c.color}08` : "var(--st-03)",
                       border: `1px solid ${isAvailable ? c.color + "55" : "var(--line)"}`,
                       boxShadow: isAvailable ? `0 8px 30px ${c.color}15` : "none",
                     }}
@@ -356,7 +356,7 @@ export default function CoursesPage() {
                     key={c.id}
                     className="rounded-2xl p-6 md:p-7 flex flex-col"
                     style={{
-                      background: isAvailable ? `${c.color}08` : "rgba(255,255,255,0.025)",
+                      background: isAvailable ? `${c.color}08` : "var(--st-03)",
                       border: `1px solid ${isAvailable ? c.color + "55" : "var(--line)"}`,
                       boxShadow: isAvailable ? `0 8px 30px ${c.color}15` : "none",
                     }}
@@ -455,7 +455,7 @@ export default function CoursesPage() {
             </Reveal>
             <div className="flex flex-col gap-3">
               {FAQS.map((f, i) => (
-                <details key={i} className="group rounded-xl p-5" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+                <details key={i} className="group rounded-xl p-5" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
                   <summary className="flex items-center justify-between cursor-pointer text-[0.98rem] font-semibold text-white">
                     {f.q}
                     <span className="text-[1.2rem] transition-transform group-open:rotate-45" style={{ color: "#7da9ff" }}>+</span>

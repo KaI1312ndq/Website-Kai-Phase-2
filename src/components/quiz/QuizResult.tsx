@@ -86,7 +86,7 @@ export default function QuizResult({ config, result, onRetake }: Props) {
         <div
           className="mt-6 rounded-2xl p-6 md:p-7"
           style={{
-            background: `linear-gradient(135deg, ${secondary.color}10 0%, rgba(255,255,255,0.02) 100%)`,
+            background: `linear-gradient(135deg, ${secondary.color}10 0%, var(--st-03) 100%)`,
             border: `1px solid ${secondary.color}33`,
           }}
         >
@@ -124,7 +124,7 @@ export default function QuizResult({ config, result, onRetake }: Props) {
 
       {/* Multi-score dimension bars (EQ, BigFive, DarkTriad) */}
       {result.dimensions && config.dimensionLabels && (
-        <div className="mt-6 rounded-2xl p-6 md:p-8" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+        <div className="mt-6 rounded-2xl p-6 md:p-8" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
           <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-5" style={{ color: "var(--st-55)" }}>
             {result.totalScore !== undefined
               ? `Tổng điểm EQ: ${result.totalScore}/160`
@@ -156,7 +156,7 @@ export default function QuizResult({ config, result, onRetake }: Props) {
 
       {/* Enneagram wing display */}
       {result.wing && (
-        <div className="mt-6 rounded-2xl p-6" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+        <div className="mt-6 rounded-2xl p-6" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
           <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-3" style={{ color: "var(--st-55)" }}>
             Wing (Cánh) của bạn
           </div>
@@ -171,7 +171,7 @@ export default function QuizResult({ config, result, onRetake }: Props) {
 
       {/* MBTI dichotomy bars */}
       {result.dichotomies && (
-        <div className="mt-6 rounded-2xl p-6 md:p-8" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+        <div className="mt-6 rounded-2xl p-6 md:p-8" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
           <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-5" style={{ color: "var(--st-55)" }}>
             Phân tích 4 chiều
           </div>
@@ -210,7 +210,7 @@ export default function QuizResult({ config, result, onRetake }: Props) {
       )}
 
       {/* Description */}
-      <div className="mt-6 rounded-2xl p-6 md:p-8" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+      <div className="mt-6 rounded-2xl p-6 md:p-8" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
         <h2 className="text-[1.2rem] font-bold text-white mb-4">Bạn là ai?</h2>
         <div className="flex flex-col gap-3">
           {archetype.description.map((p, i) => (
@@ -252,7 +252,7 @@ export default function QuizResult({ config, result, onRetake }: Props) {
       </div>
 
       {/* Context */}
-      <div className="mt-6 rounded-2xl p-6 md:p-8" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+      <div className="mt-6 rounded-2xl p-6 md:p-8" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
         <h2 className="text-[1.1rem] font-bold text-white mb-4">
           {config.scoringType === "leadership" ? "Phù hợp nhất với" : "Công việc phù hợp"}
         </h2>
@@ -285,7 +285,7 @@ export default function QuizResult({ config, result, onRetake }: Props) {
 
       {/* Follow both styles */}
       {secondary && (
-        <div className="mt-8 rounded-2xl p-6" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+        <div className="mt-8 rounded-2xl p-6" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
           <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-3" style={{ color: "var(--st-55)" }}>
             Follow cả 2 phong cách
           </div>

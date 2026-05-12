@@ -187,7 +187,7 @@ export default function TaxCalcPage() {
             </div>
 
             <Reveal>
-              <div className="rounded-2xl p-6" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+              <div className="rounded-2xl p-6" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
                 <h3 className="text-[1.05rem] font-bold text-white mb-4">Công thức tính step-by-step</h3>
                 <ol className="flex flex-col gap-2.5 list-none" style={{ color: "var(--st-80)" }}>
                   {[
@@ -222,7 +222,7 @@ export default function TaxCalcPage() {
             </Reveal>
             <div className="flex flex-col gap-3">
               {FAQS.map((f, i) => (
-                <details key={i} className="group rounded-xl p-5" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+                <details key={i} className="group rounded-xl p-5" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
                   <summary className="flex items-center justify-between cursor-pointer text-[0.96rem] font-semibold text-white gap-3">
                     {f.q}
                     <span className="text-[1.2rem] transition-transform group-open:rotate-45 flex-shrink-0" style={{ color: "#7da9ff" }}>+</span>
@@ -248,7 +248,7 @@ export default function TaxCalcPage() {
                   key={t.href}
                   href={t.href}
                   className="rounded-xl p-5 transition-transform hover:-translate-y-0.5"
-                  style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}
+                  style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}
                 >
                   <div className="text-[0.95rem] font-semibold text-white mb-1">{t.title}</div>
                   <div className="text-[0.82rem]" style={{ color: "var(--ink-mute)" }}>{t.desc}</div>

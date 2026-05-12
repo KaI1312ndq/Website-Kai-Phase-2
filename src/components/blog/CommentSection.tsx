@@ -127,7 +127,7 @@ export default function CommentSection({
       )}
 
       {/* Comment form */}
-      <div className="rounded-2xl p-6 md:p-7" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--line)" }}>
+      <div className="rounded-2xl p-6 md:p-7" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
         <h3 className="text-[1.05rem] font-bold text-white mb-1">
           {replyTo ? `Trả lời ${replyTo.name}` : "Để lại bình luận"}
         </h3>

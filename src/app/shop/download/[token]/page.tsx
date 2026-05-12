@@ -88,7 +88,7 @@ export default async function DownloadPage({ params }: { params: Promise<{ token
           <div className="max-w-[820px] mx-auto px-6 md:px-10 py-12 md:py-16">
             <div className="flex flex-col gap-4 mb-8">
               {order.files.map((f: any, i: number) => (
-                <div key={i} className="rounded-xl p-5 flex items-center justify-between gap-4 flex-wrap" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+                <div key={i} className="rounded-xl p-5 flex items-center justify-between gap-4 flex-wrap" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
                   <div className="flex items-center gap-3 min-w-0 flex-1">
                     <span className="w-11 h-11 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "rgba(125,169,255,0.12)", border: "1px solid rgba(125,169,255,0.3)", color: "#7da9ff" }}>
                       <Icon name="book-open" size={22} />

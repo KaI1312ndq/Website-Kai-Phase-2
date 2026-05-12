@@ -56,7 +56,7 @@ export default function LeadCaptureGate({ config, result, onComplete }: Props) {
   }
 
   return (
-    <div className="max-w-[640px] mx-auto rounded-2xl p-6 md:p-10" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+    <div className="max-w-[640px] mx-auto rounded-2xl p-6 md:p-10" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
       <div className="text-center mb-8">
         <div
           className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-4"

@@ -81,7 +81,7 @@ export default async function AccountPage() {
                   href={c.href}
                   className="group rounded-2xl p-6 transition-all hover:-translate-y-1"
                   style={{
-                    background: "rgba(255,255,255,0.025)",
+                    background: "var(--st-03)",
                     border: "1px solid var(--line)",
                   }}
                 >

@@ -54,7 +54,7 @@ export default function SignInPage() {
                   appearance={{
                     elements: {
                       rootBox: "w-full max-w-[420px]",
-                      card: "bg-[rgba(255,255,255,0.025)] border border-[var(--line)] shadow-2xl",
+                      card: "bg-[var(--st-03)] border border-[var(--line)] shadow-2xl",
                       header: "hidden",
                     },
                   }}

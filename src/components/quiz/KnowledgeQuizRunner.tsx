@@ -294,7 +294,7 @@ function IntroScreen({
   onStart: () => void;
 }) {
   return (
-    <div className="max-w-[820px] mx-auto rounded-2xl p-8 md:p-12 text-center" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+    <div className="max-w-[820px] mx-auto rounded-2xl p-8 md:p-12 text-center" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
       <div
         className="inline-flex items-center justify-center w-20 h-20 rounded-2xl mb-5"
         style={{ background: `${config.color}18`, border: `1px solid ${config.color}55`, color: config.color }}
@@ -312,7 +312,7 @@ function IntroScreen({
         <Stat label="Tổng" value={`~${Math.ceil((totalQuestions * secondsPerQ) / 60)}p`} color={config.color} />
       </div>
 
-      <div className="text-left max-w-[600px] mx-auto rounded-xl p-5 mb-7" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--st-08)" }}>
+      <div className="text-left max-w-[600px] mx-auto rounded-xl p-5 mb-7" style={{ background: "var(--st-03)", border: "1px solid var(--st-08)" }}>
         <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-3 text-center" style={{ color: config.color }}>
           Quy tắc bài test
         </div>
@@ -361,7 +361,7 @@ function TopBar({
   const timerProgress = (timeLeft / secondsPerQ) * 100;
 
   return (
-    <div className="sticky top-[80px] z-40 mb-6 rounded-2xl p-4 backdrop-blur-md" style={{ background: "rgba(8,16,43,0.80)", border: "1px solid var(--st-10)" }}>
+    <div className="sticky top-[80px] z-40 mb-6 rounded-2xl p-4 backdrop-blur-md" style={{ background: "var(--db-78)", border: "1px solid var(--st-10)" }}>
       {/* Progress bar */}
       <div className="rounded-full overflow-hidden h-1.5 mb-3" style={{ background: "var(--st-06)" }}>
         <div
@@ -456,7 +456,7 @@ function QuestionCard({
   const timedOut = pickedThisQ === -1;
 
   return (
-    <div key={question.id} className="rounded-2xl p-6 md:p-8 quiz-card-enter" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+    <div key={question.id} className="rounded-2xl p-6 md:p-8 quiz-card-enter" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
       <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-3" style={{ color }}>
         Câu {questionNumber} / {total}
       </div>

@@ -118,7 +118,7 @@ export default function LeadPopup() {
             className="relative w-full max-w-[460px] rounded-2xl overflow-hidden"
             onClick={(e) => e.stopPropagation()}
             style={{
-              background: "linear-gradient(180deg, rgba(20,40,90,0.95) 0%, rgba(8,16,43,0.98) 100%)",
+              background: "linear-gradient(180deg, var(--dg-70) 0%, var(--db-95) 100%)",
               border: "1px solid rgba(74,214,255,0.30)",
               boxShadow: "0 30px 80px rgba(5,10,31,0.7), 0 1px 0 var(--st-08) inset",
             }}

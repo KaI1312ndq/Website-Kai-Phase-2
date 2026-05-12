@@ -143,7 +143,7 @@ function CohortCard() {
         transition={{ duration: 0.8, ease: [0.2, 0.8, 0.2, 1] }}
         className="rounded-2xl overflow-hidden relative"
         style={{
-          background: "linear-gradient(180deg, rgba(20,40,90,0.6), var(--db-85))",
+          background: "linear-gradient(180deg, var(--dg-70), var(--db-85))",
           border: "1px solid var(--st-10)",
           boxShadow: "0 30px 80px rgba(5,10,31,0.6)",
           backdropFilter: "blur(20px)",
@@ -323,7 +323,7 @@ function CurriculumSection() {
               className="px-3.5 py-1.5 rounded-md text-[0.78rem] font-semibold transition-all border"
               style={{
                 borderColor: activeModule === "ALL" ? "#146ef5" : "var(--st-10)",
-                background: activeModule === "ALL" ? "rgba(20,110,245,0.15)" : "rgba(255,255,255,0.02)",
+                background: activeModule === "ALL" ? "rgba(20,110,245,0.15)" : "var(--st-03)",
                 color: activeModule === "ALL" ? "#9bb6ff" : "var(--st-65)",
               }}
             >
@@ -339,7 +339,7 @@ function CurriculumSection() {
                   className="px-3.5 py-1.5 rounded-md text-[0.78rem] font-semibold transition-all border"
                   style={{
                     borderColor: active ? MODULES[k].color : "var(--st-10)",
-                    background: active ? `${MODULES[k].color}15` : "rgba(255,255,255,0.02)",
+                    background: active ? `${MODULES[k].color}15` : "var(--st-03)",
                     color: active ? MODULES[k].color : "var(--st-65)",
                   }}
                 >
@@ -646,7 +646,7 @@ function PricingSection() {
                 style={{
                   background: t.featured
                     ? "linear-gradient(160deg, rgba(20,110,245,0.18) 0%, rgba(122,61,255,0.18) 60%, var(--db-85) 100%)"
-                    : "linear-gradient(180deg, rgba(20,40,90,0.45), var(--db-70))",
+                    : "linear-gradient(180deg, var(--dg-50), var(--db-70))",
                   border: t.featured ? "1px solid rgba(74,214,255,0.35)" : "1px solid var(--st-10)",
                   boxShadow: t.featured ? "0 24px 60px rgba(20,110,245,0.25), 0 0 0 1px rgba(74,214,255,0.15) inset" : "0 16px 40px rgba(5,10,31,0.4)",
                 }}>

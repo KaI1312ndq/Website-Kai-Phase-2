@@ -73,7 +73,7 @@ export default async function OrderStatusPage({ params }: { params: Promise<{ or
         <section className="relative">
           <div className="max-w-[920px] mx-auto px-6 md:px-10 py-10 md:py-14">
             {/* Order summary card */}
-            <div className="rounded-2xl p-6 md:p-7 mb-6" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+            <div className="rounded-2xl p-6 md:p-7 mb-6" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
               <div className="flex items-center justify-between mb-4 pb-4 border-b" style={{ borderColor: "var(--line)" }}>
                 <div>
                   <div className="text-[0.7rem] font-bold uppercase tracking-[0.14em]" style={{ color: "var(--st-50)" }}>Mã đơn</div>
@@ -116,7 +116,7 @@ export default async function OrderStatusPage({ params }: { params: Promise<{ or
 
             {/* Payment QR / Status */}
             {!isPaid && (
-              <div className="rounded-2xl p-6 md:p-7 mb-6" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+              <div className="rounded-2xl p-6 md:p-7 mb-6" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
                 <h2 className="text-[1.1rem] font-bold text-white mb-1">Quét QR - auto-fill số tiền + mã đơn</h2>
                 <p className="text-[0.85rem] mb-5" style={{ color: "var(--ink-mute)" }}>
                   Mở app ngân hàng bất kỳ  quét QR  kiểm tra  ấn chuyển. Mã đơn sẽ tự nhập vào nội dung.
@@ -149,7 +149,7 @@ export default async function OrderStatusPage({ params }: { params: Promise<{ or
             )}
 
             {/* Steps */}
-            <div className="rounded-2xl p-6 md:p-7 mb-6" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--line)" }}>
+            <div className="rounded-2xl p-6 md:p-7 mb-6" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
               <h2 className="text-[1rem] font-bold text-white mb-4">Các bước tiếp theo</h2>
               <div className="flex flex-col gap-3">
                 <Step n={1} done={isPaid} text="Bạn chuyển khoản (1-2 phút)" />

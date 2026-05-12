@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden" style={{ background: "#080808", color: "white" }}>
+    <footer className="dark-section relative overflow-hidden" style={{ background: "#080808", color: "white" }}>
       {/* Decorative gradient line */}
       <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: "linear-gradient(90deg, transparent, rgba(20,110,245,0.6), rgba(122,61,255,0.6), transparent)" }} />
 

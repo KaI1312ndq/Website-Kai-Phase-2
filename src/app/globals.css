@@ -796,6 +796,7 @@ input:focus, textarea:focus { outline: none; }
 [data-theme="light"] .border-white\/5 { border-color: var(--line); }
 
 [data-theme="light"] .ring-white\/10 { --tw-ring-color: var(--line); }
+[data-theme="light"] .ring-white\/15 { --tw-ring-color: var(--line); }
 [data-theme="light"] .ring-white\/25 { --tw-ring-color: var(--line-strong); }
 
 /* Exception: keep white inside gradient/primary buttons.
@@ -829,4 +830,79 @@ input:focus, textarea:focus { outline: none; }
   background: var(--bg-base) !important;
   border-color: var(--line) !important;
   box-shadow: var(--shadow-card);
+}
+
+/* ─────────────────────────────────────────
+   .dark-section: vùng dark-locked (vd Footer)
+   Trên light theme vẫn dùng nền tối + text trắng.
+   ───────────────────────────────────────── */
+[data-theme="light"] .dark-section .text-white,
+[data-theme="light"] .dark-section .text-white\/95,
+[data-theme="light"] .dark-section .text-white\/90,
+[data-theme="light"] .dark-section .text-white\/85,
+[data-theme="light"] .dark-section .text-white\/80,
+[data-theme="light"] .dark-section .text-white\/75,
+[data-theme="light"] .dark-section .text-white\/70,
+[data-theme="light"] .dark-section .text-white\/65,
+[data-theme="light"] .dark-section .text-white\/60,
+[data-theme="light"] .dark-section .text-white\/55,
+[data-theme="light"] .dark-section .text-white\/50,
+[data-theme="light"] .dark-section .text-white\/45,
+[data-theme="light"] .dark-section .text-white\/40,
+[data-theme="light"] .dark-section .text-white\/35,
+[data-theme="light"] .dark-section .text-white\/30,
+[data-theme="light"] .dark-section .text-white\/25,
+[data-theme="light"] .dark-section .text-white\/20 {
+  /* Khôi phục white opacities trong dark section trên light theme */
+  --tw-text-opacity: 1;
+}
+[data-theme="light"] .dark-section .text-white { color: rgba(255,255,255,1); }
+[data-theme="light"] .dark-section .text-white\/95 { color: rgba(255,255,255,0.95); }
+[data-theme="light"] .dark-section .text-white\/90 { color: rgba(255,255,255,0.90); }
+[data-theme="light"] .dark-section .text-white\/85 { color: rgba(255,255,255,0.85); }
+[data-theme="light"] .dark-section .text-white\/80 { color: rgba(255,255,255,0.80); }
+[data-theme="light"] .dark-section .text-white\/75 { color: rgba(255,255,255,0.75); }
+[data-theme="light"] .dark-section .text-white\/70 { color: rgba(255,255,255,0.70); }
+[data-theme="light"] .dark-section .text-white\/65 { color: rgba(255,255,255,0.65); }
+[data-theme="light"] .dark-section .text-white\/60 { color: rgba(255,255,255,0.60); }
+[data-theme="light"] .dark-section .text-white\/55 { color: rgba(255,255,255,0.55); }
+[data-theme="light"] .dark-section .text-white\/50 { color: rgba(255,255,255,0.50); }
+[data-theme="light"] .dark-section .text-white\/45 { color: rgba(255,255,255,0.45); }
+[data-theme="light"] .dark-section .text-white\/40 { color: rgba(255,255,255,0.40); }
+[data-theme="light"] .dark-section .text-white\/35 { color: rgba(255,255,255,0.35); }
+[data-theme="light"] .dark-section .text-white\/30 { color: rgba(255,255,255,0.30); }
+[data-theme="light"] .dark-section .text-white\/25 { color: rgba(255,255,255,0.25); }
+[data-theme="light"] .dark-section .text-white\/20 { color: rgba(255,255,255,0.20); }
+
+/* st tokens trong dark section vẫn dùng white-based */
+[data-theme="light"] .dark-section {
+  --st-03: rgba(255, 255, 255, 0.03);
+  --st-04: rgba(255, 255, 255, 0.04);
+  --st-05: rgba(255, 255, 255, 0.05);
+  --st-06: rgba(255, 255, 255, 0.06);
+  --st-08: rgba(255, 255, 255, 0.08);
+  --st-10: rgba(255, 255, 255, 0.10);
+  --st-12: rgba(255, 255, 255, 0.12);
+  --st-15: rgba(255, 255, 255, 0.15);
+  --st-16: rgba(255, 255, 255, 0.16);
+  --st-20: rgba(255, 255, 255, 0.20);
+  --st-25: rgba(255, 255, 255, 0.25);
+  --st-30: rgba(255, 255, 255, 0.30);
+  --st-35: rgba(255, 255, 255, 0.35);
+  --st-40: rgba(255, 255, 255, 0.40);
+  --st-42: rgba(255, 255, 255, 0.42);
+  --st-45: rgba(255, 255, 255, 0.45);
+  --st-50: rgba(255, 255, 255, 0.50);
+  --st-55: rgba(255, 255, 255, 0.55);
+  --st-60: rgba(255, 255, 255, 0.60);
+  --st-65: rgba(255, 255, 255, 0.65);
+  --st-70: rgba(255, 255, 255, 0.70);
+  --st-72: rgba(255, 255, 255, 0.72);
+  --st-78: rgba(255, 255, 255, 0.78);
+  --st-85: rgba(255, 255, 255, 0.85);
+  --st-90: rgba(255, 255, 255, 0.90);
+  --ink: #ffffff;
+  --ink-soft: rgba(255, 255, 255, 0.78);
+  --ink-mute: rgba(255, 255, 255, 0.55);
+  --ink-faint: rgba(255, 255, 255, 0.35);
 }

@@ -23,7 +23,7 @@ const SOCIAL_LINKS = [
 
 export default function AuthorBio() {
   return (
-    <div className="rounded-2xl p-6 md:p-8 mt-12" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)" }}>
+    <div className="rounded-2xl p-6 md:p-8 mt-12" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
       <div className="flex flex-col md:flex-row gap-6 items-start">
         {/* Avatar */}
         <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl flex-shrink-0 flex items-center justify-center text-[1.4rem] font-bold text-white" style={{ background: "var(--grad-primary)", boxShadow: "0 8px 24px rgba(20,110,245,0.35)" }}>

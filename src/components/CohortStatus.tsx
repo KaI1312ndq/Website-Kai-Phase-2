@@ -64,7 +64,7 @@ export default function CohortStatus({ variant = "default" }: { variant?: "defau
 
   // default - full status card
   return (
-    <div className="rounded-xl p-4 md:p-5" style={{ background: "rgba(20,40,90,0.45)", border: "1px solid rgba(74,214,255,0.25)" }}>
+    <div className="rounded-xl p-4 md:p-5" style={{ background: "var(--dg-50)", border: "1px solid rgba(74,214,255,0.25)" }}>
       <div className="flex items-center gap-2 mb-4">
         <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#5fffaa" }} />
         <span className="text-[0.65rem] font-bold uppercase tracking-[0.16em]" style={{ color: "#5fffaa" }}>Đang nhận application · Khoá 1</span>

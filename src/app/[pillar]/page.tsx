@@ -213,7 +213,7 @@ export default async function PillarPage({ params }: { params: Promise<{ pillar:
                   </p>
 
                   {cluster.posts.length === 0 ? (
-                    <div className="rounded-xl px-5 py-4 text-[0.88rem]" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid var(--line)", color: "var(--ink-mute)" }}>
+                    <div className="rounded-xl px-5 py-4 text-[0.88rem]" style={{ background: "var(--st-03)", border: "1px solid var(--line)", color: "var(--ink-mute)" }}>
                       Bài viết về chủ đề này đang được biên soạn. Quay lại sớm nhé.
                     </div>
                   ) : (
@@ -268,7 +268,7 @@ export default async function PillarPage({ params }: { params: Promise<{ pillar:
                       href={`/tools/${slug}`}
                       className="rounded-2xl p-7 transition-all hover:scale-[1.01] flex items-start gap-4"
                       style={{
-                        background: `linear-gradient(135deg, ${tool.color}10 0%, rgba(255,255,255,0.025) 100%)`,
+                        background: `linear-gradient(135deg, ${tool.color}10 0%, var(--st-03) 100%)`,
                         border: `1px solid ${tool.color}33`,
                       }}
                     >
@@ -319,7 +319,7 @@ export default async function PillarPage({ params }: { params: Promise<{ pillar:
             <h2 className="t-h2 mb-8 text-white">Câu hỏi thường gặp về <span className="grad-text">{config.shortTitle}.</span></h2>
             <div className="flex flex-col gap-3">
               {config.faqs.map((f) => (
-                <details key={f.q} className="group rounded-xl overflow-hidden" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--line)" }}>
+                <details key={f.q} className="group rounded-xl overflow-hidden" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
                   <summary className="flex items-center justify-between gap-4 px-5 py-4 cursor-pointer list-none">
                     <span className="text-[0.95rem] font-semibold text-white">{f.q}</span>
                     <span className="w-5 h-5 flex-shrink-0 flex items-center justify-center rounded-full transition-transform group-open:rotate-45" style={{ background: `${config.color}30`, color: config.color }}>+</span>

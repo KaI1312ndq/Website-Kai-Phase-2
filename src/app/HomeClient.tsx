@@ -282,7 +282,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
                   <motion.div whileHover={{ y: -4 }} transition={{ type: "spring", stiffness: 260, damping: 22 }}
                     className="relative rounded-2xl p-6 md:p-7 overflow-hidden h-full group"
                     style={{
-                      background: "linear-gradient(180deg, rgba(20,40,90,0.45) 0%, var(--db-70) 100%)",
+                      background: "linear-gradient(180deg, var(--dg-50) 0%, var(--db-70) 100%)",
                       border: "1px solid var(--st-10)",
                       boxShadow: "0 16px 40px rgba(5,10,31,0.4)",
                       backdropFilter: "blur(16px)",
@@ -544,7 +544,7 @@ export default function HomeClient({ sanityCaseStudies, sanityTestimonials, sani
                         transition={{ type: "spring", stiffness: 260, damping: 18, delay: i * 0.08 }}
                         className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 z-10"
                         style={{
-                          background: t.current ? "var(--grad-primary)" : "rgba(8,16,43,1)",
+                          background: t.current ? "var(--grad-primary)" : "var(--db-95)",
                           border: t.current ? "none" : "2px solid rgba(125,169,255,0.4)",
                           boxShadow: t.current ? "0 0 0 6px rgba(20,110,245,0.18), 0 4px 16px rgba(20,110,245,0.4)" : "none",
                         }}

@@ -137,7 +137,7 @@ export default function ContactForm() {
                   className="flex flex-col items-center gap-2 py-3.5 px-2 rounded-lg text-[0.78rem] font-semibold transition-all border whitespace-pre-line leading-snug"
                   style={{
                     borderColor: active ? "#146ef5" : "var(--st-10)",
-                    background: active ? "rgba(20,110,245,0.12)" : "rgba(255,255,255,0.02)",
+                    background: active ? "rgba(20,110,245,0.12)" : "var(--st-03)",
                     color: active ? "#9bb6ff" : "var(--st-65)",
                   }}>
                   {opt.icon}
@@ -157,7 +157,7 @@ export default function ContactForm() {
                   className="inline-flex items-center gap-2.5 py-3 px-3 rounded-lg text-[0.85rem] font-medium text-left transition-all border"
                   style={{
                     borderColor: active ? "#146ef5" : "var(--st-10)",
-                    background: active ? "rgba(20,110,245,0.12)" : "rgba(255,255,255,0.02)",
+                    background: active ? "rgba(20,110,245,0.12)" : "var(--st-03)",
                     color: active ? "#9bb6ff" : "var(--st-65)",
                   }}>
                   {opt.icon}

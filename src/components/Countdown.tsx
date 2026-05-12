@@ -63,7 +63,7 @@ export default function Countdown({ compact = false }: { compact?: boolean }) {
         <div key={i} className="flex flex-col items-center">
           <div className="rounded-lg px-3 py-2.5 min-w-[58px] text-center"
             style={{
-              background: "rgba(20,40,90,0.6)",
+              background: "var(--dg-70)",
               border: "1px solid rgba(74,214,255,0.25)",
               boxShadow: "0 1px 0 var(--st-06) inset",
             }}>
