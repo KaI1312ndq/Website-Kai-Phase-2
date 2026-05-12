@@ -153,7 +153,7 @@ export default function CommentSection({
               required
               placeholder="Chia sẻ suy nghĩ của bạn..."
               className="w-full px-4 py-2.5 rounded-lg text-[0.95rem] outline-none transition-all resize-y"
-              style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white", fontFamily: "inherit", minHeight: 120 }}
+              style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "var(--ink)", fontFamily: "inherit", minHeight: 120 }}
             />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -168,7 +168,7 @@ export default function CommentSection({
                 maxLength={80}
                 required
                 className="w-full px-4 py-2.5 rounded-lg text-[0.95rem] outline-none transition-all"
-                style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white", fontFamily: "inherit" }}
+                style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "var(--ink)", fontFamily: "inherit" }}
               />
             </div>
             <div>
@@ -180,7 +180,7 @@ export default function CommentSection({
                 value={authorEmail}
                 onChange={(e) => setAuthorEmail(e.target.value)}
                 className="w-full px-4 py-2.5 rounded-lg text-[0.95rem] outline-none transition-all"
-                style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white", fontFamily: "inherit" }}
+                style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "var(--ink)", fontFamily: "inherit" }}
               />
             </div>
           </div>

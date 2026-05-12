@@ -77,7 +77,7 @@ export default function Calculator() {
               onChange={(e) => onGrossChange(e.target.value)}
               placeholder="20.000.000"
               className="w-full px-4 py-3.5 rounded-lg outline-none text-[1.05rem] font-semibold tabular-nums"
-              style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white" }}
+              style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "var(--ink)" }}
             />
             <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[0.85rem] font-semibold pointer-events-none" style={{ color: "var(--ink-mute)" }}>
               VND
@@ -108,7 +108,7 @@ export default function Calculator() {
             value={dependents}
             onChange={(e) => setDependents(e.target.value)}
             className="w-full px-4 py-3 rounded-lg outline-none tabular-nums"
-            style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white" }}
+            style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "var(--ink)" }}
           />
           <div className="text-[0.72rem] mt-1" style={{ color: "var(--ink-mute)" }}>
             Mặc định 0. Mỗi người phụ thuộc giảm trừ {deps > 0 ? "6.200.000 (2026)" : "4.400.000 – 6.200.000"} /tháng.
@@ -146,7 +146,7 @@ export default function Calculator() {
                 onChange={(e) => onInsuranceBaseChange(e.target.value)}
                 placeholder={gross > 0 ? `Mặc định = ${gross.toLocaleString("vi-VN")} (Gross)` : "VD: 10.000.000"}
                 className="w-full px-4 py-3 rounded-lg outline-none tabular-nums"
-                style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white" }}
+                style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "var(--ink)" }}
               />
               <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[0.8rem] font-semibold pointer-events-none" style={{ color: "var(--ink-mute)" }}>
                 VND

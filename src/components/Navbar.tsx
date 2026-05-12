@@ -267,7 +267,7 @@ export default function Navbar() {
                   href="/sign-in"
                   className="px-4 py-1.5 text-[0.84rem] font-semibold rounded-full transition-all"
                   style={{
-                    color: "white",
+                    color: "var(--ink)",
                     background: "var(--grad-primary)",
                     boxShadow: "0 4px 14px rgba(20,110,245,0.35)",
                   }}

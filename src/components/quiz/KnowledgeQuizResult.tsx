@@ -148,7 +148,7 @@ export default function KnowledgeQuizResult({
         <button
           onClick={() => setReviewMode((r) => !r)}
           className="inline-flex items-center gap-2 text-[0.95rem] font-semibold px-5 py-3 rounded-xl transition-all"
-          style={{ background: "var(--st-04)", border: "1px solid var(--st-10)", color: "white" }}
+          style={{ background: "var(--st-04)", border: "1px solid var(--st-10)", color: "var(--ink)" }}
         >
           <Icon name="book-open" size={16} />
           {reviewMode ? "Ẩn review" : "Xem lại tất cả câu"}

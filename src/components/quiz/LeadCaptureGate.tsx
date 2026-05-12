@@ -86,7 +86,7 @@ export default function LeadCaptureGate({ config, result, onComplete }: Props) {
             onChange={(e) => setName(e.target.value)}
             required
             className="w-full px-4 py-3 rounded-lg text-[0.95rem] outline-none"
-            style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white" }}
+            style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "var(--ink)" }}
             placeholder="Nguyễn Văn A"
           />
         </div>
@@ -101,7 +101,7 @@ export default function LeadCaptureGate({ config, result, onComplete }: Props) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-3 rounded-lg text-[0.95rem] outline-none"
-              style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white" }}
+              style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "var(--ink)" }}
               placeholder="email@example.com"
             />
           </div>
@@ -114,7 +114,7 @@ export default function LeadCaptureGate({ config, result, onComplete }: Props) {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               className="w-full px-4 py-3 rounded-lg text-[0.95rem] outline-none"
-              style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "white" }}
+              style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "var(--ink)" }}
               placeholder="0xxx xxx xxx"
             />
           </div>

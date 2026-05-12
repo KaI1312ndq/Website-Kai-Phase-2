@@ -150,7 +150,7 @@ export default function ResourcesPage() {
               <a href="#downloads" className="px-6 py-3 rounded-xl text-[0.95rem] font-bold text-white" style={{ background: "var(--grad-primary)", boxShadow: "0 8px 24px rgba(20,110,245,0.35)" }}>
                 Xem tài liệu tải về 
               </a>
-              <a href="#tools" className="px-6 py-3 rounded-xl text-[0.95rem] font-bold" style={{ background: "var(--st-04)", border: "1px solid var(--line)", color: "white" }}>
+              <a href="#tools" className="px-6 py-3 rounded-xl text-[0.95rem] font-bold" style={{ background: "var(--st-04)", border: "1px solid var(--line)", color: "var(--ink)" }}>
                 Tools + Quizzes
               </a>
             </div>

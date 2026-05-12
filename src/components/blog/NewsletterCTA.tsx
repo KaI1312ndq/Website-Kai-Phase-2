@@ -64,7 +64,7 @@ export default function NewsletterCTA({ source }: { source?: string }) {
             required
             disabled={state === "loading"}
             className="flex-1 px-4 py-3 rounded-xl text-[0.95rem] outline-none transition-all"
-            style={{ border: "1px solid var(--st-10)", background: "rgba(0,0,0,0.25)", color: "white" }}
+            style={{ border: "1px solid var(--st-10)", background: "rgba(0,0,0,0.25)", color: "var(--ink)" }}
           />
           <button
             type="submit"
