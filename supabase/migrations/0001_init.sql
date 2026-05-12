@@ -218,27 +218,37 @@ alter table public.course_applications    enable row level security;
 
 -- Policy: service_role bypass tất cả (luôn có sẵn, không cần khai báo)
 -- Anon read public approved comments + reviews:
+drop policy if exists "anon read approved comments" on public.comments;
 create policy "anon read approved comments" on public.comments
   for select using (approved = true);
+drop policy if exists "anon read approved reviews" on public.product_reviews;
 create policy "anon read approved reviews" on public.product_reviews
   for select using (approved = true);
 
 -- Anon insert quiz_leads + newsletter (capture lead không cần auth):
+drop policy if exists "anon insert quiz leads" on public.quiz_leads;
 create policy "anon insert quiz leads" on public.quiz_leads
   for insert with check (true);
+drop policy if exists "anon insert newsletter" on public.newsletter_subscribers;
 create policy "anon insert newsletter" on public.newsletter_subscribers
   for insert with check (true);
+drop policy if exists "anon insert quiz results" on public.quiz_results;
 create policy "anon insert quiz results" on public.quiz_results
   for insert with check (true);
 
 -- Authenticated user (qua Clerk JWT 'sub' claim) đọc/sửa data của chính mình:
+drop policy if exists "user reads own profile" on public.users;
 create policy "user reads own profile" on public.users
   for select using (auth.jwt() ->> 'sub' = id);
+drop policy if exists "user updates own profile" on public.users;
 create policy "user updates own profile" on public.users
   for update using (auth.jwt() ->> 'sub' = id);
+drop policy if exists "user reads own orders" on public.orders;
 create policy "user reads own orders" on public.orders
   for select using (auth.jwt() ->> 'sub' = user_id);
+drop policy if exists "user reads own cart" on public.carts;
 create policy "user reads own cart" on public.carts
   for all using (auth.jwt() ->> 'sub' = user_id);
+drop policy if exists "user reads own quiz results" on public.quiz_results;
 create policy "user reads own quiz results" on public.quiz_results
   for select using (auth.jwt() ->> 'sub' = user_id);
