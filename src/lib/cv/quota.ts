@@ -2,7 +2,7 @@ import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import type { QuotaStatus } from "./types";
 
 const FREE_DOWNLOADS_LIMIT = 3;
-const FREE_AI_LIMIT = 1;
+const FREE_AI_LIMIT = 5;
 const PRO_AI_LIMIT = 50; // mỗi tháng cho Pro
 
 export async function getQuotaStatus(userId: string): Promise<QuotaStatus> {

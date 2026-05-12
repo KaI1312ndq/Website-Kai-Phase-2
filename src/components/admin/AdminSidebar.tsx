@@ -18,6 +18,7 @@ const NAV: NavSection[] = [
     title: "Bán hàng",
     items: [
       { label: "Đơn hàng", href: "/account/admin/orders" },
+      { label: "CV Pro purchases", href: "/account/admin/cv-purchases" },
       { label: "Vouchers", href: "/account/admin/content/voucher" },
     ],
   },

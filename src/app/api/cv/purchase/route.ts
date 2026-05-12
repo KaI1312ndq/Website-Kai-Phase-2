@@ -19,6 +19,15 @@ export async function POST(req: NextRequest) {
 
   const sb = getSupabaseAdmin();
 
+  // Admin cancel
+  if (action === "cancel") {
+    if (!(await isAdmin())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    const purchaseId = body?.purchaseId;
+    if (!purchaseId) return NextResponse.json({ error: "Missing purchaseId" }, { status: 400 });
+    await sb.from("cv_purchases").update({ status: "cancelled" }).eq("id", purchaseId);
+    return NextResponse.json({ ok: true, message: "Cancelled" });
+  }
+
   // Admin confirm - mark paid + grant Pro
   if (action === "confirm") {
     if (!(await isAdmin())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

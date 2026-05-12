@@ -11,6 +11,68 @@ export const metadata: Metadata = {
   alternates: { canonical: "/tools/cv-builder" },
 };
 
+function TemplateMockup({ variant, accent, divider }: { variant: "ats" | "visual" | "hybrid"; accent: string; divider: string }) {
+  const isVisual = variant === "visual";
+  const isHybrid = variant === "hybrid";
+  return (
+    <div className="w-full h-full bg-white rounded-md shadow-md overflow-hidden flex flex-col" style={{ fontSize: "5px", color: "#111827", lineHeight: 1.3 }}>
+      {/* Header */}
+      <div
+        style={{
+          padding: isVisual ? "14px 14px 10px" : "14px 14px 6px",
+          background: isVisual ? accent : "transparent",
+          color: isVisual ? "#fff" : accent,
+          borderBottom: isHybrid ? `1px solid ${divider}` : "none",
+        }}
+      >
+        <div style={{ fontSize: "11px", fontWeight: 700, marginBottom: 2, color: isVisual ? "#fff" : accent }}>Nguyễn Đức Quảng</div>
+        <div style={{ fontSize: "5px", color: isVisual ? "rgba(255,255,255,0.85)" : "#4b5563" }}>Performance Marketer · 3 năm exp</div>
+        <div style={{ fontSize: "4px", marginTop: 3, color: isVisual ? "rgba(255,255,255,0.7)" : "#6b7280" }}>quang@gmail.com · 0868464658 · Hà Nội</div>
+      </div>
+      {/* Body */}
+      <div style={{ padding: "8px 14px", flex: 1, display: "flex", flexDirection: "column", gap: 6 }}>
+        <Section title="KINH NGHIỆM" color={accent}>
+          <Bullet bold="Performance Marketer · UpBase">2024 - Present</Bullet>
+          <Line />
+          <Line />
+          <Bullet bold="Ecom Executive · The Bad God">2023</Bullet>
+          <Line />
+        </Section>
+        <Section title="HỌC VẤN" color={accent}>
+          <Bullet bold="ĐH FPT Greenwich">2018-2022</Bullet>
+        </Section>
+        <Section title="KỸ NĂNG" color={accent}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
+            {["TikTok Ads", "Shopee Ads", "Excel", "P&L"].map((s) => (
+              <span key={s} style={{ fontSize: "4px", padding: "1px 3px", background: divider, borderRadius: 2 }}>{s}</span>
+            ))}
+          </div>
+        </Section>
+      </div>
+    </div>
+  );
+}
+
+function Section({ title, color, children }: { title: string; color: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <div style={{ fontSize: "5px", fontWeight: 700, color, marginBottom: 2, letterSpacing: 0.4 }}>{title}</div>
+      {children}
+    </div>
+  );
+}
+function Bullet({ bold, children }: { bold: string; children?: React.ReactNode }) {
+  return (
+    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 1 }}>
+      <span style={{ fontSize: "5px", fontWeight: 600 }}>{bold}</span>
+      {children && <span style={{ fontSize: "4px", color: "#6b7280" }}>{children}</span>}
+    </div>
+  );
+}
+function Line() {
+  return <div style={{ height: 2, background: "#e5e7eb", borderRadius: 1, marginBottom: 1, width: `${75 + Math.random() * 20}%` }} />;
+}
+
 const FAQ = [
   { q: "Free 3 lần tải nghĩa là sao?", a: "Bạn đăng nhập rồi tạo CV - có thể tải 3 file PDF không watermark hoàn toàn miễn phí. Sau 3 lần, muốn tải thêm thì upgrade Pro 49k - vĩnh viễn unlimited." },
   { q: "AI feedback hoạt động thế nào?", a: "Sau khi điền xong CV, bấm 'AI feedback' - GPT-4o-mini sẽ phân tích CV và cho 4 nhóm: điểm mạnh, điểm yếu, gợi ý cụ thể từng bullet, và ATS score 1-10. Bạn TỰ sửa CV theo gợi ý - không có auto-rewrite vì recruiter dễ nhận ra CV AI viết." },
@@ -100,13 +162,13 @@ export default function CVBuilderLanding() {
           <h2 className="t-h2 text-center mb-8 text-white">3 template</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
-              { name: "ATS", desc: "1 cột plain, ATS-optimized cho Tech + Banks + Corp", color: "#1f2937" },
-              { name: "Visual", desc: "Header gradient + bullet rõ - cho Marketing + Creative", color: "#1d4ed8" },
-              { name: "Hybrid", desc: "Balanced - default cho 80% case", color: "#0f172a" },
+              { id: "ats" as const, name: "ATS", desc: "1 cột plain, ATS-optimized cho Tech + Banks + Corp", color: "#1f2937", divider: "#e5e7eb" },
+              { id: "visual" as const, name: "Visual", desc: "Header gradient + bullet rõ - cho Marketing + Creative", color: "#1d4ed8", divider: "#dbeafe" },
+              { id: "hybrid" as const, name: "Hybrid", desc: "Balanced - default cho 80% case", color: "#0f172a", divider: "#cbd5e1" },
             ].map((t) => (
-              <div key={t.name} className="rounded-2xl overflow-hidden" style={{ background: "var(--bg-base)", border: "1px solid var(--st-10)" }}>
-                <div className="aspect-[3/4] flex items-center justify-center" style={{ background: `linear-gradient(135deg, ${t.color}22, ${t.color}05)` }}>
-                  <div className="text-[2.5rem] font-bold" style={{ color: t.color }}>{t.name}</div>
+              <div key={t.id} className="rounded-2xl overflow-hidden" style={{ background: "var(--bg-base)", border: "1px solid var(--st-10)" }}>
+                <div className="aspect-[3/4] p-3" style={{ background: "var(--st-04)" }}>
+                  <TemplateMockup variant={t.id} accent={t.color} divider={t.divider} />
                 </div>
                 <div className="p-5">
                   <h3 className="text-[1.05rem] font-bold text-white mb-1">Template {t.name}</h3>
