@@ -30,7 +30,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "resend": "^6.12.3",
-    "sanity": "^3.72.1"
+    "sanity": "^3.72.1",
+    "svix": "^1.93.0"
   },
   "devDependencies": {
     "@types/node": "^22",
