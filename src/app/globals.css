@@ -65,6 +65,82 @@
   --canvas-mute: #0c1639;
   --gray-700: rgba(255, 255, 255, 0.7);
   --gray-500: rgba(255, 255, 255, 0.5);
+
+  /* Ambient gradient layers (override-able cho light) */
+  --ambient-1: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(20, 110, 245, 0.18), transparent 60%);
+  --ambient-2: radial-gradient(ellipse 60% 40% at 100% 30%, rgba(122, 61, 255, 0.10), transparent 60%);
+  --ambient-3: radial-gradient(ellipse 60% 40% at 0% 70%, rgba(20, 110, 245, 0.08), transparent 60%);
+}
+
+/* ─────────────────────────────────────────
+   LIGHT THEME OVERRIDES
+   ───────────────────────────────────────── */
+[data-theme="light"] {
+  /* Brand - blue đậm hơn cho light */
+  --wf-blue: #1d4ed8;
+  --wf-blue-400: #2563eb;
+  --wf-blue-300: #1e40af;
+  --wf-purple: #4f46e5;
+  --wf-pink: #db2777;
+  --wf-cyan: #0891b2;
+
+  /* Light surfaces */
+  --bg-deep: #f5f9ff;
+  --bg-base: #ffffff;
+  --bg-elev-1: #f0f7ff;
+  --bg-elev-2: #e8f0fe;
+  --bg-elev-3: #dbe7fc;
+  --line: rgba(15, 27, 61, 0.10);
+  --line-strong: rgba(15, 27, 61, 0.18);
+
+  /* Text - navy đậm thay vì trắng */
+  --ink: #0f1b3d;
+  --ink-soft: rgba(15, 27, 61, 0.80);
+  --ink-mute: rgba(15, 27, 61, 0.60);
+  --ink-faint: rgba(15, 27, 61, 0.40);
+
+  /* Gradients adjusted cho light bg (đậm hơn để stand out) */
+  --grad-primary: linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #4f46e5 100%);
+  --grad-primary-soft: linear-gradient(135deg, rgba(29, 78, 216, 0.12) 0%, rgba(79, 70, 229, 0.12) 100%);
+  --grad-text: linear-gradient(120deg, #1d4ed8 0%, #2563eb 50%, #4f46e5 100%);
+
+  /* Shadows - soft blue thay vì pure dark */
+  --shadow-card:
+    0 1px 0 rgba(255, 255, 255, 0.6) inset,
+    0 12px 32px rgba(29, 78, 216, 0.08),
+    0 4px 12px rgba(29, 78, 216, 0.04);
+  --shadow-glow:
+    0 0 0 1px rgba(29, 78, 216, 0.30),
+    0 12px 32px rgba(29, 78, 216, 0.18);
+
+  /* Aliases */
+  --blue: #1d4ed8;
+  --blue-deep: #1e40af;
+  --blue-sky: rgba(29, 78, 216, 0.08);
+  --blue-soft: rgba(29, 78, 216, 0.16);
+  --bg: #ffffff;
+  --text: #0f1b3d;
+  --muted: rgba(15, 27, 61, 0.60);
+  --white: #ffffff;
+  --dark: #0f1b3d;
+  --border: rgba(15, 27, 61, 0.10);
+  --canvas: #ffffff;
+  --canvas-mute: #f0f7ff;
+  --gray-700: rgba(15, 27, 61, 0.70);
+  --gray-500: rgba(15, 27, 61, 0.50);
+
+  /* Ambient - softer cho light */
+  --ambient-1: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(29, 78, 216, 0.10), transparent 60%);
+  --ambient-2: radial-gradient(ellipse 60% 40% at 100% 30%, rgba(79, 70, 229, 0.07), transparent 60%);
+  --ambient-3: radial-gradient(ellipse 60% 40% at 0% 70%, rgba(56, 189, 248, 0.08), transparent 60%);
+}
+
+/* Smooth transition khi đổi theme */
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease !important;
 }
 
 /* ─────────────────────────────────────────
@@ -95,15 +171,12 @@ body {
   font-family: var(--font-be-vn), var(--font-jakarta), "Inter", system-ui, sans-serif;
 }
 
-/* App-wide ambient gradient */
+/* App-wide ambient gradient (override-able qua --ambient-* tokens) */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background:
-    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(20, 110, 245, 0.18), transparent 60%),
-    radial-gradient(ellipse 60% 40% at 100% 30%, rgba(122, 61, 255, 0.10), transparent 60%),
-    radial-gradient(ellipse 60% 40% at 0% 70%, rgba(20, 110, 245, 0.08), transparent 60%);
+  background: var(--ambient-1), var(--ambient-2), var(--ambient-3);
   pointer-events: none;
   z-index: -1;
 }
@@ -113,8 +186,8 @@ body::before {
 /* Scrollbar */
 ::-webkit-scrollbar { width: 10px; }
 ::-webkit-scrollbar-track { background: var(--bg-deep); }
-::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.10); border-radius: 5px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.20); }
+::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: var(--ink-mute); }
 
 /* ─────────────────────────────────────────
    TYPOGRAPHY
