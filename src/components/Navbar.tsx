@@ -59,7 +59,52 @@ const links: NavLink[] = [
       },
     ],
   },
-  { label: "Tài liệu", href: "/resources" },
+  {
+    label: "Tài liệu",
+    href: "/resources",
+    submenuIcon: "book-open",
+    viewAllText: "Xem tất cả tài liệu",
+    submenu: [
+      {
+        section: "Tài liệu free",
+        label: "Salary Benchmark, CV Template, P&L...",
+        desc: "6 file PDF/Excel + cheatsheet copywriting · nhập email nhận",
+        href: "/resources",
+        badge: "Free",
+      },
+      {
+        section: "Lương ngành VN 2026",
+        label: "Tổng quan lương 20 role Marketing/Ecom",
+        desc: "Salary benchmark theo level + top company tuyển dụng",
+        href: "/luong",
+        badge: "Mới",
+      },
+      {
+        section: "Lương ngành VN 2026",
+        label: "Lương Performance Marketer",
+        desc: "10-150tr/tháng · TikTok Ads · FB Ads · Google",
+        href: "/luong/performance-marketer",
+      },
+      {
+        section: "Lương ngành VN 2026",
+        label: "Lương TikTok Shop Specialist",
+        desc: "12-100tr/tháng · Hot nhất VN 2026",
+        href: "/luong/tiktok-shop-specialist",
+      },
+      {
+        section: "Lương ngành VN 2026",
+        label: "Lương Marketing Manager",
+        desc: "25-150tr/tháng · Lead team 3-10 người",
+        href: "/luong/marketing-manager",
+      },
+      {
+        section: "Lương ngành VN 2026",
+        label: "Lương Ecommerce Executive",
+        desc: "4-65tr/tháng · Entry-level Ecom phổ biến nhất",
+        href: "/luong/ecommerce-executive",
+      },
+    ],
+  },
   {
     label: "Tools",
     href: "/tools",

@@ -205,6 +205,39 @@ export default async function QuizResultPage({ params }: { params: Promise<{ slu
                   </div>
                 </div>
 
+                {/* Salary CTA - chỉ hiện cho quiz career */}
+                {slug === "huong-nghiep-marketing" && (() => {
+                  const ROLE_MAP: Record<string, { slug: string; label: string; range: string }> = {
+                    creator: { slug: "content-creator", label: "Content Creator (TikTok / Reels)", range: "8-45tr/tháng" },
+                    analyst: { slug: "performance-marketer", label: "Performance Marketer", range: "10-150tr/tháng" },
+                    communicator: { slug: "affiliate-manager", label: "Affiliate / KOC Manager", range: "14-55tr/tháng" },
+                    builder: { slug: "marketing-manager", label: "Marketing Manager", range: "25-150tr/tháng" },
+                    operator: { slug: "operation-manager", label: "Ecommerce Operation Manager", range: "25-180tr/tháng" },
+                  };
+                  const role = ROLE_MAP[type];
+                  if (!role) return null;
+                  return (
+                    <div className="rounded-2xl p-6 md:p-8" style={{ background: "var(--grad-primary-soft)", border: "1px solid var(--st-12)" }}>
+                      <div className="flex items-start justify-between gap-4 flex-wrap mb-3">
+                        <div>
+                          <div className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] mb-1.5" style={{ color: "#7da9ff" }}>Lương role phù hợp với bạn</div>
+                          <h2 className="text-[1.25rem] md:text-[1.4rem] font-bold text-white leading-tight">{role.label}</h2>
+                        </div>
+                        <div className="px-3.5 py-1.5 rounded-lg" style={{ background: "rgba(95,255,170,0.15)", border: "1px solid rgba(95,255,170,0.3)" }}>
+                          <div className="text-[0.7rem] uppercase tracking-wider font-semibold" style={{ color: "var(--ink-mute)" }}>Range</div>
+                          <div className="text-[1rem] font-bold" style={{ color: "#5fffaa" }}>{role.range}</div>
+                        </div>
+                      </div>
+                      <p className="text-[0.92rem] leading-[1.65] mb-5" style={{ color: "var(--ink-soft)" }}>
+                        Xem chi tiết lương theo 7 level (Fresher → Director), top company tuyển dụng, kỹ năng cần học để leo từ Junior lên Senior.
+                      </p>
+                      <Link href={`/luong/${role.slug}`} className="btn btn-primary">
+                        Xem chi tiết lương {role.label.split(" (")[0]}
+                      </Link>
+                    </div>
+                  );
+                })()}
+
                 {/* Advice */}
                 {archetype.advice && archetype.advice.length > 0 && (
                   <div className="rounded-2xl p-6 md:p-8" style={{ background: `${archetype.color}10`, border: `1px solid ${archetype.color}33` }}>
