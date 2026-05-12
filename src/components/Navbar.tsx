@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Show, UserButton } from "@clerk/nextjs";
 import Icon, { type IconName } from "@/components/icons/Icon";
 import CartButton from "@/components/cart/CartButton";
+import AdminMenuLink from "@/components/AdminMenuLink";
 
 type Submenu = { label: string; desc?: string; href: string; badge?: string; section?: string };
 type NavLink = { label: string; href: string; submenu?: Submenu[]; submenuIcon?: IconName; viewAllText?: string };
@@ -252,6 +253,7 @@ export default function Navbar() {
                 </Link>
               </Show>
               <Show when="signed-in">
+                <AdminMenuLink />
                 <UserButton
                   appearance={{
                     elements: {

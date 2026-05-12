@@ -1,10 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { redirect } from "next/navigation";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import GradientBlobs from "@/components/GradientBlobs";
-import { isAdmin } from "@/lib/admin";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import OrderActions from "./OrderActions";
 
@@ -14,116 +9,202 @@ export const metadata: Metadata = {
 };
 export const dynamic = "force-dynamic";
 
-async function getOrders(status: string | null) {
+type SearchParams = {
+  status?: string;
+  q?: string;
+  from?: string;
+  to?: string;
+  page?: string;
+};
+
+const PAGE_SIZE = 30;
+
+async function fetchOrders(sp: SearchParams) {
   const sb = getSupabaseAdmin();
-  let query = sb.from("orders").select("*").order("created_at", { ascending: false }).limit(100);
-  if (status === "pending") query = query.eq("payment_status", "unpaid");
-  else if (status === "paid_undelivered") query = query.eq("payment_status", "paid").neq("delivery_status", "delivered");
-  else if (status === "delivered") query = query.eq("delivery_status", "delivered");
-  const { data } = await query;
-  return data || [];
+  let query = sb.from("orders").select("*", { count: "exact" }).order("created_at", { ascending: false });
+
+  // Status filter
+  if (sp.status === "pending") query = query.eq("payment_status", "unpaid");
+  else if (sp.status === "paid_undelivered") query = query.eq("payment_status", "paid").neq("delivery_status", "delivered");
+  else if (sp.status === "delivered") query = query.eq("delivery_status", "delivered");
+  else if (sp.status === "failed") query = query.eq("delivery_status", "failed");
+
+  // Search q (orderNumber / email / name)
+  if (sp.q && sp.q.trim()) {
+    const q = sp.q.trim().replace(/[%,]/g, "");
+    query = query.or(`order_number.ilike.%${q}%,customer_email.ilike.%${q}%,customer_name.ilike.%${q}%`);
+  }
+
+  // Date range
+  if (sp.from) query = query.gte("created_at", new Date(sp.from).toISOString());
+  if (sp.to) {
+    const to = new Date(sp.to);
+    to.setHours(23, 59, 59, 999);
+    query = query.lte("created_at", to.toISOString());
+  }
+
+  const page = Math.max(1, parseInt(sp.page || "1", 10) || 1);
+  const start = (page - 1) * PAGE_SIZE;
+  query = query.range(start, start + PAGE_SIZE - 1);
+
+  const { data, count } = await query;
+  return { rows: data || [], total: count || 0, page };
 }
 
-export default async function AdminOrdersPage({ searchParams }: { searchParams: Promise<{ status?: string }> }) {
-  if (!(await isAdmin())) redirect("/");
-  const { status } = await searchParams;
+export default async function AdminOrdersPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
+  const sp = await searchParams;
+  const { rows, total, page } = await fetchOrders(sp);
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 
-  const orders = await getOrders(status || null);
-
-  const filters = [
+  const statusFilters = [
     { label: "Tất cả", value: "" },
     { label: "Chờ thanh toán", value: "pending" },
-    { label: "Đã thu tiền - chưa gửi", value: "paid_undelivered" },
+    { label: "Đã thu, chưa gửi", value: "paid_undelivered" },
     { label: "Đã gửi file", value: "delivered" },
+    { label: "Gửi lỗi", value: "failed" },
   ];
 
   return (
-    <>
-      <Navbar />
-      <GradientBlobs blobs={[{ variant: "blue", size: 480, top: "-20%", right: "-5%" }, { variant: "purple", size: 400, bottom: "-30%", left: "-5%", delay: "2s" }]} />
-      <main className="relative max-w-[1200px] mx-auto px-6 md:px-10 py-20 md:py-28">
-        <div className="mb-8 flex items-center justify-between gap-4">
-          <div>
-            <Link href="/account/admin" className="text-[0.8rem]" style={{ color: "#7da9ff" }}>&larr; Dashboard</Link>
-            <h1 className="t-h2 text-white mt-2">Đơn hàng ({orders.length})</h1>
-          </div>
+    <div className="space-y-6">
+      <header className="flex items-center justify-between gap-4 flex-wrap">
+        <div>
+          <h1 className="t-h2 text-white mb-1">Đơn hàng</h1>
+          <p className="text-[0.85rem]" style={{ color: "var(--ink-mute)" }}>
+            Hiển thị {rows.length} / {total} đơn · Trang {page}/{totalPages}
+          </p>
         </div>
+      </header>
 
-        <div className="flex flex-wrap gap-2 mb-6">
-          {filters.map((f) => {
-            const active = (status || "") === f.value;
+      {/* Filter bar */}
+      <form method="get" action="/account/admin/orders" className="rounded-xl border p-4 space-y-3" style={{ background: "rgba(8,16,43,0.55)", borderColor: "rgba(255,255,255,0.08)" }}>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+          <Field label="Tìm kiếm">
+            <input name="q" defaultValue={sp.q || ""} placeholder="Mã đơn / email / tên..." className="input-dark" />
+          </Field>
+          <Field label="Trạng thái">
+            <select name="status" defaultValue={sp.status || ""} className="input-dark">
+              {statusFilters.map((s) => (
+                <option key={s.value} value={s.value}>{s.label}</option>
+              ))}
+            </select>
+          </Field>
+          <Field label="Từ ngày">
+            <input type="date" name="from" defaultValue={sp.from || ""} className="input-dark" />
+          </Field>
+          <Field label="Đến ngày">
+            <input type="date" name="to" defaultValue={sp.to || ""} className="input-dark" />
+          </Field>
+        </div>
+        <div className="flex gap-2">
+          <button className="px-4 py-2 rounded-md text-[0.85rem] font-semibold text-white" style={{ background: "var(--grad-primary)" }}>
+            Áp dụng
+          </button>
+          <Link href="/account/admin/orders" className="px-4 py-2 rounded-md text-[0.85rem] font-medium text-white/80 border" style={{ borderColor: "rgba(255,255,255,0.15)" }}>
+            Reset
+          </Link>
+        </div>
+      </form>
+
+      {/* Table */}
+      <div className="rounded-xl border overflow-x-auto" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+        <table className="w-full text-[0.85rem]">
+          <thead style={{ background: "rgba(255,255,255,0.04)" }}>
+            <tr>
+              <Th>Mã đơn</Th>
+              <Th>Khách hàng</Th>
+              <Th>Tổng tiền</Th>
+              <Th>Thanh toán</Th>
+              <Th>Trạng thái gửi</Th>
+              <Th>Ngày tạo</Th>
+              <Th>Hành động</Th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((o) => (
+              <tr key={o.id as string} className="border-t hover:bg-white/[0.02]" style={{ borderColor: "rgba(255,255,255,0.05)" }}>
+                <Td>
+                  <Link href={`/shop/order/${o.order_number}`} target="_blank" className="font-mono text-[0.78rem]" style={{ color: "#7da9ff" }}>
+                    {String(o.order_number)}
+                  </Link>
+                </Td>
+                <Td>
+                  <div className="text-white font-medium">{String(o.customer_name)}</div>
+                  <div className="text-[0.72rem]" style={{ color: "var(--ink-mute)" }}>{String(o.customer_email)}</div>
+                  {o.customer_phone ? <div className="text-[0.7rem]" style={{ color: "var(--ink-mute)" }}>{String(o.customer_phone)}</div> : null}
+                </Td>
+                <Td className="text-white font-semibold whitespace-nowrap">{Number(o.total).toLocaleString("vi-VN")}đ</Td>
+                <Td><PaymentBadge status={String(o.payment_status)} /></Td>
+                <Td><DeliveryBadge status={String(o.delivery_status)} /></Td>
+                <Td className="text-[0.74rem] text-white/60 whitespace-nowrap">
+                  {new Date(o.created_at as string).toLocaleString("vi-VN", { day: "2-digit", month: "2-digit", year: "2-digit", hour: "2-digit", minute: "2-digit" })}
+                </Td>
+                <Td>
+                  <OrderActions orderId={o.id as string} paymentStatus={String(o.payment_status)} deliveryStatus={String(o.delivery_status)} />
+                </Td>
+              </tr>
+            ))}
+            {rows.length === 0 && (
+              <tr><td colSpan={7} className="px-4 py-12 text-center text-[0.9rem]" style={{ color: "var(--ink-mute)" }}>Không có đơn nào khớp filter.</td></tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex items-center justify-center gap-2">
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => {
+            const params = new URLSearchParams();
+            if (sp.q) params.set("q", sp.q);
+            if (sp.status) params.set("status", sp.status);
+            if (sp.from) params.set("from", sp.from);
+            if (sp.to) params.set("to", sp.to);
+            params.set("page", String(p));
+            const active = p === page;
             return (
-              <Link
-                key={f.value}
-                href={f.value ? `/account/admin/orders?status=${f.value}` : "/account/admin/orders"}
-                className="px-3 py-1.5 rounded-md text-[0.8rem] font-medium"
-                style={{
-                  background: active ? "var(--grad-primary)" : "rgba(255,255,255,0.06)",
-                  color: active ? "white" : "var(--ink-mute)",
-                }}
-              >
-                {f.label}
+              <Link key={p} href={`/account/admin/orders?${params.toString()}`}
+                className="w-9 h-9 inline-flex items-center justify-center rounded text-[0.85rem] font-semibold"
+                style={{ background: active ? "var(--grad-primary)" : "rgba(255,255,255,0.06)", color: active ? "white" : "var(--ink-mute)" }}>
+                {p}
               </Link>
             );
           })}
         </div>
-
-        <div className="overflow-x-auto rounded-xl border" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
-          <table className="w-full text-[0.85rem]">
-            <thead style={{ background: "rgba(255,255,255,0.04)" }}>
-              <tr>
-                <Th>Mã đơn</Th><Th>Khách</Th><Th>Tổng</Th><Th>TT</Th><Th>Gửi</Th><Th>Ngày</Th><Th>Action</Th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((o) => (
-                <tr key={o.id as string} className="border-t" style={{ borderColor: "rgba(255,255,255,0.05)" }}>
-                  <Td>
-                    <Link href={`/shop/order/${o.order_number}`} className="font-mono text-[0.78rem]" style={{ color: "#7da9ff" }}>
-                      {String(o.order_number)}
-                    </Link>
-                  </Td>
-                  <Td>
-                    <div className="text-white">{String(o.customer_name)}</div>
-                    <div className="text-[0.7rem]" style={{ color: "var(--ink-mute)" }}>{String(o.customer_email)}</div>
-                  </Td>
-                  <Td className="text-white font-semibold">{Number(o.total).toLocaleString("vi-VN")}đ</Td>
-                  <Td>
-                    <Badge label={String(o.payment_status)} color={o.payment_status === "paid" ? "#5fffaa" : "#ffd479"} />
-                  </Td>
-                  <Td>
-                    <Badge label={String(o.delivery_status)} color={o.delivery_status === "delivered" ? "#5fffaa" : o.delivery_status === "failed" ? "#ff5a72" : "#7da9ff"} />
-                  </Td>
-                  <Td className="text-[0.75rem] text-white/60">
-                    {new Date(o.created_at as string).toLocaleString("vi-VN", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })}
-                  </Td>
-                  <Td>
-                    <OrderActions
-                      orderId={o.id as string}
-                      paymentStatus={String(o.payment_status)}
-                      deliveryStatus={String(o.delivery_status)}
-                    />
-                  </Td>
-                </tr>
-              ))}
-              {orders.length === 0 && (
-                <tr><td colSpan={7} className="px-4 py-12 text-center" style={{ color: "var(--ink-mute)" }}>Không có đơn nào.</td></tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </main>
-      <Footer />
-    </>
+      )}
+    </div>
   );
 }
 
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <label className="block">
+      <span className="block text-[0.72rem] uppercase tracking-wider font-medium mb-1.5" style={{ color: "var(--ink-mute)" }}>{label}</span>
+      {children}
+    </label>
+  );
+}
 function Th({ children }: { children: React.ReactNode }) {
-  return <th className="text-left px-4 py-3 font-semibold text-[0.78rem] uppercase tracking-wider" style={{ color: "var(--ink-mute)" }}>{children}</th>;
+  return <th className="text-left px-4 py-3 font-semibold text-[0.74rem] uppercase tracking-wider whitespace-nowrap" style={{ color: "var(--ink-mute)" }}>{children}</th>;
 }
 function Td({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <td className={`px-4 py-3 ${className}`}>{children}</td>;
+  return <td className={`px-4 py-3 align-top ${className}`}>{children}</td>;
 }
-function Badge({ label, color }: { label: string; color: string }) {
-  return <span className="px-2 py-0.5 rounded text-[0.7rem] font-semibold" style={{ background: `${color}22`, color }}>{label}</span>;
+
+function PaymentBadge({ status }: { status: string }) {
+  const map: Record<string, { label: string; color: string }> = {
+    paid: { label: "Đã thanh toán", color: "#5fffaa" },
+    unpaid: { label: "Chưa thanh toán", color: "#ffd479" },
+    refunded: { label: "Hoàn tiền", color: "#ff5a72" },
+  };
+  const cfg = map[status] || { label: status, color: "#7da9ff" };
+  return <span className="px-2 py-0.5 rounded text-[0.7rem] font-semibold whitespace-nowrap" style={{ background: `${cfg.color}22`, color: cfg.color }}>{cfg.label}</span>;
+}
+function DeliveryBadge({ status }: { status: string }) {
+  const map: Record<string, { label: string; color: string }> = {
+    delivered: { label: "Đã gửi", color: "#5fffaa" },
+    pending: { label: "Chờ gửi", color: "#7da9ff" },
+    failed: { label: "Gửi lỗi", color: "#ff5a72" },
+  };
+  const cfg = map[status] || { label: status, color: "#7da9ff" };
+  return <span className="px-2 py-0.5 rounded text-[0.7rem] font-semibold whitespace-nowrap" style={{ background: `${cfg.color}22`, color: cfg.color }}>{cfg.label}</span>;
 }
