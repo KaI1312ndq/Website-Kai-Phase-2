@@ -103,23 +103,27 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
           <div>
             <label className="block text-sm mb-3 font-semibold text-white">Tier video</label>
             <div className="grid sm:grid-cols-3 gap-3">
-              {TIERS.map((t) => (
-                <button
-                  key={t}
-                  type="button"
-                  onClick={() => setTier(t)}
-                  className="card-glass p-4 text-left transition-all"
-                  style={{
-                    borderColor: tier === t ? "var(--accent)" : "var(--st-15)",
-                    boxShadow: tier === t ? "0 0 0 2px var(--accent)" : "none",
-                  }}
-                >
-                  <div className="font-semibold text-white">{TIER_LABELS[t]}</div>
-                  <div className="text-xs mt-1" style={{ color: "var(--ink-soft)" }}>
-                    {TIER_DESCRIPTIONS[t]}
-                  </div>
-                </button>
-              ))}
+              {TIERS.map((t) => {
+                const isActive = tier === t;
+                return (
+                  <button
+                    key={t}
+                    type="button"
+                    onClick={() => setTier(t)}
+                    className="p-4 text-left rounded-xl border-2 transition-all"
+                    style={{
+                      borderColor: isActive ? "#a855f7" : "rgba(255,255,255,0.12)",
+                      background: isActive ? "rgba(168,85,247,0.12)" : "rgba(255,255,255,0.04)",
+                      boxShadow: isActive ? "0 0 0 4px rgba(168,85,247,0.18)" : "none",
+                    }}
+                  >
+                    <div className="font-semibold text-white text-base">{TIER_LABELS[t]}</div>
+                    <div className="text-xs mt-1.5 leading-relaxed" style={{ color: "var(--ink-soft)" }}>
+                      {TIER_DESCRIPTIONS[t]}
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -129,16 +133,18 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
               {DURATIONS.map((d) => {
                 const cost = PRICING_MATRIX[tier]?.[d];
                 const disabled = !cost;
+                const isActive = duration === d && !disabled;
                 return (
                   <button
                     key={d}
                     type="button"
                     disabled={disabled}
                     onClick={() => setDuration(d)}
-                    className="card-glass p-3 text-center transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                    className="p-3 text-center rounded-xl border-2 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
                     style={{
-                      borderColor: duration === d && !disabled ? "var(--accent)" : "var(--st-15)",
-                      boxShadow: duration === d && !disabled ? "0 0 0 2px var(--accent)" : "none",
+                      borderColor: isActive ? "#a855f7" : "rgba(255,255,255,0.12)",
+                      background: isActive ? "rgba(168,85,247,0.12)" : "rgba(255,255,255,0.04)",
+                      boxShadow: isActive ? "0 0 0 4px rgba(168,85,247,0.18)" : "none",
                     }}
                   >
                     <div className="text-lg font-bold text-white">{d}s</div>
@@ -151,7 +157,7 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
             </div>
           </div>
 
-          <div className="rounded-lg p-4 flex justify-between items-center" style={{ background: "var(--st-05)" }}>
+          <div className="rounded-xl p-4 flex justify-between items-center border-2" style={{ background: "rgba(168,85,247,0.06)", borderColor: "rgba(168,85,247,0.2)" }}>
             <span style={{ color: "var(--ink-soft)" }}>Chi phí:</span>
             <span className="font-bold grad-text text-xl">
               {tokenCost > 0 ? `${tokenCost} token (${(tokenCost * 1000).toLocaleString("vi-VN")}đ)` : "-"}
@@ -173,7 +179,7 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
 
       {/* STEP 2: Product info */}
       {step === 2 && (
-        <div className="space-y-4 card-glass p-6">
+        <div className="space-y-4 rounded-2xl border-2 p-6" style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}>
           <div>
             <label className="block text-sm mb-1 font-semibold text-white">
               Tên sản phẩm / dịch vụ *
@@ -255,47 +261,56 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
           <div>
             <label className="block text-sm mb-3 font-semibold text-white">Phong cách video</label>
             <div className="grid sm:grid-cols-2 gap-3">
-              {VIDEO_STYLES.map((s) => (
-                <button
-                  key={s.id}
-                  type="button"
-                  onClick={() => setStyle(s.id)}
-                  className="card-glass p-4 text-left transition-all"
-                  style={{
-                    borderColor: style === s.id ? "var(--accent)" : "var(--st-15)",
-                    boxShadow: style === s.id ? "0 0 0 2px var(--accent)" : "none",
-                  }}
-                >
-                  <div className="font-semibold text-white">{s.label}</div>
-                  <div className="text-xs mt-1" style={{ color: "var(--ink-soft)" }}>{s.desc}</div>
-                </button>
-              ))}
+              {VIDEO_STYLES.map((s) => {
+                const isActive = style === s.id;
+                return (
+                  <button
+                    key={s.id}
+                    type="button"
+                    onClick={() => setStyle(s.id)}
+                    className="p-4 text-left rounded-xl border-2 transition-all"
+                    style={{
+                      borderColor: isActive ? "#a855f7" : "rgba(255,255,255,0.12)",
+                      background: isActive ? "rgba(168,85,247,0.12)" : "rgba(255,255,255,0.04)",
+                      boxShadow: isActive ? "0 0 0 4px rgba(168,85,247,0.18)" : "none",
+                    }}
+                  >
+                    <div className="font-semibold text-white">{s.label}</div>
+                    <div className="text-xs mt-1.5 leading-relaxed" style={{ color: "var(--ink-soft)" }}>{s.desc}</div>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
           <div>
             <label className="block text-sm mb-3 font-semibold text-white">Giọng đọc</label>
-            <div className="grid sm:grid-cols-2 gap-2 max-h-[280px] overflow-y-auto pr-2">
-              {FPT_VOICES.map((v) => (
-                <button
-                  key={v.id}
-                  type="button"
-                  onClick={() => setVoiceId(v.id)}
-                  className="card-glass p-3 text-left transition-all"
-                  style={{
-                    borderColor: voiceId === v.id ? "var(--accent)" : "var(--st-15)",
-                  }}
-                >
-                  <div className="flex justify-between items-baseline">
-                    <span className="font-semibold text-white">{v.label}</span>
-                    <span className="text-xs" style={{ color: "var(--ink-mute)" }}>
-                      {v.region === "north" ? "Bắc" : v.region === "central" ? "Trung" : "Nam"} ·{" "}
-                      {v.gender === "female" ? "Nữ" : "Nam"}
-                    </span>
-                  </div>
-                  <div className="text-xs mt-1" style={{ color: "var(--ink-soft)" }}>{v.useCase}</div>
-                </button>
-              ))}
+            <div className="grid sm:grid-cols-2 gap-2 max-h-[320px] overflow-y-auto pr-2">
+              {FPT_VOICES.map((v) => {
+                const isActive = voiceId === v.id;
+                return (
+                  <button
+                    key={v.id}
+                    type="button"
+                    onClick={() => setVoiceId(v.id)}
+                    className="p-3 text-left rounded-xl border-2 transition-all"
+                    style={{
+                      borderColor: isActive ? "#a855f7" : "rgba(255,255,255,0.12)",
+                      background: isActive ? "rgba(168,85,247,0.12)" : "rgba(255,255,255,0.04)",
+                      boxShadow: isActive ? "0 0 0 4px rgba(168,85,247,0.18)" : "none",
+                    }}
+                  >
+                    <div className="flex justify-between items-baseline">
+                      <span className="font-semibold text-white">{v.label}</span>
+                      <span className="text-xs" style={{ color: "var(--ink-mute)" }}>
+                        {v.region === "north" ? "Bắc" : v.region === "central" ? "Trung" : "Nam"} ·{" "}
+                        {v.gender === "female" ? "Nữ" : "Nam"}
+                      </span>
+                    </div>
+                    <div className="text-xs mt-1" style={{ color: "var(--ink-soft)" }}>{v.useCase}</div>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -313,7 +328,7 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
       {/* STEP 4: Confirm */}
       {step === 4 && (
         <div className="space-y-4">
-          <div className="card-glass p-6 space-y-3">
+          <div className="rounded-2xl border-2 p-6 space-y-3" style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}>
             <Row label="Tier" value={`${TIER_LABELS[tier]} (${duration}s)`} />
             <Row label="Chi phí" value={`${tokenCost} token`} highlight />
             <Row label="Sản phẩm" value={productName} />

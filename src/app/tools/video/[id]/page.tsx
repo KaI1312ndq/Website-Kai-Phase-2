@@ -73,54 +73,35 @@ export default async function VideoDetailPage({ params }: Props) {
           </div>
 
           {/* Sidebar */}
-          <aside className="card-glass p-5 space-y-4 h-fit">
-            <h3 className="t-h4 text-white">Thông tin đầu vào</h3>
+          <aside className="rounded-2xl border-2 p-5 space-y-3 h-fit" style={{ background: "rgba(255,255,255,0.03)", borderColor: "rgba(255,255,255,0.10)" }}>
+            <h3 className="t-h4 text-white mb-2">Thông tin đầu vào</h3>
 
-            <div>
-              <div className="text-xs mb-1" style={{ color: "var(--ink-mute)" }}>Sản phẩm</div>
-              <div className="text-sm text-white">{input.product_name}</div>
-            </div>
-
-            <div>
-              <div className="text-xs mb-1" style={{ color: "var(--ink-mute)" }}>Mô tả</div>
-              <div className="text-sm" style={{ color: "var(--ink-soft)" }}>{input.product_description}</div>
-            </div>
-
-            {input.target_audience && (
-              <div>
-                <div className="text-xs mb-1" style={{ color: "var(--ink-mute)" }}>Khách hàng</div>
-                <div className="text-sm" style={{ color: "var(--ink-soft)" }}>{input.target_audience}</div>
-              </div>
-            )}
-
-            {input.cta && (
-              <div>
-                <div className="text-xs mb-1" style={{ color: "var(--ink-mute)" }}>CTA</div>
-                <div className="text-sm" style={{ color: "var(--ink-soft)" }}>{input.cta}</div>
-              </div>
-            )}
-
-            <div className="pt-2 border-t" style={{ borderColor: "var(--st-08)" }}>
-              <div className="text-xs mb-1" style={{ color: "var(--ink-mute)" }}>Phong cách</div>
-              <div className="text-sm text-white">{input.style}</div>
-            </div>
-
-            <div>
-              <div className="text-xs mb-1" style={{ color: "var(--ink-mute)" }}>Giọng đọc</div>
-              <div className="text-sm text-white">{input.voice_id}</div>
-            </div>
-
-            <div className="pt-2 border-t" style={{ borderColor: "var(--st-08)" }}>
-              <div className="text-xs mb-1" style={{ color: "var(--ink-mute)" }}>Tạo lúc</div>
-              <div className="text-sm" style={{ color: "var(--ink-soft)" }}>
-                {new Date(video.created_at).toLocaleString("vi-VN")}
-              </div>
-            </div>
+            <InfoField label="Sản phẩm" value={input.product_name} primary />
+            <InfoField label="Mô tả" value={input.product_description} />
+            {input.target_audience && <InfoField label="Khách hàng" value={input.target_audience} />}
+            {input.cta && <InfoField label="CTA" value={input.cta} />}
+            <InfoField label="Phong cách" value={input.style} />
+            <InfoField label="Giọng đọc" value={input.voice_id} />
+            <InfoField label="Tạo lúc" value={new Date(video.created_at).toLocaleString("vi-VN")} />
           </aside>
         </div>
       </main>
 
       <Footer />
     </>
+  );
+}
+
+function InfoField({ label, value, primary }: { label: string; value: string; primary?: boolean }) {
+  return (
+    <div className="rounded-lg p-3" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
+      <div className="text-[11px] uppercase tracking-wider font-semibold mb-1" style={{ color: "var(--ink-mute)" }}>
+        {label}
+      </div>
+      <div className={`text-sm leading-relaxed ${primary ? "font-semibold text-white" : ""}`}
+           style={{ color: primary ? undefined : "var(--ink-soft)" }}>
+        {value}
+      </div>
+    </div>
   );
 }

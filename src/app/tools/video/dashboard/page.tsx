@@ -70,20 +70,20 @@ export default async function VideoDashboardPage() {
 
         {/* Balance */}
         <section className="grid sm:grid-cols-3 gap-4 mb-10">
-          <div className="card-glass p-6">
+          <div className="rounded-2xl border-2 p-6" style={{ background: "rgba(168,85,247,0.06)", borderColor: "rgba(168,85,247,0.25)" }}>
             <div className="text-sm mb-1" style={{ color: "var(--ink-soft)" }}>Token hiện có</div>
             <div className="t-h1 grad-text font-bold">{profile.token_balance.toLocaleString("vi-VN")}</div>
             <div className="text-xs mt-1" style={{ color: "var(--ink-mute)" }}>
               ≈ {(profile.token_balance * 1000).toLocaleString("vi-VN")}đ
             </div>
           </div>
-          <div className="card-glass p-6">
+          <div className="rounded-2xl border-2 p-6" style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}>
             <div className="text-sm mb-1" style={{ color: "var(--ink-soft)" }}>Tổng đã nạp</div>
             <div className="t-h2 text-white font-bold">
               {profile.total_spent_vnd.toLocaleString("vi-VN")}đ
             </div>
           </div>
-          <div className="card-glass p-6">
+          <div className="rounded-2xl border-2 p-6" style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}>
             <div className="text-sm mb-1" style={{ color: "var(--ink-soft)" }}>Video đã tạo</div>
             <div className="t-h2 text-white font-bold">{profile.total_videos_created}</div>
           </div>
@@ -93,7 +93,7 @@ export default async function VideoDashboardPage() {
         <section className="mb-10">
           <h2 className="t-h3 mb-4 text-white">Video gần đây</h2>
           {!videos || videos.length === 0 ? (
-            <div className="card-glass p-8 text-center">
+            <div className="rounded-2xl border-2 p-8 text-center" style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}>
               <p className="mb-4" style={{ color: "var(--ink-soft)" }}>
                 Chưa có video nào. Tạo video đầu tiên với {profile.token_balance} token đang có.
               </p>
@@ -105,7 +105,8 @@ export default async function VideoDashboardPage() {
                 <Link
                   key={v.id}
                   href={`/tools/video/${v.id}`}
-                  className="card-glass p-4 block hover:scale-[1.02] transition-transform"
+                  className="rounded-2xl border-2 p-4 block hover:scale-[1.02] transition-transform"
+                  style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}
                 >
                   {v.thumbnail_url ? (
                     // eslint-disable-next-line @next/next/no-img-element
@@ -137,7 +138,7 @@ export default async function VideoDashboardPage() {
           {transactions.length === 0 ? (
             <p style={{ color: "var(--ink-soft)" }}>Chưa có giao dịch.</p>
           ) : (
-            <div className="card-glass p-2 overflow-hidden">
+            <div className="rounded-2xl border-2 p-2 overflow-hidden" style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}>
               <table className="w-full">
                 <thead>
                   <tr className="text-left text-sm" style={{ color: "var(--ink-soft)" }}>

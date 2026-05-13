@@ -34,7 +34,7 @@ export default async function CreateVideoPage() {
               AI sẽ tự gen kịch bản + giọng đọc + animate. 5 phút có MP4 download.
             </p>
           </div>
-          <div className="card-glass px-4 py-2">
+          <div className="rounded-xl border-2 px-4 py-2" style={{ background: "rgba(168,85,247,0.08)", borderColor: "rgba(168,85,247,0.25)" }}>
             <span className="text-sm" style={{ color: "var(--ink-soft)" }}>Token còn:</span>{" "}
             <span className="font-bold grad-text">{profile.token_balance}</span>
           </div>

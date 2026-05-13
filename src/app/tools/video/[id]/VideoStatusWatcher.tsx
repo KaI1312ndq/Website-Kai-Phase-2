@@ -68,7 +68,7 @@ export default function VideoStatusWatcher(props: Props) {
   if (status === "completed" && outputUrl) {
     return (
       <div className="space-y-4">
-        <div className="card-glass overflow-hidden">
+        <div className="rounded-2xl border-2 overflow-hidden" style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}>
           {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
           <video
             src={outputUrl}
@@ -98,7 +98,7 @@ export default function VideoStatusWatcher(props: Props) {
 
   if (status === "failed" || status === "refunded") {
     return (
-      <div className="card-glass p-6" style={{ background: "rgba(239, 68, 68, 0.1)" }}>
+      <div className="rounded-2xl border-2 p-6" style={{ background: "rgba(239, 68, 68, 0.08)", borderColor: "rgba(239, 68, 68, 0.3)" }}>
         <h3 className="t-h4 text-white mb-2">Render thất bại</h3>
         <p className="text-sm mb-3" style={{ color: "var(--ink-soft)" }}>
           {error ?? message ?? "Worker không hoàn tất sau 3 lần retry."}
@@ -112,7 +112,7 @@ export default function VideoStatusWatcher(props: Props) {
 
   // Active state - show progress
   return (
-    <div className="card-glass p-6">
+    <div className="rounded-2xl border-2 p-6" style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}>
       <div className="flex items-center justify-between mb-3">
         <span className="font-semibold text-white">{STATUS_LABEL[status] ?? status}</span>
         <span className="grad-text font-bold">{progress}%</span>

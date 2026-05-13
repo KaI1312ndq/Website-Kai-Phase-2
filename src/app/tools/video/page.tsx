@@ -78,7 +78,7 @@ export default function VideoLanding() {
             { title: "Voice tự nhiên FPT.AI", body: "3 giọng Bắc/Nam, có cảm xúc. Test thử trước khi tốn token." },
             { title: "Pay-per-use, không subscription", body: "Token không hết hạn. Nạp nhiều bonus cao. Video lỗi refund 100%." },
           ].map((u) => (
-            <div key={u.title} className="card-glass p-6">
+            <div key={u.title} className="rounded-2xl border-2 p-6" style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}>
               <h3 className="t-h4 mb-2 text-white">{u.title}</h3>
               <p className="t-body" style={{ color: "var(--ink-soft)" }}>{u.body}</p>
             </div>
@@ -144,7 +144,7 @@ export default function VideoLanding() {
           <h2 className="t-display-sm mb-6 text-center text-white">Nạp càng nhiều, bonus càng cao</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {BONUS_TIERS.slice().reverse().map((t) => (
-              <div key={t.label} className="card-glass p-5 text-center">
+              <div key={t.label} className="rounded-2xl border-2 p-5 text-center" style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}>
                 <div className="t-h4 text-white mb-1">{t.label}</div>
                 <div className="text-sm mb-3" style={{ color: "var(--ink-soft)" }}>
                   Từ {(t.minVnd / 1000).toLocaleString("vi-VN")}k
@@ -165,7 +165,7 @@ export default function VideoLanding() {
           <h2 className="t-display-sm mb-6 text-center text-white">Câu hỏi thường gặp</h2>
           <div className="space-y-3">
             {FAQ.map((f, i) => (
-              <details key={i} className="card-glass p-5">
+              <details key={i} className="rounded-2xl border-2 p-5" style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}>
                 <summary className="cursor-pointer font-semibold text-white">{f.q}</summary>
                 <p className="mt-3" style={{ color: "var(--ink-soft)" }}>{f.a}</p>
               </details>

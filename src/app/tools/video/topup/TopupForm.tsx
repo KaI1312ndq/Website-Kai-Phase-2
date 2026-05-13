@@ -46,7 +46,7 @@ export default function TopupForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="card-glass p-6 space-y-6">
+    <form onSubmit={handleSubmit} className="rounded-2xl border-2 p-6 space-y-6" style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}>
       {/* Amount input */}
       <div>
         <label className="block text-sm mb-2 font-semibold text-white">Số tiền muốn nạp (VNĐ)</label>
