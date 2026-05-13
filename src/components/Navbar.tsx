@@ -112,12 +112,6 @@ const links: NavLink[] = [
     viewAllText: "Xem tất cả tools",
     submenu: [
       {
-        label: "CV Builder ATS-friendly",
-        desc: "Tạo CV chuẩn 5 phút · 3 template · AI feedback · 3 lượt free",
-        href: "/tools/cv-builder",
-        badge: "Mới",
-      },
-      {
         label: "Tính Thuế TNCN 2026",
         desc: "So sánh luật 2025 vs 2026 · giảm trừ 15.500.000 · lương Net",
         href: "/tools/tinh-thue-tncn",

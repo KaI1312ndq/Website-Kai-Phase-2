@@ -6,18 +6,42 @@ import { compareYears, type TaxBreakdown } from "@/lib/tax/compute";
 const fmt = (n: number) => n.toLocaleString("vi-VN");
 const fmtAbs = (n: number) => Math.abs(n).toLocaleString("vi-VN");
 
-const PRESETS = [
+const MONTHLY_PRESETS = [
   { label: "15.000.000", gross: 15_000_000 },
   { label: "25.000.000", gross: 25_000_000 },
   { label: "50.000.000", gross: 50_000_000 },
   { label: "100.000.000", gross: 100_000_000 },
 ];
 
+const ANNUAL_PRESETS = [
+  { label: "180.000.000", gross: 180_000_000 },
+  { label: "300.000.000", gross: 300_000_000 },
+  { label: "600.000.000", gross: 600_000_000 },
+  { label: "1.200.000.000", gross: 1_200_000_000 },
+];
+
+function scaleTaxBreakdown(bd: TaxBreakdown, factor: number): TaxBreakdown {
+  return {
+    ...bd,
+    gross: bd.gross * factor,
+    insurance: bd.insurance * factor,
+    afterInsurance: bd.afterInsurance * factor,
+    deductionPersonal: bd.deductionPersonal * factor,
+    deductionDependents: bd.deductionDependents * factor,
+    totalDeduction: bd.totalDeduction * factor,
+    taxableIncome: bd.taxableIncome * factor,
+    totalTax: bd.totalTax * factor,
+    net: bd.net * factor,
+    brackets: bd.brackets.map((b) => ({ ...b, amount: b.amount * factor, tax: b.tax * factor })),
+  };
+}
+
 export default function Calculator() {
   const [grossInput, setGrossInput] = useState("");
   const [insuranceBaseInput, setInsuranceBaseInput] = useState("");
   const [dependents, setDependents] = useState("0");
   const [hasInsurance, setHasInsurance] = useState(true);
+  const [period, setPeriod] = useState<"monthly" | "annual">("monthly");
 
   const gross = useMemo(() => {
     const cleaned = grossInput.replace(/[^\d]/g, "");
@@ -33,15 +57,18 @@ export default function Calculator() {
 
   const result = useMemo(() => {
     if (gross <= 0) return null;
+    const monthlyGross = period === "annual" ? gross / 12 : gross;
     return compareYears({
-      gross,
+      gross: monthlyGross,
       insuranceBase: insuranceBaseNum > 0 ? insuranceBaseNum : undefined,
       dependents: deps,
       hasInsurance,
     });
-  }, [gross, insuranceBaseNum, deps, hasInsurance]);
+  }, [gross, insuranceBaseNum, deps, hasInsurance, period]);
 
-  function applyPreset(p: typeof PRESETS[number]) {
+  const PRESETS = period === "annual" ? ANNUAL_PRESETS : MONTHLY_PRESETS;
+
+  function applyPreset(p: { label: string; gross: number }) {
     setGrossInput(p.gross.toLocaleString("vi-VN"));
   }
 
@@ -55,19 +82,47 @@ export default function Calculator() {
     setInsuranceBaseInput(cleaned ? parseInt(cleaned, 10).toLocaleString("vi-VN") : "");
   }
 
+  function onPeriodChange(p: "monthly" | "annual") {
+    if (p === period) return;
+    if (gross > 0) {
+      const converted = p === "annual" ? gross * 12 : Math.round(gross / 12);
+      setGrossInput(converted.toLocaleString("vi-VN"));
+    }
+    setPeriod(p);
+  }
+
+  const periodLabel = period === "annual" ? "năm" : "tháng";
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-6 items-start">
       {/* INPUT FORM */}
       <aside className="rounded-2xl p-6 lg:sticky lg:top-24" style={{ background: "var(--st-03)", border: "1px solid var(--line)" }}>
         <div className="section-tag">Nhập thông tin</div>
-        <h2 className="text-[1.15rem] font-bold text-white mb-1 mt-2">Lương Gross/tháng</h2>
-        <p className="text-[0.82rem] mb-5" style={{ color: "var(--ink-mute)" }}>
+        <h2 className="text-[1.15rem] font-bold text-white mb-1 mt-2">Lương Gross/{periodLabel}</h2>
+        <p className="text-[0.82rem] mb-4" style={{ color: "var(--ink-mute)" }}>
           Chỉ cần lương Gross - các trường khác để mặc định cũng được.
         </p>
 
+        {/* PERIOD TOGGLE */}
+        <div className="flex items-center gap-1 mb-5 p-1 rounded-lg w-fit" style={{ background: "var(--st-06)" }}>
+          {(["monthly", "annual"] as const).map((p) => (
+            <button
+              key={p}
+              onClick={() => onPeriodChange(p)}
+              className="px-4 py-1.5 rounded-md text-[0.82rem] font-semibold transition-all"
+              style={{
+                background: period === p ? "var(--primary)" : "transparent",
+                color: period === p ? "white" : "var(--ink-mute)",
+              }}
+            >
+              {p === "monthly" ? "Tháng" : "Năm"}
+            </button>
+          ))}
+        </div>
+
         <div className="mb-5">
           <label className="block text-[0.78rem] font-semibold mb-1.5 text-white">
-            Lương Gross VND/tháng <span style={{ color: "#ff5a72" }}>*</span>
+            Lương Gross VND/{periodLabel} <span style={{ color: "#ff5a72" }}>*</span>
           </label>
           <div className="relative">
             <input
@@ -75,7 +130,7 @@ export default function Calculator() {
               inputMode="numeric"
               value={grossInput}
               onChange={(e) => onGrossChange(e.target.value)}
-              placeholder="20.000.000"
+              placeholder={period === "annual" ? "360.000.000" : "20.000.000"}
               className="w-full px-4 py-3.5 rounded-lg outline-none text-[1.05rem] font-semibold tabular-nums"
               style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "var(--ink)" }}
             />
@@ -132,11 +187,10 @@ export default function Calculator() {
           </label>
         </div>
 
-        {/* Insurance base salary - optional. Most contracts đóng BH trên mức thấp hơn lương Gross */}
         {hasInsurance && (
           <div className="mb-2">
             <label className="block text-[0.78rem] font-semibold mb-1.5 text-white">
-              Lương đóng bảo hiểm <span className="font-normal" style={{ color: "var(--ink-mute)" }}>(nếu khác Gross)</span>
+              Lương đóng bảo hiểm{period === "annual" && <span className="font-normal" style={{ color: "var(--ink-mute)" }}> (theo tháng)</span>} <span className="font-normal" style={{ color: "var(--ink-mute)" }}>(nếu khác Gross)</span>
             </label>
             <div className="relative">
               <input
@@ -144,7 +198,7 @@ export default function Calculator() {
                 inputMode="numeric"
                 value={insuranceBaseInput}
                 onChange={(e) => onInsuranceBaseChange(e.target.value)}
-                placeholder={gross > 0 ? `Mặc định = ${gross.toLocaleString("vi-VN")} (Gross)` : "VD: 10.000.000"}
+                placeholder={gross > 0 ? `Mặc định = ${(period === "annual" ? Math.round(gross / 12) : gross).toLocaleString("vi-VN")} (Gross/tháng)` : "VD: 10.000.000"}
                 className="w-full px-4 py-3 rounded-lg outline-none tabular-nums"
                 style={{ border: "1px solid var(--st-10)", background: "var(--st-03)", color: "var(--ink)" }}
               />
@@ -176,16 +230,20 @@ export default function Calculator() {
             </p>
           </div>
         ) : (
-          <ResultView c={result} hasInsurance={hasInsurance} />
+          <ResultView c={result} hasInsurance={hasInsurance} period={period} />
         )}
       </div>
     </div>
   );
 }
 
-function ResultView({ c, hasInsurance }: { c: ReturnType<typeof compareYears>; hasInsurance: boolean }) {
-  const { y2025, y2026, taxDelta, annualTaxDelta, annualNetDelta } = c;
+function ResultView({ c, hasInsurance, period }: { c: ReturnType<typeof compareYears>; hasInsurance: boolean; period: "monthly" | "annual" }) {
+  const { taxDelta, annualTaxDelta, annualNetDelta } = c;
+  const multiplier = period === "annual" ? 12 : 1;
+  const y2025 = scaleTaxBreakdown(c.y2025, multiplier);
+  const y2026 = scaleTaxBreakdown(c.y2026, multiplier);
   const isBetter = taxDelta > 0;
+  const periodLabel = period === "annual" ? "năm" : "tháng";
 
   return (
     <div className="flex flex-col gap-5">
@@ -218,7 +276,7 @@ function ResultView({ c, hasInsurance }: { c: ReturnType<typeof compareYears>; h
               Thuế 2026 và 2025 bằng nhau với mức lương này
             </h2>
             <p className="text-[0.95rem] leading-[1.6]" style={{ color: "var(--ink-soft)" }}>
-              Lương Gross của bạn chưa vượt mức giảm trừ gia cảnh  không phải đóng thuế cả 2 năm.
+              Lương Gross của bạn chưa vượt mức giảm trừ gia cảnh - không phải đóng thuế cả 2 năm.
             </p>
           </>
         )}
@@ -226,8 +284,8 @@ function ResultView({ c, hasInsurance }: { c: ReturnType<typeof compareYears>; h
 
       {/* SIDE-BY-SIDE BREAKDOWN */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <YearCard label="Luật 2025 (cũ)" data={y2025} accent="#ffd479" subtle hasInsurance={hasInsurance} />
-        <YearCard label="Luật 2026 (mới)" data={y2026} accent="#5fffaa" hasInsurance={hasInsurance} highlight />
+        <YearCard label="Luật 2025 (cũ)" data={y2025} accent="#ffd479" subtle hasInsurance={hasInsurance} periodLabel={periodLabel} />
+        <YearCard label="Luật 2026 (mới)" data={y2026} accent="#5fffaa" hasInsurance={hasInsurance} highlight periodLabel={periodLabel} />
       </div>
 
       {/* BRACKET BREAKDOWN */}
@@ -244,7 +302,7 @@ function ResultView({ c, hasInsurance }: { c: ReturnType<typeof compareYears>; h
   );
 }
 
-function YearCard({ label, data, accent, hasInsurance, subtle, highlight }: { label: string; data: TaxBreakdown; accent: string; hasInsurance: boolean; subtle?: boolean; highlight?: boolean }) {
+function YearCard({ label, data, accent, hasInsurance, subtle, highlight, periodLabel }: { label: string; data: TaxBreakdown; accent: string; hasInsurance: boolean; subtle?: boolean; highlight?: boolean; periodLabel: string }) {
   const netPct = data.gross > 0 ? Math.round((data.net / data.gross) * 100) : 0;
   return (
     <div
@@ -261,17 +319,17 @@ function YearCard({ label, data, accent, hasInsurance, subtle, highlight }: { la
         <span className="text-[0.7rem] font-bold px-2 py-0.5 rounded" style={{ background: `${accent}18`, color: accent }}>{netPct}% Net</span>
       </div>
 
-      <Row label="Lương Gross" value={data.gross} bold />
+      <Row label={`Lương Gross/${periodLabel}`} value={data.gross} bold />
       {hasInsurance && <Row label="− Bảo hiểm (10.5%)" value={data.insurance} negative />}
       <Row label="− Giảm trừ bản thân" value={data.deductionPersonal} negative subtle />
       {data.deductionDependents > 0 && (
-        <Row label={`− Giảm trừ phụ thuộc`} value={data.deductionDependents} negative subtle />
+        <Row label="− Giảm trừ phụ thuộc" value={data.deductionDependents} negative subtle />
       )}
       <Divider />
       <Row label="Thu nhập tính thuế" value={data.taxableIncome} subtle />
       <Row label="Tổng thuế TNCN" value={data.totalTax} negative highlight color="#ff5a72" />
       <Divider />
-      <Row label="Lương Net thực nhận" value={data.net} big color={accent} />
+      <Row label={`Lương Net/${periodLabel}`} value={data.net} big color={accent} />
     </div>
   );
 }
