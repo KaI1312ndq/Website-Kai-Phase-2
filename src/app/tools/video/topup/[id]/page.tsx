@@ -5,7 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import GradientBlobs from "@/components/GradientBlobs";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
-import { BANK_INFO, generateVietQRUrl } from "@/lib/video/bank";
+import { generateVietQRUrl } from "@/lib/video/bank";
 import TopupStatusWatcher from "./TopupStatusWatcher";
 
 export const metadata: Metadata = {
@@ -33,10 +33,21 @@ export default async function TopupQRPage({ params }: Props) {
 
   if (!payment) notFound();
 
-  const qrUrl = generateVietQRUrl({
-    amountVnd: payment.amount_vnd,
-    memo: payment.bank_memo ?? "",
-  });
+  // CRITICAL: must use PayOS virtual account (not real bank), or PayOS won't auto-confirm.
+  const vaNumber = payment.payos_account_number;
+  const vaName = payment.payos_account_name;
+  const vaBin = payment.payos_bin;
+  const hasVirtualAccount = Boolean(vaNumber && vaName && vaBin);
+
+  const qrUrl = hasVirtualAccount
+    ? generateVietQRUrl({
+        bin: vaBin!,
+        accountNumber: vaNumber!,
+        accountName: vaName!,
+        amountVnd: payment.amount_vnd,
+        memo: payment.bank_memo ?? "",
+      })
+    : null;
 
   return (
     <>
@@ -55,40 +66,61 @@ export default async function TopupQRPage({ params }: Props) {
           tokensReceived={payment.tokens_received}
         />
 
+        {!hasVirtualAccount && (
+          <div className="card-glass p-4 mb-6" style={{ background: "rgba(239, 68, 68, 0.1)" }}>
+            <div className="font-semibold text-red-400">⚠️ Giao dịch không có tài khoản nhận hợp lệ</div>
+            <p className="text-sm mt-1" style={{ color: "var(--ink-soft)" }}>
+              Có lỗi khi tạo thanh toán PayOS. Vui lòng quay lại trang nạp token và thử lại.
+            </p>
+          </div>
+        )}
+
         <div className="grid md:grid-cols-2 gap-6">
           {/* QR */}
           <div className="card-glass p-5 text-center">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={qrUrl}
-              alt="VietQR"
-              className="w-full max-w-[320px] mx-auto rounded bg-white p-2"
-            />
+            {qrUrl && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={qrUrl}
+                alt="VietQR"
+                className="w-full max-w-[320px] mx-auto rounded bg-white p-2"
+              />
+            )}
             {payment.checkout_url && (
               <a
                 href={payment.checkout_url}
                 target="_blank"
                 rel="noopener"
-                className="btn btn-ghost mt-4 text-sm"
+                className="btn btn-primary mt-4 text-sm"
               >
-                Mở trang PayOS →
+                Mở trang PayOS để thanh toán →
               </a>
             )}
           </div>
 
           {/* Info */}
           <div className="card-glass p-5 space-y-3">
-            <div>
-              <div className="text-xs mb-1" style={{ color: "var(--ink-mute)" }}>Ngân hàng</div>
-              <div className="font-semibold text-white">{BANK_INFO.bankNameVi}</div>
+            <div className="rounded p-2 mb-2" style={{ background: "rgba(251, 191, 36, 0.1)" }}>
+              <div className="text-xs font-semibold" style={{ color: "#fbbf24" }}>
+                ⚠️ TÀI KHOẢN ẢO PAYOS - chuyển ĐÚNG vào đây
+              </div>
+              <div className="text-xs mt-1" style={{ color: "var(--ink-soft)" }}>
+                Không chuyển vào số tài khoản MB Bank cá nhân, hệ thống sẽ không tự nhận.
+              </div>
             </div>
             <div>
-              <div className="text-xs mb-1" style={{ color: "var(--ink-mute)" }}>Số tài khoản</div>
-              <div className="font-semibold text-white font-mono text-lg">{BANK_INFO.accountNumber}</div>
+              <div className="text-xs mb-1" style={{ color: "var(--ink-mute)" }}>Ngân hàng nhận</div>
+              <div className="font-semibold text-white">
+                {vaBin === "970422" ? "MB Bank" : `BIN ${vaBin}`}
+              </div>
+            </div>
+            <div>
+              <div className="text-xs mb-1" style={{ color: "var(--ink-mute)" }}>Số tài khoản ảo</div>
+              <div className="font-semibold text-white font-mono text-lg">{vaNumber}</div>
             </div>
             <div>
               <div className="text-xs mb-1" style={{ color: "var(--ink-mute)" }}>Chủ tài khoản</div>
-              <div className="font-semibold text-white">{BANK_INFO.accountName}</div>
+              <div className="font-semibold text-white">{vaName}</div>
             </div>
             <div className="pt-2 border-t" style={{ borderColor: "var(--st-15)" }}>
               <div className="text-xs mb-1" style={{ color: "var(--ink-mute)" }}>Số tiền</div>
@@ -119,7 +151,7 @@ export default async function TopupQRPage({ params }: Props) {
 
         <div className="mt-8 text-sm text-center" style={{ color: "var(--ink-soft)" }}>
           Mã QR có hiệu lực 24 giờ. Nếu sau 1 phút token chưa được cộng,
-          inbox Zalo {BANK_INFO.accountNumber} kèm screenshot biên lai.
+          inbox Zalo 0868464658 kèm screenshot biên lai.
         </div>
       </main>
 

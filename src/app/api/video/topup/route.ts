@@ -83,7 +83,7 @@ export async function POST(req: NextRequest) {
       }, { status: 502 });
     }
 
-    // Update payment record with PayOS info
+    // Update payment record with PayOS info (incl. VIRTUAL ACCOUNT - critical!)
     await sb
       .from("video_payments")
       .update({
@@ -91,6 +91,9 @@ export async function POST(req: NextRequest) {
         payos_order_code: orderCode,
         payos_payment_link_id: resp.data.paymentLinkId,
         checkout_url: resp.data.checkoutUrl,
+        payos_account_number: resp.data.accountNumber,
+        payos_account_name: resp.data.accountName,
+        payos_bin: resp.data.bin,
       })
       .eq("id", paymentId);
 
