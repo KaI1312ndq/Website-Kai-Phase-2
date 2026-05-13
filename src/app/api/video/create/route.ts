@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
-import { getVideoTokenCost, PRICING_MATRIX } from "@/lib/video/pricing";
-import { FPT_VOICES, VIDEO_STYLES } from "@/lib/video/voices";
+import { getVideoTokenCost } from "@/lib/video/pricing";
+import { FPT_VOICES, VIDEO_STYLES, VIDEO_PLATFORMS } from "@/lib/video/voices";
 import type { VideoTier, VideoDuration } from "@/lib/video/types";
 
 export const runtime = "nodejs";
@@ -11,10 +11,14 @@ interface CreateVideoBody {
   tier: VideoTier;
   duration: VideoDuration;
   input: {
+    platform?: string;
     product_name: string;
     product_description: string;
     target_audience?: string;
     cta?: string;
+    price_vnd?: number;
+    promo?: string;
+    social_proof?: string;
     style?: string;
     voice_id?: string;
   };
@@ -34,7 +38,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  // Validate tier + duration
   if (!VALID_TIERS.includes(body.tier)) {
     return NextResponse.json({ error: "Tier không hợp lệ" }, { status: 400 });
   }
@@ -44,11 +47,10 @@ export async function POST(req: NextRequest) {
   const tokenCost = getVideoTokenCost(body.tier, body.duration);
   if (!tokenCost) {
     return NextResponse.json({
-      error: `Combination ${body.tier} ${body.duration}s không support. Xem bảng giá.`,
+      error: `Combination ${body.tier} ${body.duration}s không support.`,
     }, { status: 400 });
   }
 
-  // Validate product info
   const input = body.input ?? {};
   if (!input.product_name || input.product_name.trim().length < 3) {
     return NextResponse.json({ error: "Tên sản phẩm tối thiểu 3 ký tự" }, { status: 400 });
@@ -57,23 +59,27 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Mô tả tối thiểu 10 ký tự" }, { status: 400 });
   }
 
-  // Validate style + voice
+  const platformValid = !input.platform || VIDEO_PLATFORMS.some((p) => p.id === input.platform);
   const styleValid = !input.style || VIDEO_STYLES.some((s) => s.id === input.style);
   const voiceValid = !input.voice_id || FPT_VOICES.some((v) => v.id === input.voice_id);
+  if (!platformValid) return NextResponse.json({ error: "Platform không hợp lệ" }, { status: 400 });
   if (!styleValid) return NextResponse.json({ error: "Style không hợp lệ" }, { status: 400 });
   if (!voiceValid) return NextResponse.json({ error: "Voice không hợp lệ" }, { status: 400 });
 
   const sb = getSupabaseAdmin();
 
-  // Atomic: check balance + deduct token + insert video
   const { data: videoId, error } = await sb.rpc("create_video_with_token_lock", {
     p_user_id: userId,
     p_input_data: {
+      platform: input.platform || "tiktok",
       product_name: input.product_name.trim(),
       product_description: input.product_description.trim(),
       target_audience: input.target_audience?.trim() || null,
       cta: input.cta?.trim() || null,
-      style: input.style || "modern",
+      price_vnd: typeof input.price_vnd === "number" && input.price_vnd > 0 ? input.price_vnd : null,
+      promo: input.promo?.trim() || null,
+      social_proof: input.social_proof?.trim() || null,
+      style: input.style || "ugc",
       voice_id: input.voice_id || FPT_VOICES[0].id,
     },
     p_duration: body.duration,
@@ -89,10 +95,6 @@ export async function POST(req: NextRequest) {
     }
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
-
-  // Note: actual worker enqueue happens here. For now (no Upstash Redis yet),
-  // worker will poll the videos table directly. See worker/README.md.
-  // When BullMQ ready, add: await videoQueue.add('render', { videoId });
 
   return NextResponse.json({
     video_id: videoId,

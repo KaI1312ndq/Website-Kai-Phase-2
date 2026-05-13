@@ -55,14 +55,23 @@ export interface VideoPayment {
   expires_at: string;
 }
 
+export type VideoPlatform = "tiktok" | "shopee" | "reels";
+export type VideoStyle = "ugc" | "demo" | "before_after" | "trendy" | "punchy" | "cinematic";
+
 export interface VideoInput {
+  // platform (always 9:16 vertical)
+  platform?: VideoPlatform;
   // product info
   product_name: string;
   product_description: string;
   target_audience?: string;
   cta?: string;
+  // ecom-specific
+  price_vnd?: number;
+  promo?: string;             // e.g. "Giảm 30% - hôm nay"
+  social_proof?: string;      // e.g. "10K+ đã mua, rating 4.9"
   // style
-  style?: "modern" | "cinematic" | "playful" | "luxury" | "minimal";
+  style?: VideoStyle;
   voice_id?: string;          // FPT.AI voice
   music_track?: string;       // pixabay track id
   // optional advanced

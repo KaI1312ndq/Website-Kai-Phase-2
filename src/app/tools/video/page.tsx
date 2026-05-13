@@ -6,9 +6,9 @@ import GradientBlobs from "@/components/GradientBlobs";
 import { PRICING_MATRIX, TIER_DESCRIPTIONS, TIER_LABELS, WELCOME_BONUS_TOKENS, BONUS_TIERS } from "@/lib/video/pricing";
 
 export const metadata: Metadata = {
-  title: "AI Video Studio - Tạo video ads TikTok/Shopee 15-30s từ prompt",
-  description: "Tool tạo video ads AI tiếng Việt cho TikTok/Shopee/Facebook. Pay-per-use token, không subscription. Tặng 40 token miễn phí khi đăng ký.",
-  keywords: ["ai video", "tạo video ads", "video tiktok ads", "ai video tiếng việt"],
+  title: "AI Video Studio - Tạo video ads TikTok/Shopee/Reels dọc 9:16 từ prompt",
+  description: "Tool AI tạo video ads ecom tiếng Việt cho TikTok/Shopee Video/Reels - định dạng 9:16 dọc. Pay-per-use token, không subscription. Tặng 40 token miễn phí khi đăng ký.",
+  keywords: ["ai video", "video ads tiktok", "video ecom tiktok", "shopee video ai", "ai video tiếng việt", "video dọc tiktok"],
   alternates: { canonical: "/tools/video" },
 };
 
@@ -53,30 +53,29 @@ export default function VideoLanding() {
       <main className="relative max-w-[1100px] mx-auto px-6 md:px-10 pt-28 pb-16 md:pt-32 md:pb-24">
         {/* Hero */}
         <header className="text-center mb-14">
-          <div className="section-tag mb-3">AI Video Studio · Beta · Pay-per-use</div>
+          <div className="section-tag mb-3">AI Video Studio · Beta · TikTok / Shopee Video / Reels</div>
           <h1 className="t-display mb-5 max-w-[900px] mx-auto text-white">
-            Tạo video ads TikTok/Shopee bằng AI <span className="grad-text">trong 5 phút</span>
+            Video ads dọc 9:16 cho Ecom <span className="grad-text">trong 5 phút</span>
           </h1>
           <p className="t-body-lg max-w-[680px] mx-auto mb-7" style={{ color: "var(--ink-soft)" }}>
-            Nhập tên sản phẩm + audience → AI tự gen kịch bản, giọng đọc tiếng Việt, animate clip 15-30s.
-            Nạp token, dùng bao nhiêu trả bấy nhiêu. Tặng {WELCOME_BONUS_TOKENS} token miễn phí khi đăng ký.
+            Nhập sản phẩm + giá + khuyến mãi → AI tự viết kịch bản chuẩn hook-pain-product-CTA,
+            voice tiếng Việt, animate clip dọc 15-30s sẵn sàng đăng TikTok/Shopee/Reels.
+            Tặng {WELCOME_BONUS_TOKENS} token miễn phí.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <Link href="/tools/video/dashboard" className="btn btn-primary text-[1.05rem]">
-              Bắt đầu - nhận {WELCOME_BONUS_TOKENS} token miễn phí
+            <Link href="/tools/video/create" className="btn btn-primary text-[1.05rem]">
+              Tạo video đầu tiên - nhận {WELCOME_BONUS_TOKENS} token miễn phí
             </Link>
-            <Link href="#pricing" className="btn btn-ghost">
-              Xem bảng giá
-            </Link>
+            <Link href="#pricing" className="btn btn-ghost">Xem bảng giá</Link>
           </div>
         </header>
 
         {/* USP */}
         <section className="grid md:grid-cols-3 gap-5 mb-16">
           {[
-            { title: "AI gen kịch bản tiếng Việt", body: "Claude Haiku viết script ads chuẩn hook-pain-product-CTA. Không cần biết copywriting." },
-            { title: "Voice tự nhiên FPT.AI", body: "3 giọng Bắc/Nam, có cảm xúc. Test thử trước khi tốn token." },
-            { title: "Pay-per-use, không subscription", body: "Token không hết hạn. Nạp nhiều bonus cao. Video lỗi refund 100%." },
+            { title: "Định dạng 9:16 chuẩn ecom", body: "Output dọc sẵn sàng đăng TikTok/Shopee Video/Reels - không cần crop/edit thủ công." },
+            { title: "Hook 0-3s mạnh", body: "AI viết script kiểu TikTok ads: hook đầu giật, pain rõ, product punchy, CTA mạnh. Có price + khuyến mãi nếu có." },
+            { title: "Pay-per-use không subscription", body: "Token không hết hạn. Nạp nhiều bonus cao. Video lỗi refund 100%." },
           ].map((u) => (
             <div key={u.title} className="rounded-2xl border-2 p-6" style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}>
               <h3 className="t-h4 mb-2 text-white">{u.title}</h3>

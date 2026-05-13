@@ -15,6 +15,8 @@ export const runtime = "nodejs";
  * until Phase 4 swaps in real fal.ai/Anthropic/FPT calls.
  */
 
+// Sample for mock mode (real 9:16 video comes from worker in Phase 4).
+// Player container is 9:16 with objectFit:contain so any aspect ratio displays correctly.
 const MOCK_SAMPLE_VIDEO = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
 const MOCK_SAMPLE_THUMB = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg";
 
@@ -35,15 +37,32 @@ const STAGES: Stage[] = [
   { status: "completed",  progress: 100, message: "Hoàn tất (MOCK - dùng sample video)",          atSeconds: 26 },
 ];
 
-const MOCK_SCRIPT = (name: string, desc: string, cta?: string) => `
-[HOOK 0-3s] Bạn đã thử bao nhiêu sản phẩm nhưng vẫn chưa thấy hiệu quả?
+const MOCK_SCRIPT = (input: Record<string, string | number | null | undefined>) => {
+  const name = String(input.product_name ?? "sản phẩm");
+  const desc = String(input.product_description ?? "");
+  const cta = input.cta ? String(input.cta) : "Đặt mua ngay trong giỏ hàng đính kèm.";
+  const promo = input.promo ? String(input.promo) : null;
+  const price = typeof input.price_vnd === "number" ? input.price_vnd : null;
+  const proof = input.social_proof ? String(input.social_proof) : null;
 
-[PAIN 3-8s] Tốn tiền, tốn thời gian - vẫn không thay đổi gì. Mệt mỏi đúng không?
+  return `
+[HOOK 0-3s] "Đừng vội mua ${name} - xem hết video này đã!"
+(Text overlay: nhãn STOP đỏ, mặt người shock)
 
-[PRODUCT 8-22s] ${name} là giải pháp. ${desc}
+[PAIN 3-7s] Bạn từng mất tiền cho sản phẩm không hiệu quả? Tin quảng cáo rồi thất vọng?
+(B-roll: tay vứt sản phẩm cũ, mặt buồn)
 
-[CTA 22-30s] ${cta ?? "Truy cập ngay để trải nghiệm sự khác biệt."}
+[PRODUCT 7-18s] ${desc}
+${proof ? `Đã có ${proof} - không phải tự khen.` : ""}
+(Cận cảnh sản phẩm, demo use case 2-3 cảnh)
+
+[PRICE 18-23s] ${price ? `Giá chỉ ${price.toLocaleString("vi-VN")}đ. ` : ""}${promo ? `${promo}.` : ""}
+(Text overlay: giá + khuyến mãi, animation pulse)
+
+[CTA 23-30s] ${cta}
+(Text overlay: nút giỏ hàng + arrow chỉ xuống, music drop)
 `.trim();
+};
 
 export async function GET(_req: NextRequest, ctx: { params: Promise<{ id: string }> }) {
   const { id } = await ctx.params;
@@ -80,10 +99,7 @@ export async function GET(_req: NextRequest, ctx: { params: Promise<{ id: string
   }
 
   // Build patch
-  const input = video.input_data as Record<string, string | undefined> | null;
-  const productName = input?.product_name ?? "sản phẩm";
-  const productDesc = input?.product_description ?? "";
-  const cta = input?.cta;
+  const input = (video.input_data as Record<string, string | number | null | undefined> | null) ?? {};
 
   const patch: Record<string, unknown> = {
     status: target.status,
@@ -93,7 +109,7 @@ export async function GET(_req: NextRequest, ctx: { params: Promise<{ id: string
 
   // Set script when entering scripting stage if not already set
   if (target.atSeconds >= 3 && !video.script_text) {
-    patch.script_text = MOCK_SCRIPT(productName, productDesc, cta);
+    patch.script_text = MOCK_SCRIPT(input);
   }
 
   // Set started_at on first transition out of pending

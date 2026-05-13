@@ -9,8 +9,8 @@ import {
   TIER_LABELS,
   getVideoTokenCost,
 } from "@/lib/video/pricing";
-import { FPT_VOICES, VIDEO_STYLES } from "@/lib/video/voices";
-import type { VideoTier, VideoDuration } from "@/lib/video/types";
+import { FPT_VOICES, VIDEO_STYLES, VIDEO_PLATFORMS } from "@/lib/video/voices";
+import type { VideoTier, VideoDuration, VideoPlatform, VideoStyle } from "@/lib/video/types";
 
 const DURATIONS: VideoDuration[] = [15, 20, 25, 30];
 const TIERS: VideoTier[] = ["eco", "standard", "pro"];
@@ -19,13 +19,22 @@ interface Props {
   tokenBalance: number;
 }
 
+const STEP_LABELS = [
+  "Định dạng + gói + thời lượng",
+  "Thông tin sản phẩm",
+  "Khuyến mãi & social proof",
+  "Phong cách + giọng đọc",
+  "Xác nhận",
+];
+
 export default function CreateVideoClient({ tokenBalance }: Props) {
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Step 1: tier + duration
+  // Step 1: platform + tier + duration
+  const [platform, setPlatform] = useState<VideoPlatform>("tiktok");
   const [tier, setTier] = useState<VideoTier>("standard");
   const [duration, setDuration] = useState<VideoDuration>(20);
 
@@ -35,8 +44,13 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
   const [targetAudience, setTargetAudience] = useState("");
   const [cta, setCta] = useState("");
 
-  // Step 3: style + voice
-  const [style, setStyle] = useState<typeof VIDEO_STYLES[number]["id"]>("modern");
+  // Step 3: ecom fields (optional)
+  const [priceVnd, setPriceVnd] = useState("");
+  const [promo, setPromo] = useState("");
+  const [socialProof, setSocialProof] = useState("");
+
+  // Step 4: style + voice
+  const [style, setStyle] = useState<VideoStyle>("ugc");
   const [voiceId, setVoiceId] = useState(FPT_VOICES[0].id);
 
   const tokenCost = useMemo(() => getVideoTokenCost(tier, duration) ?? 0, [tier, duration]);
@@ -52,6 +66,7 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
     setSubmitting(true);
     setError(null);
     try {
+      const priceNum = Number(priceVnd.replace(/[^\d]/g, ""));
       const res = await fetch("/api/video/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -59,10 +74,14 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
           tier,
           duration,
           input: {
+            platform,
             product_name: productName.trim(),
             product_description: productDescription.trim(),
             target_audience: targetAudience.trim() || undefined,
             cta: cta.trim() || undefined,
+            price_vnd: priceNum > 0 ? priceNum : undefined,
+            promo: promo.trim() || undefined,
+            social_proof: socialProof.trim() || undefined,
             style,
             voice_id: voiceId,
           },
@@ -83,25 +102,63 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
 
   return (
     <div className="space-y-6">
+      {/* Format banner */}
+      <div className="rounded-xl border-2 px-4 py-3 flex items-center gap-3" style={{ background: "rgba(168,85,247,0.06)", borderColor: "rgba(168,85,247,0.25)" }}>
+        <div className="w-9 h-12 rounded-md border-2 flex items-center justify-center text-xs font-bold" style={{ borderColor: "var(--accent)", color: "var(--accent)" }}>
+          9:16
+        </div>
+        <div>
+          <div className="font-semibold text-white text-sm">Video dọc cho TikTok / Shopee Video / Reels</div>
+          <div className="text-xs" style={{ color: "var(--ink-soft)" }}>Format Ads/Ecom - tối ưu cho mobile, không có ngang</div>
+        </div>
+      </div>
+
       {/* Step indicator */}
       <div className="flex gap-2 mb-2">
-        {[1, 2, 3, 4].map((s) => (
+        {[1, 2, 3, 4, 5].map((s) => (
           <div
             key={s}
             className="flex-1 h-1 rounded transition-colors"
-            style={{ background: s <= step ? "var(--accent)" : "var(--st-08)" }}
+            style={{ background: s <= step ? "var(--accent)" : "rgba(255,255,255,0.10)" }}
           />
         ))}
       </div>
       <div className="text-sm" style={{ color: "var(--ink-soft)" }}>
-        Bước {step}/4 · {step === 1 ? "Chọn gói + thời lượng" : step === 2 ? "Thông tin sản phẩm" : step === 3 ? "Phong cách + giọng đọc" : "Xác nhận"}
+        Bước {step}/5 · {STEP_LABELS[step - 1]}
       </div>
 
-      {/* STEP 1: Tier + Duration */}
+      {/* STEP 1: Platform + Tier + Duration */}
       {step === 1 && (
         <div className="space-y-6">
           <div>
-            <label className="block text-sm mb-3 font-semibold text-white">Tier video</label>
+            <label className="block text-sm mb-3 font-semibold text-white">Nền tảng đích</label>
+            <div className="grid sm:grid-cols-3 gap-3">
+              {VIDEO_PLATFORMS.map((p) => {
+                const isActive = platform === p.id;
+                return (
+                  <button
+                    key={p.id}
+                    type="button"
+                    onClick={() => setPlatform(p.id)}
+                    className="p-4 text-left rounded-xl border-2 transition-all"
+                    style={{
+                      borderColor: isActive ? "#a855f7" : "rgba(255,255,255,0.12)",
+                      background: isActive ? "rgba(168,85,247,0.12)" : "rgba(255,255,255,0.04)",
+                      boxShadow: isActive ? "0 0 0 4px rgba(168,85,247,0.18)" : "none",
+                    }}
+                  >
+                    <div className="font-semibold text-white text-base">{p.label}</div>
+                    <div className="text-xs mt-1.5 leading-relaxed" style={{ color: "var(--ink-soft)" }}>
+                      {p.desc}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm mb-3 font-semibold text-white">Tier chất lượng video</label>
             <div className="grid sm:grid-cols-3 gap-3">
               {TIERS.map((t) => {
                 const isActive = tier === t;
@@ -165,12 +222,7 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
           </div>
 
           <div className="flex justify-end">
-            <button
-              type="button"
-              disabled={!canNext1}
-              onClick={() => setStep(2)}
-              className="btn btn-primary disabled:opacity-50"
-            >
+            <button type="button" disabled={!canNext1} onClick={() => setStep(2)} className="btn btn-primary disabled:opacity-50">
               Tiếp tục →
             </button>
           </div>
@@ -196,7 +248,7 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
 
           <div>
             <label className="block text-sm mb-1 font-semibold text-white">
-              Mô tả ngắn (USP, benefit chính) *
+              USP / Benefit chính (gây nghiện cho người xem) *
             </label>
             <textarea
               value={productDescription}
@@ -207,7 +259,7 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
               maxLength={400}
             />
             <div className="text-xs mt-1" style={{ color: "var(--ink-mute)" }}>
-              {productDescription.length}/400 ký tự. Càng cụ thể, AI viết script càng hay.
+              {productDescription.length}/400. Càng cụ thể về kết quả, AI viết hook càng mạnh.
             </div>
           </div>
 
@@ -240,23 +292,81 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
           </div>
 
           <div className="flex justify-between pt-2">
-            <button type="button" onClick={() => setStep(1)} className="btn btn-ghost">
-              ← Quay lại
-            </button>
-            <button
-              type="button"
-              disabled={!canNext2}
-              onClick={() => setStep(3)}
-              className="btn btn-primary disabled:opacity-50"
-            >
+            <button type="button" onClick={() => setStep(1)} className="btn btn-ghost">← Quay lại</button>
+            <button type="button" disabled={!canNext2} onClick={() => setStep(3)} className="btn btn-primary disabled:opacity-50">
               Tiếp tục →
             </button>
           </div>
         </div>
       )}
 
-      {/* STEP 3: Style + Voice */}
+      {/* STEP 3: Ecom fields */}
       {step === 3 && (
+        <div className="space-y-4 rounded-2xl border-2 p-6" style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}>
+          <div className="text-sm mb-2" style={{ color: "var(--ink-soft)" }}>
+            Phần này tuỳ chọn - nhưng có càng nhiều, AI viết script càng đặc thù ecom.
+          </div>
+
+          <div>
+            <label className="block text-sm mb-1 font-semibold text-white">
+              Giá sản phẩm (VNĐ)
+            </label>
+            <input
+              type="text"
+              inputMode="numeric"
+              value={priceVnd ? Number(priceVnd.replace(/[^\d]/g, "")).toLocaleString("vi-VN") : ""}
+              onChange={(e) => setPriceVnd(e.target.value)}
+              placeholder="VD: 299.000"
+              className="input-dark w-full"
+              maxLength={20}
+            />
+            <div className="text-xs mt-1" style={{ color: "var(--ink-mute)" }}>
+              Nếu có, AI sẽ hiển thị giá trong video kèm CTA
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm mb-1 font-semibold text-white">
+              Khuyến mãi đang chạy
+            </label>
+            <input
+              type="text"
+              value={promo}
+              onChange={(e) => setPromo(e.target.value)}
+              placeholder="VD: Giảm 30%, freeship, mua 2 tặng 1, flash sale 12.12..."
+              className="input-dark w-full"
+              maxLength={120}
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm mb-1 font-semibold text-white">
+              Bằng chứng xã hội (social proof)
+            </label>
+            <input
+              type="text"
+              value={socialProof}
+              onChange={(e) => setSocialProof(e.target.value)}
+              placeholder="VD: 10K+ đã bán, rating 4.9, KOC review..."
+              className="input-dark w-full"
+              maxLength={120}
+            />
+            <div className="text-xs mt-1" style={{ color: "var(--ink-mute)" }}>
+              Tăng tỷ lệ click - "5000+ chị em đã thử" mạnh hơn "rất nhiều người dùng"
+            </div>
+          </div>
+
+          <div className="flex justify-between pt-2">
+            <button type="button" onClick={() => setStep(2)} className="btn btn-ghost">← Quay lại</button>
+            <button type="button" onClick={() => setStep(4)} className="btn btn-primary">
+              Tiếp tục →
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* STEP 4: Style + Voice */}
+      {step === 4 && (
         <div className="space-y-6">
           <div>
             <label className="block text-sm mb-3 font-semibold text-white">Phong cách video</label>
@@ -315,58 +425,49 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
           </div>
 
           <div className="flex justify-between">
-            <button type="button" onClick={() => setStep(2)} className="btn btn-ghost">
-              ← Quay lại
-            </button>
-            <button type="button" onClick={() => setStep(4)} className="btn btn-primary">
-              Tiếp tục →
-            </button>
+            <button type="button" onClick={() => setStep(3)} className="btn btn-ghost">← Quay lại</button>
+            <button type="button" onClick={() => setStep(5)} className="btn btn-primary">Tiếp tục →</button>
           </div>
         </div>
       )}
 
-      {/* STEP 4: Confirm */}
-      {step === 4 && (
+      {/* STEP 5: Confirm */}
+      {step === 5 && (
         <div className="space-y-4">
           <div className="rounded-2xl border-2 p-6 space-y-3" style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}>
+            <Row label="Định dạng" value={`Dọc 9:16 · ${VIDEO_PLATFORMS.find((p) => p.id === platform)?.label ?? ""}`} />
             <Row label="Tier" value={`${TIER_LABELS[tier]} (${duration}s)`} />
             <Row label="Chi phí" value={`${tokenCost} token`} highlight />
             <Row label="Sản phẩm" value={productName} />
-            <Row label="Mô tả" value={productDescription} />
+            <Row label="USP" value={productDescription} />
             {targetAudience && <Row label="Khách hàng" value={targetAudience} />}
             {cta && <Row label="CTA" value={cta} />}
+            {priceVnd && <Row label="Giá" value={`${Number(priceVnd.replace(/[^\d]/g, "")).toLocaleString("vi-VN")}đ`} />}
+            {promo && <Row label="Khuyến mãi" value={promo} />}
+            {socialProof && <Row label="Social proof" value={socialProof} />}
             <Row label="Phong cách" value={VIDEO_STYLES.find((s) => s.id === style)?.label ?? ""} />
             <Row label="Giọng đọc" value={FPT_VOICES.find((v) => v.id === voiceId)?.label ?? ""} />
           </div>
 
           {!enoughTokens && (
-            <div className="card-glass p-4" style={{ background: "rgba(239, 68, 68, 0.1)" }}>
+            <div className="rounded-xl border-2 p-4" style={{ background: "rgba(239, 68, 68, 0.08)", borderColor: "rgba(239, 68, 68, 0.3)" }}>
               <div className="font-semibold text-red-400">Không đủ token</div>
               <p className="text-sm mt-1" style={{ color: "var(--ink-soft)" }}>
                 Bạn cần {tokenCost} token nhưng đang có {tokenBalance}.{" "}
-                <Link href="/tools/video/topup" className="underline">
-                  Nạp thêm →
-                </Link>
+                <Link href="/tools/video/topup" className="underline">Nạp thêm →</Link>
               </p>
             </div>
           )}
 
           {error && (
-            <div className="card-glass p-4 text-sm" style={{ background: "rgba(239, 68, 68, 0.1)", color: "#ef4444" }}>
+            <div className="rounded-xl border-2 p-4 text-sm" style={{ background: "rgba(239, 68, 68, 0.08)", borderColor: "rgba(239, 68, 68, 0.3)", color: "#ef4444" }}>
               {error}
             </div>
           )}
 
           <div className="flex justify-between">
-            <button type="button" onClick={() => setStep(3)} className="btn btn-ghost">
-              ← Quay lại
-            </button>
-            <button
-              type="button"
-              disabled={!canSubmit || submitting}
-              onClick={handleSubmit}
-              className="btn btn-primary disabled:opacity-50"
-            >
+            <button type="button" onClick={() => setStep(4)} className="btn btn-ghost">← Quay lại</button>
+            <button type="button" disabled={!canSubmit || submitting} onClick={handleSubmit} className="btn btn-primary disabled:opacity-50">
               {submitting ? "Đang tạo..." : `Trừ ${tokenCost} token + tạo video →`}
             </button>
           </div>
@@ -378,7 +479,7 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
 
 function Row({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
   return (
-    <div className="flex justify-between gap-3 items-baseline border-b pb-2 last:border-b-0 last:pb-0" style={{ borderColor: "var(--st-08)" }}>
+    <div className="flex justify-between gap-3 items-baseline border-b pb-2 last:border-b-0 last:pb-0" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
       <span className="text-sm flex-shrink-0" style={{ color: "var(--ink-soft)" }}>{label}</span>
       <span className={`text-right text-sm ${highlight ? "grad-text font-bold" : "text-white"}`}>{value}</span>
     </div>

@@ -20,9 +20,16 @@ export const FPT_VOICES: FptVoice[] = [
 ];
 
 export const VIDEO_STYLES = [
-  { id: "modern",    label: "Hiện đại", desc: "Clean, minimal, animation mượt - tech/SaaS/finance" },
-  { id: "cinematic", label: "Điện ảnh", desc: "Tone tối, camera move cinematic - luxury/luxury/automotive" },
-  { id: "playful",   label: "Vui tươi", desc: "Màu sắc rực rỡ, motion energetic - F&B/lifestyle/giới trẻ" },
-  { id: "luxury",    label: "Sang trọng", desc: "Vàng đen, slow motion - cao cấp, premium" },
-  { id: "minimal",   label: "Tối giản", desc: "Trắng đen, typography lớn - quotes, branding" },
+  { id: "ugc",        label: "UGC review",     desc: "Phong cách người dùng tự quay - tin cậy, gần gũi. Hợp mỹ phẩm/F&B/skincare" },
+  { id: "demo",       label: "Demo sản phẩm",  desc: "Cận cảnh sản phẩm, show feature/cách dùng. Hợp tech/gia dụng/đồ gia đình" },
+  { id: "before_after", label: "Before/After", desc: "So sánh trước-sau - mạnh cho làm đẹp/sức khoẻ/giảm cân" },
+  { id: "trendy",     label: "Trendy/Hot trend", desc: "Bắt trend TikTok - meme, transition, music. Hợp thời trang/giới trẻ" },
+  { id: "punchy",     label: "Punchy ads",     desc: "Cắt nhanh, energy cao, hook mạnh - hợp flash sale/khuyến mãi" },
+  { id: "cinematic",  label: "Cinematic",      desc: "Slow motion, đẹp ngắm - hợp luxury/cao cấp/F&B premium" },
+] as const;
+
+export const VIDEO_PLATFORMS = [
+  { id: "tiktok",  label: "TikTok",       desc: "9:16 dọc, hook 0-3s mạnh, music trending" },
+  { id: "shopee",  label: "Shopee Video", desc: "9:16 dọc, focus sản phẩm + giá + CTA mua" },
+  { id: "reels",   label: "FB/IG Reels",  desc: "9:16 dọc, lifestyle, brand-friendly hơn TikTok" },
 ] as const;

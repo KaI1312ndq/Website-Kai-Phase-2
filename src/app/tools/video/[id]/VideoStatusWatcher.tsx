@@ -68,14 +68,19 @@ export default function VideoStatusWatcher(props: Props) {
   if (status === "completed" && outputUrl) {
     return (
       <div className="space-y-4">
-        <div className="rounded-2xl border-2 overflow-hidden" style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}>
+        <div className="rounded-2xl border-2 overflow-hidden flex justify-center" style={{ background: "#000", borderColor: "rgba(255,255,255,0.10)" }}>
           {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
           <video
             src={outputUrl}
             poster={thumbnail ?? undefined}
             controls
-            className="w-full aspect-video bg-black"
+            playsInline
+            className="bg-black"
+            style={{ aspectRatio: "9 / 16", maxHeight: "75vh", objectFit: "contain" }}
           />
+        </div>
+        <div className="text-xs text-center" style={{ color: "var(--ink-mute)" }}>
+          Định dạng 9:16 dọc cho TikTok / Reels / Shopee Video
         </div>
 
         {props.watermark && (
