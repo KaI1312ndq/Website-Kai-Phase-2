@@ -1,0 +1,139 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
+interface Props {
+  videoId: string;
+  initialStatus: string;
+  initialProgress: number;
+  initialMessage: string | null;
+  initialOutputUrl: string | null;
+  initialThumbnail: string | null;
+  initialError: string | null;
+  tokenCost: number;
+  watermark: boolean;
+}
+
+const STATUS_LABEL: Record<string, string> = {
+  pending: "Chờ worker pick up...",
+  scripting: "AI đang viết kịch bản",
+  imaging: "Đang tạo hình ảnh từ prompt",
+  animating: "Đang animate clip với Kling 3.0",
+  composing: "Đang ghép clip + giọng đọc + music",
+  completed: "Hoàn tất",
+  failed: "Lỗi - đã refund 100% token",
+  refunded: "Đã hoàn token",
+  cancelled: "Đã huỷ",
+};
+
+const ACTIVE_STATUSES = new Set(["pending", "scripting", "imaging", "animating", "composing"]);
+
+export default function VideoStatusWatcher(props: Props) {
+  const [status, setStatus] = useState(props.initialStatus);
+  const [progress, setProgress] = useState(props.initialProgress);
+  const [message, setMessage] = useState(props.initialMessage);
+  const [outputUrl, setOutputUrl] = useState(props.initialOutputUrl);
+  const [thumbnail, setThumbnail] = useState(props.initialThumbnail);
+  const [error, setError] = useState(props.initialError);
+
+  useEffect(() => {
+    if (!ACTIVE_STATUSES.has(status)) return;
+
+    let cancelled = false;
+    const tick = async () => {
+      try {
+        const res = await fetch(`/api/video/${props.videoId}/status`, { cache: "no-store" });
+        if (!res.ok) return;
+        const data = await res.json();
+        if (cancelled) return;
+        setStatus(data.status);
+        setProgress(data.progress_percent ?? 0);
+        setMessage(data.status_message);
+        setOutputUrl(data.output_url);
+        setThumbnail(data.thumbnail_url);
+        setError(data.error_message);
+      } catch {
+        /* ignore */
+      }
+    };
+
+    const interval = setInterval(tick, 3000);
+    tick();
+    return () => {
+      cancelled = true;
+      clearInterval(interval);
+    };
+  }, [props.videoId, status]);
+
+  if (status === "completed" && outputUrl) {
+    return (
+      <div className="space-y-4">
+        <div className="card-glass overflow-hidden">
+          {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+          <video
+            src={outputUrl}
+            poster={thumbnail ?? undefined}
+            controls
+            className="w-full aspect-video bg-black"
+          />
+        </div>
+
+        {props.watermark && (
+          <div className="card-glass p-3 text-sm" style={{ background: "rgba(251, 191, 36, 0.1)", color: "#fbbf24" }}>
+            Video này có watermark vì đang ở chế độ Eco. Upgrade Pro để bỏ watermark.
+          </div>
+        )}
+
+        <div className="flex gap-3 flex-wrap">
+          <a href={outputUrl} download className="btn btn-primary">
+            ⬇ Tải MP4
+          </a>
+          <a href={outputUrl} target="_blank" rel="noopener" className="btn btn-ghost">
+            Mở tab mới
+          </a>
+        </div>
+      </div>
+    );
+  }
+
+  if (status === "failed" || status === "refunded") {
+    return (
+      <div className="card-glass p-6" style={{ background: "rgba(239, 68, 68, 0.1)" }}>
+        <h3 className="t-h4 text-white mb-2">Render thất bại</h3>
+        <p className="text-sm mb-3" style={{ color: "var(--ink-soft)" }}>
+          {error ?? message ?? "Worker không hoàn tất sau 3 lần retry."}
+        </p>
+        <div className="text-sm grad-text font-semibold">
+          ✓ Đã hoàn {props.tokenCost} token vào tài khoản của bạn.
+        </div>
+      </div>
+    );
+  }
+
+  // Active state - show progress
+  return (
+    <div className="card-glass p-6">
+      <div className="flex items-center justify-between mb-3">
+        <span className="font-semibold text-white">{STATUS_LABEL[status] ?? status}</span>
+        <span className="grad-text font-bold">{progress}%</span>
+      </div>
+      <div className="h-2 rounded overflow-hidden" style={{ background: "var(--st-08)" }}>
+        <div
+          className="h-full transition-all duration-500"
+          style={{
+            width: `${progress}%`,
+            background: "linear-gradient(90deg, #6366f1, #a855f7)",
+          }}
+        />
+      </div>
+      {message && (
+        <p className="text-sm mt-3" style={{ color: "var(--ink-soft)" }}>
+          {message}
+        </p>
+      )}
+      <p className="text-xs mt-3" style={{ color: "var(--ink-mute)" }}>
+        Cập nhật mỗi 3 giây. Bạn có thể đóng tab - video vẫn render. Vào Dashboard để xem lại sau.
+      </p>
+    </div>
+  );
+}
