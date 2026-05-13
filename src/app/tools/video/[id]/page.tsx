@@ -67,6 +67,7 @@ export default async function VideoDetailPage({ params }: Props) {
               initialOutputUrl={video.output_url}
               initialThumbnail={video.thumbnail_url}
               initialError={video.error_message}
+              initialScript={video.script_text}
               tokenCost={video.token_cost}
               watermark={video.watermark}
             />
@@ -77,9 +78,13 @@ export default async function VideoDetailPage({ params }: Props) {
             <h3 className="t-h4 text-white mb-2">Thông tin đầu vào</h3>
 
             <InfoField label="Sản phẩm" value={input.product_name} primary />
-            <InfoField label="Mô tả" value={input.product_description} />
+            <InfoField label="USP" value={input.product_description} />
             {input.target_audience && <InfoField label="Khách hàng" value={input.target_audience} />}
             {input.cta && <InfoField label="CTA" value={input.cta} />}
+            {input.format && <InfoField label="Format" value={input.format} />}
+            {input.character && <InfoField label="Nhân vật" value={input.character} />}
+            {input.body_part_focus && <InfoField label="Bộ phận focus" value={input.body_part_focus} />}
+            {input.tone && <InfoField label="Tone" value={input.tone} />}
             <InfoField label="Phong cách" value={input.style} />
             <InfoField label="Giọng đọc" value={input.voice_id} />
             <InfoField label="Tạo lúc" value={new Date(video.created_at).toLocaleString("vi-VN")} />

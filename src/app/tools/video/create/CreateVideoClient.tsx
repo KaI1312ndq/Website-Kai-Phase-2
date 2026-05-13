@@ -9,21 +9,24 @@ import {
   TIER_LABELS,
   getVideoTokenCost,
 } from "@/lib/video/pricing";
-import { FPT_VOICES, VIDEO_STYLES, VIDEO_PLATFORMS } from "@/lib/video/voices";
-import type { VideoTier, VideoDuration, VideoPlatform, VideoStyle } from "@/lib/video/types";
+import { FPT_VOICES, VIDEO_STYLES, VIDEO_PLATFORMS, VIDEO_FORMATS, CHARACTER_TYPES, VIDEO_TONES } from "@/lib/video/voices";
+import type { VideoTier, VideoDuration, VideoPlatform, VideoStyle, VideoFormat, CharacterType, VideoTone } from "@/lib/video/types";
 
 const DURATIONS: VideoDuration[] = [15, 20, 25, 30];
 const TIERS: VideoTier[] = ["eco", "standard", "pro"];
+
+const BODY_PARTS = ["Dạ dày", "Não", "Da", "Eo bụng", "Ruột", "Tim mạch", "Mắt", "Năng lượng cơ thể"];
 
 interface Props {
   tokenBalance: number;
 }
 
 const STEP_LABELS = [
-  "Định dạng + gói + thời lượng",
+  "Nền tảng + gói + thời lượng",
+  "Format + nhân vật chính",
   "Thông tin sản phẩm",
-  "Khuyến mãi & social proof",
-  "Phong cách + giọng đọc",
+  "Giá + khuyến mãi",
+  "Tone + phong cách + giọng",
   "Xác nhận",
 ];
 
@@ -38,18 +41,24 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
   const [tier, setTier] = useState<VideoTier>("standard");
   const [duration, setDuration] = useState<VideoDuration>(20);
 
-  // Step 2: product info
+  // Step 2: format + character + body part
+  const [format, setFormat] = useState<VideoFormat>("dialog");
+  const [character, setCharacter] = useState<CharacterType>("product");
+  const [bodyPart, setBodyPart] = useState("Dạ dày");
+
+  // Step 3: product info
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [targetAudience, setTargetAudience] = useState("");
   const [cta, setCta] = useState("");
 
-  // Step 3: ecom fields (optional)
+  // Step 4: ecom fields (optional)
   const [priceVnd, setPriceVnd] = useState("");
   const [promo, setPromo] = useState("");
   const [socialProof, setSocialProof] = useState("");
 
-  // Step 4: style + voice
+  // Step 5: tone + style + voice
+  const [tone, setTone] = useState<VideoTone>("sharp_sarcastic");
   const [style, setStyle] = useState<VideoStyle>("ugc");
   const [voiceId, setVoiceId] = useState(FPT_VOICES[0].id);
 
@@ -75,6 +84,10 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
           duration,
           input: {
             platform,
+            format,
+            character,
+            tone,
+            body_part_focus: format === "body_pain" || character === "body_part" ? bodyPart : undefined,
             product_name: productName.trim(),
             product_description: productDescription.trim(),
             target_audience: targetAudience.trim() || undefined,
@@ -115,7 +128,7 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
 
       {/* Step indicator */}
       <div className="flex gap-2 mb-2">
-        {[1, 2, 3, 4, 5].map((s) => (
+        {[1, 2, 3, 4, 5, 6].map((s) => (
           <div
             key={s}
             className="flex-1 h-1 rounded transition-colors"
@@ -124,7 +137,7 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
         ))}
       </div>
       <div className="text-sm" style={{ color: "var(--ink-soft)" }}>
-        Bước {step}/5 · {STEP_LABELS[step - 1]}
+        Bước {step}/6 · {STEP_LABELS[step - 1]}
       </div>
 
       {/* STEP 1: Platform + Tier + Duration */}
@@ -229,8 +242,107 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
         </div>
       )}
 
-      {/* STEP 2: Product info */}
+      {/* STEP 2: Format + Character */}
       {step === 2 && (
+        <div className="space-y-6">
+          <div>
+            <label className="block text-sm mb-3 font-semibold text-white">
+              Format chủ đạo
+            </label>
+            <div className="text-xs mb-3" style={{ color: "var(--ink-soft)" }}>
+              Quyết định góc nhìn kể chuyện và ai là người dẫn dắt.
+            </div>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {VIDEO_FORMATS.map((f) => {
+                const isActive = format === f.id;
+                return (
+                  <button
+                    key={f.id}
+                    type="button"
+                    onClick={() => setFormat(f.id as VideoFormat)}
+                    className="p-4 text-left rounded-xl border-2 transition-all"
+                    style={{
+                      borderColor: isActive ? "#a855f7" : "rgba(255,255,255,0.12)",
+                      background: isActive ? "rgba(168,85,247,0.12)" : "rgba(255,255,255,0.04)",
+                      boxShadow: isActive ? "0 0 0 4px rgba(168,85,247,0.18)" : "none",
+                    }}
+                  >
+                    <div className="font-semibold text-white text-sm">{f.label}</div>
+                    <div className="text-xs mt-1.5 leading-relaxed" style={{ color: "var(--ink-soft)" }}>
+                      {f.desc}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm mb-3 font-semibold text-white">
+              Nhân vật chính trong video
+            </label>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {CHARACTER_TYPES.map((c) => {
+                const isActive = character === c.id;
+                return (
+                  <button
+                    key={c.id}
+                    type="button"
+                    onClick={() => setCharacter(c.id as CharacterType)}
+                    className="p-4 text-left rounded-xl border-2 transition-all"
+                    style={{
+                      borderColor: isActive ? "#a855f7" : "rgba(255,255,255,0.12)",
+                      background: isActive ? "rgba(168,85,247,0.12)" : "rgba(255,255,255,0.04)",
+                      boxShadow: isActive ? "0 0 0 4px rgba(168,85,247,0.18)" : "none",
+                    }}
+                  >
+                    <div className="font-semibold text-white text-sm">{c.label}</div>
+                    <div className="text-xs mt-1.5 leading-relaxed" style={{ color: "var(--ink-soft)" }}>
+                      {c.desc}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {(format === "body_pain" || character === "body_part") && (
+            <div>
+              <label className="block text-sm mb-3 font-semibold text-white">
+                Bộ phận cơ thể focus
+              </label>
+              <div className="grid grid-cols-4 sm:grid-cols-4 gap-2">
+                {BODY_PARTS.map((bp) => {
+                  const isActive = bodyPart === bp;
+                  return (
+                    <button
+                      key={bp}
+                      type="button"
+                      onClick={() => setBodyPart(bp)}
+                      className="p-2 text-sm rounded-lg border-2 transition-all"
+                      style={{
+                        borderColor: isActive ? "#a855f7" : "rgba(255,255,255,0.12)",
+                        background: isActive ? "rgba(168,85,247,0.12)" : "rgba(255,255,255,0.04)",
+                        color: isActive ? "#a855f7" : "var(--ink-soft)",
+                      }}
+                    >
+                      {bp}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          <div className="flex justify-between">
+            <button type="button" onClick={() => setStep(1)} className="btn btn-ghost">← Quay lại</button>
+            <button type="button" onClick={() => setStep(3)} className="btn btn-primary">Tiếp tục →</button>
+          </div>
+        </div>
+      )}
+
+      {/* STEP 3: Product info */}
+      {step === 3 && (
         <div className="space-y-4 rounded-2xl border-2 p-6" style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}>
           <div>
             <label className="block text-sm mb-1 font-semibold text-white">
@@ -292,16 +404,16 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
           </div>
 
           <div className="flex justify-between pt-2">
-            <button type="button" onClick={() => setStep(1)} className="btn btn-ghost">← Quay lại</button>
-            <button type="button" disabled={!canNext2} onClick={() => setStep(3)} className="btn btn-primary disabled:opacity-50">
+            <button type="button" onClick={() => setStep(2)} className="btn btn-ghost">← Quay lại</button>
+            <button type="button" disabled={!canNext2} onClick={() => setStep(4)} className="btn btn-primary disabled:opacity-50">
               Tiếp tục →
             </button>
           </div>
         </div>
       )}
 
-      {/* STEP 3: Ecom fields */}
-      {step === 3 && (
+      {/* STEP 4: Ecom fields */}
+      {step === 4 && (
         <div className="space-y-4 rounded-2xl border-2 p-6" style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}>
           <div className="text-sm mb-2" style={{ color: "var(--ink-soft)" }}>
             Phần này tuỳ chọn - nhưng có càng nhiều, AI viết script càng đặc thù ecom.
@@ -357,19 +469,44 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
           </div>
 
           <div className="flex justify-between pt-2">
-            <button type="button" onClick={() => setStep(2)} className="btn btn-ghost">← Quay lại</button>
-            <button type="button" onClick={() => setStep(4)} className="btn btn-primary">
+            <button type="button" onClick={() => setStep(3)} className="btn btn-ghost">← Quay lại</button>
+            <button type="button" onClick={() => setStep(5)} className="btn btn-primary">
               Tiếp tục →
             </button>
           </div>
         </div>
       )}
 
-      {/* STEP 4: Style + Voice */}
-      {step === 4 && (
+      {/* STEP 5: Tone + Style + Voice */}
+      {step === 5 && (
         <div className="space-y-6">
           <div>
-            <label className="block text-sm mb-3 font-semibold text-white">Phong cách video</label>
+            <label className="block text-sm mb-3 font-semibold text-white">Tone giọng kể chuyện</label>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {VIDEO_TONES.map((t) => {
+                const isActive = tone === t.id;
+                return (
+                  <button
+                    key={t.id}
+                    type="button"
+                    onClick={() => setTone(t.id as VideoTone)}
+                    className="p-4 text-left rounded-xl border-2 transition-all"
+                    style={{
+                      borderColor: isActive ? "#a855f7" : "rgba(255,255,255,0.12)",
+                      background: isActive ? "rgba(168,85,247,0.12)" : "rgba(255,255,255,0.04)",
+                      boxShadow: isActive ? "0 0 0 4px rgba(168,85,247,0.18)" : "none",
+                    }}
+                  >
+                    <div className="font-semibold text-white text-sm">{t.label}</div>
+                    <div className="text-xs mt-1.5 leading-relaxed" style={{ color: "var(--ink-soft)" }}>{t.desc}</div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm mb-3 font-semibold text-white">Phong cách hình ảnh</label>
             <div className="grid sm:grid-cols-2 gap-3">
               {VIDEO_STYLES.map((s) => {
                 const isActive = style === s.id;
@@ -425,19 +562,22 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
           </div>
 
           <div className="flex justify-between">
-            <button type="button" onClick={() => setStep(3)} className="btn btn-ghost">← Quay lại</button>
-            <button type="button" onClick={() => setStep(5)} className="btn btn-primary">Tiếp tục →</button>
+            <button type="button" onClick={() => setStep(4)} className="btn btn-ghost">← Quay lại</button>
+            <button type="button" onClick={() => setStep(6)} className="btn btn-primary">Tiếp tục →</button>
           </div>
         </div>
       )}
 
-      {/* STEP 5: Confirm */}
-      {step === 5 && (
+      {/* STEP 6: Confirm */}
+      {step === 6 && (
         <div className="space-y-4">
           <div className="rounded-2xl border-2 p-6 space-y-3" style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}>
             <Row label="Định dạng" value={`Dọc 9:16 · ${VIDEO_PLATFORMS.find((p) => p.id === platform)?.label ?? ""}`} />
             <Row label="Tier" value={`${TIER_LABELS[tier]} (${duration}s)`} />
             <Row label="Chi phí" value={`${tokenCost} token`} highlight />
+            <Row label="Format" value={VIDEO_FORMATS.find((f) => f.id === format)?.label ?? ""} />
+            <Row label="Nhân vật" value={CHARACTER_TYPES.find((c) => c.id === character)?.label ?? ""} />
+            {(format === "body_pain" || character === "body_part") && <Row label="Bộ phận focus" value={bodyPart} />}
             <Row label="Sản phẩm" value={productName} />
             <Row label="USP" value={productDescription} />
             {targetAudience && <Row label="Khách hàng" value={targetAudience} />}
@@ -445,6 +585,7 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
             {priceVnd && <Row label="Giá" value={`${Number(priceVnd.replace(/[^\d]/g, "")).toLocaleString("vi-VN")}đ`} />}
             {promo && <Row label="Khuyến mãi" value={promo} />}
             {socialProof && <Row label="Social proof" value={socialProof} />}
+            <Row label="Tone giọng" value={VIDEO_TONES.find((t) => t.id === tone)?.label ?? ""} />
             <Row label="Phong cách" value={VIDEO_STYLES.find((s) => s.id === style)?.label ?? ""} />
             <Row label="Giọng đọc" value={FPT_VOICES.find((v) => v.id === voiceId)?.label ?? ""} />
           </div>
@@ -466,7 +607,7 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
           )}
 
           <div className="flex justify-between">
-            <button type="button" onClick={() => setStep(4)} className="btn btn-ghost">← Quay lại</button>
+            <button type="button" onClick={() => setStep(5)} className="btn btn-ghost">← Quay lại</button>
             <button type="button" disabled={!canSubmit || submitting} onClick={handleSubmit} className="btn btn-primary disabled:opacity-50">
               {submitting ? "Đang tạo..." : `Trừ ${tokenCost} token + tạo video →`}
             </button>

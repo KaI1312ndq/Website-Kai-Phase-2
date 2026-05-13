@@ -57,10 +57,18 @@ export interface VideoPayment {
 
 export type VideoPlatform = "tiktok" | "shopee" | "reels";
 export type VideoStyle = "ugc" | "demo" | "before_after" | "trendy" | "punchy" | "cinematic";
+export type VideoFormat = "dialog" | "monologue" | "drama" | "body_pain";
+export type CharacterType = "product" | "user_persona" | "body_part" | "duo";
+export type VideoTone = "sharp_sarcastic" | "friendly_funny" | "confident_proud" | "urgent_punchy";
 
 export interface VideoInput {
   // platform (always 9:16 vertical)
   platform?: VideoPlatform;
+  // narrative
+  format?: VideoFormat;
+  character?: CharacterType;
+  tone?: VideoTone;
+  body_part_focus?: string;    // for body_pain format: "dạ dày" | "não" | "da" | "eo bụng" | etc.
   // product info
   product_name: string;
   product_description: string;
@@ -68,14 +76,14 @@ export interface VideoInput {
   cta?: string;
   // ecom-specific
   price_vnd?: number;
-  promo?: string;             // e.g. "Giảm 30% - hôm nay"
-  social_proof?: string;      // e.g. "10K+ đã mua, rating 4.9"
+  promo?: string;
+  social_proof?: string;
   // style
   style?: VideoStyle;
-  voice_id?: string;          // FPT.AI voice
-  music_track?: string;       // pixabay track id
+  voice_id?: string;
+  music_track?: string;
   // optional advanced
-  scenes?: VideoScene[];      // pre-edited scenes
+  scenes?: VideoScene[];
   brand_colors?: string[];
   logo_url?: string;
 }

@@ -10,6 +10,7 @@ interface Props {
   initialOutputUrl: string | null;
   initialThumbnail: string | null;
   initialError: string | null;
+  initialScript?: string | null;
   tokenCost: number;
   watermark: boolean;
 }
@@ -35,6 +36,7 @@ export default function VideoStatusWatcher(props: Props) {
   const [outputUrl, setOutputUrl] = useState(props.initialOutputUrl);
   const [thumbnail, setThumbnail] = useState(props.initialThumbnail);
   const [error, setError] = useState(props.initialError);
+  const [script, setScript] = useState(props.initialScript ?? null);
 
   useEffect(() => {
     if (!ACTIVE_STATUSES.has(status)) return;
@@ -52,6 +54,7 @@ export default function VideoStatusWatcher(props: Props) {
         setOutputUrl(data.output_url);
         setThumbnail(data.thumbnail_url);
         setError(data.error_message);
+        if (data.script_text) setScript(data.script_text);
       } catch {
         /* ignore */
       }
@@ -97,6 +100,8 @@ export default function VideoStatusWatcher(props: Props) {
             Mở tab mới
           </a>
         </div>
+
+        {script && <ScriptBox script={script} />}
       </div>
     );
   }
@@ -139,6 +144,22 @@ export default function VideoStatusWatcher(props: Props) {
       <p className="text-xs mt-3" style={{ color: "var(--ink-mute)" }}>
         Cập nhật mỗi 3 giây. Bạn có thể đóng tab - video vẫn render. Vào Dashboard để xem lại sau.
       </p>
+
+      {script && <div className="mt-4"><ScriptBox script={script} /></div>}
+    </div>
+  );
+}
+
+function ScriptBox({ script }: { script: string }) {
+  return (
+    <div className="rounded-2xl border-2 p-5" style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}>
+      <div className="flex items-baseline justify-between mb-3">
+        <h3 className="t-h4 text-white">Kịch bản AI</h3>
+        <span className="text-xs" style={{ color: "var(--ink-mute)" }}>6 cảnh · sẵn sàng feed cho video render</span>
+      </div>
+      <pre className="text-xs whitespace-pre-wrap font-mono leading-relaxed" style={{ color: "var(--ink-soft)" }}>
+        {script}
+      </pre>
     </div>
   );
 }

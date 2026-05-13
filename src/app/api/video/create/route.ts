@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { getVideoTokenCost } from "@/lib/video/pricing";
-import { FPT_VOICES, VIDEO_STYLES, VIDEO_PLATFORMS } from "@/lib/video/voices";
+import { FPT_VOICES, VIDEO_STYLES, VIDEO_PLATFORMS, VIDEO_FORMATS, CHARACTER_TYPES, VIDEO_TONES } from "@/lib/video/voices";
 import type { VideoTier, VideoDuration } from "@/lib/video/types";
 
 export const runtime = "nodejs";
@@ -12,6 +12,10 @@ interface CreateVideoBody {
   duration: VideoDuration;
   input: {
     platform?: string;
+    format?: string;
+    character?: string;
+    tone?: string;
+    body_part_focus?: string;
     product_name: string;
     product_description: string;
     target_audience?: string;
@@ -60,9 +64,15 @@ export async function POST(req: NextRequest) {
   }
 
   const platformValid = !input.platform || VIDEO_PLATFORMS.some((p) => p.id === input.platform);
+  const formatValid = !input.format || VIDEO_FORMATS.some((f) => f.id === input.format);
+  const characterValid = !input.character || CHARACTER_TYPES.some((c) => c.id === input.character);
+  const toneValid = !input.tone || VIDEO_TONES.some((t) => t.id === input.tone);
   const styleValid = !input.style || VIDEO_STYLES.some((s) => s.id === input.style);
   const voiceValid = !input.voice_id || FPT_VOICES.some((v) => v.id === input.voice_id);
   if (!platformValid) return NextResponse.json({ error: "Platform không hợp lệ" }, { status: 400 });
+  if (!formatValid) return NextResponse.json({ error: "Format không hợp lệ" }, { status: 400 });
+  if (!characterValid) return NextResponse.json({ error: "Character không hợp lệ" }, { status: 400 });
+  if (!toneValid) return NextResponse.json({ error: "Tone không hợp lệ" }, { status: 400 });
   if (!styleValid) return NextResponse.json({ error: "Style không hợp lệ" }, { status: 400 });
   if (!voiceValid) return NextResponse.json({ error: "Voice không hợp lệ" }, { status: 400 });
 
@@ -72,6 +82,10 @@ export async function POST(req: NextRequest) {
     p_user_id: userId,
     p_input_data: {
       platform: input.platform || "tiktok",
+      format: input.format || "dialog",
+      character: input.character || "product",
+      tone: input.tone || "sharp_sarcastic",
+      body_part_focus: input.body_part_focus?.trim() || null,
       product_name: input.product_name.trim(),
       product_description: input.product_description.trim(),
       target_audience: input.target_audience?.trim() || null,

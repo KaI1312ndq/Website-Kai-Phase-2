@@ -37,6 +37,7 @@ const STAGES: Stage[] = [
   { status: "completed",  progress: 100, message: "Hoàn tất (MOCK - dùng sample video)",          atSeconds: 26 },
 ];
 
+/** Generate scene-by-scene script per Yumvita TikTok ads workflow. */
 const MOCK_SCRIPT = (input: Record<string, string | number | null | undefined>) => {
   const name = String(input.product_name ?? "sản phẩm");
   const desc = String(input.product_description ?? "");
@@ -44,23 +45,76 @@ const MOCK_SCRIPT = (input: Record<string, string | number | null | undefined>) 
   const promo = input.promo ? String(input.promo) : null;
   const price = typeof input.price_vnd === "number" ? input.price_vnd : null;
   const proof = input.social_proof ? String(input.social_proof) : null;
+  const format = String(input.format ?? "dialog");
+  const character = String(input.character ?? "product");
+  const tone = String(input.tone ?? "sharp_sarcastic");
+  const bodyPart = input.body_part_focus ? String(input.body_part_focus) : "dạ dày";
+
+  // Pick hook based on format + tone
+  const hooks: Record<string, string> = {
+    dialog: `"Bạn đang ăn ${name} sai cách rồi đấy."`,
+    monologue: `"Tôi là ${name} - khác bọn snack rẻ tiền kia hoàn toàn."`,
+    drama: `"Snack thường vs ${name} - chọn cái nào?"`,
+    body_pain: `"${bodyPart.toUpperCase()} của bạn đang KÊU CỨU đấy!"`,
+  };
+  const hook = hooks[format] ?? hooks.dialog;
+
+  // Pick visual cue based on character type
+  const visuals: Record<string, string> = {
+    product: `Sản phẩm hoạt hình có tay chân, biểu cảm xéo`,
+    user_persona: `Cô gái Gen Z, mặt bối rối`,
+    body_part: `${bodyPart} hoạt hình mặt mệt mỏi, exaggerated`,
+    duo: `2 nhân vật: sản phẩm + cô gái user`,
+  };
+  const visualCue = visuals[character] ?? visuals.product;
+
+  // Tone modifier for dialogue
+  const toneStyle: Record<string, string> = {
+    sharp_sarcastic: "thẳng thắn + xéo, không khiêm tốn",
+    friendly_funny: "vui tươi, hài nhẹ như nói chuyện với bạn",
+    confident_proud: "tự tin, dứt khoát, không dài dòng",
+    urgent_punchy: "gấp gáp, cắt nhanh, nhấn từ khóa",
+  };
 
   return `
-[HOOK 0-3s] "Đừng vội mua ${name} - xem hết video này đã!"
-(Text overlay: nhãn STOP đỏ, mặt người shock)
+═══ KỊCH BẢN 6 CẢNH ═══
+Format: ${format} | Nhân vật: ${character} | Tone: ${toneStyle[tone] ?? toneStyle.sharp_sarcastic}
 
-[PAIN 3-7s] Bạn từng mất tiền cho sản phẩm không hiệu quả? Tin quảng cáo rồi thất vọng?
-(B-roll: tay vứt sản phẩm cũ, mặt buồn)
+CẢNH 1 (0-4s) - HOOK
+Visual: ${visualCue} - close-up đầu video
+Lời thoại: ${hook}
+On-screen text: ${format === "body_pain" ? "S.O.S 🆘" : "STOP ✋"}
 
-[PRODUCT 7-18s] ${desc}
-${proof ? `Đã có ${proof} - không phải tự khen.` : ""}
-(Cận cảnh sản phẩm, demo use case 2-3 cảnh)
+CẢNH 2 (4-10s) - PAIN POINT
+Visual: ${format === "body_pain" ? `${bodyPart} hoạt hình giận dữ, gánh chịu` : "Cô gái user mặt bối rối, lifestyle hiện đại"}
+Lời thoại: "Bạn ăn vặt linh tinh chiều nào cũng vậy. Đói + stress + sợ béo - vòng luẩn quẩn."
+On-screen text: 3 icon vấn đề: đói/béo/mệt
 
-[PRICE 18-23s] ${price ? `Giá chỉ ${price.toLocaleString("vi-VN")}đ. ` : ""}${promo ? `${promo}.` : ""}
-(Text overlay: giá + khuyến mãi, animation pulse)
+CẢNH 3 (10-18s) - PRODUCT INTRO
+Visual: ${name} hoạt hình xuất hiện, cười tự tin
+Lời thoại: "Đây - ${name}. ${desc}"
+On-screen text: Highlight 2-3 USP keyword
 
-[CTA 23-30s] ${cta}
-(Text overlay: nút giỏ hàng + arrow chỉ xuống, music drop)
+CẢNH 4 (18-24s) - PROOF & DIFFERENTIATION
+Visual: ${name} demo, cận cảnh thành phần
+Lời thoại: ${proof ? `"${proof} - không phải tự khen, là sự thật."` : `"Ai ăn cũng quay lại - vì khác bọn snack thường."`}
+On-screen text: ${proof ? `⭐ ${proof}` : "Loop demo + happy reaction"}
+
+CẢNH 5 (24-30s) - PRICE & PROMO
+Visual: Sản phẩm trên bàn, light flare effect
+Lời thoại: ${price ? `"Chỉ ${price.toLocaleString("vi-VN")}đ. ` : '"'}${promo ? `${promo}."` : 'Đáng tin hơn 10 lần snack khác."'}
+On-screen text: ${price ? `${price.toLocaleString("vi-VN")}đ` : "Best value"}${promo ? ` · ${promo}` : ""}
+
+CẢNH 6 (30-${input.duration ?? 30}s) - CTA
+Visual: Sản phẩm + arrow chỉ xuống giỏ hàng, music drop
+Lời thoại: "${cta}"
+On-screen text: Đặt mua ↓ (đính kèm shop link)
+
+═══ GHI CHÚ AI RENDER ═══
+- Voice: ${input.voice_id ?? "leminh"} - tốc độ nhanh, nhấn từ khóa
+- Style: ${input.style ?? "ugc"}
+- Aspect: 9:16 dọc cho TikTok/Shopee/Reels
+- Music: punchy, BPM 100-120, drop ở cảnh 5-6
 `.trim();
 };
 
