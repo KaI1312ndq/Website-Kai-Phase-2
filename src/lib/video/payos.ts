@@ -52,13 +52,39 @@ export interface CreatePaymentLinkResponse {
   signature?: string;
 }
 
-/** Sort object keys ASC and build query-like signature payload. */
+/**
+ * Recursively sort object keys alphabetically.
+ * Arrays preserve order but their object elements are sorted.
+ * Per PayOS spec: https://payos.vn/docs/tich-hop-webhook/kiem-tra-du-lieu-voi-signature/
+ */
+function deepSortObj<T>(input: T): T {
+  if (Array.isArray(input)) {
+    return input.map((item) => deepSortObj(item)) as unknown as T;
+  }
+  if (input !== null && typeof input === "object") {
+    const sorted: Record<string, unknown> = {};
+    for (const key of Object.keys(input as Record<string, unknown>).sort()) {
+      sorted[key] = deepSortObj((input as Record<string, unknown>)[key]);
+    }
+    return sorted as unknown as T;
+  }
+  return input;
+}
+
+/**
+ * Build PayOS signature payload from data object.
+ * Format: key1=value1&key2=value2 (keys sorted ASC alphabetically).
+ * Null/undefined -> empty string.
+ * Arrays/objects -> JSON.stringify after deep-sort.
+ * No URL encoding (webhooks/payment-requests differ from Payouts API).
+ */
 function buildSignaturePayload(obj: Record<string, unknown>): string {
-  const keys = Object.keys(obj).sort();
+  const sorted = deepSortObj(obj);
+  const keys = Object.keys(sorted as Record<string, unknown>);
   return keys.map((k) => {
-    const v = obj[k];
+    const v = (sorted as Record<string, unknown>)[k];
     if (v === null || v === undefined) return `${k}=`;
-    if (typeof v === "object") return `${k}=${JSON.stringify(v)}`;
+    if (Array.isArray(v) || (typeof v === "object")) return `${k}=${JSON.stringify(v)}`;
     return `${k}=${v}`;
   }).join("&");
 }
