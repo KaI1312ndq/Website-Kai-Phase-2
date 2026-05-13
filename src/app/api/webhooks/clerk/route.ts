@@ -84,5 +84,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
+  // Grant 40-token welcome bonus on first user.created (idempotent via RPC).
+  if (event.type === "user.created") {
+    try {
+      await sb.rpc("grant_video_welcome_bonus", { p_user_id: u.id });
+    } catch (e) {
+      // Don't fail the webhook if bonus grant fails - profile can be created on first visit.
+      console.warn("[clerk-webhook] welcome bonus grant failed", e);
+    }
+  }
+
   return NextResponse.json({ ok: true, action: event.type });
 }
