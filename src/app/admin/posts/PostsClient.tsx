@@ -5,7 +5,7 @@ import {
   IcSearch, IcFilter, IcSortDown, IcPlus, IcX, IcRefresh, IcDownload, IcLogout,
   IcStar, IcImage, IcUpload, IcTrash, IcCopy, IcExternal, IcEye, IcFire,
   IcTag, IcGrip, IcCheck, IcRows, IcLayoutList, IcBook, IcCamera, IcFileEdit,
-  IcPencil, IcAlertCircle, IcArrowReorder, IcPen,
+  IcPencil, IcAlertCircle, IcArrowReorder, IcPen, IcSparkles,
 } from "./Icons";
 import PostEditor from "./PostEditor";
 
@@ -145,10 +145,11 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
   );
 }
 
-/* ─── Cover cell with upload ───────────────────────────────────────── */
+/* ─── Cover cell with upload + AI generate ──────────────────────────── */
 function CoverCell({ post, onUpdate, size = 56 }: { post: Post; onUpdate: (p: Partial<Post>) => void; size?: number }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
+  const [generating, setGenerating] = useState(false);
 
   async function handleFile(file: File) {
     if (!file.type.startsWith("image/")) { alert("Chỉ chấp nhận file ảnh"); return; }
@@ -165,21 +166,46 @@ function CoverCell({ post, onUpdate, size = 56 }: { post: Post; onUpdate: (p: Pa
     finally { setUploading(false); }
   }
 
+  async function handleAIGenerate(e: React.MouseEvent) {
+    e.stopPropagation();
+    if (generating) return;
+    setGenerating(true);
+    try {
+      const res = await fetch("/api/admin/generate-cover", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ postId: post._id }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      onUpdate({ coverUrl: data.url });
+    } catch (err: any) { alert("Lỗi AI gen: " + err.message); }
+    finally { setGenerating(false); }
+  }
+
   const h = Math.round(size * 9/16);
+  const busy = uploading || generating;
+
   return (
-    <div style={{ position: "relative", width: size, height: h, borderRadius: 6, overflow: "hidden", background: post.coverUrl ? "transparent" : "rgba(255,255,255,0.04)", border: post.coverUrl ? "none" : "1px dashed rgba(255,255,255,0.15)", cursor: "pointer", flexShrink: 0 }}
-      onClick={() => inputRef.current?.click()} title="Click để đổi/upload ảnh bìa" className="cover-cell">
+    <div style={{ position: "relative", width: size, height: h, borderRadius: 6, overflow: "hidden", background: post.coverUrl ? "transparent" : "rgba(255,255,255,0.04)", border: post.coverUrl ? "none" : "1px dashed rgba(255,255,255,0.15)", flexShrink: 0 }}
+      className="cover-cell">
       {post.coverUrl ? (
-        <img src={`${post.coverUrl}?w=${size*2}&h=${h*2}&fit=crop`} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+        <img src={`${post.coverUrl}?w=${size*2}&h=${h*2}&fit=crop`} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} onClick={() => inputRef.current?.click()} title="Click để đổi ảnh" />
       ) : (
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", color: "rgba(255,255,255,0.3)" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", color: "rgba(255,255,255,0.3)", cursor: "pointer" }} onClick={() => inputRef.current?.click()} title="Upload ảnh">
           <IcCamera size={16} />
         </div>
       )}
-      {uploading && <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.75)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, color: "#5fffaa" }}>...</div>}
-      {!uploading && (
-        <div className="cover-overlay" style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.55)", display: "flex", alignItems: "center", justifyContent: "center", opacity: 0, transition: "opacity 0.15s", color: "#fff" }}>
-          <IcUpload size={14} />
+      {busy && <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.75)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, color: generating ? "#ff7ad9" : "#5fffaa" }}>{generating ? "AI..." : "..."}</div>}
+      {!busy && (
+        <div className="cover-overlay" style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.62)", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, opacity: 0, transition: "opacity 0.15s", color: "#fff" }}>
+          <button onClick={(e) => { e.stopPropagation(); inputRef.current?.click(); }} title="Upload ảnh"
+            style={{ background: "rgba(255,255,255,0.15)", border: "none", borderRadius: 4, padding: 3, cursor: "pointer", color: "#fff", display: "flex" }}>
+            <IcUpload size={12} />
+          </button>
+          <button onClick={handleAIGenerate} title="Tạo bằng AI"
+            style={{ background: "rgba(255,122,217,0.25)", border: "none", borderRadius: 4, padding: 3, cursor: "pointer", color: "#ff7ad9", display: "flex" }}>
+            <IcSparkles size={12} />
+          </button>
         </div>
       )}
       <input ref={inputRef} type="file" accept="image/*" style={{ display: "none" }} onChange={e => e.target.files?.[0] && handleFile(e.target.files[0])} />
