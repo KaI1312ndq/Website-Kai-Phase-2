@@ -1,5 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      // 301 permanent redirect non-www -> www (Googlebot follows 301, not 307)
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "nguyenducquang.website" }],
+        destination: "https://www.nguyenducquang.website/:path*",
+        permanent: true,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
