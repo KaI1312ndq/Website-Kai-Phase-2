@@ -76,9 +76,9 @@ export const VIDEO_PRESETS: VideoPreset[] = [
   {
     id: "reels_storytelling",
     label: "Reels triết lý + cảnh thiên nhiên",
-    useCase: "Voice-over triết lý đè cảnh thiên nhiên epic - quotes brand",
+    useCase: "Voice-over triết lý đè cảnh thiên nhiên epic - quotes brand (KHÔNG có người nói trên camera)",
     niche: ["self-help", "brand-storytelling", "quotes"],
-    needsLipSync: false,
+    needsLipSync: false,  // voice-over đè B-roll, không thấy mồm
     defaults: {
       shotSize: "wide",
       cameraAngle: "low",
@@ -96,7 +96,7 @@ export const VIDEO_PRESETS: VideoPreset[] = [
     label: "Animation 2D minh hoạ",
     useCase: "Nhân vật 2D + icon + transition - giải thích concept",
     niche: ["saas", "app", "finance", "education"],
-    needsLipSync: false,
+    needsLipSync: true,  // nhân vật 2D nói chuyện
     defaults: {
       shotSize: "medium",
       cameraAngle: "eye_level",
@@ -112,9 +112,9 @@ export const VIDEO_PRESETS: VideoPreset[] = [
   {
     id: "news_compilation",
     label: "Tin tức tổng hợp (News-style)",
-    useCase: "Globe + LIVE banner + footage cuộn - news-jacking hot trends",
+    useCase: "MC newsreader đọc tin + footage cuộn - news-jacking hot trends",
     niche: ["news-jacking", "social-hot", "trending"],
-    needsLipSync: false,
+    needsLipSync: true,  // MC newsreader nói chuyện
     defaults: {
       shotSize: "wide",
       cameraAngle: "eye_level",
@@ -168,7 +168,7 @@ export const VIDEO_PRESETS: VideoPreset[] = [
     label: "Nhân vật hoạt hình 3D",
     useCase: "Bất kỳ vật/người được nhân hoá 3D (như dạ dày/sản phẩm có mắt mũi) - Yumvita style",
     niche: ["healthy-food", "supplement", "kids-product", "any-anthropomorphized"],
-    needsLipSync: false,
+    needsLipSync: true,  // nhân vật 3D nói chuyện cần lip sync
     defaults: {
       shotSize: "medium",
       cameraAngle: "eye_level",
