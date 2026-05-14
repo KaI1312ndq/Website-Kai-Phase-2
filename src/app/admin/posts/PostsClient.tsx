@@ -1,9 +1,16 @@
 "use client";
 
-import { useState, useMemo, useRef, useEffect, useCallback } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
+import {
+  IcSearch, IcFilter, IcSortDown, IcPlus, IcX, IcRefresh, IcDownload, IcLogout,
+  IcStar, IcImage, IcUpload, IcTrash, IcCopy, IcExternal, IcEye, IcFire,
+  IcTag, IcGrip, IcCheck, IcRows, IcLayoutList, IcBook, IcCamera, IcFileEdit,
+  IcPencil, IcAlertCircle, IcArrowReorder, IcPen,
+} from "./Icons";
+import PostEditor from "./PostEditor";
 
 /* ─── Types ─────────────────────────────────────────────────────────── */
-type Post = {
+export type Post = {
   _id: string;
   title: string;
   slug: { current: string };
@@ -18,7 +25,6 @@ type Post = {
   hasBody: boolean;
   wordCount?: number;
   coverUrl?: string;
-  // Pageview stats (joined from /api/admin/pageviews)
   views?: number;
   viewsWeek?: number;
   viewsToday?: number;
@@ -28,55 +34,65 @@ type ViewStats = Record<string, { views: number; week: number; today: number }>;
 type SortKey = "newest" | "oldest" | "title" | "title_desc" | "updated" | "category" | "views" | "views_week";
 type ViewMode = "comfortable" | "compact";
 
-/* ─── Constants ─────────────────────────────────────────────────────── */
-const CATEGORIES: Record<string, string> = {
+/* ─── Categories - đầy đủ tất cả slugs đang dùng ─── */
+export const CATEGORIES: Record<string, string> = {
+  // Modern slugs
   "unit-economics": "Unit Economics",
+  "tmdt-co-ban": "TMĐT 101",
+  "ads-scaling": "Ads & Scaling",
+  "mua-vu-sale": "Mùa vụ & Sale",
+  "team-leadership": "Team & Leadership",
+  "case-study-data": "Case Study & Data",
+  "tam-ly-mindset": "Tâm lý & Mindset",
+  "thue-cong-cu": "Thuế & Công cụ",
+  // Legacy single-word
   performance: "Performance Marketing",
   tiktok: "TikTok Shop",
   shopee: "Shopee",
   ecom: "Ecommerce",
   career: "Hướng nghiệp",
-  psychology: "Tâm lý & Mindset",
-  "thue-cong-cu": "Thuế & Công cụ",
+  psychology: "Tâm lý & Phát triển bản thân",
   mindset: "Mindset",
   leadership: "Leadership",
 };
 
 const CAT_COLORS: Record<string, string> = {
   "unit-economics": "#5fffaa",
+  "tmdt-co-ban": "#4ad6ff",
+  "ads-scaling": "#7da9ff",
+  "mua-vu-sale": "#ff9f7a",
+  "team-leadership": "#a78bff",
+  "case-study-data": "#ffd700",
+  "tam-ly-mindset": "#ff7ad9",
+  "thue-cong-cu": "#ff9f7a",
   performance: "#7da9ff",
   tiktok: "#ff7ad9",
   shopee: "#ff8859",
   ecom: "#4ad6ff",
   career: "#ffd700",
   psychology: "#a78bff",
-  "thue-cong-cu": "#ff9f7a",
   mindset: "#a78bff",
   leadership: "#7da9ff",
 };
 
 const SORT_LABELS: Record<SortKey, string> = {
-  newest: "Mới nhất",
-  oldest: "Cũ nhất",
-  title: "Tên A-Z",
-  title_desc: "Tên Z-A",
-  updated: "Sửa gần đây",
-  category: "Theo danh mục",
-  views: "👁 Lượt xem nhiều",
-  views_week: "🔥 Hot tuần này",
+  newest: "Mới nhất", oldest: "Cũ nhất",
+  title: "Tên A-Z", title_desc: "Tên Z-A",
+  updated: "Sửa gần đây", category: "Theo danh mục",
+  views: "Lượt xem nhiều", views_week: "Hot tuần này",
 };
 
-function catColor(c: string) { return CAT_COLORS[c] || "#888"; }
-function catLabel(c: string) { return CATEGORIES[c] || c || "—"; }
+export function catColor(c: string) { return CAT_COLORS[c] || "#888"; }
+export function catLabel(c: string) { return CATEGORIES[c] || c || "—"; }
 
-/* ─── Health score: how complete is a post ─── */
-function getHealth(p: Post): { score: number; missing: string[] } {
-  const missing: string[] = [];
-  if (!p.coverUrl) missing.push("ảnh bìa");
-  if (!p.hasBody) missing.push("nội dung");
-  if (!p.excerpt || p.excerpt.length < 30) missing.push("tóm tắt");
-  if (!p.tags || p.tags.length < 2) missing.push("tags");
-  if (!CATEGORIES[p.category]) missing.push("danh mục đúng");
+/* ─── Health check ─────────────────────────────────────────────────── */
+function getHealth(p: Post): { score: number; missing: { field: string; reason: string }[] } {
+  const missing: { field: string; reason: string }[] = [];
+  if (!p.coverUrl) missing.push({ field: "Ảnh bìa", reason: "Bài cần ảnh bìa để hiển thị tốt trên list + social share" });
+  if (!p.hasBody) missing.push({ field: "Nội dung", reason: "Body trống - bài chưa có gì để đọc" });
+  if (!p.excerpt || p.excerpt.length < 30) missing.push({ field: "Tóm tắt", reason: "Excerpt < 30 ký tự, cần ít nhất 1-2 câu để SEO + hiển thị card" });
+  if (!p.tags || p.tags.length < 2) missing.push({ field: "Tags", reason: "Cần ít nhất 2 tags để internal linking + filter hoạt động tốt" });
+  if (!CATEGORIES[p.category]) missing.push({ field: "Danh mục", reason: `"${p.category}" không nằm trong danh sách chuẩn - cần đổi sang danh mục hợp lệ` });
   const score = Math.max(0, 100 - missing.length * 20);
   return { score, missing };
 }
@@ -104,7 +120,7 @@ async function api(url: string, opts?: RequestInit) {
   return r.json();
 }
 
-/* ─── Login screen ───────────────────────────────────────────────────── */
+/* ─── Login ────────────────────────────────────────────────────────── */
 function LoginScreen({ onLogin }: { onLogin: () => void }) {
   const [pw, setPw] = useState(""); const [err, setErr] = useState(""); const [loading, setLoading] = useState(false);
   async function submit(e: React.FormEvent) {
@@ -116,7 +132,7 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
   return (
     <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#08080f" }}>
       <form onSubmit={submit} style={{ width: 360, padding: "40px 36px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 16, display: "flex", flexDirection: "column", gap: 16 }}>
-        <div style={{ fontSize: 24, fontWeight: 700, color: "#fff" }}>🔐 Blog Admin</div>
+        <div style={{ fontSize: 22, fontWeight: 700, color: "#fff" }}>Blog Admin</div>
         <div style={{ fontSize: 13, color: "rgba(255,255,255,0.45)" }}>Nhập mật khẩu để tiếp tục</div>
         <input type="password" value={pw} onChange={e => setPw(e.target.value)} autoFocus placeholder="Admin password"
           style={{ padding: "12px 14px", borderRadius: 10, border: `1px solid ${err ? "#ff6b6b" : "rgba(255,255,255,0.12)"}`, background: "rgba(255,255,255,0.06)", color: "#fff", fontSize: 15, outline: "none" }} />
@@ -129,7 +145,7 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
   );
 }
 
-/* ─── Cover Image Cell with upload ─────────────────────────────────── */
+/* ─── Cover cell with upload ───────────────────────────────────────── */
 function CoverCell({ post, onUpdate, size = 56 }: { post: Post; onUpdate: (p: Partial<Post>) => void; size?: number }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
@@ -140,8 +156,7 @@ function CoverCell({ post, onUpdate, size = 56 }: { post: Post; onUpdate: (p: Pa
     setUploading(true);
     try {
       const fd = new FormData();
-      fd.append("file", file);
-      fd.append("postId", post._id);
+      fd.append("file", file); fd.append("postId", post._id);
       const res = await fetch("/api/admin/upload", { method: "POST", body: fd });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
@@ -150,22 +165,21 @@ function CoverCell({ post, onUpdate, size = 56 }: { post: Post; onUpdate: (p: Pa
     finally { setUploading(false); }
   }
 
+  const h = Math.round(size * 9/16);
   return (
-    <div style={{ position: "relative", width: size, height: Math.round(size * 9/16), borderRadius: 6, overflow: "hidden", background: post.coverUrl ? "transparent" : "rgba(255,255,255,0.05)", border: post.coverUrl ? "none" : "1px dashed rgba(255,255,255,0.15)", cursor: "pointer", flexShrink: 0 }}
-      onClick={() => inputRef.current?.click()}
-      title="Click để đổi/upload ảnh bìa"
-    >
+    <div style={{ position: "relative", width: size, height: h, borderRadius: 6, overflow: "hidden", background: post.coverUrl ? "transparent" : "rgba(255,255,255,0.04)", border: post.coverUrl ? "none" : "1px dashed rgba(255,255,255,0.15)", cursor: "pointer", flexShrink: 0 }}
+      onClick={() => inputRef.current?.click()} title="Click để đổi/upload ảnh bìa" className="cover-cell">
       {post.coverUrl ? (
-        <img src={`${post.coverUrl}?w=${size*2}&h=${size}&fit=crop`} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+        <img src={`${post.coverUrl}?w=${size*2}&h=${h*2}&fit=crop`} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
       ) : (
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", fontSize: 16, opacity: 0.4 }}>📷</div>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", color: "rgba(255,255,255,0.3)" }}>
+          <IcCamera size={16} />
+        </div>
       )}
-      {uploading && (
-        <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.7)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, color: "#5fffaa" }}>...</div>
-      )}
-      {post.coverUrl && !uploading && (
-        <div className="cover-overlay" style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.5)", display: "flex", alignItems: "center", justifyContent: "center", opacity: 0, transition: "opacity 0.15s", fontSize: 11, color: "#fff", fontWeight: 600 }}>
-          ↑ Đổi
+      {uploading && <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.75)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, color: "#5fffaa" }}>...</div>}
+      {!uploading && (
+        <div className="cover-overlay" style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.55)", display: "flex", alignItems: "center", justifyContent: "center", opacity: 0, transition: "opacity 0.15s", color: "#fff" }}>
+          <IcUpload size={14} />
         </div>
       )}
       <input ref={inputRef} type="file" accept="image/*" style={{ display: "none" }} onChange={e => e.target.files?.[0] && handleFile(e.target.files[0])} />
@@ -173,7 +187,7 @@ function CoverCell({ post, onUpdate, size = 56 }: { post: Post; onUpdate: (p: Pa
   );
 }
 
-/* ─── Category dropdown ─────────────────────────────────────────────── */
+/* ─── Category dropdown ────────────────────────────────────────────── */
 function CategoryDropdown({ current, onSelect, onClose }: { current: string; onSelect: (c: string) => void; onClose: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -181,21 +195,21 @@ function CategoryDropdown({ current, onSelect, onClose }: { current: string; onS
     document.addEventListener("mousedown", h); return () => document.removeEventListener("mousedown", h);
   }, [onClose]);
   return (
-    <div ref={ref} style={{ position: "absolute", zIndex: 100, top: "100%", left: 0, marginTop: 4, background: "#181828", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 12, padding: 6, minWidth: 200, boxShadow: "0 8px 32px rgba(0,0,0,0.5)" }}>
+    <div ref={ref} style={{ position: "absolute", zIndex: 100, top: "100%", left: 0, marginTop: 4, background: "#181828", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 12, padding: 6, minWidth: 220, maxHeight: 320, overflowY: "auto", boxShadow: "0 8px 32px rgba(0,0,0,0.5)" }}>
       {Object.entries(CATEGORIES).map(([key, label]) => (
         <div key={key} onClick={() => onSelect(key)}
-          style={{ padding: "8px 12px", borderRadius: 8, cursor: "pointer", fontSize: 13, color: key === current ? catColor(key) : "rgba(255,255,255,0.8)", background: key === current ? `${catColor(key)}15` : "transparent", display: "flex", alignItems: "center", gap: 8 }}
+          style={{ padding: "7px 12px", borderRadius: 8, cursor: "pointer", fontSize: 13, color: key === current ? catColor(key) : "rgba(255,255,255,0.8)", background: key === current ? `${catColor(key)}15` : "transparent", display: "flex", alignItems: "center", gap: 8 }}
           onMouseEnter={e => (e.currentTarget.style.background = `${catColor(key)}15`)}
           onMouseLeave={e => (e.currentTarget.style.background = key === current ? `${catColor(key)}15` : "transparent")}>
           <span style={{ width: 8, height: 8, borderRadius: "50%", background: catColor(key) }} />
-          {label}{key === current && <span style={{ marginLeft: "auto", fontSize: 10 }}>✓</span>}
+          <span style={{ flex: 1 }}>{label}</span>
+          {key === current && <IcCheck size={12} />}
         </div>
       ))}
     </div>
   );
 }
 
-/* ─── Generic dropdown ─────────────────────────────────────────────── */
 function Popover({ children, onClose, style }: { children: React.ReactNode; onClose: () => void; style?: React.CSSProperties }) {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -205,107 +219,45 @@ function Popover({ children, onClose, style }: { children: React.ReactNode; onCl
   return <div ref={ref} style={{ position: "absolute", zIndex: 100, background: "#181828", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 12, padding: 8, boxShadow: "0 8px 32px rgba(0,0,0,0.5)", ...style }}>{children}</div>;
 }
 
-/* ─── New post modal ────────────────────────────────────────────────── */
-function NewPostModal({ onClose, onCreated }: { onClose: () => void; onCreated: (p: Post) => void }) {
-  const [form, setForm] = useState({ title: "", slug: "", excerpt: "", category: "ecom", tags: "", featured: false });
-  const [loading, setLoading] = useState(false); const [err, setErr] = useState("");
-
-  function autoSlug(t: string) {
-    return t.toLowerCase()
-      .replace(/[àáạảãâầấậẩẫăằắặẳẵ]/g, "a").replace(/[èéẹẻẽêềếệểễ]/g, "e")
-      .replace(/[ìíịỉĩ]/g, "i").replace(/[òóọỏõôồốộổỗơờớợởỡ]/g, "o")
-      .replace(/[ùúụủũưừứựửữ]/g, "u").replace(/[ỳýỵỷỹ]/g, "y")
-      .replace(/đ/g, "d").replace(/[^a-z0-9\s-]/g, "").trim()
-      .replace(/\s+/g, "-").slice(0, 80);
-  }
-
-  async function submit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!form.title.trim()) { setErr("Cần có tiêu đề"); return; }
-    setLoading(true); setErr("");
-    try {
-      const slug = form.slug || autoSlug(form.title);
-      const tags = form.tags.split(",").map(t => t.trim()).filter(Boolean);
-      const data = await api("/api/admin/posts", { method: "POST", body: JSON.stringify({ ...form, slug, tags }) });
-      onCreated({ _id: data.id, title: form.title, slug: { current: slug }, category: form.category, featured: form.featured, publishedAt: new Date().toISOString(), tags, excerpt: form.excerpt, hasBody: false });
-      onClose();
-    } catch (e: any) { setErr(e.message); }
-    finally { setLoading(false); }
-  }
-
-  const lbl: React.CSSProperties = { color: "rgba(255,255,255,0.6)", fontSize: 11, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 4 };
-  const inp: React.CSSProperties = { padding: "10px 12px", borderRadius: 8, border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.05)", color: "#fff", fontSize: 14, outline: "none", width: "100%", boxSizing: "border-box" };
+/* ─── Health detail popover ────────────────────────────────────────── */
+function HealthBar({ post }: { post: Post }) {
+  const [open, setOpen] = useState(false);
+  const health = getHealth(post);
+  const color = health.score === 100 ? "#5fffaa" : health.score >= 60 ? "#ffd700" : "#ff6b6b";
 
   return (
-    <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.7)", zIndex: 200, display: "flex", alignItems: "flex-end", justifyContent: "center" }} onClick={e => e.target === e.currentTarget && onClose()}>
-      <form onSubmit={submit} style={{ width: "100%", maxWidth: 640, background: "#0f0f1a", border: "1px solid rgba(255,255,255,0.1)", borderBottom: "none", borderRadius: "20px 20px 0 0", padding: "28px 28px 40px", display: "flex", flexDirection: "column", gap: 16 }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <span style={{ fontSize: 18, fontWeight: 700, color: "#fff" }}>+ Bài viết mới</span>
-          <button type="button" onClick={onClose} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.4)", fontSize: 22, cursor: "pointer" }}>×</button>
+    <div style={{ position: "relative", display: "inline-block" }} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+      <div style={{ display: "flex", alignItems: "center", gap: 6, cursor: "help" }}>
+        <div style={{ width: 36, height: 4, borderRadius: 2, background: "rgba(255,255,255,0.08)", overflow: "hidden" }}>
+          <div style={{ width: `${health.score}%`, height: "100%", background: color, transition: "width 0.3s" }} />
         </div>
-        <div><div style={lbl}>Tiêu đề *</div>
-          <input style={inp} value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value, slug: autoSlug(e.target.value) }))} placeholder="Tiêu đề bài viết..." autoFocus /></div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-          <div><div style={lbl}>Slug</div><input style={inp} value={form.slug} onChange={e => setForm(f => ({ ...f, slug: e.target.value }))} /></div>
-          <div><div style={lbl}>Danh mục</div>
-            <select style={{ ...inp, cursor: "pointer" }} value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))}>
-              {Object.entries(CATEGORIES).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
-            </select></div>
+        <span style={{ fontSize: 10, color, fontWeight: 700 }}>{health.score}</span>
+      </div>
+      {open && (
+        <div style={{ position: "absolute", zIndex: 50, right: 0, top: "100%", marginTop: 6, background: "#181828", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 10, padding: 12, minWidth: 260, boxShadow: "0 8px 32px rgba(0,0,0,0.6)", pointerEvents: "none" }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color, marginBottom: 8, display: "flex", alignItems: "center", gap: 6 }}>
+            {health.score === 100 ? <><IcCheck size={13} /> Hoàn chỉnh</> : <><IcAlertCircle size={13} /> Điểm: {health.score}/100</>}
+          </div>
+          {health.missing.length === 0 ? (
+            <div style={{ fontSize: 12, color: "rgba(255,255,255,0.6)" }}>Bài viết đã đủ tất cả các yêu cầu cơ bản.</div>
+          ) : (
+            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.45)", marginBottom: 2 }}>Thiếu {health.missing.length} mục - mỗi mục trừ 20đ:</div>
+              {health.missing.map(m => (
+                <div key={m.field} style={{ fontSize: 11, color: "rgba(255,255,255,0.75)", paddingLeft: 14, position: "relative" }}>
+                  <span style={{ position: "absolute", left: 0, top: 4, width: 6, height: 6, borderRadius: "50%", background: "#ff6b6b" }} />
+                  <strong style={{ color: "#fff" }}>{m.field}:</strong> {m.reason}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
-        <div><div style={lbl}>Tóm tắt</div>
-          <textarea style={{ ...inp, resize: "vertical", minHeight: 72 }} value={form.excerpt} onChange={e => setForm(f => ({ ...f, excerpt: e.target.value }))} placeholder="1-2 câu mô tả ngắn..." /></div>
-        <div><div style={lbl}>Tags (phẩy ngăn cách)</div>
-          <input style={inp} value={form.tags} onChange={e => setForm(f => ({ ...f, tags: e.target.value }))} placeholder="shopee, phi san, unit economics" /></div>
-        <label style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer" }}>
-          <input type="checkbox" checked={form.featured} onChange={e => setForm(f => ({ ...f, featured: e.target.checked }))} />
-          <span style={{ color: "rgba(255,255,255,0.7)", fontSize: 14 }}>Đánh dấu nổi bật</span>
-        </label>
-        {err && <div style={{ color: "#ff6b6b", fontSize: 13 }}>{err}</div>}
-        <div style={{ display: "flex", gap: 10 }}>
-          <button type="submit" disabled={loading} style={{ flex: 1, padding: "12px 0", borderRadius: 10, background: "#146ef5", color: "#fff", fontWeight: 600, fontSize: 15, border: "none", cursor: loading ? "wait" : "pointer" }}>
-            {loading ? "Đang tạo..." : "Tạo bài viết"}
-          </button>
-          <button type="button" onClick={onClose} style={{ padding: "12px 20px", borderRadius: 10, background: "rgba(255,255,255,0.07)", color: "#fff", border: "1px solid rgba(255,255,255,0.1)", cursor: "pointer", fontWeight: 600 }}>Huỷ</button>
-        </div>
-      </form>
+      )}
     </div>
   );
 }
 
-/* ─── Excerpt edit popover ─────────────────────────────────────────── */
-function ExcerptEditor({ post, onSave, onClose }: { post: Post; onSave: (val: string) => void; onClose: () => void }) {
-  const [val, setVal] = useState(post.excerpt || "");
-  return (
-    <Popover onClose={onClose} style={{ top: "100%", left: 0, marginTop: 4, width: 380 }}>
-      <textarea value={val} onChange={e => setVal(e.target.value)} autoFocus rows={4}
-        style={{ width: "100%", padding: "10px 12px", borderRadius: 8, border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.05)", color: "#fff", fontSize: 13, outline: "none", resize: "vertical", fontFamily: "inherit", boxSizing: "border-box" }}
-        placeholder="Tóm tắt 1-2 câu..." />
-      <div style={{ display: "flex", gap: 6, marginTop: 8, alignItems: "center" }}>
-        <span style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginRight: "auto" }}>{val.length} ký tự (lý tưởng 120-180)</span>
-        <button onClick={onClose} style={{ padding: "5px 10px", borderRadius: 6, background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.6)", border: "1px solid rgba(255,255,255,0.1)", cursor: "pointer", fontSize: 12 }}>Huỷ</button>
-        <button onClick={() => { onSave(val); onClose(); }} style={{ padding: "5px 12px", borderRadius: 6, background: "#146ef5", color: "#fff", border: "none", cursor: "pointer", fontSize: 12, fontWeight: 600 }}>Lưu</button>
-      </div>
-    </Popover>
-  );
-}
-
-/* ─── Title inline edit ─────────────────────────────────────────────── */
-function TitleEditor({ post, onSave, onClose }: { post: Post; onSave: (val: string) => void; onClose: () => void }) {
-  const [val, setVal] = useState(post.title);
-  useEffect(() => {
-    function h(e: KeyboardEvent) {
-      if (e.key === "Escape") onClose();
-      if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); onSave(val.trim()); onClose(); }
-    }
-    document.addEventListener("keydown", h); return () => document.removeEventListener("keydown", h);
-  }, [val, onClose, onSave]);
-  return (
-    <input value={val} onChange={e => setVal(e.target.value)} autoFocus onBlur={() => { if (val.trim() && val.trim() !== post.title) onSave(val.trim()); onClose(); }}
-      style={{ width: "100%", padding: "4px 8px", borderRadius: 6, border: "1px solid #146ef5", background: "rgba(20,110,245,0.1)", color: "#fff", fontSize: 14, fontWeight: 500, outline: "none" }} />
-  );
-}
-
-/* ─── Main Component ─────────────────────────────────────────────────── */
+/* ─── Main Component ──────────────────────────────────────────────── */
 export default function PostsClient({ authed }: { authed: boolean }) {
   const [isAuthed, setIsAuthed] = useState(authed);
   const [posts, setPosts] = useState<Post[]>([]);
@@ -313,32 +265,31 @@ export default function PostsClient({ authed }: { authed: boolean }) {
   const [mutating, setMutating] = useState<Set<string>>(new Set());
   const [selected, setSelected] = useState<Set<string>>(new Set());
 
-  // Search & filter & sort
   const [search, setSearch] = useState("");
   const [filterCat, setFilterCat] = useState<string[]>([]);
-  const [filterStatus, setFilterStatus] = useState<string>("all"); // all | featured | needs-cover | needs-body | needs-excerpt | needs-tags
-  const [filterDate, setFilterDate] = useState<string>("all"); // all | today | week | month
+  const [filterStatus, setFilterStatus] = useState<string>("all");
+  const [filterDate, setFilterDate] = useState<string>("all");
   const [sortBy, setSortBy] = useState<SortKey>("newest");
   const [viewMode, setViewMode] = useState<ViewMode>("comfortable");
 
-  // UI state
   const [editingCatId, setEditingCatId] = useState<string | null>(null);
-  const [editingExcerptId, setEditingExcerptId] = useState<string | null>(null);
-  const [editingTitleId, setEditingTitleId] = useState<string | null>(null);
-  const [showNewPost, setShowNewPost] = useState(false);
+  const [editingPostId, setEditingPostId] = useState<string | null>(null);
   const [showFilters, setShowFilters] = useState(false);
   const [showSort, setShowSort] = useState(false);
   const [bulkCat, setBulkCat] = useState("");
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const [toast, setToast] = useState<{ msg: string; ok: boolean } | null>(null);
 
+  const [reorderMode, setReorderMode] = useState(false);
+  const dragId = useRef<string | null>(null);
+
+  const [bulkTagInput, setBulkTagInput] = useState("");
+  const [showBulkTag, setShowBulkTag] = useState(false);
+
   const searchRef = useRef<HTMLInputElement>(null);
   const lastSelected = useRef<string | null>(null);
 
-  function showToast(msg: string, ok = true) {
-    setToast({ msg, ok });
-    setTimeout(() => setToast(null), 2800);
-  }
+  function showToast(msg: string, ok = true) { setToast({ msg, ok }); setTimeout(() => setToast(null), 2800); }
 
   async function loadPosts() {
     setLoading(true);
@@ -348,26 +299,15 @@ export default function PostsClient({ authed }: { authed: boolean }) {
         api("/api/admin/pageviews").catch(() => ({} as ViewStats)),
       ]);
       const v = viewsData as ViewStats;
-      const merged: Post[] = (postsData as Post[]).map(p => {
+      setPosts((postsData as Post[]).map(p => {
         const stat = v[p.slug?.current];
         return { ...p, views: stat?.views || 0, viewsWeek: stat?.week || 0, viewsToday: stat?.today || 0 };
-      });
-      setPosts(merged);
+      }));
     } catch { showToast("Lỗi tải", false); }
     finally { setLoading(false); }
   }
   useEffect(() => { if (isAuthed) loadPosts(); }, [isAuthed]);
 
-  // Drag-to-reorder featured posts
-  const [reorderMode, setReorderMode] = useState(false);
-  const dragId = useRef<string | null>(null);
-  const dragOverId = useRef<string | null>(null);
-
-  // Bulk add tag
-  const [bulkTagInput, setBulkTagInput] = useState("");
-  const [showBulkTag, setShowBulkTag] = useState(false);
-
-  // ─── Keyboard shortcuts ───
   useEffect(() => {
     if (!isAuthed) return;
     function h(e: KeyboardEvent) {
@@ -375,13 +315,12 @@ export default function PostsClient({ authed }: { authed: boolean }) {
       const inField = tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT";
       if ((e.metaKey || e.ctrlKey) && e.key === "k") { e.preventDefault(); searchRef.current?.focus(); }
       if (e.key === "Escape" && !inField) { setSelected(new Set()); setShowFilters(false); setShowSort(false); }
-      if ((e.metaKey || e.ctrlKey) && e.key === "n") { e.preventDefault(); setShowNewPost(true); }
+      if ((e.metaKey || e.ctrlKey) && e.key === "n" && !inField) { e.preventDefault(); setEditingPostId("new"); }
     }
     window.addEventListener("keydown", h);
     return () => window.removeEventListener("keydown", h);
   }, [isAuthed]);
 
-  // ─── Derived data ───
   const filtered = useMemo(() => {
     let list = posts.slice();
     if (filterCat.length > 0) list = list.filter(p => filterCat.includes(p.category));
@@ -393,6 +332,7 @@ export default function PostsClient({ authed }: { authed: boolean }) {
         if (filterStatus === "needs-body") return !p.hasBody;
         if (filterStatus === "needs-excerpt") return !p.excerpt || p.excerpt.length < 30;
         if (filterStatus === "needs-tags") return !p.tags || p.tags.length < 2;
+        if (filterStatus === "invalid-cat") return !CATEGORIES[p.category];
         return true;
       });
     }
@@ -411,13 +351,12 @@ export default function PostsClient({ authed }: { authed: boolean }) {
         p.slug?.current?.toLowerCase().includes(q)
       );
     }
-    // Reorder mode: show only featured, ordered by featuredOrder
+
     if (reorderMode) {
       list = list.filter(p => p.featured);
       list.sort((a, b) => (a.featuredOrder ?? 999) - (b.featuredOrder ?? 999));
       return list;
     }
-    // Normal sort
     list.sort((a, b) => {
       switch (sortBy) {
         case "newest": return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
@@ -433,22 +372,16 @@ export default function PostsClient({ authed }: { authed: boolean }) {
     return list;
   }, [posts, filterCat, filterStatus, filterDate, search, sortBy, reorderMode]);
 
-  const catCounts = useMemo(() => {
-    const m: Record<string, number> = {};
-    posts.forEach(p => { m[p.category] = (m[p.category] || 0) + 1; });
-    return m;
-  }, [posts]);
-
   const stats = useMemo(() => ({
     total: posts.length,
     featured: posts.filter(p => p.featured).length,
     needsCover: posts.filter(p => !p.coverUrl).length,
     needsBody: posts.filter(p => !p.hasBody).length,
+    invalidCat: posts.filter(p => !CATEGORIES[p.category]).length,
   }), [posts]);
 
   const activeFilterCount = (filterCat.length > 0 ? 1 : 0) + (filterStatus !== "all" ? 1 : 0) + (filterDate !== "all" ? 1 : 0);
 
-  // ─── Mutations ───
   async function patchPost(id: string, patch: object) {
     setMutating(prev => new Set(prev).add(id));
     try {
@@ -457,10 +390,9 @@ export default function PostsClient({ authed }: { authed: boolean }) {
     } catch { showToast("Lỗi cập nhật", false); }
     finally { setMutating(prev => { const n = new Set(prev); n.delete(id); return n; }); }
   }
-
   async function toggleFeatured(post: Post) {
     await patchPost(post._id, { featured: !post.featured });
-    showToast(post.featured ? "Đã bỏ nổi bật" : "Đã đánh dấu nổi bật ⭐");
+    showToast(post.featured ? "Đã bỏ nổi bật" : "Đã đánh dấu nổi bật");
   }
   async function changeCategory(id: string, cat: string) { setEditingCatId(null); await patchPost(id, { category: cat }); showToast("Đã đổi danh mục"); }
 
@@ -472,7 +404,6 @@ export default function PostsClient({ authed }: { authed: boolean }) {
       showToast(msg); setSelected(new Set());
     } catch { showToast("Lỗi cập nhật", false); }
   }
-
   async function deletePost(id: string) {
     try {
       await api("/api/admin/posts", { method: "DELETE", body: JSON.stringify({ id }) });
@@ -489,89 +420,63 @@ export default function PostsClient({ authed }: { authed: boolean }) {
       showToast(`Đã xoá ${ids.length} bài`); setSelected(new Set());
     } catch { showToast("Lỗi xoá", false); }
   }
-
   async function duplicatePost(id: string) {
     try {
-      const data = await api("/api/admin/posts", { method: "POST", body: JSON.stringify({ action: "duplicate", sourceId: id }) });
-      showToast("Đã nhân bản bài viết");
-      await loadPosts();
+      await api("/api/admin/posts", { method: "POST", body: JSON.stringify({ action: "duplicate", sourceId: id }) });
+      showToast("Đã nhân bản"); await loadPosts();
     } catch { showToast("Lỗi nhân bản", false); }
   }
-
-  function exportCSV() {
-    const rows = [["Title", "Slug", "Category", "Featured", "Tags", "Published", "Word Count"]];
-    filtered.forEach(p => rows.push([
-      `"${p.title.replace(/"/g, '""')}"`,
-      p.slug?.current || "",
-      catLabel(p.category),
-      p.featured ? "Yes" : "No",
-      `"${(p.tags || []).join(", ")}"`,
-      fmtDate(p.publishedAt),
-      String(p.wordCount || 0),
-    ]));
-    const csv = rows.map(r => r.join(",")).join("\n");
-    const blob = new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a"); a.href = url; a.download = `blog-posts-${Date.now()}.csv`;
-    document.body.appendChild(a); a.click(); a.remove();
-    URL.revokeObjectURL(url);
-    showToast("Đã xuất CSV");
-  }
-
-  async function logout() { await fetch("/api/admin/auth", { method: "DELETE" }); setIsAuthed(false); }
-
-  // ─── Drag to reorder featured ───
   async function handleDrop(targetId: string) {
-    const srcId = dragId.current;
-    dragId.current = null; dragOverId.current = null;
+    const srcId = dragId.current; dragId.current = null;
     if (!srcId || srcId === targetId) return;
-
     const featuredList = posts.filter(p => p.featured).sort((a, b) => (a.featuredOrder ?? 999) - (b.featuredOrder ?? 999));
     const srcIdx = featuredList.findIndex(p => p._id === srcId);
     const tgtIdx = featuredList.findIndex(p => p._id === targetId);
     if (srcIdx < 0 || tgtIdx < 0) return;
-
     const reordered = [...featuredList];
     const [moved] = reordered.splice(srcIdx, 1);
     reordered.splice(tgtIdx, 0, moved);
-
-    // Update featuredOrder in batches: 1, 2, 3, ...
     const updates = reordered.map((p, i) => ({ id: p._id, order: i + 1 }));
     setPosts(prev => prev.map(p => {
       const u = updates.find(x => x.id === p._id);
       return u ? { ...p, featuredOrder: u.order } : p;
     }));
-
     try {
-      await Promise.all(updates.map(u =>
-        api("/api/admin/posts", { method: "PATCH", body: JSON.stringify({ id: u.id, patch: { featuredOrder: u.order } }) })
-      ));
-      showToast(`Đã sắp xếp lại ${updates.length} bài nổi bật`);
-    } catch { showToast("Lỗi cập nhật thứ tự", false); }
+      await Promise.all(updates.map(u => api("/api/admin/posts", { method: "PATCH", body: JSON.stringify({ id: u.id, patch: { featuredOrder: u.order } }) })));
+      showToast(`Đã sắp xếp ${updates.length} bài nổi bật`);
+    } catch { showToast("Lỗi cập nhật", false); }
   }
-
-  // ─── Bulk add tag (append to existing) ───
   async function bulkAddTag(tag: string) {
-    const trimmed = tag.trim().toLowerCase();
-    if (!trimmed) return;
+    const trimmed = tag.trim().toLowerCase(); if (!trimmed) return;
     const ids = Array.from(selected);
     try {
-      // Patch each post with merged tags (Sanity has no array-append-unique in single op, so do per-doc)
       await Promise.all(ids.map(async id => {
-        const post = posts.find(p => p._id === id);
-        if (!post) return;
-        const existing = post.tags || [];
-        if (existing.includes(trimmed)) return;
-        const newTags = [...existing, trimmed];
-        await api("/api/admin/posts", { method: "PATCH", body: JSON.stringify({ id, patch: { tags: newTags } }) });
+        const post = posts.find(p => p._id === id); if (!post) return;
+        const existing = post.tags || []; if (existing.includes(trimmed)) return;
+        await api("/api/admin/posts", { method: "PATCH", body: JSON.stringify({ id, patch: { tags: [...existing, trimmed] } }) });
       }));
       setPosts(prev => prev.map(p => ids.includes(p._id) && !(p.tags || []).includes(trimmed) ? { ...p, tags: [...(p.tags || []), trimmed] } : p));
       showToast(`Đã thêm tag "${trimmed}" vào ${ids.length} bài`);
       setBulkTagInput(""); setShowBulkTag(false); setSelected(new Set());
     } catch { showToast("Lỗi thêm tag", false); }
   }
+  function exportCSV() {
+    const rows = [["Title", "Slug", "Category", "Featured", "Tags", "Published", "Views", "Word Count"]];
+    filtered.forEach(p => rows.push([
+      `"${p.title.replace(/"/g, '""')}"`, p.slug?.current || "", catLabel(p.category),
+      p.featured ? "Yes" : "No", `"${(p.tags || []).join(", ")}"`,
+      fmtDate(p.publishedAt), String(p.views || 0), String(p.wordCount || 0),
+    ]));
+    const csv = rows.map(r => r.join(",")).join("\n");
+    const blob = new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a"); a.href = url; a.download = `blog-${Date.now()}.csv`;
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+    showToast("Đã xuất CSV");
+  }
+  async function logout() { await fetch("/api/admin/auth", { method: "DELETE" }); setIsAuthed(false); }
 
-  // Selection
   function toggleSelect(id: string, e: React.MouseEvent) {
     if (e.shiftKey && lastSelected.current) {
       const ids = filtered.map(p => p._id);
@@ -588,148 +493,147 @@ export default function PostsClient({ authed }: { authed: boolean }) {
   if (!isAuthed) return <LoginScreen onLogin={() => setIsAuthed(true)} />;
 
   const rowH = viewMode === "compact" ? 44 : 64;
+  const editing = posts.find(p => p._id === editingPostId) || null;
 
-  /* ── Styles ── */
-  const s = {
-    wrap: { minHeight: "100vh", background: "#08080f", color: "#fff", fontFamily: "'Inter', -apple-system, sans-serif", fontSize: 14 } as React.CSSProperties,
-    header: { display: "flex", alignItems: "center", gap: 12, padding: "14px 24px", borderBottom: "1px solid rgba(255,255,255,0.07)", background: "rgba(0,0,0,0.5)", position: "sticky" as const, top: 0, zIndex: 50, backdropFilter: "blur(12px)" },
-    th: { padding: "10px 14px", textAlign: "left" as const, fontSize: 10.5, fontWeight: 700, color: "rgba(255,255,255,0.4)", textTransform: "uppercase" as const, letterSpacing: "0.1em", borderBottom: "1px solid rgba(255,255,255,0.07)", background: "rgba(255,255,255,0.02)" },
-    td: { padding: viewMode === "compact" ? "6px 14px" : "10px 14px", borderBottom: "1px solid rgba(255,255,255,0.05)", verticalAlign: "middle" as const },
-    btn: { padding: "7px 12px", borderRadius: 9, background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.75)", border: "1px solid rgba(255,255,255,0.1)", cursor: "pointer", fontSize: 13, fontWeight: 500, display: "flex", alignItems: "center", gap: 6 } as React.CSSProperties,
-  };
+  const btn: React.CSSProperties = { padding: "7px 12px", borderRadius: 9, background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.78)", border: "1px solid rgba(255,255,255,0.1)", cursor: "pointer", fontSize: 13, fontWeight: 500, display: "inline-flex", alignItems: "center", gap: 6, lineHeight: 1 };
+  const th: React.CSSProperties = { padding: "10px 14px", textAlign: "left", fontSize: 10.5, fontWeight: 700, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.1em", borderBottom: "1px solid rgba(255,255,255,0.07)", background: "rgba(255,255,255,0.02)" };
+  const td: React.CSSProperties = { padding: viewMode === "compact" ? "6px 14px" : "10px 14px", borderBottom: "1px solid rgba(255,255,255,0.05)", verticalAlign: "middle" };
 
   return (
-    <div style={s.wrap}>
-      {/* ─── Header ─── */}
-      <div style={s.header}>
-        <span style={{ fontSize: 17, fontWeight: 800, letterSpacing: "-0.02em" }}>✍️ Blog Admin</span>
-
-        <div style={{ flex: 1, maxWidth: 360, position: "relative" }}>
-          <span style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "rgba(255,255,255,0.3)", fontSize: 14 }}>🔍</span>
-          <input ref={searchRef} value={search} onChange={e => setSearch(e.target.value)} placeholder="Tìm... (Ctrl+K)"
-            style={{ width: "100%", padding: "8px 36px 8px 34px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.06)", color: "#fff", fontSize: 14, outline: "none", boxSizing: "border-box" }} />
-          {search && <button onClick={() => setSearch("")} style={{ position: "absolute", right: 8, top: "50%", transform: "translateY(-50%)", background: "rgba(255,255,255,0.1)", border: "none", color: "#fff", borderRadius: 4, width: 20, height: 20, fontSize: 11, cursor: "pointer" }}>×</button>}
+    <div style={{ minHeight: "100vh", background: "#08080f", color: "#fff", fontFamily: "'Inter', -apple-system, sans-serif", fontSize: 14 }}>
+      {/* Header */}
+      <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 24px", borderBottom: "1px solid rgba(255,255,255,0.07)", background: "rgba(0,0,0,0.5)", position: "sticky", top: 0, zIndex: 50, backdropFilter: "blur(12px)" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 16, fontWeight: 800 }}>
+          <IcPen size={18} color="#7da9ff" />
+          Blog Admin
         </div>
 
-        {/* Filters button */}
+        <div style={{ flex: 1, maxWidth: 360, position: "relative" }}>
+          <span style={{ position: "absolute", left: 11, top: "50%", transform: "translateY(-50%)", color: "rgba(255,255,255,0.35)", display: "flex" }}><IcSearch size={15} /></span>
+          <input ref={searchRef} value={search} onChange={e => setSearch(e.target.value)} placeholder="Tìm... (Ctrl+K)"
+            style={{ width: "100%", padding: "8px 36px 8px 34px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.06)", color: "#fff", fontSize: 14, outline: "none", boxSizing: "border-box" }} />
+          {search && <button onClick={() => setSearch("")} style={{ position: "absolute", right: 6, top: "50%", transform: "translateY(-50%)", background: "rgba(255,255,255,0.1)", border: "none", color: "#fff", borderRadius: 4, width: 22, height: 22, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}><IcX size={11} /></button>}
+        </div>
+
+        {/* Filter */}
         <div style={{ position: "relative" }}>
-          <button onClick={() => { setShowFilters(v => !v); setShowSort(false); }} style={{ ...s.btn, background: activeFilterCount > 0 ? "rgba(20,110,245,0.18)" : "rgba(255,255,255,0.06)", borderColor: activeFilterCount > 0 ? "rgba(20,110,245,0.4)" : "rgba(255,255,255,0.1)", color: activeFilterCount > 0 ? "#7da9ff" : "rgba(255,255,255,0.75)" }}>
-            <span>⚙️</span> Lọc {activeFilterCount > 0 && <span style={{ marginLeft: 4, background: "#146ef5", color: "#fff", borderRadius: 10, padding: "1px 7px", fontSize: 11, fontWeight: 700 }}>{activeFilterCount}</span>}
+          <button onClick={() => { setShowFilters(v => !v); setShowSort(false); }}
+            style={{ ...btn, background: activeFilterCount > 0 ? "rgba(20,110,245,0.18)" : "rgba(255,255,255,0.06)", borderColor: activeFilterCount > 0 ? "rgba(20,110,245,0.4)" : "rgba(255,255,255,0.1)", color: activeFilterCount > 0 ? "#7da9ff" : "rgba(255,255,255,0.78)" }}>
+            <IcFilter size={14} /> Lọc
+            {activeFilterCount > 0 && <span style={{ background: "#146ef5", color: "#fff", borderRadius: 10, padding: "0px 6px", fontSize: 11, fontWeight: 700 }}>{activeFilterCount}</span>}
           </button>
           {showFilters && (
-            <Popover onClose={() => setShowFilters(false)} style={{ top: "100%", right: 0, marginTop: 6, width: 320, padding: 14 }}>
+            <Popover onClose={() => setShowFilters(false)} style={{ top: "100%", right: 0, marginTop: 6, width: 340, padding: 14 }}>
               <div style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.4)", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 8 }}>Trạng thái</div>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 14 }}>
-                {[["all","Tất cả"],["featured","⭐ Nổi bật"],["not-featured","Không nổi bật"],["needs-cover","Thiếu ảnh"],["needs-body","Thiếu nội dung"],["needs-excerpt","Thiếu tóm tắt"],["needs-tags","Thiếu tags"]].map(([k,l]) => (
-                  <button key={k} onClick={() => setFilterStatus(k)} style={{ padding: "5px 10px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer", border: `1px solid ${filterStatus === k ? "#146ef5" : "rgba(255,255,255,0.1)"}`, background: filterStatus === k ? "rgba(20,110,245,0.2)" : "rgba(255,255,255,0.04)", color: filterStatus === k ? "#7da9ff" : "rgba(255,255,255,0.65)" }}>{l}</button>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 14 }}>
+                {[["all","Tất cả"],["featured","Nổi bật"],["not-featured","Không nổi bật"],["needs-cover","Thiếu ảnh"],["needs-body","Thiếu nội dung"],["needs-excerpt","Thiếu tóm tắt"],["needs-tags","Thiếu tags"],["invalid-cat","Sai danh mục"]].map(([k,l]) => (
+                  <button key={k} onClick={() => setFilterStatus(k)} style={{ padding: "4px 10px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer", border: `1px solid ${filterStatus === k ? "#146ef5" : "rgba(255,255,255,0.1)"}`, background: filterStatus === k ? "rgba(20,110,245,0.2)" : "rgba(255,255,255,0.04)", color: filterStatus === k ? "#7da9ff" : "rgba(255,255,255,0.65)" }}>{l}</button>
                 ))}
               </div>
               <div style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.4)", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 8 }}>Ngày đăng</div>
-              <div style={{ display: "flex", gap: 6, marginBottom: 14 }}>
+              <div style={{ display: "flex", gap: 5, marginBottom: 14 }}>
                 {[["all","Tất cả"],["today","Hôm nay"],["week","7 ngày"],["month","30 ngày"]].map(([k,l]) => (
                   <button key={k} onClick={() => setFilterDate(k)} style={{ flex: 1, padding: "5px 8px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer", border: `1px solid ${filterDate === k ? "#146ef5" : "rgba(255,255,255,0.1)"}`, background: filterDate === k ? "rgba(20,110,245,0.2)" : "rgba(255,255,255,0.04)", color: filterDate === k ? "#7da9ff" : "rgba(255,255,255,0.65)" }}>{l}</button>
                 ))}
               </div>
               <div style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.4)", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 8 }}>Danh mục</div>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
                 {Object.entries(CATEGORIES).map(([k, l]) => {
                   const on = filterCat.includes(k);
                   return (
                     <button key={k} onClick={() => setFilterCat(prev => on ? prev.filter(c => c !== k) : [...prev, k])}
-                      style={{ padding: "4px 9px", borderRadius: 12, fontSize: 11, fontWeight: 600, cursor: "pointer", border: `1px solid ${on ? catColor(k) : "rgba(255,255,255,0.1)"}`, background: on ? `${catColor(k)}20` : "rgba(255,255,255,0.04)", color: on ? catColor(k) : "rgba(255,255,255,0.55)" }}>
-                      {l}
-                    </button>
+                      style={{ padding: "3px 9px", borderRadius: 12, fontSize: 11, fontWeight: 600, cursor: "pointer", border: `1px solid ${on ? catColor(k) : "rgba(255,255,255,0.1)"}`, background: on ? `${catColor(k)}20` : "rgba(255,255,255,0.04)", color: on ? catColor(k) : "rgba(255,255,255,0.55)" }}>{l}</button>
                   );
                 })}
               </div>
               {activeFilterCount > 0 && (
-                <button onClick={() => { setFilterCat([]); setFilterStatus("all"); setFilterDate("all"); }} style={{ marginTop: 14, width: "100%", padding: "6px 0", borderRadius: 8, background: "rgba(255,100,100,0.1)", border: "1px solid rgba(255,100,100,0.25)", color: "#ff8888", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>
-                  Xoá tất cả bộ lọc
-                </button>
+                <button onClick={() => { setFilterCat([]); setFilterStatus("all"); setFilterDate("all"); }} style={{ marginTop: 14, width: "100%", padding: "6px 0", borderRadius: 8, background: "rgba(255,100,100,0.1)", border: "1px solid rgba(255,100,100,0.25)", color: "#ff8888", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>Xoá tất cả bộ lọc</button>
               )}
             </Popover>
           )}
         </div>
 
-        {/* Sort button */}
+        {/* Sort */}
         <div style={{ position: "relative" }}>
-          <button onClick={() => { setShowSort(v => !v); setShowFilters(false); }} style={s.btn}>
-            <span>↕</span> {SORT_LABELS[sortBy]}
+          <button onClick={() => { setShowSort(v => !v); setShowFilters(false); }} style={btn}>
+            <IcSortDown size={14} /> {SORT_LABELS[sortBy]}
           </button>
           {showSort && (
-            <Popover onClose={() => setShowSort(false)} style={{ top: "100%", right: 0, marginTop: 6, minWidth: 180 }}>
+            <Popover onClose={() => setShowSort(false)} style={{ top: "100%", right: 0, marginTop: 6, minWidth: 200 }}>
               {Object.entries(SORT_LABELS).map(([k, l]) => (
                 <div key={k} onClick={() => { setSortBy(k as SortKey); setShowSort(false); }}
-                  style={{ padding: "8px 12px", borderRadius: 8, fontSize: 13, cursor: "pointer", color: sortBy === k ? "#7da9ff" : "rgba(255,255,255,0.8)", background: sortBy === k ? "rgba(20,110,245,0.12)" : "transparent" }}
+                  style={{ padding: "8px 12px", borderRadius: 8, fontSize: 13, cursor: "pointer", color: sortBy === k ? "#7da9ff" : "rgba(255,255,255,0.8)", background: sortBy === k ? "rgba(20,110,245,0.12)" : "transparent", display: "flex", alignItems: "center", gap: 8 }}
                   onMouseEnter={e => sortBy !== k && (e.currentTarget.style.background = "rgba(255,255,255,0.05)")}
                   onMouseLeave={e => sortBy !== k && (e.currentTarget.style.background = "transparent")}>
-                  {l}{sortBy === k && <span style={{ float: "right" }}>✓</span>}
+                  {k === "views" && <IcEye size={13} />}{k === "views_week" && <IcFire size={13} color="#ff7ad9" />}
+                  <span style={{ flex: 1 }}>{l}</span>{sortBy === k && <IcCheck size={12} />}
                 </div>
               ))}
             </Popover>
           )}
         </div>
 
-        {/* Reorder featured mode */}
-        <button onClick={() => setReorderMode(v => !v)} title="Kéo thả để sắp xếp thứ tự bài nổi bật"
-          style={{ ...s.btn, background: reorderMode ? "rgba(255,215,0,0.18)" : "rgba(255,255,255,0.06)", borderColor: reorderMode ? "rgba(255,215,0,0.4)" : "rgba(255,255,255,0.1)", color: reorderMode ? "#ffd700" : "rgba(255,255,255,0.75)" }}>
-          {reorderMode ? "✓ Xong sắp xếp" : "🔀 Sắp xếp Featured"}
+        <button onClick={() => setReorderMode(v => !v)} title="Kéo thả để sắp xếp featured"
+          style={{ ...btn, background: reorderMode ? "rgba(255,215,0,0.18)" : "rgba(255,255,255,0.06)", borderColor: reorderMode ? "rgba(255,215,0,0.4)" : "rgba(255,255,255,0.1)", color: reorderMode ? "#ffd700" : "rgba(255,255,255,0.78)" }}>
+          <IcArrowReorder size={14} /> {reorderMode ? "Xong" : "Sắp xếp"}
         </button>
 
-        {/* View mode */}
-        <button onClick={() => setViewMode(v => v === "compact" ? "comfortable" : "compact")} title={viewMode === "compact" ? "Chế độ rộng" : "Chế độ gọn"} style={{ ...s.btn, padding: "7px 10px" }}>
-          {viewMode === "compact" ? "☰" : "≡"}
+        <button onClick={() => setViewMode(v => v === "compact" ? "comfortable" : "compact")} title="Đổi chế độ xem" style={{ ...btn, padding: "7px 9px" }}>
+          {viewMode === "compact" ? <IcRows size={14} /> : <IcLayoutList size={14} />}
         </button>
 
-        <button onClick={exportCSV} title="Xuất CSV" style={{ ...s.btn, padding: "7px 10px" }}>📥</button>
+        <button onClick={exportCSV} title="Xuất CSV" style={{ ...btn, padding: "7px 9px" }}><IcDownload size={14} /></button>
 
         <div style={{ marginLeft: "auto", display: "flex", gap: 8 }}>
-          <button onClick={() => setShowNewPost(true)} style={{ padding: "8px 18px", borderRadius: 10, background: "linear-gradient(135deg,#146ef5,#7a3dff)", color: "#fff", fontWeight: 700, fontSize: 14, border: "none", cursor: "pointer" }}>+ Bài mới</button>
-          <button onClick={loadPosts} title="Làm mới" style={{ ...s.btn, padding: "7px 10px" }}>⟳</button>
-          <button onClick={logout} style={{ padding: "7px 12px", borderRadius: 9, background: "rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.4)", border: "1px solid rgba(255,255,255,0.08)", cursor: "pointer", fontSize: 12 }}>Đăng xuất</button>
+          <button onClick={() => setEditingPostId("new")} style={{ padding: "8px 16px", borderRadius: 10, background: "linear-gradient(135deg,#146ef5,#7a3dff)", color: "#fff", fontWeight: 700, fontSize: 13, border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }}>
+            <IcPlus size={14} /> Bài mới
+          </button>
+          <button onClick={loadPosts} title="Làm mới" style={{ ...btn, padding: "7px 9px" }}><IcRefresh size={14} /></button>
+          <button onClick={logout} title="Đăng xuất" style={{ padding: "7px 11px", borderRadius: 9, background: "rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.45)", border: "1px solid rgba(255,255,255,0.08)", cursor: "pointer", display: "flex", alignItems: "center", gap: 6, fontSize: 12 }}><IcLogout size={13} /> Thoát</button>
         </div>
       </div>
 
       <div style={{ padding: "18px 24px", maxWidth: 1500, margin: "0 auto" }}>
-        {/* Stats cards */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(150px,1fr))", gap: 10, marginBottom: 18 }}>
+        {/* Stats - clickable */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(170px,1fr))", gap: 10, marginBottom: 18 }}>
           {[
-            { label: "Tổng bài viết", value: stats.total, color: "#5fffaa", icon: "📚" },
-            { label: "Bài nổi bật", value: stats.featured, color: "#ffd700", icon: "⭐" },
-            { label: "Thiếu ảnh bìa", value: stats.needsCover, color: "#ff9f7a", icon: "📷", action: () => { setFilterStatus("needs-cover"); setShowFilters(false); } },
-            { label: "Thiếu nội dung", value: stats.needsBody, color: "#ff6b6b", icon: "📝", action: () => { setFilterStatus("needs-body"); setShowFilters(false); } },
-          ].map(s => (
-            <div key={s.label} onClick={s.action} style={{ padding: "14px 18px", borderRadius: 12, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", cursor: s.action ? "pointer" : "default", transition: "all 0.15s", display: "flex", alignItems: "center", gap: 12 }}
-              onMouseEnter={e => s.action && (e.currentTarget.style.background = "rgba(255,255,255,0.06)")}
-              onMouseLeave={e => s.action && (e.currentTarget.style.background = "rgba(255,255,255,0.03)")}>
-              <div style={{ fontSize: 24 }}>{s.icon}</div>
+            { Icon: IcBook, label: "Tổng bài viết", value: stats.total, color: "#5fffaa", action: () => { setFilterStatus("all"); setFilterDate("all"); setFilterCat([]); } },
+            { Icon: IcStar, label: "Bài nổi bật", value: stats.featured, color: "#ffd700", action: () => setFilterStatus("featured") },
+            { Icon: IcImage, label: "Thiếu ảnh bìa", value: stats.needsCover, color: "#ff9f7a", action: () => setFilterStatus("needs-cover") },
+            { Icon: IcFileEdit, label: "Thiếu nội dung", value: stats.needsBody, color: "#ff6b6b", action: () => setFilterStatus("needs-body") },
+            ...(stats.invalidCat > 0 ? [{ Icon: IcAlertCircle, label: "Sai danh mục", value: stats.invalidCat, color: "#ff6b6b", action: () => setFilterStatus("invalid-cat") }] : []),
+          ].map((it: any) => (
+            <button key={it.label} onClick={it.action}
+              style={{ padding: "14px 18px", borderRadius: 12, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", cursor: "pointer", transition: "all 0.15s", display: "flex", alignItems: "center", gap: 12, textAlign: "left", color: "inherit", fontFamily: "inherit" }}
+              onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.06)")}
+              onMouseLeave={e => (e.currentTarget.style.background = "rgba(255,255,255,0.03)")}>
+              <div style={{ color: it.color, display: "flex" }}><it.Icon size={22} /></div>
               <div>
-                <div style={{ fontSize: 22, fontWeight: 800, color: s.color, lineHeight: 1 }}>{s.value}</div>
-                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", marginTop: 4 }}>{s.label}</div>
+                <div style={{ fontSize: 22, fontWeight: 800, color: it.color, lineHeight: 1 }}>{it.value}</div>
+                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", marginTop: 4 }}>{it.label}</div>
               </div>
-            </div>
+            </button>
           ))}
         </div>
 
-        {/* Active filter chips */}
         {activeFilterCount > 0 && (
           <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 14 }}>
             {filterStatus !== "all" && (
-              <span style={{ padding: "4px 10px", borderRadius: 14, background: "rgba(20,110,245,0.15)", border: "1px solid rgba(20,110,245,0.35)", fontSize: 12, color: "#7da9ff", display: "flex", alignItems: "center", gap: 4 }}>
-                {filterStatus === "needs-cover" && "Thiếu ảnh"}{filterStatus === "needs-body" && "Thiếu nội dung"}{filterStatus === "featured" && "⭐ Nổi bật"}{filterStatus === "not-featured" && "Không nổi bật"}{filterStatus === "needs-excerpt" && "Thiếu tóm tắt"}{filterStatus === "needs-tags" && "Thiếu tags"}
-                <button onClick={() => setFilterStatus("all")} style={{ background: "none", border: "none", color: "inherit", cursor: "pointer", fontSize: 14, padding: 0, marginLeft: 2 }}>×</button>
+              <span style={{ padding: "4px 10px", borderRadius: 14, background: "rgba(20,110,245,0.15)", border: "1px solid rgba(20,110,245,0.35)", fontSize: 12, color: "#7da9ff", display: "flex", alignItems: "center", gap: 5 }}>
+                {filterStatus === "needs-cover" && "Thiếu ảnh"}{filterStatus === "needs-body" && "Thiếu nội dung"}{filterStatus === "featured" && "Nổi bật"}{filterStatus === "not-featured" && "Không nổi bật"}{filterStatus === "needs-excerpt" && "Thiếu tóm tắt"}{filterStatus === "needs-tags" && "Thiếu tags"}{filterStatus === "invalid-cat" && "Sai danh mục"}
+                <button onClick={() => setFilterStatus("all")} style={{ background: "none", border: "none", color: "inherit", cursor: "pointer", display: "flex" }}><IcX size={11} /></button>
               </span>
             )}
             {filterDate !== "all" && (
-              <span style={{ padding: "4px 10px", borderRadius: 14, background: "rgba(95,255,170,0.12)", border: "1px solid rgba(95,255,170,0.3)", fontSize: 12, color: "#5fffaa", display: "flex", alignItems: "center", gap: 4 }}>
+              <span style={{ padding: "4px 10px", borderRadius: 14, background: "rgba(95,255,170,0.12)", border: "1px solid rgba(95,255,170,0.3)", fontSize: 12, color: "#5fffaa", display: "flex", alignItems: "center", gap: 5 }}>
                 {filterDate === "today" && "Hôm nay"}{filterDate === "week" && "7 ngày"}{filterDate === "month" && "30 ngày"}
-                <button onClick={() => setFilterDate("all")} style={{ background: "none", border: "none", color: "inherit", cursor: "pointer", fontSize: 14, marginLeft: 2 }}>×</button>
+                <button onClick={() => setFilterDate("all")} style={{ background: "none", border: "none", color: "inherit", cursor: "pointer", display: "flex" }}><IcX size={11} /></button>
               </span>
             )}
             {filterCat.map(c => (
-              <span key={c} style={{ padding: "4px 10px", borderRadius: 14, background: `${catColor(c)}18`, border: `1px solid ${catColor(c)}40`, fontSize: 12, color: catColor(c), display: "flex", alignItems: "center", gap: 4 }}>
+              <span key={c} style={{ padding: "4px 10px", borderRadius: 14, background: `${catColor(c)}18`, border: `1px solid ${catColor(c)}40`, fontSize: 12, color: catColor(c), display: "flex", alignItems: "center", gap: 5 }}>
                 {catLabel(c)}
-                <button onClick={() => setFilterCat(prev => prev.filter(x => x !== c))} style={{ background: "none", border: "none", color: "inherit", cursor: "pointer", fontSize: 14 }}>×</button>
+                <button onClick={() => setFilterCat(prev => prev.filter(x => x !== c))} style={{ background: "none", border: "none", color: "inherit", cursor: "pointer", display: "flex" }}><IcX size={11} /></button>
               </span>
             ))}
           </div>
@@ -743,97 +647,89 @@ export default function PostsClient({ authed }: { authed: boolean }) {
             <table style={{ width: "100%", borderCollapse: "collapse" }}>
               <thead>
                 <tr>
-                  {reorderMode && <th style={{ ...s.th, width: 32 }}>≡</th>}
-                  {!reorderMode && (
-                    <th style={{ ...s.th, width: 40 }}>
+                  {reorderMode ? <th style={{ ...th, width: 38 }}>#</th> : (
+                    <th style={{ ...th, width: 38 }}>
                       <input type="checkbox" checked={selected.size > 0 && selected.size === filtered.length}
                         ref={el => el && (el.indeterminate = selected.size > 0 && selected.size < filtered.length)}
                         onChange={toggleSelectAll} style={{ cursor: "pointer" }} />
                     </th>
                   )}
-                  <th style={{ ...s.th, width: 32 }}>⭐</th>
-                  {viewMode === "comfortable" && <th style={{ ...s.th, width: 76 }}>Ảnh</th>}
-                  <th style={s.th}>Tiêu đề</th>
-                  <th style={{ ...s.th, width: 160 }}>Danh mục</th>
-                  {viewMode === "comfortable" && <th style={{ ...s.th, width: 120 }}>Tags</th>}
-                  <th style={{ ...s.th, width: 90, textAlign: "right" as const }}>👁 Views</th>
-                  <th style={{ ...s.th, width: 100 }}>Ngày</th>
-                  <th style={{ ...s.th, width: 70 }}>Health</th>
-                  <th style={{ ...s.th, width: 120 }}>Thao tác</th>
+                  <th style={{ ...th, width: 32 }}><IcStar size={11} /></th>
+                  {viewMode === "comfortable" && <th style={{ ...th, width: 80 }}>Ảnh</th>}
+                  <th style={th}>Tiêu đề</th>
+                  <th style={{ ...th, width: 170 }}>Danh mục</th>
+                  {viewMode === "comfortable" && <th style={{ ...th, width: 130 }}>Tags</th>}
+                  <th style={{ ...th, width: 86, textAlign: "right" }}>Views</th>
+                  <th style={{ ...th, width: 100 }}>Ngày</th>
+                  <th style={{ ...th, width: 76 }}>Health</th>
+                  <th style={{ ...th, width: 110 }}>Thao tác</th>
                 </tr>
               </thead>
               <tbody>
                 {filtered.length === 0 && (
-                  <tr><td colSpan={10} style={{ ...s.td, textAlign: "center", padding: 48, color: "rgba(255,255,255,0.3)" }}>
+                  <tr><td colSpan={10} style={{ ...td, textAlign: "center", padding: 48, color: "rgba(255,255,255,0.3)" }}>
                     {reorderMode ? "Chưa có bài nào được đánh dấu nổi bật" : `Không tìm thấy bài nào${search ? ` cho "${search}"` : ""}`}
                   </td></tr>
                 )}
                 {filtered.map((post, idx) => {
                   const isSel = selected.has(post._id);
                   const isMut = mutating.has(post._id);
-                  const health = getHealth(post);
+                  const invalidCat = !CATEGORIES[post.category];
                   return (
                     <tr key={post._id}
                       draggable={reorderMode}
                       onDragStart={() => { if (reorderMode) dragId.current = post._id; }}
-                      onDragOver={e => { if (reorderMode) { e.preventDefault(); dragOverId.current = post._id; } }}
+                      onDragOver={e => { if (reorderMode) e.preventDefault(); }}
                       onDrop={() => { if (reorderMode) handleDrop(post._id); }}
                       style={{ background: isSel ? "rgba(20,110,245,0.08)" : "transparent", transition: "background 0.1s", height: rowH, cursor: reorderMode ? "grab" : "default" }}
                       onMouseEnter={e => !isSel && (e.currentTarget.style.background = "rgba(255,255,255,0.025)")}
                       onMouseLeave={e => !isSel && (e.currentTarget.style.background = "transparent")}>
                       {reorderMode ? (
-                        <td style={{ ...s.td, color: "#ffd700", fontWeight: 700, fontSize: 14 }}>
-                          <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-                            <span style={{ opacity: 0.5, cursor: "grab" }}>⋮⋮</span>
-                            <span style={{ fontSize: 11, padding: "2px 6px", borderRadius: 4, background: "rgba(255,215,0,0.12)" }}>{idx + 1}</span>
-                          </span>
+                        <td style={td}>
+                          <div style={{ display: "flex", alignItems: "center", gap: 6, color: "#ffd700", fontWeight: 700, fontSize: 13 }}>
+                            <IcGrip size={14} color="rgba(255,255,255,0.4)" />
+                            <span style={{ fontSize: 11, padding: "2px 6px", borderRadius: 4, background: "rgba(255,215,0,0.15)" }}>{idx + 1}</span>
+                          </div>
                         </td>
                       ) : (
-                        <td style={s.td}>
+                        <td style={td}>
                           <input type="checkbox" checked={isSel} onChange={() => {}} onClick={e => toggleSelect(post._id, e as any)} style={{ cursor: "pointer" }} />
                         </td>
                       )}
-                      <td style={s.td}>
-                        <button onClick={() => !isMut && toggleFeatured(post)} disabled={isMut}
-                          style={{ background: "none", border: "none", cursor: "pointer", fontSize: 17, opacity: isMut ? 0.4 : 1, padding: 0 }}>
-                          {post.featured ? "⭐" : "☆"}
+                      <td style={td}>
+                        <button onClick={() => !isMut && toggleFeatured(post)} disabled={isMut} title={post.featured ? "Bỏ nổi bật" : "Đánh dấu nổi bật"}
+                          style={{ background: "none", border: "none", cursor: "pointer", opacity: isMut ? 0.4 : 1, padding: 4, display: "flex", color: post.featured ? "#ffd700" : "rgba(255,255,255,0.3)" }}>
+                          <IcStar size={17} filled={post.featured} color={post.featured ? "#ffd700" : "rgba(255,255,255,0.3)"} />
                         </button>
                       </td>
                       {viewMode === "comfortable" && (
-                        <td style={s.td}>
+                        <td style={td}>
                           <CoverCell post={post} onUpdate={patch => setPosts(prev => prev.map(p => p._id === post._id ? { ...p, ...patch } : p))} />
                         </td>
                       )}
-                      <td style={s.td}>
-                        {editingTitleId === post._id ? (
-                          <TitleEditor post={post} onSave={v => patchPost(post._id, { title: v })} onClose={() => setEditingTitleId(null)} />
-                        ) : (
-                          <div style={{ display: "flex", flexDirection: "column", gap: 2, maxWidth: 480 }}>
-                            <div onDoubleClick={() => setEditingTitleId(post._id)} title="Double click để sửa"
-                              style={{ color: "#fff", fontWeight: 500, fontSize: 14, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", cursor: "text" }}>
-                              {post.title}
-                            </div>
-                            <div style={{ display: "flex", gap: 8, alignItems: "center", fontSize: 11, color: "rgba(255,255,255,0.35)" }}>
-                              <a href={`/blog/${post.slug?.current}`} target="_blank" style={{ color: "inherit", textDecoration: "none" }} title="Xem trên blog">↗ /{post.slug?.current}</a>
-                              {post.wordCount ? <span>· {post.wordCount.toLocaleString()} từ</span> : null}
-                              {viewMode === "comfortable" && (
-                                <span style={{ position: "relative" }}>
-                                  · <button onClick={() => setEditingExcerptId(post._id)} style={{ background: "none", border: "none", color: post.excerpt ? "rgba(255,255,255,0.5)" : "#ffaa44", cursor: "pointer", fontSize: 11, padding: 0, textDecoration: "underline dotted", textUnderlineOffset: 2 }}>
-                                    {post.excerpt ? "tóm tắt" : "+ tóm tắt"}
-                                  </button>
-                                  {editingExcerptId === post._id && (
-                                    <ExcerptEditor post={post} onSave={v => patchPost(post._id, { excerpt: v })} onClose={() => setEditingExcerptId(null)} />
-                                  )}
-                                </span>
-                              )}
-                            </div>
+                      <td style={td}>
+                        <div style={{ display: "flex", flexDirection: "column", gap: 2, maxWidth: 500 }}>
+                          <div onClick={() => setEditingPostId(post._id)} title="Click để sửa"
+                            style={{ color: "#fff", fontWeight: 500, fontSize: 14, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", cursor: "pointer" }}>
+                            {post.title}
                           </div>
-                        )}
+                          <div style={{ display: "flex", gap: 8, alignItems: "center", fontSize: 11, color: "rgba(255,255,255,0.35)", flexWrap: "wrap" }}>
+                            <a href={`/blog/${post.slug?.current}`} target="_blank" style={{ color: "inherit", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 3 }} title="Xem trên blog">
+                              <IcExternal size={10} /> /{post.slug?.current}
+                            </a>
+                            {post.wordCount ? <span>· {post.wordCount.toLocaleString()} từ</span> : null}
+                          </div>
+                        </div>
                       </td>
-                      <td style={{ ...s.td, position: "relative" }}>
+                      <td style={{ ...td, position: "relative" }}>
                         <div style={{ position: "relative", display: "inline-block" }}>
                           <span onClick={() => setEditingCatId(editingCatId === post._id ? null : post._id)}
-                            style={{ padding: "3px 10px", borderRadius: 14, fontSize: 11, fontWeight: 600, background: `${catColor(post.category)}18`, color: catColor(post.category), border: `1px solid ${catColor(post.category)}40`, cursor: "pointer", whiteSpace: "nowrap", userSelect: "none" }}>
+                            style={{ padding: "3px 10px", borderRadius: 14, fontSize: 11, fontWeight: 600,
+                              background: invalidCat ? "rgba(255,100,100,0.12)" : `${catColor(post.category)}18`,
+                              color: invalidCat ? "#ff8888" : catColor(post.category),
+                              border: `1px solid ${invalidCat ? "rgba(255,100,100,0.3)" : `${catColor(post.category)}40`}`,
+                              cursor: "pointer", whiteSpace: "nowrap", userSelect: "none", display: "inline-flex", alignItems: "center", gap: 4 }}>
+                            {invalidCat && <IcAlertCircle size={11} />}
                             {catLabel(post.category)}
                           </span>
                           {editingCatId === post._id && (
@@ -842,43 +738,40 @@ export default function PostsClient({ authed }: { authed: boolean }) {
                         </div>
                       </td>
                       {viewMode === "comfortable" && (
-                        <td style={{ ...s.td, fontSize: 11 }}>
+                        <td style={{ ...td, fontSize: 11 }}>
                           {(post.tags || []).slice(0, 3).map(t => (
                             <span key={t} style={{ display: "inline-block", padding: "1px 7px", borderRadius: 8, background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.55)", marginRight: 3, marginBottom: 2 }}>{t}</span>
                           ))}
                           {(post.tags || []).length > 3 && <span style={{ color: "rgba(255,255,255,0.35)" }}>+{post.tags!.length - 3}</span>}
                         </td>
                       )}
-                      <td style={{ ...s.td, textAlign: "right" as const, fontSize: 13, fontVariantNumeric: "tabular-nums" }}>
+                      <td style={{ ...td, textAlign: "right", fontSize: 13, fontVariantNumeric: "tabular-nums" }}>
                         {post.views ? (
-                          <div title={`Hôm nay: ${post.viewsToday || 0} · Tuần này: ${post.viewsWeek || 0} · 90 ngày: ${post.views}`}>
+                          <div title={`Hôm nay: ${post.viewsToday || 0} | Tuần: ${post.viewsWeek || 0} | 90 ngày: ${post.views}`}>
                             <div style={{ color: "#fff", fontWeight: 600 }}>{post.views.toLocaleString()}</div>
                             {(post.viewsWeek || 0) > 0 && <div style={{ fontSize: 10, color: "#5fffaa" }}>+{post.viewsWeek}/tuần</div>}
                           </div>
-                        ) : (
-                          <span style={{ color: "rgba(255,255,255,0.2)" }}>—</span>
-                        )}
+                        ) : <span style={{ color: "rgba(255,255,255,0.2)" }}>—</span>}
                       </td>
-                      <td style={{ ...s.td, color: "rgba(255,255,255,0.5)", fontSize: 12 }}>
+                      <td style={{ ...td, color: "rgba(255,255,255,0.5)", fontSize: 12 }}>
                         <div>{fmtDate(post.publishedAt)}</div>
                         <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)" }}>{fmtRelative(post.publishedAt)}</div>
                       </td>
-                      <td style={s.td}>
-                        <div title={health.missing.length ? `Thiếu: ${health.missing.join(", ")}` : "Đầy đủ"} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                          <div style={{ width: 32, height: 4, borderRadius: 2, background: "rgba(255,255,255,0.08)", overflow: "hidden" }}>
-                            <div style={{ width: `${health.score}%`, height: "100%", background: health.score === 100 ? "#5fffaa" : health.score >= 60 ? "#ffd700" : "#ff6b6b", transition: "width 0.3s" }} />
-                          </div>
-                          <span style={{ fontSize: 10, color: health.score === 100 ? "#5fffaa" : health.score >= 60 ? "#ffd700" : "#ff6b6b", fontWeight: 600 }}>{health.score}</span>
-                        </div>
-                      </td>
-                      <td style={s.td}>
+                      <td style={td}><HealthBar post={post} /></td>
+                      <td style={td}>
                         <div style={{ display: "flex", gap: 4 }}>
-                          <a href={`/studio/intent/edit/id=${post._id}`} target="_blank" title="Sửa trong Studio"
-                            style={{ padding: "5px 8px", borderRadius: 6, background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.6)", border: "1px solid rgba(255,255,255,0.08)", textDecoration: "none", fontSize: 11, fontWeight: 500 }}>Studio</a>
+                          <button onClick={() => setEditingPostId(post._id)} title="Sửa trong admin"
+                            style={{ padding: "5px 8px", borderRadius: 6, background: "rgba(20,110,245,0.12)", color: "#7da9ff", border: "1px solid rgba(20,110,245,0.25)", cursor: "pointer", display: "flex", alignItems: "center", gap: 4, fontSize: 11, fontWeight: 600 }}>
+                            <IcPencil size={11} /> Sửa
+                          </button>
                           <button onClick={() => duplicatePost(post._id)} title="Nhân bản"
-                            style={{ padding: "5px 8px", borderRadius: 6, background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.5)", border: "1px solid rgba(255,255,255,0.08)", cursor: "pointer", fontSize: 11 }}>⎘</button>
+                            style={{ padding: "5px 7px", borderRadius: 6, background: "rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.5)", border: "1px solid rgba(255,255,255,0.08)", cursor: "pointer", display: "flex" }}>
+                            <IcCopy size={12} />
+                          </button>
                           <button onClick={() => setDeleteConfirm(post._id)} title="Xoá"
-                            style={{ padding: "5px 8px", borderRadius: 6, background: "rgba(255,60,60,0.08)", color: "#ff7878", border: "1px solid rgba(255,60,60,0.18)", cursor: "pointer", fontSize: 11 }}>🗑</button>
+                            style={{ padding: "5px 7px", borderRadius: 6, background: "rgba(255,60,60,0.08)", color: "#ff7878", border: "1px solid rgba(255,60,60,0.18)", cursor: "pointer", display: "flex" }}>
+                            <IcTrash size={12} />
+                          </button>
                         </div>
                       </td>
                     </tr>
@@ -892,16 +785,14 @@ export default function PostsClient({ authed }: { authed: boolean }) {
         <div style={{ padding: "12px 4px", color: "rgba(255,255,255,0.3)", fontSize: 12, display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 8 }}>
           <span>Hiển thị {filtered.length} / {posts.length} bài viết{reorderMode && " · Đang ở chế độ sắp xếp"}</span>
           <span style={{ fontSize: 11 }}>
-            {reorderMode
-              ? "💡 Kéo thả các hàng để sắp xếp lại thứ tự bài nổi bật"
-              : "💡 Ctrl+K tìm · Ctrl+N tạo bài · Shift+click chọn range · Esc bỏ chọn · Double-click tiêu đề để sửa"}
+            {reorderMode ? "Kéo thả các hàng để sắp xếp lại thứ tự bài nổi bật" : "Ctrl+K tìm · Ctrl+N tạo bài · Shift+click chọn range · Click tiêu đề để sửa"}
           </span>
         </div>
       </div>
 
       {/* Bulk action bar */}
       {selected.size > 0 && (
-        <div style={{ position: "fixed", bottom: 28, left: "50%", transform: "translateX(-50%)", background: "#181828", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 16, padding: "10px 18px", display: "flex", gap: 10, alignItems: "center", boxShadow: "0 8px 40px rgba(0,0,0,0.6)", zIndex: 100, whiteSpace: "nowrap" }}>
+        <div style={{ position: "fixed", bottom: 28, left: "50%", transform: "translateX(-50%)", background: "#181828", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 16, padding: "10px 18px", display: "flex", gap: 10, alignItems: "center", boxShadow: "0 8px 40px rgba(0,0,0,0.6)", zIndex: 100, whiteSpace: "nowrap", flexWrap: "wrap", maxWidth: "calc(100vw - 48px)" }}>
           <span style={{ color: "#7da9ff", fontWeight: 700, fontSize: 14 }}>{selected.size} đã chọn</span>
           <div style={{ width: 1, height: 18, background: "rgba(255,255,255,0.15)" }} />
           <select value={bulkCat} onChange={e => setBulkCat(e.target.value)} style={{ padding: "6px 10px", borderRadius: 7, background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)", color: "#fff", fontSize: 12, cursor: "pointer", outline: "none" }}>
@@ -911,26 +802,28 @@ export default function PostsClient({ authed }: { authed: boolean }) {
           <button onClick={() => bulkCat && bulkPatch({ category: bulkCat }, `Đã đổi ${selected.size} bài`).then(() => setBulkCat(""))} disabled={!bulkCat}
             style={{ padding: "6px 12px", borderRadius: 7, background: bulkCat ? "#146ef5" : "rgba(255,255,255,0.06)", color: bulkCat ? "#fff" : "rgba(255,255,255,0.3)", border: "none", cursor: bulkCat ? "pointer" : "not-allowed", fontWeight: 600, fontSize: 12 }}>Áp dụng</button>
           <div style={{ width: 1, height: 18, background: "rgba(255,255,255,0.15)" }} />
-          <button onClick={() => bulkPatch({ featured: true }, `Đã đánh dấu ${selected.size} bài`)} style={{ padding: "6px 10px", borderRadius: 7, background: "rgba(255,215,0,0.12)", color: "#ffd700", border: "1px solid rgba(255,215,0,0.25)", cursor: "pointer", fontSize: 12, fontWeight: 600 }}>⭐</button>
-          <button onClick={() => bulkPatch({ featured: false }, `Đã bỏ nổi bật ${selected.size} bài`)} style={{ padding: "6px 10px", borderRadius: 7, background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.5)", border: "1px solid rgba(255,255,255,0.1)", cursor: "pointer", fontSize: 12 }}>☆</button>
+          <button onClick={() => bulkPatch({ featured: true }, `Đã đánh dấu ${selected.size} bài`)} title="Nổi bật" style={{ padding: "6px 9px", borderRadius: 7, background: "rgba(255,215,0,0.12)", color: "#ffd700", border: "1px solid rgba(255,215,0,0.25)", cursor: "pointer", display: "flex" }}><IcStar size={13} filled /></button>
+          <button onClick={() => bulkPatch({ featured: false }, `Đã bỏ nổi bật ${selected.size} bài`)} title="Bỏ nổi bật" style={{ padding: "6px 9px", borderRadius: 7, background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.5)", border: "1px solid rgba(255,255,255,0.1)", cursor: "pointer", display: "flex" }}><IcStar size={13} /></button>
           <div style={{ width: 1, height: 18, background: "rgba(255,255,255,0.15)" }} />
           <div style={{ position: "relative" }}>
-            <button onClick={() => setShowBulkTag(v => !v)} style={{ padding: "6px 10px", borderRadius: 7, background: "rgba(95,255,170,0.1)", color: "#5fffaa", border: "1px solid rgba(95,255,170,0.25)", cursor: "pointer", fontSize: 12, fontWeight: 600 }}>🏷 Thêm tag</button>
+            <button onClick={() => setShowBulkTag(v => !v)} style={{ padding: "6px 10px", borderRadius: 7, background: "rgba(95,255,170,0.1)", color: "#5fffaa", border: "1px solid rgba(95,255,170,0.25)", cursor: "pointer", fontSize: 12, fontWeight: 600, display: "flex", alignItems: "center", gap: 5 }}>
+              <IcTag size={12} /> Thêm tag
+            </button>
             {showBulkTag && (
               <Popover onClose={() => setShowBulkTag(false)} style={{ bottom: "100%", right: 0, marginBottom: 6, width: 240, padding: 10 }}>
-                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", marginBottom: 6 }}>Tag sẽ được thêm vào tất cả {selected.size} bài đã chọn (bỏ qua bài đã có tag này)</div>
-                <input value={bulkTagInput} onChange={e => setBulkTagInput(e.target.value)} autoFocus placeholder="nhập tên tag..."
+                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", marginBottom: 6 }}>Tag sẽ được thêm vào {selected.size} bài (bỏ qua bài đã có)</div>
+                <input value={bulkTagInput} onChange={e => setBulkTagInput(e.target.value)} autoFocus placeholder="tên tag..."
                   onKeyDown={e => e.key === "Enter" && bulkAddTag(bulkTagInput)}
                   style={{ width: "100%", padding: "7px 10px", borderRadius: 7, border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.06)", color: "#fff", fontSize: 13, outline: "none", boxSizing: "border-box", marginBottom: 8 }} />
                 <button onClick={() => bulkAddTag(bulkTagInput)} disabled={!bulkTagInput.trim()}
                   style={{ width: "100%", padding: "7px 0", borderRadius: 7, background: bulkTagInput.trim() ? "#146ef5" : "rgba(255,255,255,0.05)", color: bulkTagInput.trim() ? "#fff" : "rgba(255,255,255,0.3)", border: "none", cursor: bulkTagInput.trim() ? "pointer" : "not-allowed", fontWeight: 600, fontSize: 13 }}>
-                  Thêm tag vào {selected.size} bài
+                  Thêm tag
                 </button>
               </Popover>
             )}
           </div>
-          <button onClick={bulkDelete} style={{ padding: "6px 10px", borderRadius: 7, background: "rgba(255,60,60,0.12)", color: "#ff6b6b", border: "1px solid rgba(255,60,60,0.25)", cursor: "pointer", fontSize: 12, fontWeight: 600 }}>🗑 Xoá</button>
-          <button onClick={() => setSelected(new Set())} style={{ padding: "6px 8px", background: "none", color: "rgba(255,255,255,0.4)", border: "none", cursor: "pointer", fontSize: 16 }}>×</button>
+          <button onClick={bulkDelete} style={{ padding: "6px 10px", borderRadius: 7, background: "rgba(255,60,60,0.12)", color: "#ff6b6b", border: "1px solid rgba(255,60,60,0.25)", cursor: "pointer", fontSize: 12, fontWeight: 600, display: "flex", alignItems: "center", gap: 5 }}><IcTrash size={12} /> Xoá</button>
+          <button onClick={() => setSelected(new Set())} title="Bỏ chọn" style={{ padding: "6px 7px", background: "none", color: "rgba(255,255,255,0.4)", border: "none", cursor: "pointer", display: "flex" }}><IcX size={14} /></button>
         </div>
       )}
 
@@ -950,8 +843,23 @@ export default function PostsClient({ authed }: { authed: boolean }) {
         </div>
       )}
 
-      {showNewPost && (
-        <NewPostModal onClose={() => setShowNewPost(false)} onCreated={p => { setPosts(prev => [p, ...prev]); showToast("Đã tạo bài viết. Vào Studio để thêm nội dung."); }} />
+      {/* Editor (new + edit existing) */}
+      {(editingPostId === "new" || editing) && (
+        <PostEditor
+          post={editing}
+          isNew={editingPostId === "new"}
+          onClose={() => setEditingPostId(null)}
+          onSaved={(updated) => {
+            if (editingPostId === "new") {
+              setPosts(prev => [updated, ...prev]);
+              showToast("Đã tạo bài viết");
+            } else {
+              setPosts(prev => prev.map(p => p._id === updated._id ? { ...p, ...updated } : p));
+              showToast("Đã lưu thay đổi");
+            }
+            setEditingPostId(null);
+          }}
+        />
       )}
 
       {toast && (
@@ -963,13 +871,13 @@ export default function PostsClient({ authed }: { authed: boolean }) {
       <style>{`
         @keyframes fadeIn { from { opacity:0; transform:translateY(8px) } to { opacity:1; transform:none } }
         * { box-sizing: border-box; }
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
         select option { background: #181828; color: #fff; }
         input[type=checkbox] { accent-color: #146ef5; }
-        .cover-overlay:hover, [class*="CoverCell"]:hover .cover-overlay { opacity: 1 !important; }
-        tr:hover .cover-overlay { opacity: 1; }
+        .cover-cell:hover .cover-overlay { opacity: 1; }
       `}</style>
     </div>
   );
