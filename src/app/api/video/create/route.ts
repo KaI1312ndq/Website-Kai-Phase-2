@@ -2,16 +2,21 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { getVideoTokenCost, SCENES_PER_VIDEO } from "@/lib/video/pricing";
-import { FPT_VOICES, VIDEO_PRESETS } from "@/lib/video/voices";
+import { FPT_VOICES, VIDEO_PRESETS, VIDEO_FLOWS } from "@/lib/video/voices";
 import type { VideoTier, VideoDuration } from "@/lib/video/types";
 
 export const runtime = "nodejs";
+
+interface ProductImage { url: string; path: string; name: string; }
 
 interface CreateVideoBody {
   tier: VideoTier;
   duration: VideoDuration;
   preset_id?: string;
   auto_caption?: boolean;
+  flow_template?: string;
+  custom_scene_labels?: string[];
+  product_images?: ProductImage[];
   input: {
     preset_id?: string;
     platform?: string;
@@ -36,7 +41,13 @@ interface CreateVideoBody {
 const VALID_TIERS: VideoTier[] = ["eco", "standard", "pro"];
 const VALID_DURATIONS: VideoDuration[] = [15, 20, 25, 30];
 
-const SCENE_LABELS = ["Hook", "Pain point", "Product intro", "Proof", "Price & promo", "CTA"];
+function resolveSceneLabels(flowId: string, customLabels?: string[]): string[] {
+  if (flowId === "custom" && customLabels) {
+    return customLabels.map((l, i) => l.trim() || `Cảnh ${i + 1}`);
+  }
+  const flow = VIDEO_FLOWS.find((f) => f.id === flowId);
+  return flow?.scenes ?? VIDEO_FLOWS[0].scenes;
+}
 
 export async function POST(req: NextRequest) {
   const { userId } = await auth();
@@ -76,8 +87,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Preset không hợp lệ" }, { status: 400 });
   }
 
+  const flowId = body.flow_template ?? "aida_classic";
+  const flowValid = VIDEO_FLOWS.some((f) => f.id === flowId);
+  if (!flowValid) return NextResponse.json({ error: "Flow template không hợp lệ" }, { status: 400 });
+
   const voiceValid = !input.voice_id || FPT_VOICES.some((v) => v.id === input.voice_id);
   if (!voiceValid) return NextResponse.json({ error: "Voice không hợp lệ" }, { status: 400 });
+
+  const sceneLabels = resolveSceneLabels(flowId, body.custom_scene_labels);
+  const productImages = Array.isArray(body.product_images) ? body.product_images.slice(0, 5) : [];
 
   const sb = getSupabaseAdmin();
 
@@ -87,6 +105,8 @@ export async function POST(req: NextRequest) {
     p_input_data: {
       preset_id: presetId,
       platform: input.platform || "tiktok",
+      flow_template: flowId,
+      scene_labels: sceneLabels,
       product_name: input.product_name.trim(),
       product_description: input.product_description.trim(),
       target_audience: input.target_audience?.trim() || null,
@@ -117,10 +137,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  // Update video with preset_id + auto_caption flag
+  // Update video with preset_id + flow + auto_caption + product images
   await sb.from("videos").update({
     preset_id: presetId,
     auto_caption: body.auto_caption ?? true,
+    flow_template: flowId,
+    product_images: productImages,
   }).eq("id", videoId);
 
   // Create 6 scene rows (status='pending', mock will advance them)
@@ -128,7 +150,7 @@ export async function POST(req: NextRequest) {
   const scenesPayload = Array.from({ length: SCENES_PER_VIDEO }, (_, i) => ({
     video_id: videoId,
     scene_idx: i,
-    label: SCENE_LABELS[i] ?? `Scene ${i + 1}`,
+    label: sceneLabels[i] ?? `Cảnh ${i + 1}`,
     duration_sec: sceneDuration,
     status: "pending",
     is_lipsync: preset.needsLipSync,

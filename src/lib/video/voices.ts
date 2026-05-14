@@ -284,6 +284,120 @@ export const MC_CHARACTERS: { id: McCharacter; label: string; desc: string }[] =
   { id: "real_expert", label: "Chuyên gia thật",             desc: "Bác sĩ / PT / coach testimonial" },
 ];
 
+/**
+ * Flow templates - cách kể chuyện qua 6 cảnh.
+ * User có thể chọn 1 flow hoặc Custom để rename labels.
+ */
+export interface VideoFlow {
+  id: string;
+  label: string;
+  desc: string;
+  vibe: string;
+  scenes: string[];           // 6 scene labels
+  scriptHints: string[];       // gợi ý script cho mỗi cảnh (AI sẽ adapt)
+}
+
+export const VIDEO_FLOWS: VideoFlow[] = [
+  {
+    id: "aida_classic",
+    label: "AIDA cổ điển",
+    desc: "Hook → Pain → Product → Proof → Price → CTA. Format chuẩn ads ecom.",
+    vibe: "Trực tiếp, dễ hiểu, conversion cao",
+    scenes: ["Hook", "Pain point", "Product intro", "Proof", "Price & promo", "CTA"],
+    scriptHints: [
+      "Câu hook giật, dừng scroll",
+      "Vấn đề người xem đang gặp",
+      "Giới thiệu sản phẩm + USP chính",
+      "Bằng chứng / testimonial / số liệu",
+      "Giá + khuyến mãi đang chạy",
+      "Call-to-action mua hàng",
+    ],
+  },
+  {
+    id: "storytelling",
+    label: "Kể chuyện",
+    desc: "Setup → Conflict → Twist → Solution → Result → CTA. Hợp brand storytelling.",
+    vibe: "Cảm xúc, có cốt truyện, branding mạnh",
+    scenes: ["Setup", "Conflict", "Twist", "Solution", "Result", "CTA"],
+    scriptHints: [
+      "Bối cảnh nhân vật chính",
+      "Vấn đề / mâu thuẫn xuất hiện",
+      "Bước ngoặt bất ngờ",
+      "Giải pháp = sản phẩm",
+      "Kết quả sau khi dùng",
+      "Mời người xem trải nghiệm",
+    ],
+  },
+  {
+    id: "drama_reveal",
+    label: "Drama / Reveal",
+    desc: "Mystery → Tension → Reveal → Explain → Result → CTA. Hợp viral hook mạnh.",
+    vibe: "Bí ẩn, tò mò, retention cao",
+    scenes: ["Mystery", "Tension", "Reveal", "Explain", "Result", "CTA"],
+    scriptHints: [
+      "Hé lộ điều bất ngờ - 'Bạn biết là...?'",
+      "Tăng dần kịch tính",
+      "Tiết lộ sự thật / sản phẩm",
+      "Giải thích tại sao",
+      "Cho thấy kết quả thật",
+      "Mời mua / follow",
+    ],
+  },
+  {
+    id: "testimonial_heavy",
+    label: "Testimonial nặng",
+    desc: "Hook → User 1 → Product → User 2 → User 3 → CTA. Trust-builder cho healthcare / sữa.",
+    vibe: "Tin cậy, social proof mạnh",
+    scenes: ["Hook", "Khách hàng 1", "Sản phẩm", "Khách hàng 2", "Khách hàng 3", "CTA"],
+    scriptHints: [
+      "Câu hỏi gây tò mò",
+      "Khách hàng đầu kể trải nghiệm",
+      "Giới thiệu sản phẩm",
+      "Khách hàng thứ 2 - case khác",
+      "Khách hàng thứ 3 - case khác nữa",
+      "CTA mạnh + đa dạng người dùng",
+    ],
+  },
+  {
+    id: "list_tips",
+    label: "List / Tips",
+    desc: "Hook → Tip 1 → Tip 2 → Tip 3 → Sản phẩm → CTA. Hợp educational ads.",
+    vibe: "Hữu ích, lưu lại để xem sau, share cao",
+    scenes: ["Hook", "Tip 1", "Tip 2", "Tip 3", "Sản phẩm hỗ trợ", "CTA"],
+    scriptHints: [
+      "'X điều bạn cần biết về...'",
+      "Tip đầu - cụ thể, dễ áp dụng",
+      "Tip 2 - khác hẳn tip 1",
+      "Tip 3 - hoặc tip nâng cao",
+      "Sản phẩm giúp làm các tip dễ hơn",
+      "CTA mua / follow để xem thêm",
+    ],
+  },
+  {
+    id: "compare",
+    label: "So sánh",
+    desc: "Hook → Cách cũ → Vấn đề → Cách mới → Lợi ích → CTA. Hợp pitch khác biệt vs competitor.",
+    vibe: "Rõ ràng đối lập, dễ chốt",
+    scenes: ["Hook", "Cách cũ", "Vấn đề", "Cách mới", "Lợi ích", "CTA"],
+    scriptHints: [
+      "'Bạn có biết tại sao...?'",
+      "Cách thông thường mọi người làm",
+      "Vấn đề của cách đó",
+      "Cách mới = sản phẩm",
+      "Lợi ích cụ thể đo được",
+      "Mời thử / mua ngay",
+    ],
+  },
+  {
+    id: "custom",
+    label: "Custom (tự đặt tên)",
+    desc: "Tự đặt tên 6 cảnh theo ý mình. Phù hợp brand có format riêng.",
+    vibe: "Linh hoạt tối đa",
+    scenes: ["Cảnh 1", "Cảnh 2", "Cảnh 3", "Cảnh 4", "Cảnh 5", "Cảnh 6"],
+    scriptHints: ["", "", "", "", "", ""],
+  },
+];
+
 export const WARDROBES: { id: Wardrobe; label: string; desc: string }[] = [
   { id: "vest",         label: "Vest công sở",     desc: "Xanh/Đen - business, news" },
   { id: "blouse_white", label: "Áo sơ mi trắng",   desc: "Trang trọng, professional" },

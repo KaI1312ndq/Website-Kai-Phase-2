@@ -12,6 +12,7 @@ import {
 import {
   FPT_VOICES,
   VIDEO_PRESETS,
+  VIDEO_FLOWS,
   SHOT_SIZES,
   CAMERA_ANGLES,
   CAMERA_MOTIONS,
@@ -22,6 +23,9 @@ import {
 } from "@/lib/video/voices";
 import type { VideoTier, VideoDuration } from "@/lib/video/types";
 import { PresetIcon, CharacterPortrait, WardrobeIcon, PlayIcon } from "@/components/video/PresetIcon";
+import ProductImageUpload from "@/components/video/ProductImageUpload";
+
+interface UploadedImage { url: string; path: string; name: string; }
 
 const DURATIONS: VideoDuration[] = [15, 20, 25, 30];
 const TIERS: VideoTier[] = ["eco", "standard", "pro"];
@@ -50,6 +54,17 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
   const [promo, setPromo] = useState("");
   const [socialProof, setSocialProof] = useState("");
   const [autoCaption, setAutoCaption] = useState(true);
+
+  // Flow + product images
+  const [flowId, setFlowId] = useState("aida_classic");
+  const [customLabels, setCustomLabels] = useState<string[]>(["", "", "", "", "", ""]);
+  const [productImages, setProductImages] = useState<UploadedImage[]>([]);
+
+  const flow = useMemo(() => VIDEO_FLOWS.find((f) => f.id === flowId) ?? VIDEO_FLOWS[0], [flowId]);
+  const isCustomFlow = flowId === "custom";
+  const sceneLabels = isCustomFlow
+    ? customLabels.map((l, i) => l.trim() || `Cảnh ${i + 1}`)
+    : flow.scenes;
 
   // Advanced overrides (Step 3 toggle)
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -100,6 +115,9 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
           duration,
           preset_id: presetId,
           auto_caption: autoCaption,
+          flow_template: flowId,
+          custom_scene_labels: isCustomFlow ? customLabels : undefined,
+          product_images: productImages,
           input: {
             preset_id: presetId,
             platform: "tiktok",
@@ -328,6 +346,88 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
                 maxLength={100}
               />
             </div>
+
+            <div>
+              <label className="block text-sm mb-1 font-semibold text-white">
+                Ảnh sản phẩm{" "}
+                <span className="text-xs font-normal" style={{ color: "var(--ink-mute)" }}>
+                  (tuỳ chọn - AI sẽ dùng làm reference render)
+                </span>
+              </label>
+              <ProductImageUpload images={productImages} onChange={setProductImages} maxImages={3} />
+            </div>
+          </div>
+
+          {/* Flow picker */}
+          <div className="space-y-4 rounded-2xl border-2 p-6" style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}>
+            <div className="flex items-baseline justify-between gap-2">
+              <h3 className="t-h4 text-white">Flow video (cách kể chuyện qua 6 cảnh)</h3>
+              <span className="text-xs" style={{ color: "var(--ink-mute)" }}>Quyết định AI viết script theo hướng nào</span>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-3">
+              {VIDEO_FLOWS.map((f) => {
+                const isActive = flowId === f.id;
+                return (
+                  <button
+                    key={f.id}
+                    type="button"
+                    onClick={() => setFlowId(f.id)}
+                    className="p-4 text-left rounded-xl border-2 transition-all"
+                    style={{
+                      borderColor: isActive ? "#a855f7" : "rgba(255,255,255,0.12)",
+                      background: isActive ? "rgba(168,85,247,0.12)" : "rgba(255,255,255,0.04)",
+                      boxShadow: isActive ? "0 0 0 4px rgba(168,85,247,0.18)" : "none",
+                    }}
+                  >
+                    <div className="font-semibold text-white text-sm">{f.label}</div>
+                    <div className="text-xs mt-1.5 leading-relaxed" style={{ color: "var(--ink-soft)" }}>
+                      {f.desc}
+                    </div>
+                    <div className="text-[10px] mt-2" style={{ color: "var(--ink-mute)" }}>
+                      Vibe: {f.vibe}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Scene labels preview / custom edit */}
+            <div className="rounded-xl p-4" style={{ background: "rgba(255,255,255,0.03)" }}>
+              <div className="text-xs font-semibold mb-3 text-white">
+                Thứ tự 6 cảnh sẽ render:
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {sceneLabels.map((label, i) => (
+                  <div key={i} className="rounded-lg border p-2" style={{ borderColor: "rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.02)" }}>
+                    <div className="text-[10px]" style={{ color: "var(--ink-mute)" }}>
+                      Cảnh {i + 1}
+                    </div>
+                    {isCustomFlow ? (
+                      <input
+                        type="text"
+                        value={customLabels[i]}
+                        onChange={(e) => {
+                          const newLabels = [...customLabels];
+                          newLabels[i] = e.target.value;
+                          setCustomLabels(newLabels);
+                        }}
+                        placeholder={`Cảnh ${i + 1}`}
+                        className="w-full bg-transparent text-sm text-white border-none outline-none focus:outline-none mt-1"
+                        maxLength={30}
+                      />
+                    ) : (
+                      <div className="text-sm text-white font-medium mt-1">{label}</div>
+                    )}
+                  </div>
+                ))}
+              </div>
+              {isCustomFlow && (
+                <p className="text-xs mt-3" style={{ color: "var(--ink-mute)" }}>
+                  Đặt tên 6 cảnh theo brand bạn. Để trống sẽ dùng &quot;Cảnh 1&quot;...
+                </p>
+              )}
+            </div>
           </div>
 
           {/* Optional ecom */}
@@ -519,6 +619,8 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
             <Row label="Loại video" value={preset.label} />
             <Row label="Tier" value={`${TIER_LABELS[tier]} (${duration}s)`} />
             <Row label="Chi phí" value={`${tokenCost} token (6 cảnh)`} highlight />
+            <Row label="Flow" value={`${flow.label} - ${sceneLabels.join(" → ")}`} />
+            <Row label="Ảnh sản phẩm" value={productImages.length > 0 ? `${productImages.length} ảnh đã upload` : "Không"} />
             <Row label="Sản phẩm" value={productName} />
             <Row label="USP" value={productDescription} />
             {cta && <Row label="CTA" value={cta} />}

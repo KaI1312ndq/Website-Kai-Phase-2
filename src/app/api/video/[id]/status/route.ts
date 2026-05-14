@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
-import { VIDEO_PRESETS } from "@/lib/video/voices";
+import { VIDEO_PRESETS, VIDEO_FLOWS } from "@/lib/video/voices";
 
 export const runtime = "nodejs";
 
@@ -18,21 +18,23 @@ export const runtime = "nodejs";
  *   12s+:  completed (sample MP4 + thumbnail set)
  */
 
+// Mock sample clips - reliable W3.org test videos + Pexels free CDN backups.
+// In Phase 4 these get replaced with real fal.ai output.
 const SAMPLE_CLIPS = [
-  "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-  "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-  "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-  "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
-  "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
-  "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
+  "https://www.w3schools.com/html/mov_bbb.mp4",
+  "https://www.w3schools.com/html/movie.mp4",
+  "https://www.w3schools.com/html/mov_bbb.mp4",
+  "https://www.w3schools.com/html/movie.mp4",
+  "https://www.w3schools.com/html/mov_bbb.mp4",
+  "https://www.w3schools.com/html/movie.mp4",
 ];
 const SAMPLE_THUMBS = [
-  "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerBlazes.jpg",
-  "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerEscapes.jpg",
-  "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerFun.jpg",
-  "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerJoyrides.jpg",
-  "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerMeltdowns.jpg",
-  "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/Sintel.jpg",
+  "https://images.pexels.com/videos/3209828/free-video-3209828.jpg?auto=compress&cs=tinysrgb&w=300",
+  "https://images.pexels.com/videos/3045163/free-video-3045163.jpg?auto=compress&cs=tinysrgb&w=300",
+  "https://images.pexels.com/videos/3197123/free-video-3197123.jpg?auto=compress&cs=tinysrgb&w=300",
+  "https://images.pexels.com/videos/2932301/free-video-2932301.jpg?auto=compress&cs=tinysrgb&w=300",
+  "https://images.pexels.com/videos/4434243/free-video-4434243.jpg?auto=compress&cs=tinysrgb&w=300",
+  "https://images.pexels.com/videos/3209828/free-video-3209828.jpg?auto=compress&cs=tinysrgb&w=300",
 ];
 
 interface SceneRow {
@@ -52,7 +54,7 @@ interface SceneRow {
   updated_at: string;
 }
 
-function buildSceneScript(input: Record<string, string | number | null | undefined>, sceneIdx: number, label: string): {
+function buildSceneScript(input: Record<string, unknown>, sceneIdx: number, label: string): {
   script: string;
   visual: string;
   voice: string;
@@ -65,41 +67,50 @@ function buildSceneScript(input: Record<string, string | number | null | undefin
   const proof = input.social_proof ? String(input.social_proof) : null;
   const presetId = String(input.preset_id ?? "cartoon_3d_character");
   const preset = VIDEO_PRESETS.find((p) => p.id === presetId);
+  const flowId = String(input.flow_template ?? "aida_classic");
+  const flow = VIDEO_FLOWS.find((f) => f.id === flowId);
+  const sceneLabels = (input.scene_labels as string[] | undefined) ?? flow?.scenes ?? [];
+  const scriptHint = flow?.scriptHints[sceneIdx] ?? "";
+  const sceneLabel = sceneLabels[sceneIdx] ?? label;
+  const hasImages = Array.isArray(input.product_images) && (input.product_images as unknown[]).length > 0;
+  const visualBase = preset?.defaults.conceptHint ?? "Cảnh quay sản phẩm";
+  const imageHint = hasImages ? " · Match sản phẩm trong ảnh user upload" : "";
 
-  // 6 scenes: Hook / Pain / Product / Proof / Price / CTA
-  const scenes = [
-    {
-      script: `Đừng vội mua ${name} - xem hết video này đã!`,
-      visual: `${preset?.defaults.conceptHint ?? "Sản phẩm trên bàn"}, hook overlay STOP đỏ`,
-      voice: `Đừng vội mua ${name} - xem hết video này đã!`,
-    },
-    {
-      script: "Bạn ăn theo thói quen, không phải nhu cầu - vòng luẩn quẩn không lối thoát.",
-      visual: "Cảnh người dùng bối rối, 3 icon vấn đề overlay: đói/béo/mệt",
-      voice: "Bạn ăn theo thói quen, không phải nhu cầu. Vòng luẩn quẩn không lối thoát.",
-    },
-    {
-      script: `Đây - ${name}. ${desc}`,
-      visual: `${name} cận cảnh, biểu cảm tự tin, đèn vàng warmth`,
-      voice: `Đây. ${name}. ${desc}`,
-    },
-    {
-      script: proof ? `${proof} - không phải tự khen, là sự thật.` : "Ai dùng cũng quay lại - vì khác bọn snack thường.",
-      visual: proof ? `Counter "${proof}" pulse animation` : "Loop demo + happy reaction faces",
-      voice: proof ? `${proof}. Không phải tự khen, là sự thật.` : "Ai dùng cũng quay lại. Vì khác bọn snack thường.",
-    },
-    {
-      script: price ? `Chỉ ${price.toLocaleString("vi-VN")}đ. ${promo ?? ""}` : (promo ?? "Best value, đáng giá hơn 10 lần."),
-      visual: "Light flare effect, giá overlay neon to",
-      voice: price ? `Chỉ ${price.toLocaleString("vi-VN")} đồng. ${promo ?? ""}` : (promo ?? "Best value, đáng giá hơn mười lần."),
-    },
-    {
-      script: cta,
-      visual: "Arrow chỉ xuống giỏ hàng, music drop, shop link đính kèm",
-      voice: cta,
-    },
-  ];
-  return scenes[sceneIdx] ?? { script: label, visual: "", voice: label };
+  // Generate scene-specific script based on flow + scene index + product info
+  const labelLower = sceneLabel.toLowerCase();
+  let script: string;
+  let visual: string;
+  let voice: string;
+
+  if (labelLower.includes("hook") || labelLower.includes("mystery") || labelLower.includes("setup") || sceneIdx === 0) {
+    script = `Đừng vội mua ${name} - xem hết video này đã!`;
+    visual = `${visualBase}, hook overlay STOP đỏ${imageHint}`;
+  } else if (labelLower.includes("pain") || labelLower.includes("conflict") || labelLower.includes("tension") || labelLower.includes("vấn đề")) {
+    script = "Bạn đang gặp vấn đề này đúng không? Mất tiền cho cái không hiệu quả?";
+    visual = "Cảnh người dùng bối rối, 3 icon vấn đề pop in";
+  } else if (labelLower.includes("product") || labelLower.includes("solution") || labelLower.includes("sản phẩm") || labelLower.includes("reveal") || labelLower.includes("cách mới")) {
+    script = `Đây - ${name}. ${desc}`;
+    visual = `${name} cận cảnh, biểu cảm tự tin${imageHint}`;
+  } else if (labelLower.includes("proof") || labelLower.includes("testimonial") || labelLower.includes("khách hàng") || labelLower.includes("result") || labelLower.includes("kết quả") || labelLower.includes("explain") || labelLower.includes("twist")) {
+    script = proof ? `${proof} - không phải tự khen, là sự thật.` : "Ai dùng cũng quay lại - khác hẳn bọn rẻ tiền.";
+    visual = proof ? `Counter "${proof}" pulse animation` : "Loop demo + happy reaction faces";
+  } else if (labelLower.includes("price") || labelLower.includes("promo") || labelLower.includes("giá") || labelLower.includes("khuyến") || labelLower.includes("offer") || labelLower.includes("lợi ích")) {
+    script = price ? `Chỉ ${price.toLocaleString("vi-VN")}đ. ${promo ?? ""}` : (promo ?? "Best value, đáng giá hơn 10 lần.");
+    visual = "Light flare effect, giá overlay neon to";
+  } else if (labelLower.includes("cta") || labelLower.includes("mua") || sceneIdx === 5) {
+    script = cta;
+    visual = "Arrow chỉ xuống giỏ hàng, music drop, shop link đính kèm";
+  } else if (labelLower.includes("tip")) {
+    script = `Tip ${sceneIdx}: ${desc.slice(0, 60)}...`;
+    visual = `Text overlay TIP ${sceneIdx} lớn, icon minh hoạ`;
+  } else {
+    // Fallback - dùng script hint từ flow definition
+    script = scriptHint || `${sceneLabel}: ${desc.slice(0, 80)}`;
+    visual = `${visualBase}, theo nhịp ${sceneLabel}${imageHint}`;
+  }
+
+  voice = script;
+  return { script, visual, voice };
 }
 
 const RENDER_START_SEC = 3;
