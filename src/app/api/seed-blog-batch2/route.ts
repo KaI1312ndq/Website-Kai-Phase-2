@@ -438,10 +438,13 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  const token = process.env.SANITY_API_WRITE_TOKEN;
+  if (!token) return NextResponse.json({ error: "Missing SANITY_API_WRITE_TOKEN" }, { status: 500 });
+
   const client = createClient({
     projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
     dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
-    token: process.env.SANITY_API_TOKEN,
+    token,
     apiVersion: "2024-01-01",
     useCdn: false,
   });
