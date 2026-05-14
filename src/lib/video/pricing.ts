@@ -43,23 +43,40 @@ export function computeTokensForTopup(amountVnd: number): {
   };
 }
 
-/** Pricing matrix per Brief section 3.3 */
+/**
+ * Pricing matrix v2 (2026-05-14) - Strategy B Hybrid Anthropic + FPT.
+ *
+ * Cost breakdown 1 video Std 20s (6 cảnh ~3.3s/cảnh) với lip-sync:
+ * - Anthropic Claude Haiku script    : ~50đ
+ * - Anthropic Vision image analysis  : ~125đ
+ * - fal.ai Kling 3.0 Std (6×3.3s)    : ~14.500đ ($0.029/s)
+ * - fal.ai Hedra lip sync (6 scenes) : ~12.500đ ($0.10/scene, optional)
+ * - FPT.AI VITs TTS (6×~200 chars)   : ~300đ
+ * - FPT.AI Whisper STT (auto-caption): ~100đ
+ * - FFmpeg compose (local)           : 0đ
+ * Total: ~27.500đ với lip-sync, ~15.000đ B-roll only
+ *
+ * Pro tier dùng Kling 3.0 Pro ($0.058/s) = ~2x cost.
+ * Eco tier = Kling Std nhưng slow queue → bán rẻ hơn Std.
+ *
+ * Target margin: 30-40% (sau khi gỡ free credit).
+ */
 export const PRICING_MATRIX: Record<VideoTier, Partial<Record<VideoDuration, number>>> = {
   eco: {
-    20: 25,
-    25: 30,
+    20: 30,
+    25: 40,
   },
   standard: {
-    15: 25,
-    20: 30,
-    25: 35,
-    30: 40,
+    15: 35,
+    20: 45,
+    25: 55,
+    30: 65,
   },
   pro: {
-    15: 60,
-    20: 75,
-    25: 90,
-    30: 100,
+    15: 80,
+    20: 100,
+    25: 120,
+    30: 140,
   },
 };
 
@@ -68,11 +85,18 @@ export function getVideoTokenCost(tier: VideoTier, duration: VideoDuration): num
   return typeof cost === "number" ? cost : null;
 }
 
-/** Cost to regenerate a single scene (margin ~10%, much cheaper than Brief's 15/30). */
+/**
+ * Cost to regenerate a single scene (5s clip).
+ *
+ * Std (Kling 3.0 Std, 5s):   5 × 725đ = 3.625đ → sell 5 token (margin 28%)
+ * Std + lip-sync (Hedra):    3.625đ + 2.500đ = 6.125đ → sell 8 token (margin 24%)
+ * Pro (Kling 3.0 Pro, 5s):   5 × 1.450đ = 7.250đ → sell 10 token (margin 28%)
+ * Pro + lip-sync:            7.250đ + 2.500đ = 9.750đ → sell 13 token (margin 25%)
+ */
 export const SCENE_REGEN_COST: Record<VideoTier, { standard: number; lipsync: number }> = {
-  eco:      { standard: 4,  lipsync: 6  },
-  standard: { standard: 4,  lipsync: 6  },
-  pro:      { standard: 8,  lipsync: 10 },
+  eco:      { standard: 5,  lipsync: 8  },
+  standard: { standard: 5,  lipsync: 8  },
+  pro:      { standard: 10, lipsync: 13 },
 };
 
 export function getSceneRegenCost(tier: VideoTier, isLipSync: boolean): number {

@@ -216,7 +216,7 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
                     </div>
                     {p.needsLipSync && (
                       <div className="text-[10px] mt-2 inline-block px-2 py-0.5 rounded" style={{ background: "rgba(251,191,36,0.15)", color: "#fbbf24" }}>
-                        Lip sync · regen +2 token
+                        Lip sync · regen +3 token
                       </div>
                     )}
                   </button>
@@ -286,7 +286,7 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
             <div>
               <span style={{ color: "var(--ink-soft)" }}>Chi phí ban đầu:</span>
               <div className="text-xs mt-0.5" style={{ color: "var(--ink-mute)" }}>
-                Bao gồm 6 cảnh. Sửa từng cảnh sau: {preset.needsLipSync ? "6/10" : "4/8"} token (Std/Pro).
+                Bao gồm 6 cảnh. Sửa từng cảnh sau: {preset.needsLipSync ? "8/13" : "5/10"} token (Std/Pro).
               </div>
             </div>
             <span className="font-bold grad-text text-xl">

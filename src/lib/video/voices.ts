@@ -31,7 +31,7 @@ export interface VideoPreset {
   label: string;
   useCase: string;
   niche: string[];          // ngành nghề phù hợp
-  needsLipSync: boolean;    // → cost regen 6/10 thay vì 4/8
+  needsLipSync: boolean;    // → cost regen 8/13 (Std/Pro) thay vì 5/10
   // smart defaults cho 9 brief dimensions
   defaults: {
     shotSize: ShotSize;

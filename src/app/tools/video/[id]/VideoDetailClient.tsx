@@ -322,8 +322,8 @@ function SceneEditModal({ videoId, scene, tier, onClose, onUpdated }: {
   const [error, setError] = useState<string | null>(null);
 
   const regenCost = (() => {
-    if (tier === "pro") return scene.is_lipsync ? 10 : 8;
-    return scene.is_lipsync ? 6 : 4;
+    if (tier === "pro") return scene.is_lipsync ? 13 : 10;
+    return scene.is_lipsync ? 8 : 5;
   })();
 
   async function saveScriptOnly() {

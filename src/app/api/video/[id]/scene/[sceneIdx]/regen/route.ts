@@ -8,7 +8,7 @@ export const runtime = "nodejs";
 
 /**
  * Regenerate a single scene.
- * Costs: 4 token Std / 8 Pro for B-roll; 6 / 10 for lip-sync presets.
+ * Costs (v2 2026-05-14): 5 token Std / 10 Pro for B-roll; 8 / 13 for lip-sync.
  * Tokens deducted atomically via regen_video_scene RPC.
  */
 export async function POST(req: NextRequest, ctx: { params: Promise<{ id: string; sceneIdx: string }> }) {
