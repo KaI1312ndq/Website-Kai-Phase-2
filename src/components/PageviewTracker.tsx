@@ -10,7 +10,7 @@ export default function PageviewTracker() {
   useEffect(() => {
     if (!pathname) return;
     // Skip admin + studio routes
-    if (pathname.startsWith("/account/admin") || pathname.startsWith("/studio")) return;
+    if (pathname.startsWith("/account/admin") || pathname.startsWith("/admin") || pathname.startsWith("/studio")) return;
 
     let sessionId = "";
     try {

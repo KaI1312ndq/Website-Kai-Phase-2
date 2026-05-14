@@ -18,9 +18,14 @@ type Post = {
   hasBody: boolean;
   wordCount?: number;
   coverUrl?: string;
+  // Pageview stats (joined from /api/admin/pageviews)
+  views?: number;
+  viewsWeek?: number;
+  viewsToday?: number;
 };
 
-type SortKey = "newest" | "oldest" | "title" | "title_desc" | "updated" | "category";
+type ViewStats = Record<string, { views: number; week: number; today: number }>;
+type SortKey = "newest" | "oldest" | "title" | "title_desc" | "updated" | "category" | "views" | "views_week";
 type ViewMode = "comfortable" | "compact";
 
 /* ─── Constants ─────────────────────────────────────────────────────── */
@@ -57,6 +62,8 @@ const SORT_LABELS: Record<SortKey, string> = {
   title_desc: "Tên Z-A",
   updated: "Sửa gần đây",
   category: "Theo danh mục",
+  views: "👁 Lượt xem nhiều",
+  views_week: "🔥 Hot tuần này",
 };
 
 function catColor(c: string) { return CAT_COLORS[c] || "#888"; }
@@ -335,11 +342,30 @@ export default function PostsClient({ authed }: { authed: boolean }) {
 
   async function loadPosts() {
     setLoading(true);
-    try { setPosts(await api("/api/admin/posts")); }
-    catch { showToast("Lỗi tải", false); }
+    try {
+      const [postsData, viewsData] = await Promise.all([
+        api("/api/admin/posts"),
+        api("/api/admin/pageviews").catch(() => ({} as ViewStats)),
+      ]);
+      const v = viewsData as ViewStats;
+      const merged: Post[] = (postsData as Post[]).map(p => {
+        const stat = v[p.slug?.current];
+        return { ...p, views: stat?.views || 0, viewsWeek: stat?.week || 0, viewsToday: stat?.today || 0 };
+      });
+      setPosts(merged);
+    } catch { showToast("Lỗi tải", false); }
     finally { setLoading(false); }
   }
   useEffect(() => { if (isAuthed) loadPosts(); }, [isAuthed]);
+
+  // Drag-to-reorder featured posts
+  const [reorderMode, setReorderMode] = useState(false);
+  const dragId = useRef<string | null>(null);
+  const dragOverId = useRef<string | null>(null);
+
+  // Bulk add tag
+  const [bulkTagInput, setBulkTagInput] = useState("");
+  const [showBulkTag, setShowBulkTag] = useState(false);
 
   // ─── Keyboard shortcuts ───
   useEffect(() => {
@@ -385,7 +411,13 @@ export default function PostsClient({ authed }: { authed: boolean }) {
         p.slug?.current?.toLowerCase().includes(q)
       );
     }
-    // Sort
+    // Reorder mode: show only featured, ordered by featuredOrder
+    if (reorderMode) {
+      list = list.filter(p => p.featured);
+      list.sort((a, b) => (a.featuredOrder ?? 999) - (b.featuredOrder ?? 999));
+      return list;
+    }
+    // Normal sort
     list.sort((a, b) => {
       switch (sortBy) {
         case "newest": return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
@@ -394,10 +426,12 @@ export default function PostsClient({ authed }: { authed: boolean }) {
         case "title_desc": return b.title.localeCompare(a.title);
         case "updated": return new Date(b._updatedAt || b.publishedAt).getTime() - new Date(a._updatedAt || a.publishedAt).getTime();
         case "category": return a.category.localeCompare(b.category) || new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
+        case "views": return (b.views || 0) - (a.views || 0);
+        case "views_week": return (b.viewsWeek || 0) - (a.viewsWeek || 0);
       }
     });
     return list;
-  }, [posts, filterCat, filterStatus, filterDate, search, sortBy]);
+  }, [posts, filterCat, filterStatus, filterDate, search, sortBy, reorderMode]);
 
   const catCounts = useMemo(() => {
     const m: Record<string, number> = {};
@@ -485,6 +519,57 @@ export default function PostsClient({ authed }: { authed: boolean }) {
   }
 
   async function logout() { await fetch("/api/admin/auth", { method: "DELETE" }); setIsAuthed(false); }
+
+  // ─── Drag to reorder featured ───
+  async function handleDrop(targetId: string) {
+    const srcId = dragId.current;
+    dragId.current = null; dragOverId.current = null;
+    if (!srcId || srcId === targetId) return;
+
+    const featuredList = posts.filter(p => p.featured).sort((a, b) => (a.featuredOrder ?? 999) - (b.featuredOrder ?? 999));
+    const srcIdx = featuredList.findIndex(p => p._id === srcId);
+    const tgtIdx = featuredList.findIndex(p => p._id === targetId);
+    if (srcIdx < 0 || tgtIdx < 0) return;
+
+    const reordered = [...featuredList];
+    const [moved] = reordered.splice(srcIdx, 1);
+    reordered.splice(tgtIdx, 0, moved);
+
+    // Update featuredOrder in batches: 1, 2, 3, ...
+    const updates = reordered.map((p, i) => ({ id: p._id, order: i + 1 }));
+    setPosts(prev => prev.map(p => {
+      const u = updates.find(x => x.id === p._id);
+      return u ? { ...p, featuredOrder: u.order } : p;
+    }));
+
+    try {
+      await Promise.all(updates.map(u =>
+        api("/api/admin/posts", { method: "PATCH", body: JSON.stringify({ id: u.id, patch: { featuredOrder: u.order } }) })
+      ));
+      showToast(`Đã sắp xếp lại ${updates.length} bài nổi bật`);
+    } catch { showToast("Lỗi cập nhật thứ tự", false); }
+  }
+
+  // ─── Bulk add tag (append to existing) ───
+  async function bulkAddTag(tag: string) {
+    const trimmed = tag.trim().toLowerCase();
+    if (!trimmed) return;
+    const ids = Array.from(selected);
+    try {
+      // Patch each post with merged tags (Sanity has no array-append-unique in single op, so do per-doc)
+      await Promise.all(ids.map(async id => {
+        const post = posts.find(p => p._id === id);
+        if (!post) return;
+        const existing = post.tags || [];
+        if (existing.includes(trimmed)) return;
+        const newTags = [...existing, trimmed];
+        await api("/api/admin/posts", { method: "PATCH", body: JSON.stringify({ id, patch: { tags: newTags } }) });
+      }));
+      setPosts(prev => prev.map(p => ids.includes(p._id) && !(p.tags || []).includes(trimmed) ? { ...p, tags: [...(p.tags || []), trimmed] } : p));
+      showToast(`Đã thêm tag "${trimmed}" vào ${ids.length} bài`);
+      setBulkTagInput(""); setShowBulkTag(false); setSelected(new Set());
+    } catch { showToast("Lỗi thêm tag", false); }
+  }
 
   // Selection
   function toggleSelect(id: string, e: React.MouseEvent) {
@@ -585,6 +670,12 @@ export default function PostsClient({ authed }: { authed: boolean }) {
           )}
         </div>
 
+        {/* Reorder featured mode */}
+        <button onClick={() => setReorderMode(v => !v)} title="Kéo thả để sắp xếp thứ tự bài nổi bật"
+          style={{ ...s.btn, background: reorderMode ? "rgba(255,215,0,0.18)" : "rgba(255,255,255,0.06)", borderColor: reorderMode ? "rgba(255,215,0,0.4)" : "rgba(255,255,255,0.1)", color: reorderMode ? "#ffd700" : "rgba(255,255,255,0.75)" }}>
+          {reorderMode ? "✓ Xong sắp xếp" : "🔀 Sắp xếp Featured"}
+        </button>
+
         {/* View mode */}
         <button onClick={() => setViewMode(v => v === "compact" ? "comfortable" : "compact")} title={viewMode === "compact" ? "Chế độ rộng" : "Chế độ gọn"} style={{ ...s.btn, padding: "7px 10px" }}>
           {viewMode === "compact" ? "☰" : "≡"}
@@ -652,16 +743,20 @@ export default function PostsClient({ authed }: { authed: boolean }) {
             <table style={{ width: "100%", borderCollapse: "collapse" }}>
               <thead>
                 <tr>
-                  <th style={{ ...s.th, width: 40 }}>
-                    <input type="checkbox" checked={selected.size > 0 && selected.size === filtered.length}
-                      ref={el => el && (el.indeterminate = selected.size > 0 && selected.size < filtered.length)}
-                      onChange={toggleSelectAll} style={{ cursor: "pointer" }} />
-                  </th>
+                  {reorderMode && <th style={{ ...s.th, width: 32 }}>≡</th>}
+                  {!reorderMode && (
+                    <th style={{ ...s.th, width: 40 }}>
+                      <input type="checkbox" checked={selected.size > 0 && selected.size === filtered.length}
+                        ref={el => el && (el.indeterminate = selected.size > 0 && selected.size < filtered.length)}
+                        onChange={toggleSelectAll} style={{ cursor: "pointer" }} />
+                    </th>
+                  )}
                   <th style={{ ...s.th, width: 32 }}>⭐</th>
                   {viewMode === "comfortable" && <th style={{ ...s.th, width: 76 }}>Ảnh</th>}
                   <th style={s.th}>Tiêu đề</th>
                   <th style={{ ...s.th, width: 160 }}>Danh mục</th>
                   {viewMode === "comfortable" && <th style={{ ...s.th, width: 120 }}>Tags</th>}
+                  <th style={{ ...s.th, width: 90, textAlign: "right" as const }}>👁 Views</th>
                   <th style={{ ...s.th, width: 100 }}>Ngày</th>
                   <th style={{ ...s.th, width: 70 }}>Health</th>
                   <th style={{ ...s.th, width: 120 }}>Thao tác</th>
@@ -669,20 +764,35 @@ export default function PostsClient({ authed }: { authed: boolean }) {
               </thead>
               <tbody>
                 {filtered.length === 0 && (
-                  <tr><td colSpan={9} style={{ ...s.td, textAlign: "center", padding: 48, color: "rgba(255,255,255,0.3)" }}>Không tìm thấy bài nào{search && ` cho "${search}"`}</td></tr>
+                  <tr><td colSpan={10} style={{ ...s.td, textAlign: "center", padding: 48, color: "rgba(255,255,255,0.3)" }}>
+                    {reorderMode ? "Chưa có bài nào được đánh dấu nổi bật" : `Không tìm thấy bài nào${search ? ` cho "${search}"` : ""}`}
+                  </td></tr>
                 )}
-                {filtered.map(post => {
+                {filtered.map((post, idx) => {
                   const isSel = selected.has(post._id);
                   const isMut = mutating.has(post._id);
                   const health = getHealth(post);
                   return (
                     <tr key={post._id}
-                      style={{ background: isSel ? "rgba(20,110,245,0.08)" : "transparent", transition: "background 0.1s", height: rowH }}
+                      draggable={reorderMode}
+                      onDragStart={() => { if (reorderMode) dragId.current = post._id; }}
+                      onDragOver={e => { if (reorderMode) { e.preventDefault(); dragOverId.current = post._id; } }}
+                      onDrop={() => { if (reorderMode) handleDrop(post._id); }}
+                      style={{ background: isSel ? "rgba(20,110,245,0.08)" : "transparent", transition: "background 0.1s", height: rowH, cursor: reorderMode ? "grab" : "default" }}
                       onMouseEnter={e => !isSel && (e.currentTarget.style.background = "rgba(255,255,255,0.025)")}
                       onMouseLeave={e => !isSel && (e.currentTarget.style.background = "transparent")}>
-                      <td style={s.td}>
-                        <input type="checkbox" checked={isSel} onChange={() => {}} onClick={e => toggleSelect(post._id, e as any)} style={{ cursor: "pointer" }} />
-                      </td>
+                      {reorderMode ? (
+                        <td style={{ ...s.td, color: "#ffd700", fontWeight: 700, fontSize: 14 }}>
+                          <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                            <span style={{ opacity: 0.5, cursor: "grab" }}>⋮⋮</span>
+                            <span style={{ fontSize: 11, padding: "2px 6px", borderRadius: 4, background: "rgba(255,215,0,0.12)" }}>{idx + 1}</span>
+                          </span>
+                        </td>
+                      ) : (
+                        <td style={s.td}>
+                          <input type="checkbox" checked={isSel} onChange={() => {}} onClick={e => toggleSelect(post._id, e as any)} style={{ cursor: "pointer" }} />
+                        </td>
+                      )}
                       <td style={s.td}>
                         <button onClick={() => !isMut && toggleFeatured(post)} disabled={isMut}
                           style={{ background: "none", border: "none", cursor: "pointer", fontSize: 17, opacity: isMut ? 0.4 : 1, padding: 0 }}>
@@ -739,6 +849,16 @@ export default function PostsClient({ authed }: { authed: boolean }) {
                           {(post.tags || []).length > 3 && <span style={{ color: "rgba(255,255,255,0.35)" }}>+{post.tags!.length - 3}</span>}
                         </td>
                       )}
+                      <td style={{ ...s.td, textAlign: "right" as const, fontSize: 13, fontVariantNumeric: "tabular-nums" }}>
+                        {post.views ? (
+                          <div title={`Hôm nay: ${post.viewsToday || 0} · Tuần này: ${post.viewsWeek || 0} · 90 ngày: ${post.views}`}>
+                            <div style={{ color: "#fff", fontWeight: 600 }}>{post.views.toLocaleString()}</div>
+                            {(post.viewsWeek || 0) > 0 && <div style={{ fontSize: 10, color: "#5fffaa" }}>+{post.viewsWeek}/tuần</div>}
+                          </div>
+                        ) : (
+                          <span style={{ color: "rgba(255,255,255,0.2)" }}>—</span>
+                        )}
+                      </td>
                       <td style={{ ...s.td, color: "rgba(255,255,255,0.5)", fontSize: 12 }}>
                         <div>{fmtDate(post.publishedAt)}</div>
                         <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)" }}>{fmtRelative(post.publishedAt)}</div>
@@ -769,9 +889,13 @@ export default function PostsClient({ authed }: { authed: boolean }) {
           )}
         </div>
 
-        <div style={{ padding: "12px 4px", color: "rgba(255,255,255,0.3)", fontSize: 12, display: "flex", justifyContent: "space-between" }}>
-          <span>Hiển thị {filtered.length} / {posts.length} bài viết</span>
-          <span style={{ fontSize: 11 }}>💡 Ctrl+K tìm · Ctrl+N tạo bài · Shift+click chọn range · Esc bỏ chọn · Double-click tiêu đề để sửa</span>
+        <div style={{ padding: "12px 4px", color: "rgba(255,255,255,0.3)", fontSize: 12, display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 8 }}>
+          <span>Hiển thị {filtered.length} / {posts.length} bài viết{reorderMode && " · Đang ở chế độ sắp xếp"}</span>
+          <span style={{ fontSize: 11 }}>
+            {reorderMode
+              ? "💡 Kéo thả các hàng để sắp xếp lại thứ tự bài nổi bật"
+              : "💡 Ctrl+K tìm · Ctrl+N tạo bài · Shift+click chọn range · Esc bỏ chọn · Double-click tiêu đề để sửa"}
+          </span>
         </div>
       </div>
 
@@ -789,6 +913,22 @@ export default function PostsClient({ authed }: { authed: boolean }) {
           <div style={{ width: 1, height: 18, background: "rgba(255,255,255,0.15)" }} />
           <button onClick={() => bulkPatch({ featured: true }, `Đã đánh dấu ${selected.size} bài`)} style={{ padding: "6px 10px", borderRadius: 7, background: "rgba(255,215,0,0.12)", color: "#ffd700", border: "1px solid rgba(255,215,0,0.25)", cursor: "pointer", fontSize: 12, fontWeight: 600 }}>⭐</button>
           <button onClick={() => bulkPatch({ featured: false }, `Đã bỏ nổi bật ${selected.size} bài`)} style={{ padding: "6px 10px", borderRadius: 7, background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.5)", border: "1px solid rgba(255,255,255,0.1)", cursor: "pointer", fontSize: 12 }}>☆</button>
+          <div style={{ width: 1, height: 18, background: "rgba(255,255,255,0.15)" }} />
+          <div style={{ position: "relative" }}>
+            <button onClick={() => setShowBulkTag(v => !v)} style={{ padding: "6px 10px", borderRadius: 7, background: "rgba(95,255,170,0.1)", color: "#5fffaa", border: "1px solid rgba(95,255,170,0.25)", cursor: "pointer", fontSize: 12, fontWeight: 600 }}>🏷 Thêm tag</button>
+            {showBulkTag && (
+              <Popover onClose={() => setShowBulkTag(false)} style={{ bottom: "100%", right: 0, marginBottom: 6, width: 240, padding: 10 }}>
+                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", marginBottom: 6 }}>Tag sẽ được thêm vào tất cả {selected.size} bài đã chọn (bỏ qua bài đã có tag này)</div>
+                <input value={bulkTagInput} onChange={e => setBulkTagInput(e.target.value)} autoFocus placeholder="nhập tên tag..."
+                  onKeyDown={e => e.key === "Enter" && bulkAddTag(bulkTagInput)}
+                  style={{ width: "100%", padding: "7px 10px", borderRadius: 7, border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.06)", color: "#fff", fontSize: 13, outline: "none", boxSizing: "border-box", marginBottom: 8 }} />
+                <button onClick={() => bulkAddTag(bulkTagInput)} disabled={!bulkTagInput.trim()}
+                  style={{ width: "100%", padding: "7px 0", borderRadius: 7, background: bulkTagInput.trim() ? "#146ef5" : "rgba(255,255,255,0.05)", color: bulkTagInput.trim() ? "#fff" : "rgba(255,255,255,0.3)", border: "none", cursor: bulkTagInput.trim() ? "pointer" : "not-allowed", fontWeight: 600, fontSize: 13 }}>
+                  Thêm tag vào {selected.size} bài
+                </button>
+              </Popover>
+            )}
+          </div>
           <button onClick={bulkDelete} style={{ padding: "6px 10px", borderRadius: 7, background: "rgba(255,60,60,0.12)", color: "#ff6b6b", border: "1px solid rgba(255,60,60,0.25)", cursor: "pointer", fontSize: 12, fontWeight: 600 }}>🗑 Xoá</button>
           <button onClick={() => setSelected(new Set())} style={{ padding: "6px 8px", background: "none", color: "rgba(255,255,255,0.4)", border: "none", cursor: "pointer", fontSize: 16 }}>×</button>
         </div>
