@@ -230,8 +230,26 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                   />
                 </div>
 
-                {/* In-article CTA */}
-                <div className="mt-10 rounded-2xl p-6 md:p-8" style={{ background: "linear-gradient(135deg, rgba(20,110,245,0.10) 0%, rgba(122,61,255,0.10) 100%)", border: "1px solid rgba(20,110,245,0.22)" }}>
+                {/* In-article CTA - Tool nếu bài về phí/ecom */}
+                {(post.category === "Unit Economics" || (post.tags || []).some((t: string) => ["shopee", "tiktok", "phi san", "phi hoa hong", "ecommerce"].includes(t.toLowerCase()))) && (
+                  <div className="mt-10 rounded-2xl p-6 md:p-8" style={{ background: "linear-gradient(135deg, rgba(238,77,45,0.08) 0%, rgba(20,110,245,0.10) 100%)", border: "1px solid rgba(20,110,245,0.25)" }}>
+                    <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-2" style={{ color: "#5fffaa" }}>
+                      Tool miễn phí · Cập nhật 29/05/2026
+                    </div>
+                    <div className="text-[1.3rem] md:text-[1.5rem] font-bold mb-3 leading-tight text-white">
+                      Tính lại margin ngay với phí sàn mới - chọn đúng ngành để chính xác nhất
+                    </div>
+                    <p className="text-[0.92rem] leading-[1.7] mb-5" style={{ color: "var(--st-70)" }}>
+                      Tool tính phí sàn TikTok Shop & Shopee 2026 - so sánh đồng thời Mall vs Non-Mall, có phí hoa hồng theo 1.300+ ngành hàng cấp 3. Miễn phí, không đăng ký.
+                    </p>
+                    <Link href="/tools/tinh-phi-san" className="btn btn-primary">
+                      Tính phí sàn ngay
+                    </Link>
+                  </div>
+                )}
+
+                {/* In-article CTA - Khoá học */}
+                <div className="mt-6 rounded-2xl p-6 md:p-8" style={{ background: "linear-gradient(135deg, rgba(20,110,245,0.10) 0%, rgba(122,61,255,0.10) 100%)", border: "1px solid rgba(20,110,245,0.22)" }}>
                   <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] mb-2" style={{ color: "#7da9ff" }}>
                     Khoá học · Đang mở apply Khoá 1
                   </div>

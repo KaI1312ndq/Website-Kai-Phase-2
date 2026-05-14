@@ -184,15 +184,25 @@ export default function Page() {
               ← Tất cả Tools
             </Link>
             <div className="section-tag">Tools · Miễn phí</div>
+            <div className="flex items-center gap-3 flex-wrap mb-3">
+              <span className="inline-flex items-center gap-1.5 text-[0.72rem] font-bold px-2.5 py-1 rounded-full" style={{ background: "rgba(95,255,170,0.12)", border: "1px solid rgba(95,255,170,0.35)", color: "#5fffaa" }}>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#5fffaa] animate-pulse" />
+                Cập nhật {new Date().toLocaleDateString("vi-VN", { day: "2-digit", month: "2-digit", year: "numeric" })} · Bảng phí Shopee Mall 29/05/2026
+              </span>
+            </div>
             <h1 className="t-h1 mb-4 leading-[1.1] text-white max-w-[820px]">
               Tính phí sàn <span className="grad-text">TikTok Shop & Shopee.</span>
             </h1>
-            <p className="t-body-lg max-w-[760px] mb-6">
+            <p className="t-body-lg max-w-[760px] mb-4">
               Công cụ tính phí sàn cho seller TMĐT - so sánh đồng thời 4 phương án <strong className="text-white">Mall vs Non-Mall</strong> trên TikTok Shop và Shopee, áp dụng bảng phí mới 2026.
               Tìm ngành hàng nhanh bằng từ khoá, hỗ trợ voucher extra, SFR, pi ship, và chi phí ads/marketing tuỳ chỉnh.
             </p>
+            <div className="mb-5 px-4 py-3 rounded-xl text-[0.85rem] leading-[1.6]" style={{ background: "rgba(255,212,121,0.07)", border: "1px solid rgba(255,212,121,0.25)", color: "var(--st-70)" }}>
+              <strong className="text-white">Quan trọng:</strong> Phí hoa hồng dao động <strong style={{ color: "#ffd479" }}>7% - 21%</strong> tuỳ ngành hàng.
+              Hãy <strong className="text-white">chọn ngành hàng</strong> trong tool bên dưới để có phí chính xác - kết quả mặc định chỉ là phí trung bình tham khảo.
+            </div>
             <div className="flex flex-wrap gap-2">
-              {["Phí TikTok Shop 2026", "Phí Shopee Mall", "Voucher Extra Plus", "SFR", "Pi Ship", "P&L gian hàng"].map((tag) => (
+              {["Phí TikTok Shop 2026", "Phí Shopee Mall 29/05", "Voucher Extra Plus", "SFR", "Pi Ship 2.700đ", "P&L gian hàng"].map((tag) => (
                 <span key={tag} className="wf-badge text-[0.72rem]">{tag}</span>
               ))}
             </div>
@@ -232,7 +242,11 @@ export default function Page() {
           <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-24 md:py-32">
             <div className="section-tag">So sánh phí 2026</div>
             <h2 className="t-h2 mb-3 text-white">TikTok Shop và Shopee - <span className="grad-text">sàn nào phí cao hơn?</span></h2>
-            <p className="t-body mb-10 max-w-[680px]">Tổng quan các loại phí cố định và option giữa 2 sàn, cập nhật bảng phí mới nhất 05/2026.</p>
+            <p className="t-body mb-4 max-w-[680px]">Tổng quan các loại phí cố định và option giữa 2 sàn, cập nhật bảng phí mới nhất 29/05/2026.</p>
+            <div className="mb-8 px-4 py-2.5 rounded-lg text-[0.8rem] inline-flex items-center gap-2" style={{ background: "rgba(95,255,170,0.08)", border: "1px solid rgba(95,255,170,0.25)", color: "#5fffaa" }}>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#5fffaa]" />
+              Phí Shopee Mall cập nhật 29/05/2026 · TikTok Shop cập nhật 09/05/2026
+            </div>
 
             <div className="overflow-x-auto rounded-2xl" style={{ background: "var(--dg-30)", border: "1px solid var(--line)" }}>
               <table className="w-full text-[0.88rem]">
@@ -247,10 +261,10 @@ export default function Page() {
                 </thead>
                 <tbody style={{ color: "var(--ink-soft)" }}>
                   {[
-                    { l: "Phí hoa hồng (range)", v: ["7% – 13%", "10% – 17%", "11.5% – 15%", "13% – 18%"] },
+                    { l: "Phí hoa hồng (range)", v: ["7% – 13%", "10% – 21%", "11.5% – 15%", "13% – 18%"] },
                     { l: "Phí giao dịch", v: ["6%", "6%", "6%", "6%"] },
                     { l: "Phí xử lý đơn / CSHT", v: ["3.000đ (CSHT)", "3.000đ (CSHT)", "3.000đ", "3.000đ"] },
-                    { l: "Voucher Extra", v: ["4% (cap 50k)", "4% (cap 50k)", "4% (cap 50k)", "4% (cap 50k)"] },
+                    { l: "Voucher Extra", v: ["5.5% (cap 50k)", "5.5% (cap 50k)", "4% (cap 50k)", "4% (cap 50k)"] },
                     { l: "Voucher Extra Plus", v: ["-", "-", "5.5% (cap 80k)", "5.5% (cap 80k)"] },
                     { l: "SFR / Pi Ship", v: ["2.700đ Pi Ship", "2.700đ Pi Ship", "1.620đ SFR", "1.620đ SFR"] },
                     { l: "Áp dụng từ", v: ["08/05/2026", "08/05/2026", "09/05/2026", "09/05/2026"] },

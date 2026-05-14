@@ -25,8 +25,8 @@ const TOOLS: Array<LinkSuggestion & { categories: string[]; tagKeywords: string[
     description: "Tính chính xác phí Mall vs Non-Mall - preset 4 platform, có search ngành.",
     iconName: "tool",
     color: "#4ad6ff",
-    categories: ["tiktok", "shopee", "ecom"],
-    tagKeywords: ["phí", "fee", "hoa hồng", "commission", "mall", "shopee", "tiktok"],
+    categories: ["tiktok", "shopee", "ecom", "Unit Economics", "unit economics"],
+    tagKeywords: ["phí", "fee", "hoa hồng", "commission", "mall", "shopee", "tiktok", "phi san", "phi hoa hong"],
   },
   {
     type: "tool",
@@ -45,8 +45,8 @@ const TOOLS: Array<LinkSuggestion & { categories: string[]; tagKeywords: string[
     description: "Báo cáo lãi lỗ gian hàng từ Net Revenue -> EBITDA, có in PDF.",
     iconName: "layers",
     color: "#a78bff",
-    categories: ["ecom", "shopee", "tiktok", "performance"],
-    tagKeywords: ["p&l", "pl", "lãi", "lợi nhuận", "profit", "ebitda", "margin", "contribution"],
+    categories: ["ecom", "shopee", "tiktok", "performance", "Unit Economics", "unit economics"],
+    tagKeywords: ["p&l", "pl", "lãi", "lợi nhuận", "profit", "ebitda", "margin", "contribution", "phi san", "unit economics"],
   },
 ];
 

@@ -3,6 +3,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import {
   searchTiktok, searchShopee,
   compute, fmt, PLATFORM_CONFIG,
+  SHOPEE_DEFAULT_MALL, SHOPEE_DEFAULT_NONMALL,
+  TIKTOK_DEFAULT_STD, TIKTOK_DEFAULT_MALL,
   type ExtraCost, type PlatformKey, type TiktokMatch, type ShopeeMatch,
 } from "@/lib/fees/lookup";
 
@@ -270,10 +272,10 @@ export default function Calculator() {
   const results = useMemo(() => PLATFORMS.map((p) => {
     const cfg = PLATFORM_CONFIG[p];
     let commission = 0;
-    if (p === "tiktokNonMall") commission = ttSelection?.std ?? 12.5;
-    if (p === "tiktokMall") commission = ttSelection?.mall ?? 15.5;
-    if (p === "shopeeNonMall") commission = spSelection?.nonMallRate ?? 10.5;
-    if (p === "shopeeMall") commission = spSelection?.mallRate ?? 13.5;
+    if (p === "tiktokNonMall") commission = ttSelection?.std ?? TIKTOK_DEFAULT_STD;
+    if (p === "tiktokMall") commission = ttSelection?.mall ?? TIKTOK_DEFAULT_MALL;
+    if (p === "shopeeNonMall") commission = spSelection?.nonMallRate ?? SHOPEE_DEFAULT_NONMALL;
+    if (p === "shopeeMall") commission = spSelection?.mallRate ?? SHOPEE_DEFAULT_MALL;
 
     const isTt = p === "tiktokNonMall" || p === "tiktokMall";
     const isSp = p === "shopeeNonMall" || p === "shopeeMall";
@@ -341,7 +343,20 @@ export default function Calculator() {
         <Section title="Shopee" accent="#EE4D2D">
           <div className="space-y-4">
             <div>
-              <label className="block text-[0.78rem] font-semibold mb-2 text-white">Tìm ngành hàng</label>
+              <div className="flex items-start gap-2 mb-2.5 px-3 py-2 rounded-lg text-[0.78rem] leading-[1.5]"
+                style={{ background: "rgba(238,77,45,0.08)", border: "1px solid rgba(238,77,45,0.25)", color: "var(--st-70)" }}>
+                <span className="text-[0.9rem] flex-shrink-0 mt-0.5">⚠</span>
+                <span>
+                  <strong className="text-white">Chọn ngành hàng trước</strong> để tính phí chính xác.
+                  Nếu để trống, tool dùng mức mặc định{" "}
+                  <strong style={{ color: "#EE4D2D" }}>Non-Mall {SHOPEE_DEFAULT_NONMALL}% · Mall {SHOPEE_DEFAULT_MALL}%</strong>{" "}
+                  - cao hơn nhiều ngành thực tế.
+                </span>
+              </div>
+              <label className="block text-[0.78rem] font-semibold mb-2 text-white">
+                Tìm ngành hàng
+                <span className="ml-1.5 font-normal text-[0.7rem]" style={{ color: "#5fffaa" }}>Cập nhật 29/05/2026</span>
+              </label>
               <CategorySearch<ShopeeMatch>
                 selected={spSelection}
                 onSelect={setSpSelection}
@@ -372,7 +387,19 @@ export default function Calculator() {
         <Section title="TikTok Shop" accent="#ff3358">
           <div className="space-y-4">
             <div>
-              <label className="block text-[0.78rem] font-semibold mb-2 text-white">Tìm ngành hàng</label>
+              <div className="flex items-start gap-2 mb-2.5 px-3 py-2 rounded-lg text-[0.78rem] leading-[1.5]"
+                style={{ background: "rgba(255,51,88,0.08)", border: "1px solid rgba(255,51,88,0.25)", color: "var(--st-70)" }}>
+                <span className="text-[0.9rem] flex-shrink-0 mt-0.5">⚠</span>
+                <span>
+                  <strong className="text-white">Chọn ngành hàng trước</strong> để phí hoa hồng chính xác.
+                  Nếu để trống, tool dùng mặc định{" "}
+                  <strong style={{ color: "#ff3358" }}>Non-Mall {TIKTOK_DEFAULT_STD}% · Mall {TIKTOK_DEFAULT_MALL}%</strong>.
+                </span>
+              </div>
+              <label className="block text-[0.78rem] font-semibold mb-2 text-white">
+                Tìm ngành hàng
+                <span className="ml-1.5 font-normal text-[0.7rem]" style={{ color: "#5fffaa" }}>Cập nhật 09/05/2026</span>
+              </label>
               <CategorySearch<TiktokMatch>
                 selected={ttSelection}
                 onSelect={setTtSelection}
@@ -579,7 +606,11 @@ export default function Calculator() {
 
       {/* Lưu ý - đẩy xuống dưới */}
       <div className="rounded-xl p-4 text-[0.82rem] leading-[1.65]" style={{ background: "var(--st-03)", border: "1px solid var(--st-06)", color: "var(--st-60)" }}>
-        <strong className="text-white">Lưu ý:</strong> Tất cả phí trong tool đã bao gồm thuế GTGT và <strong className="text-white">tính cho 1 đơn hàng</strong>. Phí TikTok Shop áp dụng từ 09/05/2026, Shopee từ 08/05/2026. Default rate khi chưa chọn ngành: TikTok 12.5% / 15.5% · Shopee 10.5% / 13.5%. Nếu bạn không tìm thấy ngành chính xác trong ô tìm kiếm, chọn ngành gần nhất hoặc để trống - tool sẽ dùng default rate trung bình.
+        <strong className="text-white">Lưu ý quan trọng:</strong> Tất cả phí đã bao gồm thuế GTGT, tính cho <strong className="text-white">1 đơn hàng</strong>.
+        Phí TikTok Shop áp dụng từ 09/05/2026, Shopee từ 08/05/2026 (Mall từ 29/05/2026).{" "}
+        <strong className="text-white">Default rate khi chưa chọn ngành:</strong>{" "}
+        TikTok {TIKTOK_DEFAULT_STD}% / {TIKTOK_DEFAULT_MALL}% · Shopee {SHOPEE_DEFAULT_NONMALL}% / {SHOPEE_DEFAULT_MALL}%.{" "}
+        Phí hoa hồng dao động 7-21% tuỳ ngành - <span style={{ color: "#ffd479" }}>luôn chọn ngành hàng để kết quả chính xác nhất.</span>
       </div>
     </div>
   );
