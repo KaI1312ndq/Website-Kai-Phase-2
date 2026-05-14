@@ -20,15 +20,16 @@ const CATEGORY_LABELS: Record<string, string> = {
   "case-study-data": "Case Study & Data",
   "tam-ly-mindset": "Tâm lý & Mindset",
   "thue-cong-cu": "Thuế & Công cụ",
-  // legacy
+  // normalized legacy
   ecom: "Ecommerce",
-  performance: "Performance",
+  performance: "Performance Marketing",
   leadership: "Leadership",
   tiktok: "TikTok Shop",
   shopee: "Shopee",
   mindset: "Mindset",
   psychology: "Tâm lý & Phát triển bản thân",
   career: "Hướng nghiệp",
+  tax: "Thuế & Công cụ",
 };
 
 export const metadata = {

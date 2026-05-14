@@ -92,8 +92,8 @@ export async function getPopularTags(limit = 12) {
 
 export async function getFeaturedPosts() {
   return client.fetch(`
-    *[_type == "post" && featured == true] | order(publishedAt desc) [0...3] {
-      _id, title, slug, excerpt, coverImage, category, readTime, publishedAt
+    *[_type == "post" && featured == true] | order(featuredOrder asc, publishedAt desc) [0...3] {
+      _id, title, slug, excerpt, coverImage, category, readTime, publishedAt, featuredOrder
     }
   `);
 }
