@@ -53,7 +53,7 @@ const FAQS = [
   },
   {
     q: "Pi Ship của Shopee có hữu ích không?",
-    a: "Pi Ship là dịch vụ vận chuyển nội bộ của Shopee. Phí 1.600đ/đơn (đăng ký). Lợi: rate ship rẻ hơn ngoài, tích hợp sâu vào Seller Center, tự động cập nhật trạng thái. Nhược: phụ thuộc Shopee, ít linh động khi có vấn đề. Phù hợp shop có volume cao và ngành hàng nhỏ gọn.",
+    a: "Pi Ship là dịch vụ vận chuyển nội bộ của Shopee. Phí 2.700đ/đơn từ 23/05/2026 (tăng từ 1.620đ). Lợi: rate ship rẻ hơn ngoài, tích hợp sâu vào Seller Center, tự động cập nhật trạng thái. Nhược: phụ thuộc Shopee, ít linh động khi có vấn đề. Phù hợp shop có volume cao và ngành hàng nhỏ gọn.",
   },
   {
     q: "Margin bao nhiêu là an toàn cho seller TMĐT?",
@@ -250,7 +250,7 @@ export default function Page() {
                     { l: "Phí xử lý đơn / CSHT", v: ["3.000đ (CSHT)", "3.000đ (CSHT)", "3.000đ", "3.000đ"] },
                     { l: "Voucher Extra", v: ["4% (cap 50k)", "4% (cap 50k)", "4% (cap 50k)", "4% (cap 50k)"] },
                     { l: "Voucher Extra Plus", v: ["-", "-", "5.5% (cap 80k)", "5.5% (cap 80k)"] },
-                    { l: "SFR / Pi Ship", v: ["1.600đ Pi Ship", "1.600đ Pi Ship", "1.620đ SFR", "1.620đ SFR"] },
+                    { l: "SFR / Pi Ship", v: ["2.700đ Pi Ship", "2.700đ Pi Ship", "1.620đ SFR", "1.620đ SFR"] },
                     { l: "Áp dụng từ", v: ["08/05/2026", "08/05/2026", "09/05/2026", "09/05/2026"] },
                     {
                       l: "Tổng phí áp lên SP 500k",
@@ -321,7 +321,7 @@ export default function Page() {
                 { t: "Voucher Extra", d: "Gói voucher do sàn tài trợ, seller đăng ký để có thêm voucher giảm giá cho buyer. Phí 4% giá sản phẩm (cap 50.000đ/SP). Có ở cả TikTok và Shopee." },
                 { t: "Voucher Extra Plus (TikTok)", d: "Gói nâng cấp của Voucher Extra - 5.5% (cap 80.000đ). Có nhiều voucher độc quyền + ưu tiên hiển thị. Chỉ chọn 1 trong 2 (không cộng dồn)." },
                 { t: "SFR - Bồi hoàn vận chuyển (TikTok)", d: "Dịch vụ TikTok thay seller xử lý bồi hoàn phí ship cho buyer khi có vấn đề. Phí 1.620đ/đơn - đăng ký." },
-                { t: "Pi Ship (Shopee)", d: "Dịch vụ vận chuyển nội bộ của Shopee. Phí 1.600đ/đơn - đăng ký. Rate ship rẻ hơn ngoài, tích hợp sâu Seller Center." },
+                { t: "Pi Ship (Shopee)", d: "Dịch vụ vận chuyển nội bộ của Shopee. Phí 2.700đ/đơn từ 23/05/2026 - đăng ký. Rate ship rẻ hơn ngoài, tích hợp sâu Seller Center." },
                 { t: "Doanh thu thực", d: "Tiền seller thực sự nhận = Giá bán − Voucher seller. Đây là cơ sở tính phí hoa hồng." },
                 { t: "COGS - Cost of Goods Sold", d: "Giá vốn của sản phẩm. Tính trực tiếp vào lợi nhuận, không liên quan phí sàn." },
                 { t: "Margin (% lợi nhuận)", d: "Tỷ lệ lợi nhuận trên giá bán. Margin tối thiểu nên đạt 10% - dưới đó dễ âm khi có biến động phí hoặc cost ads." },

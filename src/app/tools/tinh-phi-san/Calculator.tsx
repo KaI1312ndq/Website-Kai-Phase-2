@@ -361,8 +361,8 @@ export default function Calculator() {
             <div>
               <label className="block text-[0.78rem] font-semibold mb-2 text-white">Phí option <span className="font-normal" style={{ color: "var(--st-45)" }}>- đăng ký</span></label>
               <div className="space-y-2">
-                <CheckboxRow checked={spVoucherExtra} onChange={setSpVoucherExtra} label="Voucher Extra" hint="4% · cap 50.000đ" />
-                <CheckboxRow checked={spPiShip} onChange={setSpPiShip} label="Pi Ship" hint="1.600đ/đơn" />
+                <CheckboxRow checked={spVoucherExtra} onChange={setSpVoucherExtra} label="Voucher Extra" hint="5,5% · cap 50.000đ" />
+                <CheckboxRow checked={spPiShip} onChange={setSpPiShip} label="Pi Ship" hint="2.700đ/đơn" />
               </div>
             </div>
           </div>

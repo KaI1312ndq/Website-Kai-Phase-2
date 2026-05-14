@@ -13,8 +13,8 @@ export const SHOPEE_NONMALL_ROWS = shopeeNonMall as ShopeeRow[];
 /* ─── Fallback rates (per spec) ─── */
 export const TIKTOK_DEFAULT_STD = 12.5;
 export const TIKTOK_DEFAULT_MALL = 15.5;
-// Shopee không công bố default; dùng giá trị mode (phổ biến nhất)
-export const SHOPEE_DEFAULT_MALL = 13.5;
+// Shopee không công bố default; dùng giá trị mode (phổ biến nhất). Updated 29/05/2026 sau khi tăng phí cố định.
+export const SHOPEE_DEFAULT_MALL = 16.5;
 export const SHOPEE_DEFAULT_NONMALL = 10.5;
 
 /* ─── Search across all levels (free-text) ─── */

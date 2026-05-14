@@ -27,6 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description: seoDesc.slice(0, 160),
     keywords: [quiz.name, "test tính cách", "trắc nghiệm tiếng việt", "free quiz vietnam", "personality test"].join(", "),
     alternates: { canonical: `/quiz/${slug}` },
+    robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
     openGraph: {
       type: "website",
       title: seoTitle,
