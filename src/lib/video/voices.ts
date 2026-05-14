@@ -29,7 +29,6 @@ export const FPT_VOICES: FptVoice[] = [
 export interface VideoPreset {
   id: string;
   label: string;
-  emoji: string;
   useCase: string;
   niche: string[];          // ngành nghề phù hợp
   needsLipSync: boolean;    // → cost regen 6/10 thay vì 4/8
@@ -59,7 +58,6 @@ export const VIDEO_PRESETS: VideoPreset[] = [
   {
     id: "mc_talking_head",
     label: "MC Ảo - Talking Head",
-    emoji: "🎤",
     useCase: "AI avatar nói thẳng camera - kiểu news anchor, course intro",
     niche: ["course", "finance", "tech", "news"],
     needsLipSync: true,
@@ -78,7 +76,6 @@ export const VIDEO_PRESETS: VideoPreset[] = [
   {
     id: "reels_storytelling",
     label: "Reels triết lý + cảnh thiên nhiên",
-    emoji: "🌄",
     useCase: "Voice-over triết lý đè cảnh thiên nhiên epic - quotes brand",
     niche: ["self-help", "brand-storytelling", "quotes"],
     needsLipSync: false,
@@ -97,7 +94,6 @@ export const VIDEO_PRESETS: VideoPreset[] = [
   {
     id: "animation_explainer",
     label: "Animation 2D minh hoạ",
-    emoji: "✏️",
     useCase: "Nhân vật 2D + icon + transition - giải thích concept",
     niche: ["saas", "app", "finance", "education"],
     needsLipSync: false,
@@ -116,7 +112,6 @@ export const VIDEO_PRESETS: VideoPreset[] = [
   {
     id: "news_compilation",
     label: "Tin tức tổng hợp (News-style)",
-    emoji: "📰",
     useCase: "Globe + LIVE banner + footage cuộn - news-jacking hot trends",
     niche: ["news-jacking", "social-hot", "trending"],
     needsLipSync: false,
@@ -135,7 +130,6 @@ export const VIDEO_PRESETS: VideoPreset[] = [
   {
     id: "asmr_product",
     label: "ASMR cận cảnh sản phẩm",
-    emoji: "🍃",
     useCase: "Cận cảnh texture/sound sản phẩm - mỹ phẩm/F&B premium",
     niche: ["cosmetic", "skincare", "fnb-premium"],
     needsLipSync: false,
@@ -154,7 +148,6 @@ export const VIDEO_PRESETS: VideoPreset[] = [
   {
     id: "fake_livestream",
     label: "Giả livestream bán hàng",
-    emoji: "🔴",
     useCase: "Layout livestream + sản phẩm hiện ra - flash sale ecom",
     niche: ["flash-sale", "ecom-hot-deal"],
     needsLipSync: true,
@@ -173,7 +166,6 @@ export const VIDEO_PRESETS: VideoPreset[] = [
   {
     id: "cartoon_3d_character",
     label: "Nhân vật hoạt hình 3D",
-    emoji: "🧁",
     useCase: "Bất kỳ vật/người được nhân hoá 3D (như dạ dày/sản phẩm có mắt mũi) - Yumvita style",
     niche: ["healthy-food", "supplement", "kids-product", "any-anthropomorphized"],
     needsLipSync: false,
@@ -192,7 +184,6 @@ export const VIDEO_PRESETS: VideoPreset[] = [
   {
     id: "real_beauty_model",
     label: "Model người thật cận cảnh",
-    emoji: "💄",
     useCase: "Real model face cận cảnh - skincare/makeup tutorial",
     niche: ["skincare", "cosmetic", "makeup-tutorial"],
     needsLipSync: true,
@@ -211,7 +202,6 @@ export const VIDEO_PRESETS: VideoPreset[] = [
   {
     id: "real_expert_testimonial",
     label: "Người thật testimonial (chuyên gia + khách)",
-    emoji: "👨‍⚕️",
     useCase: "Real bác sĩ/PT/chuyên gia + khách hàng thật - sức khoẻ/sữa/dược nhi",
     niche: ["healthcare", "milk", "supplement-pharma", "expert-led"],
     needsLipSync: true,
@@ -230,7 +220,6 @@ export const VIDEO_PRESETS: VideoPreset[] = [
   {
     id: "emotional_lifestyle_ad",
     label: "Quảng cáo cảm xúc đời thường",
-    emoji: "❤️",
     useCase: "Mẹ + con / gia đình - tình huống đời thường, emotional hook",
     niche: ["family", "baby", "kids", "household-care"],
     needsLipSync: true,

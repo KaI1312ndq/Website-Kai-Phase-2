@@ -9,6 +9,7 @@ import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import VideoDetailClient from "./VideoDetailClient";
 import { TIER_LABELS } from "@/lib/video/pricing";
 import { VIDEO_PRESETS } from "@/lib/video/voices";
+import { PresetIcon } from "@/components/video/PresetIcon";
 
 export const metadata: Metadata = {
   title: "Video chi tiết - AI Video Studio",
@@ -56,11 +57,19 @@ export default async function VideoDetailPage({ params }: Props) {
         </div>
 
         <div className="flex flex-wrap items-end justify-between gap-4 mb-2">
-          <div>
-            <h1 className="t-h2 text-white">{input.product_name ?? "Video không tên"}</h1>
-            <div className="text-sm mt-1" style={{ color: "var(--ink-soft)" }}>
-              {preset?.emoji} {preset?.label ?? "Custom"} ·{" "}
-              {TIER_LABELS[video.tier as "eco" | "standard" | "pro"]} · {video.duration}s · {video.token_cost} token
+          <div className="flex items-center gap-3">
+            {preset && (
+              <div className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center"
+                   style={{ background: "rgba(168,85,247,0.15)", color: "#a855f7" }}>
+                <PresetIcon presetId={preset.id} size={26} />
+              </div>
+            )}
+            <div>
+              <h1 className="t-h2 text-white">{input.product_name ?? "Video không tên"}</h1>
+              <div className="text-sm mt-1" style={{ color: "var(--ink-soft)" }}>
+                {preset?.label ?? "Custom"} ·{" "}
+                {TIER_LABELS[video.tier as "eco" | "standard" | "pro"]} · {video.duration}s · {video.token_cost} token
+              </div>
             </div>
           </div>
         </div>

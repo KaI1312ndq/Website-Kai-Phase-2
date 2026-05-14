@@ -21,6 +21,7 @@ import {
   WARDROBES,
 } from "@/lib/video/voices";
 import type { VideoTier, VideoDuration } from "@/lib/video/types";
+import { PresetIcon, CharacterPortrait, WardrobeIcon, PlayIcon } from "@/components/video/PresetIcon";
 
 const DURATIONS: VideoDuration[] = [15, 20, 25, 30];
 const TIERS: VideoTier[] = ["eco", "standard", "pro"];
@@ -182,8 +183,14 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
                       boxShadow: isActive ? "0 0 0 4px rgba(168,85,247,0.18)" : "none",
                     }}
                   >
-                    <div className="flex items-baseline gap-2 mb-1">
-                      <span className="text-2xl">{p.emoji}</span>
+                    <div className="flex items-center gap-3 mb-1.5">
+                      <div className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center"
+                           style={{
+                             background: isActive ? "rgba(168,85,247,0.18)" : "rgba(255,255,255,0.06)",
+                             color: isActive ? "#a855f7" : "var(--ink-soft)",
+                           }}>
+                        <PresetIcon presetId={p.id} size={22} />
+                      </div>
                       <span className="font-semibold text-white text-sm leading-tight">{p.label}</span>
                     </div>
                     <div className="text-xs leading-relaxed" style={{ color: "var(--ink-soft)" }}>
@@ -354,7 +361,7 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
           {/* Advanced mode toggle */}
           <details className="rounded-2xl border-2" style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }} open={showAdvanced} onToggle={(e) => setShowAdvanced((e.target as HTMLDetailsElement).open)}>
             <summary className="px-6 py-4 cursor-pointer font-semibold text-white flex items-center justify-between">
-              <span>⚙️ Advanced - tinh chỉnh visual (9 chiều brief)</span>
+              <span>Advanced - tinh chỉnh visual (9 chiều brief)</span>
               <span className="text-xs" style={{ color: "var(--ink-mute)" }}>
                 {showAdvanced ? "Thu gọn" : "Mở (smart default theo preset)"}
               </span>
@@ -365,15 +372,117 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
               <AdvancedPicker label="Chuyển động camera" options={CAMERA_MOTIONS} value={cameraMotion} onChange={(v) => setCameraMotion(v as typeof cameraMotion)} />
               <AdvancedPicker label="Ánh sáng" options={LIGHTINGS} value={lighting} onChange={(v) => setLighting(v as typeof lighting)} />
               <AdvancedPicker label="Cảm xúc MC" options={MC_EMOTIONS} value={mcEmotion} onChange={(v) => setMcEmotion(v as typeof mcEmotion)} />
-              <AdvancedPicker label="Nhân vật MC" options={MC_CHARACTERS} value={mcCharacter} onChange={(v) => setMcCharacter(v as typeof mcCharacter)} />
-              <AdvancedPicker label="Trang phục" options={WARDROBES} value={wardrobe} onChange={(v) => setWardrobe(v as typeof wardrobe)} />
+
+              {/* Nhân vật MC - có visual preview */}
+              <div>
+                <label className="block text-sm mb-2 font-semibold text-white">
+                  Nhân vật MC{" "}
+                  <span className="text-xs font-normal" style={{ color: "var(--ink-mute)" }}>
+                    (hình minh hoạ - thật ở Phase 4)
+                  </span>
+                </label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+                  {MC_CHARACTERS.map((o) => {
+                    const isActive = mcCharacter === o.id;
+                    return (
+                      <button
+                        key={o.id}
+                        type="button"
+                        onClick={() => setMcCharacter(o.id as typeof mcCharacter)}
+                        className="p-2 rounded-lg border-2 transition-all flex flex-col items-center gap-2"
+                        style={{
+                          borderColor: isActive ? "#a855f7" : "rgba(255,255,255,0.10)",
+                          background: isActive ? "rgba(168,85,247,0.10)" : "transparent",
+                        }}
+                      >
+                        <CharacterPortrait characterId={o.id} size={52} />
+                        <div className="text-center">
+                          <div className="text-xs font-semibold text-white leading-tight">{o.label.split(" - ")[0]}</div>
+                          <div className="text-[10px] mt-0.5" style={{ color: "var(--ink-mute)" }}>{o.label.split(" - ")[1] ?? ""}</div>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Trang phục - có visual swatch */}
+              <div>
+                <label className="block text-sm mb-2 font-semibold text-white">
+                  Trang phục{" "}
+                  <span className="text-xs font-normal" style={{ color: "var(--ink-mute)" }}>
+                    (minh hoạ màu)
+                  </span>
+                </label>
+                <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+                  {WARDROBES.map((o) => {
+                    const isActive = wardrobe === o.id;
+                    return (
+                      <button
+                        key={o.id}
+                        type="button"
+                        onClick={() => setWardrobe(o.id as typeof wardrobe)}
+                        className="p-2 rounded-lg border-2 transition-all flex flex-col items-center gap-1"
+                        style={{
+                          borderColor: isActive ? "#a855f7" : "rgba(255,255,255,0.10)",
+                          background: isActive ? "rgba(168,85,247,0.10)" : "transparent",
+                        }}
+                      >
+                        <div className="w-full aspect-square rounded flex items-center justify-center" style={{ background: "rgba(255,255,255,0.06)" }}>
+                          <WardrobeIcon wardrobeId={o.id} size={36} />
+                        </div>
+                        <div className="text-[10px] text-center text-white font-semibold leading-tight">{o.label}</div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Voice - có thông tin chi tiết + preview button placeholder */}
               <div>
                 <label className="block text-sm mb-2 font-semibold text-white">Giọng đọc</label>
-                <select value={voiceId} onChange={(e) => setVoiceId(e.target.value)} className="input-dark w-full">
-                  {FPT_VOICES.map((v) => (
-                    <option key={v.id} value={v.id}>{v.label}</option>
-                  ))}
-                </select>
+                <div className="space-y-2">
+                  {FPT_VOICES.map((v) => {
+                    const isActive = voiceId === v.id;
+                    return (
+                      <label
+                        key={v.id}
+                        className="rounded-lg border-2 p-3 flex items-center gap-3 cursor-pointer transition-all"
+                        style={{
+                          borderColor: isActive ? "#a855f7" : "rgba(255,255,255,0.10)",
+                          background: isActive ? "rgba(168,85,247,0.10)" : "rgba(255,255,255,0.03)",
+                        }}
+                      >
+                        <input
+                          type="radio"
+                          name="voice"
+                          checked={isActive}
+                          onChange={() => setVoiceId(v.id)}
+                          className="w-4 h-4 flex-shrink-0 accent-purple-500"
+                        />
+                        <div className="flex-1 min-w-0">
+                          <div className="font-semibold text-white text-sm">{v.label}</div>
+                          <div className="text-xs mt-0.5" style={{ color: "var(--ink-soft)" }}>
+                            <span className="font-medium">{v.vibe}</span> · {v.useCase}
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          disabled
+                          title="Sample audio sẽ có ở Phase 4 (tích hợp FPT.AI thật)"
+                          className="flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed"
+                          style={{ borderColor: "rgba(255,255,255,0.20)", color: "var(--ink-soft)" }}
+                          onClick={(e) => e.preventDefault()}
+                        >
+                          <PlayIcon size={12} />
+                        </button>
+                      </label>
+                    );
+                  })}
+                </div>
+                <p className="text-[11px] mt-2" style={{ color: "var(--ink-mute)" }}>
+                  Nút ▶ nghe thử sẽ hoạt động khi Phase 4 tích hợp FPT.AI TTS thật.
+                </p>
               </div>
             </div>
           </details>
@@ -407,7 +516,7 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
       {step === 3 && (
         <div className="space-y-4">
           <div className="rounded-2xl border-2 p-6 space-y-3" style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}>
-            <Row label="Loại video" value={`${preset.emoji} ${preset.label}`} />
+            <Row label="Loại video" value={preset.label} />
             <Row label="Tier" value={`${TIER_LABELS[tier]} (${duration}s)`} />
             <Row label="Chi phí" value={`${tokenCost} token (6 cảnh)`} highlight />
             <Row label="Sản phẩm" value={productName} />

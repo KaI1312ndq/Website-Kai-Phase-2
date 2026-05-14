@@ -2,6 +2,16 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import {
+  FilmIcon,
+  DownloadIcon,
+  HourglassIcon,
+  WarningIcon,
+  EditIcon,
+  SaveIcon,
+  RefreshIcon,
+  LightbulbIcon,
+} from "@/components/video/PresetIcon";
 
 interface SceneRow {
   id: string;
@@ -112,7 +122,9 @@ export default function VideoDetailClient({ videoId, initialVideo, initialScenes
       {/* Final video preview if composed */}
       {composed && (
         <section>
-          <h3 className="t-h4 text-white mb-3">🎬 Video hoàn chỉnh</h3>
+          <h3 className="t-h4 text-white mb-3 flex items-center gap-2">
+            <FilmIcon size={20} className="text-purple-400" /> Video hoàn chỉnh
+          </h3>
           <div className="rounded-2xl border-2 overflow-hidden flex justify-center" style={{ background: "#000", borderColor: "rgba(168,85,247,0.4)" }}>
             {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
             <video
@@ -125,7 +137,9 @@ export default function VideoDetailClient({ videoId, initialVideo, initialScenes
             />
           </div>
           <div className="flex gap-2 mt-3 flex-wrap">
-            <a href={video.output_url as string} download className="btn btn-primary">⬇ Tải MP4</a>
+            <a href={video.output_url as string} download className="btn btn-primary inline-flex items-center gap-2">
+              <DownloadIcon size={16} /> Tải MP4
+            </a>
             <a href={video.output_url as string} target="_blank" rel="noopener" className="btn btn-ghost">Mở tab mới</a>
           </div>
         </section>
@@ -244,12 +258,12 @@ function SceneCard({ scene, videoTier, onOpenEdit, onUpdate }: {
           />
         ) : isRendering ? (
           <div className="text-center p-4" style={{ color: "var(--ink-mute)" }}>
-            <div className="text-2xl mb-2 animate-pulse">⏳</div>
+            <div className="mb-2 animate-pulse flex justify-center"><HourglassIcon size={28} /></div>
             <div className="text-xs">{STATUS_LABEL[scene.status]}...</div>
           </div>
         ) : (
           <div className="text-center p-4" style={{ color: "#ef4444" }}>
-            <div className="text-2xl mb-2">⚠</div>
+            <div className="mb-2 flex justify-center"><WarningIcon size={28} /></div>
             <div className="text-xs">{STATUS_LABEL[scene.status]}</div>
           </div>
         )}
@@ -278,10 +292,10 @@ function SceneCard({ scene, videoTier, onOpenEdit, onUpdate }: {
           type="button"
           onClick={onOpenEdit}
           disabled={isRendering}
-          className="text-xs px-3 py-1.5 rounded-lg border-2 disabled:opacity-50"
+          className="text-xs px-3 py-1.5 rounded-lg border-2 disabled:opacity-50 inline-flex items-center gap-1.5"
           style={{ borderColor: "rgba(255,255,255,0.15)", color: "var(--ink-soft)" }}
         >
-          ✏️ Sửa cảnh
+          <EditIcon size={12} /> Sửa cảnh
         </button>
         {scene.regen_count > 0 && (
           <span className="text-[10px] self-center" style={{ color: "var(--ink-mute)" }}>
@@ -432,20 +446,23 @@ function SceneEditModal({ videoId, scene, tier, onClose, onUpdated }: {
             </div>
           )}
 
-          <div className="text-xs p-3 rounded-lg" style={{ background: "rgba(255,255,255,0.04)", color: "var(--ink-soft)" }}>
-            💡 <strong>Lưu chữ</strong> (chỉ sửa text): <strong className="text-white">miễn phí</strong>.<br/>
-            <strong>Render lại cảnh</strong> (visual + voice mới): <strong className="grad-text">{regenCost} token</strong>
-            {scene.is_lipsync && " (cảnh lip-sync nên cao hơn)"}.
+          <div className="text-xs p-3 rounded-lg flex items-start gap-2" style={{ background: "rgba(255,255,255,0.04)", color: "var(--ink-soft)" }}>
+            <LightbulbIcon size={16} className="flex-shrink-0 mt-0.5" />
+            <div>
+              <strong>Lưu chữ</strong> (chỉ sửa text): <strong className="text-white">miễn phí</strong>.<br/>
+              <strong>Render lại cảnh</strong> (visual + voice mới): <strong className="grad-text">{regenCost} token</strong>
+              {scene.is_lipsync && " (cảnh lip-sync nên cao hơn)"}.
+            </div>
           </div>
 
           <div className="flex justify-between gap-2 flex-wrap">
             <button type="button" onClick={onClose} className="btn btn-ghost">Đóng</button>
             <div className="flex gap-2 flex-wrap">
-              <button type="button" onClick={saveScriptOnly} disabled={saving} className="btn btn-ghost disabled:opacity-50">
-                {saving ? "Đang lưu..." : "💾 Lưu chữ (free)"}
+              <button type="button" onClick={saveScriptOnly} disabled={saving} className="btn btn-ghost disabled:opacity-50 inline-flex items-center gap-2">
+                <SaveIcon size={14} /> {saving ? "Đang lưu..." : "Lưu chữ (free)"}
               </button>
-              <button type="button" onClick={regenScene} disabled={regenerating} className="btn btn-primary disabled:opacity-50">
-                {regenerating ? "Đang gửi render..." : `🔄 Render lại (${regenCost} token)`}
+              <button type="button" onClick={regenScene} disabled={regenerating} className="btn btn-primary disabled:opacity-50 inline-flex items-center gap-2">
+                <RefreshIcon size={14} /> {regenerating ? "Đang gửi render..." : `Render lại (${regenCost} token)`}
               </button>
             </div>
           </div>

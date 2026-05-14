@@ -112,9 +112,11 @@ export default async function VideoDashboardPage() {
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={v.thumbnail_url} alt="" className="w-full object-cover rounded mb-3" style={{ aspectRatio: "9 / 16" }} />
                   ) : (
-                    <div className="w-full rounded mb-3 flex items-center justify-center text-2xl"
+                    <div className="w-full rounded mb-3 flex items-center justify-center"
                          style={{ aspectRatio: "9 / 16", background: "rgba(255,255,255,0.06)", color: "var(--ink-mute)" }}>
-                      {v.status === "completed" ? "✓" : v.status === "failed" ? "⚠" : "⏳"}
+                      <span className="text-xs uppercase tracking-wider">
+                        {v.status === "completed" ? "Done" : v.status === "failed" ? "Failed" : "Đang xử lý"}
+                      </span>
                     </div>
                   )}
                   <div className="flex justify-between items-center text-sm">
