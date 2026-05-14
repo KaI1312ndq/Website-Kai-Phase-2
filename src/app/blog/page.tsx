@@ -32,13 +32,19 @@ const CATEGORY_LABELS: Record<string, string> = {
 };
 
 export const metadata = {
-  title: "Blog & Insights - Nguyễn Đức Quảng",
-  description: "Bài viết về Ecommerce, Performance Marketing, P&L gian hàng, Team Building, tâm lý và phát triển bản thân.",
+  title: "Blog Ecommerce - Phí sàn, P&L, Performance Marketing | Nguyễn Đức Quảng",
+  description: "Bài viết thực chiến về Ecommerce: phí sàn TikTok & Shopee 2026, tính P&L gian hàng, Performance Marketing, tư duy founder và phát triển team. Cập nhật liên tục.",
+  keywords: [
+    "blog ecommerce việt nam", "phí shopee 2026", "phí tiktok shop 2026",
+    "p&l gian hàng", "performance marketing ecom", "tư duy founder ecom",
+    "nguyễn đức quảng", "kiến thức ecommerce tiếng việt",
+  ],
   alternates: {
     canonical: "/blog",
     types: { "application/rss+xml": [{ url: "/blog/feed.xml", title: "Blog & Insights RSS" }] },
   },
-  openGraph: { type: "website", title: "Blog & Insights - Nguyễn Đức Quảng", description: "Góc nhìn thực tế về Ecommerce, Performance Marketing và Leadership." },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
+  openGraph: { type: "website", title: "Blog Ecommerce - Phí sàn, P&L, Performance Marketing", description: "Bài viết thực chiến về Ecommerce: phí sàn 2026, P&L gian hàng, ads và tư duy founder." },
 };
 
 export const revalidate = 60;

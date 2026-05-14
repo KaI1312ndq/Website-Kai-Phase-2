@@ -6,13 +6,20 @@ import Link from "next/link";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.nguyenducquang.website";
 
 export const metadata: Metadata = {
-  title: "Tools - Công cụ miễn phí cho seller TMĐT",
-  description: "Bộ tools miễn phí cho seller Ecommerce: tính phí sàn TikTok Shop & Shopee, ROAS calculator, P&L template, và nhiều hơn nữa.",
+  title: "Công cụ miễn phí cho seller Ecommerce 2026 - Tính phí sàn, Thuế, ROAS, P&L",
+  description: "Bộ 4 công cụ miễn phí cho seller TikTok Shop & Shopee: tính phí sàn theo ngành hàng (cập nhật 29/05/2026), tính thuế TNCN 2026, ROAS calculator và P&L gian hàng. Không đăng ký.",
+  keywords: [
+    "công cụ ecommerce miễn phí", "tools seller tmđt", "tính phí sàn shopee tiktok",
+    "tính thuế tncn 2026", "roas calculator", "p&l gian hàng",
+    "công cụ tính lợi nhuận shop", "tools seller shopee", "tools seller tiktok shop",
+  ],
   alternates: { canonical: "/tools" },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
   openGraph: {
     type: "website",
-    title: "Tools - Công cụ miễn phí cho seller TMĐT",
-    description: "Bộ tools miễn phí cho seller Ecommerce: tính phí sàn TikTok & Shopee và nhiều hơn nữa.",
+    locale: "vi_VN",
+    title: "Công cụ miễn phí cho seller Ecommerce 2026",
+    description: "Tính phí sàn TikTok & Shopee, thuế TNCN, ROAS, P&L - 4 tools miễn phí, không đăng ký.",
   },
 };
 

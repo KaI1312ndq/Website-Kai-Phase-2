@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     "tính lợi nhuận ads", "ads ecom hiệu quả",
   ],
   alternates: { canonical: "/tools/roas-calculator" },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
   openGraph: {
     type: "website",
     locale: "vi_VN",

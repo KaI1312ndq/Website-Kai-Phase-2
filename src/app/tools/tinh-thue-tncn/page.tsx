@@ -10,14 +10,25 @@ import Calculator from "./Calculator";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.nguyenducquang.website";
 
 export const metadata: Metadata = {
-  title: "Tính Thuế TNCN 2026 - So sánh 2025 vs 2026 mới nhất",
+  title: "Tính Thuế TNCN 2026 - Công cụ tính lương Net miễn phí",
   description:
-    "Tool tính thuế thu nhập cá nhân 2026 theo Nghị quyết 110/2025/UBTVQH15 - so sánh trực tiếp với luật 2025 cũ. Nhập lương Gross/tháng, tự tính BHXH 10.5% + giảm trừ gia cảnh + thuế lũy tiến 5 bậc mới (giảm trừ 15.500.000 cho bản thân, 6.200.000/người phụ thuộc) + lương Net. Miễn phí.",
+    "Tính thuế thu nhập cá nhân 2026 theo luật mới - so sánh trực tiếp với 2025. Nhập lương Gross, tự tính BHXH 10.5% + giảm trừ gia cảnh 15.5 triệu + thuế lũy tiến 5 bậc. Ra ngay lương Net + số thuế phải nộp. Miễn phí.",
+  keywords: [
+    "tính thuế tncn 2026", "thuế thu nhập cá nhân 2026", "tính lương net",
+    "công cụ tính thuế tncn", "thuế tncn 2026 thay đổi gì",
+    "giảm trừ gia cảnh 2026", "bảng thuế tncn 2026",
+    "lương gross bao nhiêu đóng thuế", "tính thuế tncn từ lương gross",
+    "thuế tncn 2025 vs 2026", "nghị quyết 110 thuế tncn",
+    "5 bậc thuế tncn mới", "tính bhxh 2026", "lương net 2026",
+    "tính thuế thu nhập cá nhân tháng", "tính thuế thu nhập cá nhân năm",
+  ],
   alternates: { canonical: "/tools/tinh-thue-tncn" },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
   openGraph: {
     type: "website",
-    title: "Tính Thuế TNCN 2026 vs 2025 - Tool miễn phí",
-    description: "So sánh thuế thu nhập cá nhân theo luật mới 2026 (5 bậc, giảm trừ 15.500.000) vs luật cũ 2025 (7 bậc, giảm trừ 11.000.000). Tính lương Net trong 3 giây.",
+    locale: "vi_VN",
+    title: "Tính Thuế TNCN 2026 - Công cụ tính lương Net miễn phí",
+    description: "Nhập lương Gross - ra ngay lương Net + thuế TNCN 2026 theo 5 bậc mới. So sánh với 2025 để thấy chênh lệch. Miễn phí.",
     url: `${SITE_URL}/tools/tinh-thue-tncn`,
   },
 };

@@ -18,6 +18,7 @@ export const metadata: Metadata = {
     "lập kế hoạch tài chính shop", "P&L excel ecom",
   ],
   alternates: { canonical: "/tools/pnl-ecom" },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
   openGraph: {
     type: "website",
     locale: "vi_VN",

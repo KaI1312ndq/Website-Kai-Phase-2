@@ -5,24 +5,26 @@ import Link from "next/link";
 import Calculator from "./Calculator";
 
 export const metadata: Metadata = {
-  title: "Tính phí sàn TikTok Shop & Shopee 2026 - Công cụ miễn phí",
+  title: "Tính phí sàn TikTok Shop & Shopee 2026 - Cập nhật 29/05/2026",
   description:
-    "Công cụ tính phí sàn TikTok Shop và Shopee 2026 chính xác - so sánh đồng thời 4 phương án Mall · Non-Mall, hỗ trợ tìm ngành hàng nhanh. Miễn phí, không cần đăng ký.",
+    "Công cụ tính phí sàn TikTok Shop và Shopee 2026 chính xác - phí hoa hồng theo ngành hàng cập nhật 29/05/2026, so sánh đồng thời 4 phương án Mall · Non-Mall. Miễn phí, không đăng ký.",
   keywords: [
-    "tính phí sàn", "phí sàn tiktok", "phí sàn shopee",
-    "công cụ tính phí sàn tiktok", "công cụ tính phí sàn shopee",
+    "tính phí sàn", "phí sàn tiktok shop 2026", "phí sàn shopee 2026",
     "phí hoa hồng tiktok shop", "phí hoa hồng shopee mall",
-    "tính lợi nhuận sàn", "p&l shopee", "p&l tiktok shop",
-    "phí tiktok shop 2026", "phí shopee 2026",
+    "công cụ tính phí sàn", "tính lợi nhuận sàn tmđt",
+    "phí shopee tháng 5 2026", "shopee tăng phí 2026",
     "tiktok shop hay shopee", "shopee mall có nên đăng ký",
-    "voucher extra plus tiktok", "sfr tiktok", "pi ship shopee",
+    "voucher extra shopee 5.5%", "pi ship shopee 2700đ", "sfr tiktok",
+    "phí giao dịch shopee", "phí giao dịch tiktok shop",
+    "tính margin shop tmđt", "p&l shopee", "p&l tiktok shop",
   ],
   alternates: { canonical: "/tools/tinh-phi-san" },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
   openGraph: {
     type: "website",
     locale: "vi_VN",
-    title: "Tính phí sàn TikTok Shop & Shopee 2026 - Công cụ miễn phí",
-    description: "So sánh phí Mall vs Non-Mall trên TikTok Shop và Shopee đồng thời. Phí 2026, có voucher extra, pi ship, sfr, chi phí ads tuỳ chỉnh.",
+    title: "Tính phí sàn TikTok Shop & Shopee 2026 - Cập nhật 29/05/2026",
+    description: "Phí hoa hồng theo ngành cập nhật 29/05/2026. So sánh Mall vs Non-Mall TikTok Shop & Shopee đồng thời. Có voucher extra 5.5%, pi ship 2.700đ, sfr. Miễn phí.",
   },
 };
 

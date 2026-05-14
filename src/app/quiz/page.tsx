@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   title: "Quiz tính cách & kiến thức Marketing - 10 test miễn phí tiếng Việt",
   description: "Bộ 10 quiz tiếng Việt: MBTI, Big Five, Enneagram, EQ, DISC, Dark Triad, Lãnh đạo, Hướng nghiệp Marketing, ROAS knowledge, Content frameworks. Free + chi tiết.",
   alternates: { canonical: "/quiz" },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
   openGraph: {
     type: "website",
     title: "Quiz tính cách & Marketing - 10 test miễn phí 2026",
