@@ -259,8 +259,8 @@ export const PLATFORM_CONFIG = {
     accent: "#EE4D2D",
     txnRate: 6,
     perOrderFee: 3000,
-    voucherExtraOptions: { rate: 4, cap: 50000 },
-    piShip: 1600,
+    voucherExtraOptions: { rate: 5.5, cap: 50000 }, // updated 23/05/2026: 4% -> 5.5%
+    piShip: 2700, // updated 23/05/2026: 1620 -> 2700
   },
   shopeeMall: {
     label: "Shopee · Mall",
@@ -269,8 +269,8 @@ export const PLATFORM_CONFIG = {
     accent: "#EE4D2D",
     txnRate: 6,
     perOrderFee: 3000,
-    voucherExtraOptions: { rate: 4, cap: 50000 },
-    piShip: 1600,
+    voucherExtraOptions: { rate: 5.5, cap: 50000 }, // updated 23/05/2026: 4% -> 5.5%
+    piShip: 2700, // updated 23/05/2026: 1620 -> 2700
   },
 } as const;
 
