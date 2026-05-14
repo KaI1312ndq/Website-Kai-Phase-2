@@ -19,7 +19,7 @@ function isAuthed(req: NextRequest) {
   return cookie === ADMIN_SECRET || header === ADMIN_SECRET;
 }
 
-// GET all posts (lightweight - no body)
+// GET all posts (lightweight)
 export async function GET(req: NextRequest) {
   if (!isAuthed(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
@@ -27,69 +27,82 @@ export async function GET(req: NextRequest) {
   const posts = await client.fetch(`
     *[_type == "post"] | order(publishedAt desc) {
       _id, title, slug, category, featured, featuredOrder,
-      publishedAt, tags, excerpt, readTime,
+      publishedAt, _updatedAt, tags, excerpt, readTime,
       "hasBody": defined(body) && length(body) > 0,
-      "hasCover": defined(coverImage)
+      "wordCount": length(pt::text(body)),
+      "coverUrl": coverImage.asset->url
     }
   `);
   return NextResponse.json(posts);
 }
 
-// PATCH - update one or multiple posts
 export async function PATCH(req: NextRequest) {
   if (!isAuthed(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-
   const body = await req.json();
   const client = getClient();
 
-  // Bulk: { ids: string[], patch: object }
   if (Array.isArray(body.ids)) {
     const results = await Promise.allSettled(
       body.ids.map((id: string) => client.patch(id).set(body.patch).commit())
     );
     return NextResponse.json({ updated: body.ids.length, results: results.map(r => r.status) });
   }
-
-  // Single: { id: string, patch: object }
   if (body.id && body.patch) {
     await client.patch(body.id).set(body.patch).commit();
     return NextResponse.json({ ok: true });
   }
-
   return NextResponse.json({ error: "Invalid body" }, { status: 400 });
 }
 
-// DELETE - one or multiple posts
 export async function DELETE(req: NextRequest) {
   if (!isAuthed(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-
   const body = await req.json();
   const client = getClient();
-
   const ids: string[] = Array.isArray(body.ids) ? body.ids : [body.id];
   await Promise.allSettled(ids.map(id => client.delete(id)));
   return NextResponse.json({ deleted: ids.length });
 }
 
-// POST - create new post
+function autoSlug(t: string) {
+  return t.toLowerCase()
+    .replace(/[àáạảãâầấậẩẫăằắặẳẵ]/g, "a").replace(/[èéẹẻẽêềếệểễ]/g, "e")
+    .replace(/[ìíịỉĩ]/g, "i").replace(/[òóọỏõôồốộổỗơờớợởỡ]/g, "o")
+    .replace(/[ùúụủũưừứựửữ]/g, "u").replace(/[ỳýỵỷỹ]/g, "y")
+    .replace(/đ/g, "d").replace(/[^a-z0-9\s-]/g, "").trim()
+    .replace(/\s+/g, "-").slice(0, 80);
+}
+
 export async function POST(req: NextRequest) {
   if (!isAuthed(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const body = await req.json();
   const client = getClient();
 
-  const slug = body.title
-    .toLowerCase()
-    .normalize("NFD").replace(/[̀-ͯ]/g, "")
-    .replace(/đ/g, "d").replace(/Đ/g, "d")
-    .replace(/[^a-z0-9\s-]/g, "")
-    .trim().replace(/\s+/g, "-")
-    .slice(0, 80);
+  // DUPLICATE existing post
+  if (body.action === "duplicate" && body.sourceId) {
+    const src = await client.fetch(`*[_id == $id][0]`, { id: body.sourceId });
+    if (!src) return NextResponse.json({ error: "Source not found" }, { status: 404 });
+    const newTitle = `${src.title} (Bản sao)`;
+    const newSlug = `${src.slug?.current || autoSlug(src.title)}-copy-${Date.now().toString(36)}`;
+    const { _id, _createdAt, _updatedAt, _rev, ...rest } = src;
+    const doc = {
+      ...rest,
+      _type: "post",
+      title: newTitle,
+      slug: { _type: "slug", current: newSlug },
+      featured: false,
+      publishedAt: new Date().toISOString(),
+    };
+    const created = await client.create(doc);
+    return NextResponse.json({ ok: true, id: created._id });
+  }
 
+  // CREATE new
+  const slug = body.slug || autoSlug(body.title);
   const doc = {
     _type: "post",
     title: body.title,
-    slug: { _type: "slug", current: body.slug || slug },
+    slug: { _type: "slug", current: slug },
     excerpt: body.excerpt || "",
     category: body.category || "ecom",
     tags: body.tags || [],
@@ -97,7 +110,6 @@ export async function POST(req: NextRequest) {
     publishedAt: new Date().toISOString(),
     body: [],
   };
-
   const created = await client.create(doc);
-  return NextResponse.json({ ok: true, id: created._id, slug: doc.slug.current });
+  return NextResponse.json({ ok: true, id: created._id, slug });
 }

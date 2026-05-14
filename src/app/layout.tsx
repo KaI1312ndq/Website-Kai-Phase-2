@@ -13,6 +13,7 @@ import LeadPopup from "@/components/LeadPopup";
 import PageTransition from "@/components/PageTransition";
 import { CartProvider } from "@/components/cart/CartContext";
 import CartDrawer from "@/components/cart/CartDrawer";
+import AdminFAB from "@/components/AdminFAB";
 
 // Clerk - use official dark baseTheme + site-palette overrides for proper contrast
 const clerkAppearance = {
@@ -250,6 +251,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <CartDrawer />
           </CartProvider>
           <LeadPopup />
+          <AdminFAB />
           <Analytics />
           <PageviewTracker />
         </ClerkProvider>
