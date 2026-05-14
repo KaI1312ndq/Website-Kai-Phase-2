@@ -186,28 +186,52 @@ function CoverCell({ post, onUpdate, size = 56 }: { post: Post; onUpdate: (p: Pa
   const busy = uploading || generating;
 
   return (
-    <div style={{ position: "relative", width: size, height: h, borderRadius: 6, overflow: "hidden", background: post.coverUrl ? "transparent" : "rgba(255,255,255,0.04)", border: post.coverUrl ? "none" : "1px dashed rgba(255,255,255,0.15)", flexShrink: 0 }}
-      className="cover-cell">
-      {post.coverUrl ? (
-        <img src={`${post.coverUrl}?w=${size*2}&h=${h*2}&fit=crop`} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} onClick={() => inputRef.current?.click()} title="Click để đổi ảnh" />
-      ) : (
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", color: "rgba(255,255,255,0.3)", cursor: "pointer" }} onClick={() => inputRef.current?.click()} title="Upload ảnh">
-          <IcCamera size={16} />
-        </div>
-      )}
-      {busy && <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.75)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, color: generating ? "#ff7ad9" : "#5fffaa" }}>{generating ? "AI..." : "..."}</div>}
-      {!busy && (
-        <div className="cover-overlay" style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.62)", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, opacity: 0, transition: "opacity 0.15s", color: "#fff" }}>
-          <button onClick={(e) => { e.stopPropagation(); inputRef.current?.click(); }} title="Upload ảnh"
-            style={{ background: "rgba(255,255,255,0.15)", border: "none", borderRadius: 4, padding: 3, cursor: "pointer", color: "#fff", display: "flex" }}>
-            <IcUpload size={12} />
-          </button>
-          <button onClick={handleAIGenerate} title="Tạo bằng AI"
-            style={{ background: "rgba(255,122,217,0.25)", border: "none", borderRadius: 4, padding: 3, cursor: "pointer", color: "#ff7ad9", display: "flex" }}>
-            <IcSparkles size={12} />
-          </button>
-        </div>
-      )}
+    <div style={{ position: "relative", display: "inline-block", flexShrink: 0 }}>
+      <div
+        onClick={() => !busy && inputRef.current?.click()}
+        title="Click để upload ảnh"
+        style={{
+          position: "relative", width: size, height: h, borderRadius: 6, overflow: "hidden",
+          background: post.coverUrl ? "transparent" : "rgba(255,255,255,0.04)",
+          border: post.coverUrl ? "none" : "1px dashed rgba(255,255,255,0.15)",
+          cursor: busy ? "wait" : "pointer",
+        }}
+      >
+        {post.coverUrl ? (
+          <img src={`${post.coverUrl}?w=${size*2}&h=${h*2}&fit=crop`} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+        ) : (
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", color: "rgba(255,255,255,0.3)" }}>
+            <IcCamera size={16} />
+          </div>
+        )}
+        {busy && (
+          <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.75)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, color: generating ? "#ff7ad9" : "#5fffaa", fontWeight: 600 }}>
+            {generating ? "AI..." : "..."}
+          </div>
+        )}
+      </div>
+      {/* AI button - always visible, top-right corner */}
+      <button
+        onClick={handleAIGenerate}
+        disabled={busy}
+        title="Tạo cover bằng AI"
+        style={{
+          position: "absolute", top: -6, right: -6,
+          width: 20, height: 20, borderRadius: "50%",
+          background: "linear-gradient(135deg, #ff7ad9, #7a3dff)",
+          border: "1.5px solid #0c0c14",
+          cursor: busy ? "wait" : "pointer",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          color: "#fff", padding: 0,
+          boxShadow: "0 2px 8px rgba(122,61,255,0.4)",
+          opacity: busy ? 0.5 : 1,
+          transition: "transform 0.15s",
+        }}
+        onMouseEnter={(e) => !busy && (e.currentTarget.style.transform = "scale(1.15)")}
+        onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+      >
+        <IcSparkles size={11} />
+      </button>
       <input ref={inputRef} type="file" accept="image/*" style={{ display: "none" }} onChange={e => e.target.files?.[0] && handleFile(e.target.files[0])} />
     </div>
   );
