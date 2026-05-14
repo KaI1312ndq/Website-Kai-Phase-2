@@ -56,36 +56,59 @@ export interface VideoPayment {
 }
 
 export type VideoPlatform = "tiktok" | "shopee" | "reels";
-export type VideoStyle = "ugc" | "demo" | "before_after" | "trendy" | "punchy" | "cinematic";
-export type VideoFormat = "dialog" | "monologue" | "drama" | "body_pain";
-export type CharacterType = "product" | "user_persona" | "body_part" | "duo";
-export type VideoTone = "sharp_sarcastic" | "friendly_funny" | "confident_proud" | "urgent_punchy";
 
 export interface VideoInput {
-  // platform (always 9:16 vertical)
+  // preset (auto-fills 9 brief dimensions if user uses Quick mode)
+  preset_id?: string;
   platform?: VideoPlatform;
-  // narrative
-  format?: VideoFormat;
-  character?: CharacterType;
-  tone?: VideoTone;
-  body_part_focus?: string;    // for body_pain format: "dạ dày" | "não" | "da" | "eo bụng" | etc.
-  // product info
+
+  // product (Quick mode mandatory)
   product_name: string;
   product_description: string;
-  target_audience?: string;
   cta?: string;
-  // ecom-specific
+
+  // optional ecom
+  target_audience?: string;
   price_vnd?: number;
   promo?: string;
   social_proof?: string;
-  // style
-  style?: VideoStyle;
+
+  // Advanced overrides (9 brief dimensions)
+  shot_size?: string;
+  camera_angle?: string;
+  camera_motion?: string;
+  lighting?: string;
+  mc_emotion?: string;
   voice_id?: string;
+  mc_character?: string;
+  wardrobe?: string;
+  concept?: string;
+
+  // misc
   music_track?: string;
-  // optional advanced
-  scenes?: VideoScene[];
   brand_colors?: string[];
   logo_url?: string;
+}
+
+export interface VideoSceneRow {
+  id: string;
+  video_id: string;
+  scene_idx: number;
+  label: string | null;
+  script_text: string | null;
+  visual_prompt: string | null;
+  voiceover_text: string | null;
+  duration_sec: number;
+  status: "pending" | "rendering" | "completed" | "failed" | "approved";
+  approved_by_user: boolean;
+  is_lipsync: boolean;
+  output_url: string | null;
+  thumbnail_url: string | null;
+  voice_url: string | null;
+  regen_count: number;
+  cost_token: number;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface VideoScene {

@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
-import { getVideoTokenCost } from "@/lib/video/pricing";
-import { FPT_VOICES, VIDEO_STYLES, VIDEO_PLATFORMS, VIDEO_FORMATS, CHARACTER_TYPES, VIDEO_TONES } from "@/lib/video/voices";
+import { getVideoTokenCost, SCENES_PER_VIDEO } from "@/lib/video/pricing";
+import { FPT_VOICES, VIDEO_PRESETS } from "@/lib/video/voices";
 import type { VideoTier, VideoDuration } from "@/lib/video/types";
 
 export const runtime = "nodejs";
@@ -10,12 +10,11 @@ export const runtime = "nodejs";
 interface CreateVideoBody {
   tier: VideoTier;
   duration: VideoDuration;
+  preset_id?: string;
+  auto_caption?: boolean;
   input: {
+    preset_id?: string;
     platform?: string;
-    format?: string;
-    character?: string;
-    tone?: string;
-    body_part_focus?: string;
     product_name: string;
     product_description: string;
     target_audience?: string;
@@ -23,13 +22,21 @@ interface CreateVideoBody {
     price_vnd?: number;
     promo?: string;
     social_proof?: string;
-    style?: string;
+    shot_size?: string;
+    camera_angle?: string;
+    camera_motion?: string;
+    lighting?: string;
+    mc_emotion?: string;
+    mc_character?: string;
+    wardrobe?: string;
     voice_id?: string;
   };
 }
 
 const VALID_TIERS: VideoTier[] = ["eco", "standard", "pro"];
 const VALID_DURATIONS: VideoDuration[] = [15, 20, 25, 30];
+
+const SCENE_LABELS = ["Hook", "Pain point", "Product intro", "Proof", "Price & promo", "CTA"];
 
 export async function POST(req: NextRequest) {
   const { userId } = await auth();
@@ -55,7 +62,7 @@ export async function POST(req: NextRequest) {
     }, { status: 400 });
   }
 
-  const input = body.input ?? {};
+  const input = body.input ?? ({} as CreateVideoBody["input"]);
   if (!input.product_name || input.product_name.trim().length < 3) {
     return NextResponse.json({ error: "Tên sản phẩm tối thiểu 3 ký tự" }, { status: 400 });
   }
@@ -63,29 +70,23 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Mô tả tối thiểu 10 ký tự" }, { status: 400 });
   }
 
-  const platformValid = !input.platform || VIDEO_PLATFORMS.some((p) => p.id === input.platform);
-  const formatValid = !input.format || VIDEO_FORMATS.some((f) => f.id === input.format);
-  const characterValid = !input.character || CHARACTER_TYPES.some((c) => c.id === input.character);
-  const toneValid = !input.tone || VIDEO_TONES.some((t) => t.id === input.tone);
-  const styleValid = !input.style || VIDEO_STYLES.some((s) => s.id === input.style);
+  const presetId = body.preset_id ?? input.preset_id ?? "cartoon_3d_character";
+  const preset = VIDEO_PRESETS.find((p) => p.id === presetId);
+  if (!preset) {
+    return NextResponse.json({ error: "Preset không hợp lệ" }, { status: 400 });
+  }
+
   const voiceValid = !input.voice_id || FPT_VOICES.some((v) => v.id === input.voice_id);
-  if (!platformValid) return NextResponse.json({ error: "Platform không hợp lệ" }, { status: 400 });
-  if (!formatValid) return NextResponse.json({ error: "Format không hợp lệ" }, { status: 400 });
-  if (!characterValid) return NextResponse.json({ error: "Character không hợp lệ" }, { status: 400 });
-  if (!toneValid) return NextResponse.json({ error: "Tone không hợp lệ" }, { status: 400 });
-  if (!styleValid) return NextResponse.json({ error: "Style không hợp lệ" }, { status: 400 });
   if (!voiceValid) return NextResponse.json({ error: "Voice không hợp lệ" }, { status: 400 });
 
   const sb = getSupabaseAdmin();
 
+  // Atomically deduct tokens + create video
   const { data: videoId, error } = await sb.rpc("create_video_with_token_lock", {
     p_user_id: userId,
     p_input_data: {
+      preset_id: presetId,
       platform: input.platform || "tiktok",
-      format: input.format || "dialog",
-      character: input.character || "product",
-      tone: input.tone || "sharp_sarcastic",
-      body_part_focus: input.body_part_focus?.trim() || null,
       product_name: input.product_name.trim(),
       product_description: input.product_description.trim(),
       target_audience: input.target_audience?.trim() || null,
@@ -93,8 +94,14 @@ export async function POST(req: NextRequest) {
       price_vnd: typeof input.price_vnd === "number" && input.price_vnd > 0 ? input.price_vnd : null,
       promo: input.promo?.trim() || null,
       social_proof: input.social_proof?.trim() || null,
-      style: input.style || "ugc",
-      voice_id: input.voice_id || FPT_VOICES[0].id,
+      shot_size: input.shot_size || preset.defaults.shotSize,
+      camera_angle: input.camera_angle || preset.defaults.cameraAngle,
+      camera_motion: input.camera_motion || preset.defaults.cameraMotion,
+      lighting: input.lighting || preset.defaults.lighting,
+      mc_emotion: input.mc_emotion || preset.defaults.mcEmotion,
+      mc_character: input.mc_character || preset.defaults.mcCharacter,
+      wardrobe: input.wardrobe || preset.defaults.wardrobe,
+      voice_id: input.voice_id || preset.defaults.voiceId,
     },
     p_duration: body.duration,
     p_tier: body.tier,
@@ -110,9 +117,28 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
+  // Update video with preset_id + auto_caption flag
+  await sb.from("videos").update({
+    preset_id: presetId,
+    auto_caption: body.auto_caption ?? true,
+  }).eq("id", videoId);
+
+  // Create 6 scene rows (status='pending', mock will advance them)
+  const sceneDuration = Math.floor(body.duration / SCENES_PER_VIDEO) || 5;
+  const scenesPayload = Array.from({ length: SCENES_PER_VIDEO }, (_, i) => ({
+    video_id: videoId,
+    scene_idx: i,
+    label: SCENE_LABELS[i] ?? `Scene ${i + 1}`,
+    duration_sec: sceneDuration,
+    status: "pending",
+    is_lipsync: preset.needsLipSync,
+  }));
+  await sb.from("video_scenes").insert(scenesPayload);
+
   return NextResponse.json({
     video_id: videoId,
     token_cost: tokenCost,
     status: "pending",
+    scenes_count: SCENES_PER_VIDEO,
   });
 }

@@ -68,10 +68,24 @@ export function getVideoTokenCost(tier: VideoTier, duration: VideoDuration): num
   return typeof cost === "number" ? cost : null;
 }
 
-/** Cost to regenerate a single clip */
-export function getClipRegenCost(tier: VideoTier): number {
-  return tier === "pro" ? 30 : 15;
+/** Cost to regenerate a single scene (margin ~10%, much cheaper than Brief's 15/30). */
+export const SCENE_REGEN_COST: Record<VideoTier, { standard: number; lipsync: number }> = {
+  eco:      { standard: 4,  lipsync: 6  },
+  standard: { standard: 4,  lipsync: 6  },
+  pro:      { standard: 8,  lipsync: 10 },
+};
+
+export function getSceneRegenCost(tier: VideoTier, isLipSync: boolean): number {
+  const t = SCENE_REGEN_COST[tier] ?? SCENE_REGEN_COST.standard;
+  return isLipSync ? t.lipsync : t.standard;
 }
+
+/** Legacy export - kept for older code paths */
+export function getClipRegenCost(tier: VideoTier): number {
+  return getSceneRegenCost(tier, false);
+}
+
+export const SCENES_PER_VIDEO = 6;
 
 export const TIER_LABELS: Record<VideoTier, string> = {
   eco: "Eco",
