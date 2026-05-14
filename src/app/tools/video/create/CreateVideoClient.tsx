@@ -20,6 +20,7 @@ import {
   MC_EMOTIONS,
   MC_CHARACTERS,
   WARDROBES,
+  RESOLUTIONS,
 } from "@/lib/video/voices";
 import type { VideoTier, VideoDuration } from "@/lib/video/types";
 import { PresetIcon, CharacterPortrait, WardrobeIcon, PlayIcon } from "@/components/video/PresetIcon";
@@ -59,6 +60,12 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
   const [flowId, setFlowId] = useState("aida_classic");
   const [customLabels, setCustomLabels] = useState<string[]>(["", "", "", "", "", ""]);
   const [productImages, setProductImages] = useState<UploadedImage[]>([]);
+
+  // Output settings
+  const [resolution, setResolution] = useState<"720x1280" | "1080x1920" | "2160x3840">("1080x1920");
+  const [hasMusic, setHasMusic] = useState(false);
+  const [customAvatarUrl, setCustomAvatarUrl] = useState<string | null>(null);
+  const [customAvatarUploading, setCustomAvatarUploading] = useState(false);
 
   const flow = useMemo(() => VIDEO_FLOWS.find((f) => f.id === flowId) ?? VIDEO_FLOWS[0], [flowId]);
   const isCustomFlow = flowId === "custom";
@@ -118,6 +125,9 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
           flow_template: flowId,
           custom_scene_labels: isCustomFlow ? customLabels : undefined,
           product_images: productImages,
+          output_resolution: resolution,
+          has_music: hasMusic,
+          custom_avatar_url: customAvatarUrl,
           input: {
             preset_id: presetId,
             platform: "tiktok",
@@ -282,6 +292,53 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
             </div>
           </div>
 
+          <div>
+            <label className="block text-sm mb-3 font-semibold text-white">Độ phân giải</label>
+            <div className="grid sm:grid-cols-3 gap-3">
+              {RESOLUTIONS.map((r) => {
+                const isActive = resolution === r.id;
+                const disabled = r.id === "2160x3840" && tier !== "pro";
+                return (
+                  <button
+                    key={r.id}
+                    type="button"
+                    disabled={disabled}
+                    onClick={() => setResolution(r.id as typeof resolution)}
+                    className="p-4 text-left rounded-xl border-2 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                    style={{
+                      borderColor: isActive ? "#a855f7" : "rgba(255,255,255,0.12)",
+                      background: isActive ? "rgba(168,85,247,0.12)" : "rgba(255,255,255,0.04)",
+                      boxShadow: isActive ? "0 0 0 4px rgba(168,85,247,0.18)" : "none",
+                    }}
+                  >
+                    <div className="font-semibold text-white text-sm">{r.label}</div>
+                    <div className="text-xs mt-1.5 leading-relaxed" style={{ color: "var(--ink-soft)" }}>
+                      {r.desc}
+                    </div>
+                    {disabled && (
+                      <div className="text-[10px] mt-2" style={{ color: "#fbbf24" }}>Chỉ tier Pro</div>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <label className="rounded-xl border-2 p-4 flex items-center justify-between cursor-pointer" style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.10)" }}>
+            <div>
+              <div className="font-semibold text-white">Nhạc nền</div>
+              <div className="text-xs mt-0.5" style={{ color: "var(--ink-soft)" }}>
+                Tự thêm nhạc nền (Pixabay free library). Tắt nếu chỉ cần voiceover + sound effect.
+              </div>
+            </div>
+            <input
+              type="checkbox"
+              checked={hasMusic}
+              onChange={(e) => setHasMusic(e.target.checked)}
+              className="w-5 h-5 accent-purple-500"
+            />
+          </label>
+
           <div className="rounded-xl p-4 flex justify-between items-center border-2" style={{ background: "rgba(168,85,247,0.06)", borderColor: "rgba(168,85,247,0.2)" }}>
             <div>
               <span style={{ color: "var(--ink-soft)" }}>Chi phí ban đầu:</span>
@@ -356,6 +413,70 @@ export default function CreateVideoClient({ tokenBalance }: Props) {
               </label>
               <ProductImageUpload images={productImages} onChange={setProductImages} maxImages={3} />
             </div>
+
+            {preset.needsLipSync && preset.defaults.mcCharacter !== "cartoon_3d" && (
+              <div>
+                <label className="block text-sm mb-1 font-semibold text-white">
+                  Ảnh chân dung của bạn (tuỳ chọn){" "}
+                  <span className="text-xs font-normal" style={{ color: "var(--ink-mute)" }}>
+                    AI sẽ dùng mặt bạn làm MC trong video
+                  </span>
+                </label>
+                {customAvatarUrl ? (
+                  <div className="flex items-center gap-3">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={customAvatarUrl} alt="Avatar" className="w-20 h-20 rounded-full object-cover border-2" style={{ borderColor: "rgba(168,85,247,0.4)" }} />
+                    <div className="flex-1">
+                      <div className="text-sm text-white">Avatar đã upload</div>
+                      <button
+                        type="button"
+                        onClick={() => setCustomAvatarUrl(null)}
+                        className="text-xs text-red-400 hover:underline mt-1"
+                      >
+                        Xoá / đổi ảnh
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <label
+                    className="block rounded-lg border-2 border-dashed p-4 cursor-pointer text-center transition-colors"
+                    style={{
+                      borderColor: "rgba(255,255,255,0.20)",
+                      background: "rgba(255,255,255,0.03)",
+                      color: "var(--ink-soft)",
+                    }}
+                  >
+                    <input
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp"
+                      className="hidden"
+                      disabled={customAvatarUploading}
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0];
+                        if (!file) return;
+                        setCustomAvatarUploading(true);
+                        const fd = new FormData();
+                        fd.append("file", file);
+                        try {
+                          const res = await fetch("/api/video/upload-product-image", { method: "POST", body: fd });
+                          const data = await res.json();
+                          if (res.ok) setCustomAvatarUrl(data.url);
+                        } finally {
+                          setCustomAvatarUploading(false);
+                          e.target.value = "";
+                        }
+                      }}
+                    />
+                    <div className="text-sm">
+                      {customAvatarUploading ? "Đang upload..." : "+ Upload ảnh chân dung của bạn"}
+                    </div>
+                    <div className="text-xs mt-1" style={{ color: "var(--ink-mute)" }}>
+                      Ảnh rõ mặt, chính diện, 1 người. Tối đa 5MB.
+                    </div>
+                  </label>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Flow picker */}

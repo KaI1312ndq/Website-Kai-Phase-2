@@ -398,6 +398,12 @@ export const VIDEO_FLOWS: VideoFlow[] = [
   },
 ];
 
+export const RESOLUTIONS = [
+  { id: "720x1280",  label: "HD 720p",        desc: "720×1280 - file ~15MB, render nhanh, đủ cho TikTok feed" },
+  { id: "1080x1920", label: "Full HD 1080p",  desc: "1080×1920 - file ~35MB, chất lượng chuẩn ads (default)" },
+  { id: "2160x3840", label: "4K Ultra HD",    desc: "2160×3840 - file ~120MB, chỉ nên dùng cho Pro tier" },
+] as const;
+
 export const WARDROBES: { id: Wardrobe; label: string; desc: string }[] = [
   { id: "vest",         label: "Vest công sở",     desc: "Xanh/Đen - business, news" },
   { id: "blouse_white", label: "Áo sơ mi trắng",   desc: "Trang trọng, professional" },

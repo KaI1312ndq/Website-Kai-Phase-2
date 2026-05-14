@@ -17,6 +17,9 @@ interface CreateVideoBody {
   flow_template?: string;
   custom_scene_labels?: string[];
   product_images?: ProductImage[];
+  output_resolution?: string;
+  has_music?: boolean;
+  custom_avatar_url?: string | null;
   input: {
     preset_id?: string;
     platform?: string;
@@ -137,30 +140,109 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  // Update video with preset_id + flow + auto_caption + product images
+  // Validate resolution
+  const validResolutions = ["720x1280", "1080x1920", "2160x3840"];
+  const resolution = validResolutions.includes(body.output_resolution ?? "")
+    ? body.output_resolution!
+    : "1080x1920";
+
+  // Update video with all metadata
   await sb.from("videos").update({
     preset_id: presetId,
     auto_caption: body.auto_caption ?? true,
     flow_template: flowId,
     product_images: productImages,
+    output_resolution: resolution,
+    has_music: body.has_music ?? false,
+    custom_avatar_url: body.custom_avatar_url ?? null,
   }).eq("id", videoId);
 
-  // Create 6 scene rows (status='pending', mock will advance them)
+  // Generate scripts for each scene (Phase 3.5 MOCK - Phase 4 will call Anthropic real)
   const sceneDuration = Math.floor(body.duration / SCENES_PER_VIDEO) || 5;
-  const scenesPayload = Array.from({ length: SCENES_PER_VIDEO }, (_, i) => ({
-    video_id: videoId,
-    scene_idx: i,
-    label: sceneLabels[i] ?? `Cảnh ${i + 1}`,
-    duration_sec: sceneDuration,
-    status: "pending",
-    is_lipsync: preset.needsLipSync,
-  }));
+  const scenesPayload = Array.from({ length: SCENES_PER_VIDEO }, (_, i) => {
+    const label = sceneLabels[i] ?? `Cảnh ${i + 1}`;
+    const script = generateMockScriptForScene(i, label, input, body.has_music ?? false);
+    return {
+      video_id: videoId,
+      scene_idx: i,
+      label,
+      duration_sec: sceneDuration,
+      script_text: script.text,
+      visual_prompt: script.visual,
+      voiceover_text: script.text,
+      status: "script_ready",   // wait for user approval before rendering
+      is_lipsync: preset.needsLipSync,
+    };
+  });
   await sb.from("video_scenes").insert(scenesPayload);
 
   return NextResponse.json({
     video_id: videoId,
     token_cost: tokenCost,
-    status: "pending",
+    status: "script_ready",
     scenes_count: SCENES_PER_VIDEO,
   });
+}
+
+/** Mock script generator (Phase 3.5). Phase 4 sẽ thay bằng Anthropic Claude Haiku call. */
+function generateMockScriptForScene(
+  sceneIdx: number,
+  label: string,
+  input: CreateVideoBody["input"],
+  _hasMusic: boolean,
+): { text: string; visual: string } {
+  const name = input.product_name?.trim() ?? "sản phẩm";
+  const desc = input.product_description?.trim() ?? "";
+  const cta = input.cta?.trim() ?? "Đặt mua ngay";
+  const promo = input.promo?.trim() ?? "";
+  const price = typeof input.price_vnd === "number" ? input.price_vnd : null;
+  const proof = input.social_proof?.trim() ?? "";
+  const labelLower = label.toLowerCase();
+
+  if (labelLower.includes("hook") || labelLower.includes("mystery") || labelLower.includes("setup") || sceneIdx === 0) {
+    return {
+      text: `Đừng vội mua ${name} - xem hết video này đã!`,
+      visual: `Cận cảnh sản phẩm ${name}, overlay text "STOP" đỏ pulse`,
+    };
+  }
+  if (labelLower.includes("pain") || labelLower.includes("conflict") || labelLower.includes("tension") || labelLower.includes("cách cũ") || labelLower.includes("vấn đề")) {
+    return {
+      text: "Bạn đang tốn tiền cho cái không hiệu quả? Mệt mỏi đúng không?",
+      visual: "Người dùng mặt bối rối, 3 icon vấn đề overlay",
+    };
+  }
+  if (labelLower.includes("product") || labelLower.includes("solution") || labelLower.includes("sản phẩm") || labelLower.includes("reveal") || labelLower.includes("cách mới")) {
+    return {
+      text: `Đây - ${name}. ${desc}`,
+      visual: `${name} cận cảnh, ánh đèn warm, biểu cảm tự tin`,
+    };
+  }
+  if (labelLower.includes("proof") || labelLower.includes("testimonial") || labelLower.includes("khách hàng") || labelLower.includes("result") || labelLower.includes("kết quả") || labelLower.includes("explain") || labelLower.includes("twist") || labelLower.includes("lợi ích")) {
+    return {
+      text: proof ? `${proof} - không phải tự khen, là sự thật.` : "Ai dùng cũng quay lại - khác hẳn bọn rẻ tiền.",
+      visual: proof ? `Counter "${proof}" pulse animation` : "Loop demo + happy reaction faces",
+    };
+  }
+  if (labelLower.includes("price") || labelLower.includes("promo") || labelLower.includes("giá") || labelLower.includes("khuyến") || labelLower.includes("offer")) {
+    return {
+      text: price ? `Chỉ ${price.toLocaleString("vi-VN")}đ. ${promo}` : (promo || "Best value, đáng giá hơn 10 lần."),
+      visual: "Light flare effect, giá overlay neon to",
+    };
+  }
+  if (labelLower.includes("cta") || sceneIdx === 5) {
+    return {
+      text: cta,
+      visual: "Arrow chỉ xuống giỏ hàng, shop link đính kèm",
+    };
+  }
+  if (labelLower.includes("tip")) {
+    return {
+      text: `Tip ${sceneIdx}: ${desc.slice(0, 60)}`,
+      visual: `Text overlay TIP ${sceneIdx} lớn, icon minh hoạ`,
+    };
+  }
+  return {
+    text: `${label}: ${desc.slice(0, 80)}`,
+    visual: `Cảnh ${label} - sản phẩm ${name} với ánh sáng tự nhiên`,
+  };
 }

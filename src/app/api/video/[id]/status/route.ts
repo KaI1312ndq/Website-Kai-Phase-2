@@ -127,8 +127,9 @@ function computeSceneStatus(scene: SceneRow, input: Record<string, string | numb
   // Always populate script even before render (free, just text)
   const { script, visual, voice } = buildSceneScript(input, scene.scene_idx, scene.label ?? "");
 
-  // If already terminal (completed/failed/approved), return null - no update needed
-  if (scene.status === "completed" || scene.status === "approved" || scene.status === "failed") {
+  // If already terminal (completed/failed/approved) OR waiting for user approval (script_ready),
+  // return null - no auto-advance
+  if (scene.status === "completed" || scene.status === "approved" || scene.status === "failed" || scene.status === "script_ready") {
     return null;
   }
 

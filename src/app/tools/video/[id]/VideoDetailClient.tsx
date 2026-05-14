@@ -41,6 +41,7 @@ interface Props {
 
 const STATUS_LABEL: Record<string, string> = {
   pending: "Chờ render",
+  script_ready: "Script sẵn sàng - đợi duyệt",
   rendering: "Đang render",
   completed: "Xong",
   approved: "Đã duyệt",
@@ -48,11 +49,12 @@ const STATUS_LABEL: Record<string, string> = {
 };
 
 const STATUS_COLOR: Record<string, string> = {
-  pending:   "rgba(255,255,255,0.6)",
-  rendering: "#a855f7",
-  completed: "#10b981",
-  approved:  "#10b981",
-  failed:    "#ef4444",
+  pending:      "rgba(255,255,255,0.6)",
+  script_ready: "#fbbf24",
+  rendering:    "#a855f7",
+  completed:    "#10b981",
+  approved:     "#10b981",
+  failed:       "#ef4444",
 };
 
 export default function VideoDetailClient({ videoId, initialVideo, initialScenes }: Props) {
@@ -90,6 +92,35 @@ export default function VideoDetailClient({ videoId, initialVideo, initialScenes
 
   const allReady = scenes.length > 0 && scenes.every((s) => s.status === "completed" || s.status === "approved");
   const composed = video.status === "completed" && Boolean(video.output_url);
+  const allScriptReady = scenes.length > 0 && scenes.every((s) => s.status === "script_ready");
+  const someScriptReady = scenes.some((s) => s.status === "script_ready");
+  const [startingRender, setStartingRender] = useState(false);
+  const [renderError, setRenderError] = useState<string | null>(null);
+
+  async function handleStartRender() {
+    if (!confirm("Duyệt 6 script và bắt đầu render? Không thể quay lại sửa script sau khi render bắt đầu (chỉ regen từng cảnh được).")) return;
+    setStartingRender(true);
+    setRenderError(null);
+    try {
+      const res = await fetch(`/api/video/${videoId}/start-render`, { method: "POST" });
+      const data = await res.json();
+      if (!res.ok) {
+        setRenderError(data.error ?? "Start render thất bại");
+        return;
+      }
+      // Refresh status
+      const status = await fetch(`/api/video/${videoId}/status`, { cache: "no-store" });
+      if (status.ok) {
+        const d = await status.json();
+        setVideo(d);
+        if (Array.isArray(d.scenes)) setScenes(d.scenes);
+      }
+    } catch (e) {
+      setRenderError(String(e));
+    } finally {
+      setStartingRender(false);
+    }
+  }
 
   async function handleCompose() {
     if (!allReady || composing) return;
@@ -119,6 +150,48 @@ export default function VideoDetailClient({ videoId, initialVideo, initialScenes
 
   return (
     <div className="space-y-6 mt-4">
+      {/* Script approval banner - shown when all scenes are script_ready */}
+      {someScriptReady && (
+        <section className="rounded-2xl border-2 p-5" style={{
+          background: "rgba(251,191,36,0.06)",
+          borderColor: "rgba(251,191,36,0.3)",
+        }}>
+          <div className="flex items-start gap-3">
+            <div className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center" style={{ background: "rgba(251,191,36,0.18)", color: "#fbbf24" }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 9v4M12 17h.01" />
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+              </svg>
+            </div>
+            <div className="flex-1">
+              <div className="font-semibold text-white mb-1">AI đã viết xong script - đợi bạn duyệt</div>
+              <p className="text-sm" style={{ color: "var(--ink-soft)" }}>
+                Đọc kỹ 6 script bên dưới. Bạn có thể bấm <strong>Sửa cảnh</strong> để chỉnh từng đoạn (miễn phí, chỉ chỉnh chữ).
+                Khi ưng, bấm nút bên dưới để bắt đầu render thật (không quay lại sửa script được nữa, chỉ regen được).
+              </p>
+              <div className="flex flex-wrap gap-2 mt-4">
+                <button
+                  type="button"
+                  disabled={!allScriptReady || startingRender}
+                  onClick={handleStartRender}
+                  className="btn btn-primary disabled:opacity-50"
+                >
+                  {startingRender ? "Đang gửi render..." : `Duyệt 6 script + Bắt đầu render`}
+                </button>
+                <span className="text-xs self-center" style={{ color: "var(--ink-mute)" }}>
+                  {scenes.filter((s) => s.status === "script_ready").length}/{scenes.length} cảnh có script
+                </span>
+              </div>
+              {renderError && (
+                <div className="rounded-lg border-2 p-3 mt-3 text-sm" style={{ background: "rgba(239,68,68,0.08)", borderColor: "rgba(239,68,68,0.3)", color: "#ef4444" }}>
+                  {renderError}
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Final video preview if composed */}
       {composed && (
         <section>
@@ -222,6 +295,7 @@ function SceneCard({ scene, videoTier, onOpenEdit, onUpdate }: {
 }) {
   const isReady = scene.status === "completed" || scene.status === "approved";
   const isRendering = scene.status === "rendering" || scene.status === "pending";
+  const isScriptOnly = scene.status === "script_ready";
   const statusColor = STATUS_COLOR[scene.status] ?? STATUS_COLOR.pending;
 
   async function handleApprove() {
@@ -256,6 +330,14 @@ function SceneCard({ scene, videoTier, onOpenEdit, onUpdate }: {
             className="w-full h-full"
             style={{ objectFit: "cover" }}
           />
+        ) : isScriptOnly ? (
+          <div className="text-center p-4 flex flex-col items-center justify-center h-full" style={{ color: "#fbbf24" }}>
+            <div className="text-xs uppercase tracking-wider mb-1.5 opacity-80">Chưa render</div>
+            <div className="text-lg font-semibold">Script sẵn sàng</div>
+            <div className="text-xs mt-2 px-3 leading-relaxed" style={{ color: "var(--ink-soft)" }}>
+              Đọc + sửa chữ bên dưới rồi bấm &quot;Duyệt&quot; ở banner trên
+            </div>
+          </div>
         ) : isRendering ? (
           <div className="text-center p-4" style={{ color: "var(--ink-mute)" }}>
             <div className="mb-2 animate-pulse flex justify-center"><HourglassIcon size={28} /></div>
@@ -321,7 +403,10 @@ function SceneEditModal({ videoId, scene, tier, onClose, onUpdated }: {
   const [regenerating, setRegenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const isScriptPhase = scene.status === "script_ready";
   const regenCost = (() => {
+    // In script_ready phase, edit is free (no Kling job yet)
+    if (isScriptPhase) return 0;
     if (tier === "pro") return scene.is_lipsync ? 13 : 10;
     return scene.is_lipsync ? 8 : 5;
   })();
@@ -449,9 +534,18 @@ function SceneEditModal({ videoId, scene, tier, onClose, onUpdated }: {
           <div className="text-xs p-3 rounded-lg flex items-start gap-2" style={{ background: "rgba(255,255,255,0.04)", color: "var(--ink-soft)" }}>
             <LightbulbIcon size={16} className="flex-shrink-0 mt-0.5" />
             <div>
-              <strong>Lưu chữ</strong> (chỉ sửa text): <strong className="text-white">miễn phí</strong>.<br/>
-              <strong>Render lại cảnh</strong> (visual + voice mới): <strong className="grad-text">{regenCost} token</strong>
-              {scene.is_lipsync && " (cảnh lip-sync nên cao hơn)"}.
+              {isScriptPhase ? (
+                <>
+                  Cảnh chưa render → <strong>mọi chỉnh sửa đều miễn phí</strong>.<br/>
+                  Sửa thoải mái rồi bấm &quot;Duyệt + Bắt đầu render&quot; ở banner trên khi sẵn sàng.
+                </>
+              ) : (
+                <>
+                  <strong>Lưu chữ</strong> (chỉ sửa text): <strong className="text-white">miễn phí</strong>.<br/>
+                  <strong>Render lại cảnh</strong> (visual + voice mới): <strong className="grad-text">{regenCost} token</strong>
+                  {scene.is_lipsync && " (cảnh lip-sync nên cao hơn)"}.
+                </>
+              )}
             </div>
           </div>
 
@@ -459,11 +553,13 @@ function SceneEditModal({ videoId, scene, tier, onClose, onUpdated }: {
             <button type="button" onClick={onClose} className="btn btn-ghost">Đóng</button>
             <div className="flex gap-2 flex-wrap">
               <button type="button" onClick={saveScriptOnly} disabled={saving} className="btn btn-ghost disabled:opacity-50 inline-flex items-center gap-2">
-                <SaveIcon size={14} /> {saving ? "Đang lưu..." : "Lưu chữ (free)"}
+                <SaveIcon size={14} /> {saving ? "Đang lưu..." : isScriptPhase ? "Lưu thay đổi" : "Lưu chữ (free)"}
               </button>
-              <button type="button" onClick={regenScene} disabled={regenerating} className="btn btn-primary disabled:opacity-50 inline-flex items-center gap-2">
-                <RefreshIcon size={14} /> {regenerating ? "Đang gửi render..." : `Render lại (${regenCost} token)`}
-              </button>
+              {!isScriptPhase && (
+                <button type="button" onClick={regenScene} disabled={regenerating} className="btn btn-primary disabled:opacity-50 inline-flex items-center gap-2">
+                  <RefreshIcon size={14} /> {regenerating ? "Đang gửi render..." : `Render lại (${regenCost} token)`}
+                </button>
+              )}
             </div>
           </div>
         </div>
