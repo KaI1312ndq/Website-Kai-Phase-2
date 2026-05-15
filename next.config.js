@@ -32,6 +32,18 @@ const nextConfig = {
   // Compression + perf
   compress: true,
   poweredByHeader: false,
+  // Exclude huge client-only deps from serverless function bundles.
+  // @huggingface/transformers (~50MB) + ONNX runtime would blow past
+  // Vercel's 50MB function size limit if included on server side.
+  outputFileTracingExcludes: {
+    '*': [
+      'node_modules/@huggingface/**',
+      'node_modules/onnxruntime-web/**',
+      'node_modules/onnxruntime-common/**',
+      'node_modules/sharp/**',
+      'node_modules/jszip/**',
+    ],
+  },
   // Transformers.js / ONNX runtime - tránh resolve sharp/onnxruntime-node trong browser bundle
   webpack: (config, { isServer }) => {
     if (!isServer) {
@@ -40,6 +52,16 @@ const nextConfig = {
         fs: false, path: false, sharp: false,
         "onnxruntime-node": false,
       };
+    } else {
+      // Server build - mark heavy client-only deps as externals so they
+      // aren't bundled into server chunks.
+      config.externals = [
+        ...(Array.isArray(config.externals) ? config.externals : config.externals ? [config.externals] : []),
+        '@huggingface/transformers',
+        'onnxruntime-web',
+        'onnxruntime-common',
+        'jszip',
+      ];
     }
     return config;
   },
