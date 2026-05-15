@@ -290,8 +290,8 @@ export default function Calculator() {
     const vep = isTt && ttVoucher === "extraPlus" ? (cfg as any).voucherExtraPlusOptions : undefined;
     const ps = isSp && spPiShip ? (cfg as any).piShip : undefined;
     const sfr = isTt && ttSfr ? (cfg as any).sfr : undefined;
-    // DVHT chỉ áp dụng cho Shopee (Non-Mall + Mall) khi seller bật
-    const dvht = isSp && spDuyTri ? spDuyTriRate : undefined;
+    // DVHT CHỈ áp Shopee Mall (Non-Mall không bị) - default ON 1% khi chọn Mall
+    const dvht = p === "shopeeMall" && spDuyTri ? spDuyTriRate : undefined;
 
     return {
       platform: p,
@@ -388,16 +388,17 @@ export default function Calculator() {
               </div>
             </div>
 
-            {/* DVHT - Duy trì hiển thị (Shopee, từ 29/05/2026) */}
+            {/* DVHT - Duy trì hiển thị (CHỈ Shopee Mall, từ 29/05/2026) */}
             <div className="rounded-lg p-3" style={{ background: "rgba(238,77,45,0.06)", border: "1px solid rgba(238,77,45,0.22)" }}>
               <div className="flex items-start justify-between gap-3 mb-2">
                 <div>
-                  <div className="text-[0.82rem] font-semibold text-white flex items-center gap-1.5">
+                  <div className="text-[0.82rem] font-semibold text-white flex items-center gap-1.5 flex-wrap">
                     Duy trì hiển thị (DVHT)
-                    <span className="text-[0.62rem] font-bold px-1.5 py-0.5 rounded" style={{ background: "#EE4D2D", color: "#fff" }}>29/05</span>
+                    <span className="text-[0.62rem] font-bold px-1.5 py-0.5 rounded" style={{ background: "#EE4D2D", color: "#fff" }}>Chỉ Mall</span>
+                    <span className="text-[0.62rem] font-bold px-1.5 py-0.5 rounded" style={{ background: "rgba(238,77,45,0.25)", color: "#ff9f7a", border: "1px solid rgba(238,77,45,0.4)" }}>29/05</span>
                   </div>
                   <div className="text-[0.7rem] mt-0.5" style={{ color: "var(--st-55)" }}>
-                    Tự nạp ads từ doanh thu mỗi đơn - chuẩn 1%, linh hoạt 1-50%
+                    Mall: tự nạp ads từ doanh thu mỗi đơn (chuẩn 1%, linh hoạt 1-50%) · Non-Mall không bị
                   </div>
                 </div>
                 <button
@@ -668,8 +669,9 @@ export default function Calculator() {
         TikTok {TIKTOK_DEFAULT_STD}% / {TIKTOK_DEFAULT_MALL}% · Shopee {SHOPEE_DEFAULT_NONMALL}% / {SHOPEE_DEFAULT_MALL}%.{" "}
         Phí hoa hồng dao động 7-21% tuỳ ngành - <span style={{ color: "#ffd479" }}>luôn chọn ngành hàng để kết quả chính xác nhất.</span>
         <div className="mt-2 pt-2" style={{ borderTop: "1px solid var(--st-06)" }}>
-          <strong className="text-white">Duy trì hiển thị (DVHT) - Shopee từ 29/05/2026:</strong> Cơ chế tự động trích tiền từ doanh thu mỗi đơn để nạp cho Dịch vụ Hiển thị quảng cáo, giúp duy trì lưu lượng truy cập gian hàng.
-          Mức <span style={{ color: "#EE4D2D" }}>tiêu chuẩn 1%</span> áp dụng mặc định cho mọi đơn hàng "Đã giao". Người Bán có thể chỉnh từ 1% - 50% tuỳ nhu cầu nạp ads. Tỷ lệ này áp cho cả Mall và Non-Mall.
+          <strong className="text-white">Duy trì hiển thị (DVHT) - CHỈ áp Shopee Mall từ 29/05/2026:</strong> Cơ chế tự động trích tiền từ doanh thu mỗi đơn để nạp cho Dịch vụ Hiển thị quảng cáo, giúp duy trì lưu lượng truy cập gian hàng.
+          Mức <span style={{ color: "#EE4D2D" }}>tiêu chuẩn 1%</span> áp dụng mặc định cho mọi đơn hàng "Đã giao" của <strong className="text-white">shop Mall</strong>. Người Bán có thể chỉnh từ 1% - 50% tuỳ nhu cầu nạp ads.
+          <span style={{ color: "#5fffaa" }}> Shopee Non-Mall KHÔNG áp DVHT - đây là một lợi thế chi phí của Non-Mall.</span>
         </div>
       </div>
     </div>
