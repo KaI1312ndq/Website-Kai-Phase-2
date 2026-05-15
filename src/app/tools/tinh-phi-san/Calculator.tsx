@@ -261,6 +261,10 @@ export default function Calculator() {
   // Shopee opt-ins
   const [spVoucherExtra, setSpVoucherExtra] = useState(false);
   const [spPiShip, setSpPiShip] = useState(false);
+  // Duy trì hiển thị (DVHT) - Shopee từ 29/05/2026: tự nạp tiền ads từ doanh thu mỗi đơn.
+  // ON mặc định, rate mặc định 1% (tiêu chuẩn), seller có thể chỉnh 1-50% (linh hoạt).
+  const [spDuyTri, setSpDuyTri] = useState(true);
+  const [spDuyTriRate, setSpDuyTriRate] = useState(1);
   // TikTok opt-ins
   const [ttVoucher, setTtVoucher] = useState<TtVoucher>("none");
   const [ttSfr, setTtSfr] = useState(false);
@@ -286,6 +290,8 @@ export default function Calculator() {
     const vep = isTt && ttVoucher === "extraPlus" ? (cfg as any).voucherExtraPlusOptions : undefined;
     const ps = isSp && spPiShip ? (cfg as any).piShip : undefined;
     const sfr = isTt && ttSfr ? (cfg as any).sfr : undefined;
+    // DVHT chỉ áp dụng cho Shopee (Non-Mall + Mall) khi seller bật
+    const dvht = isSp && spDuyTri ? spDuyTriRate : undefined;
 
     return {
       platform: p,
@@ -295,10 +301,11 @@ export default function Calculator() {
         price, cogs, sellerVoucherPct: sellerVoucher, shippingBuyer,
         commissionRate: commission, txnRate: cfg.txnRate, perOrderFee: cfg.perOrderFee,
         voucherExtra: ve as any, voucherExtraPlus: vep as any, piShip: ps as any, sfr: sfr as any,
+        duyTriHienThiRate: dvht,
         extraCosts: extras,
       }),
     };
-  }), [price, cogs, sellerVoucher, shippingBuyer, ttSelection, spSelection, ttVoucher, ttSfr, spVoucherExtra, spPiShip, extras]);
+  }), [price, cogs, sellerVoucher, shippingBuyer, ttSelection, spSelection, ttVoucher, ttSfr, spVoucherExtra, spPiShip, spDuyTri, spDuyTriRate, extras]);
 
   const bestIdx = useMemo(() => {
     let best = 0, max = -Infinity;
@@ -379,6 +386,54 @@ export default function Calculator() {
                 <CheckboxRow checked={spVoucherExtra} onChange={setSpVoucherExtra} label="Voucher Extra" hint="5,5% · cap 50.000đ" />
                 <CheckboxRow checked={spPiShip} onChange={setSpPiShip} label="Pi Ship" hint="2.700đ/đơn" />
               </div>
+            </div>
+
+            {/* DVHT - Duy trì hiển thị (Shopee, từ 29/05/2026) */}
+            <div className="rounded-lg p-3" style={{ background: "rgba(238,77,45,0.06)", border: "1px solid rgba(238,77,45,0.22)" }}>
+              <div className="flex items-start justify-between gap-3 mb-2">
+                <div>
+                  <div className="text-[0.82rem] font-semibold text-white flex items-center gap-1.5">
+                    Duy trì hiển thị (DVHT)
+                    <span className="text-[0.62rem] font-bold px-1.5 py-0.5 rounded" style={{ background: "#EE4D2D", color: "#fff" }}>29/05</span>
+                  </div>
+                  <div className="text-[0.7rem] mt-0.5" style={{ color: "var(--st-55)" }}>
+                    Tự nạp ads từ doanh thu mỗi đơn - chuẩn 1%, linh hoạt 1-50%
+                  </div>
+                </div>
+                <button
+                  onClick={() => setSpDuyTri(v => !v)}
+                  className="flex-shrink-0 relative w-9 h-5 rounded-full transition-colors"
+                  style={{ background: spDuyTri ? "#EE4D2D" : "rgba(255,255,255,0.15)" }}
+                  aria-label="Toggle DVHT"
+                >
+                  <span className="absolute top-0.5 w-4 h-4 rounded-full bg-white transition-all" style={{ left: spDuyTri ? "calc(100% - 18px)" : "2px" }} />
+                </button>
+              </div>
+              {spDuyTri && (
+                <div className="flex items-center gap-2 mt-2">
+                  <span className="text-[0.72rem]" style={{ color: "var(--st-60)" }}>Tỷ lệ áp dụng:</span>
+                  <div className="flex items-center gap-1 flex-1">
+                    <input
+                      type="range" min={1} max={50} step={1}
+                      value={spDuyTriRate}
+                      onChange={e => setSpDuyTriRate(parseInt(e.target.value) || 1)}
+                      className="flex-1 h-1 rounded-full appearance-none"
+                      style={{ background: `linear-gradient(to right, #EE4D2D 0%, #EE4D2D ${(spDuyTriRate-1)/49*100}%, rgba(255,255,255,0.1) ${(spDuyTriRate-1)/49*100}%, rgba(255,255,255,0.1) 100%)`, accentColor: "#EE4D2D" }}
+                    />
+                    <input
+                      type="number" min={1} max={50}
+                      value={spDuyTriRate}
+                      onChange={e => {
+                        const v = parseInt(e.target.value) || 1;
+                        setSpDuyTriRate(Math.max(1, Math.min(50, v)));
+                      }}
+                      className="w-12 text-center text-[0.78rem] font-bold rounded py-0.5"
+                      style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(238,77,45,0.3)", color: "#EE4D2D" }}
+                    />
+                    <span className="text-[0.72rem] font-semibold" style={{ color: "#EE4D2D" }}>%</span>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </Section>
@@ -569,6 +624,7 @@ export default function Calculator() {
                       <Row label={isTt ? "Phí xử lý đơn" : "Phí cơ sở hạ tầng"} val={-r.result.perOrder} muted pct={pct(r.result.perOrder, price)} />
                       {r.result.voucherExtra > 0 && <Row label="Voucher Extra" val={-r.result.voucherExtra} muted pct={pct(r.result.voucherExtra, price)} />}
                       {r.result.voucherExtraPlus > 0 && <Row label="Voucher Extra+" val={-r.result.voucherExtraPlus} muted pct={pct(r.result.voucherExtraPlus, price)} />}
+                      {r.result.duyTriHienThi > 0 && <Row label={`Duy trì hiển thị · ${spDuyTriRate}%`} val={-r.result.duyTriHienThi} muted pct={pct(r.result.duyTriHienThi, price)} />}
                       {r.result.sfr > 0 && <Row label="SFR" val={-r.result.sfr} muted pct={pct(r.result.sfr, price)} />}
                       {r.result.piShip > 0 && <Row label="Pi Ship" val={-r.result.piShip} muted pct={pct(r.result.piShip, price)} />}
                     </div>
@@ -611,6 +667,10 @@ export default function Calculator() {
         <strong className="text-white">Default rate khi chưa chọn ngành:</strong>{" "}
         TikTok {TIKTOK_DEFAULT_STD}% / {TIKTOK_DEFAULT_MALL}% · Shopee {SHOPEE_DEFAULT_NONMALL}% / {SHOPEE_DEFAULT_MALL}%.{" "}
         Phí hoa hồng dao động 7-21% tuỳ ngành - <span style={{ color: "#ffd479" }}>luôn chọn ngành hàng để kết quả chính xác nhất.</span>
+        <div className="mt-2 pt-2" style={{ borderTop: "1px solid var(--st-06)" }}>
+          <strong className="text-white">Duy trì hiển thị (DVHT) - Shopee từ 29/05/2026:</strong> Cơ chế tự động trích tiền từ doanh thu mỗi đơn để nạp cho Dịch vụ Hiển thị quảng cáo, giúp duy trì lưu lượng truy cập gian hàng.
+          Mức <span style={{ color: "#EE4D2D" }}>tiêu chuẩn 1%</span> áp dụng mặc định cho mọi đơn hàng "Đã giao". Người Bán có thể chỉnh từ 1% - 50% tuỳ nhu cầu nạp ads. Tỷ lệ này áp cho cả Mall và Non-Mall.
+        </div>
       </div>
     </div>
   );

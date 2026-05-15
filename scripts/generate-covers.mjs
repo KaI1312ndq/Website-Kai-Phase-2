@@ -152,6 +152,10 @@ async function fetchMissingCovers() {
   });
   if (!r.ok) throw new Error(`Fetch posts failed: ${r.status}`);
   const all = await r.json();
+  if (args["regen-square"]) {
+    // Regenerate posts whose current cover is 1024x1024 (square ratio)
+    return all.filter(p => p.title && (p.coverUrl || "").includes("-1024x1024."));
+  }
   return all.filter(p => !p.coverUrl && p.title);
 }
 

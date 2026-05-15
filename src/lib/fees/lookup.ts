@@ -148,6 +148,12 @@ export type CalcInput = {
   voucherExtraPlus?: { rate: number; cap?: number };
   piShip?: number;          // VND - Shopee 1.600đ
   sfr?: number;             // VND - TikTok 1.620đ (bồi hoàn vận chuyển)
+  /**
+   * Shopee Duy trì hiển thị (DVHT) - áp dụng từ 29/05/2026.
+   * Cơ chế tự nạp tiền cho DVHT từ doanh thu mỗi đơn.
+   * Mặc định 1% (tiêu chuẩn), seller có thể chỉnh 1-50% (linh hoạt).
+   */
+  duyTriHienThiRate?: number; // % (1-50)
   extraCosts: ExtraCost[];
 };
 
@@ -163,6 +169,7 @@ export type CalcResult = {
   voucherExtraPlus: number;
   piShip: number;
   sfr: number;
+  duyTriHienThi: number;  // Shopee DVHT - trích tự động theo % từ doanh thu
   totalPlatformFee: number;
   extras: { label: string; amount: number }[];
   totalExtras: number;
@@ -198,7 +205,12 @@ export function compute(i: CalcInput): CalcResult {
   const piShip = i.piShip ?? 0;
   const sfr = i.sfr ?? 0;
 
-  const totalPlatformFee = commission + txn + perOrder + voucherExtra + voucherExtraPlus + piShip + sfr;
+  // Duy trì hiển thị (Shopee, từ 29/05/2026) - tự nạp 1% mặc định (linh hoạt 1-50%)
+  // Tính trên doanh thu thực (net revenue) - sau seller voucher
+  const dvhtRate = i.duyTriHienThiRate ?? 0;
+  const duyTriHienThi = netRevenue * (dvhtRate / 100);
+
+  const totalPlatformFee = commission + txn + perOrder + voucherExtra + voucherExtraPlus + piShip + sfr + duyTriHienThi;
 
   const extras = i.extraCosts.map((c) => ({
     label: c.label,
@@ -221,6 +233,7 @@ export function compute(i: CalcInput): CalcResult {
     voucherExtraPlus,
     piShip,
     sfr,
+    duyTriHienThi,
     totalPlatformFee,
     extras,
     totalExtras,
@@ -262,6 +275,7 @@ export const PLATFORM_CONFIG = {
     perOrderFee: 3000,
     voucherExtraOptions: { rate: 5.5, cap: 50000 }, // updated 23/05/2026: 4% -> 5.5%
     piShip: 2700, // updated 23/05/2026: 1620 -> 2700
+    duyTriHienThiDefault: 1, // % - DVHT tiêu chuẩn từ 29/05/2026
   },
   shopeeMall: {
     label: "Shopee · Mall",
@@ -272,6 +286,7 @@ export const PLATFORM_CONFIG = {
     perOrderFee: 3000,
     voucherExtraOptions: { rate: 5.5, cap: 50000 }, // updated 23/05/2026: 4% -> 5.5%
     piShip: 2700, // updated 23/05/2026: 1620 -> 2700
+    duyTriHienThiDefault: 1, // % - DVHT tiêu chuẩn từ 29/05/2026
   },
 } as const;
 
