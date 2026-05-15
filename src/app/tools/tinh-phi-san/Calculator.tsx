@@ -620,7 +620,7 @@ export default function Calculator() {
                       <div className="text-[0.95rem] font-bold" style={{ color: "#ff8da3" }}>-{fmt(r.result.totalPlatformFee)}đ</div>
                     </div>
                     <div className="space-y-1.5 text-[0.82rem]">
-                      <Row label={`Hoa hồng ${r.commission}%`} val={-r.result.commission} muted pct={pct(r.result.commission, price)} />
+                      <Row label={`${isTt ? "Hoa hồng" : "Phí cố định"} ${r.commission}%`} val={-r.result.commission} muted pct={pct(r.result.commission, price)} />
                       <Row label={`Giao dịch ${r.config.txnRate}%`} val={-r.result.txn} muted hint={`base ${fmt(r.result.txnBase)}đ`} pct={pct(r.result.txn, price)} />
                       <Row label={isTt ? "Phí xử lý đơn" : "Phí cơ sở hạ tầng"} val={-r.result.perOrder} muted pct={pct(r.result.perOrder, price)} />
                       {r.result.voucherExtra > 0 && <Row label="Voucher Extra" val={-r.result.voucherExtra} muted pct={pct(r.result.voucherExtra, price)} />}
@@ -667,7 +667,8 @@ export default function Calculator() {
         Phí TikTok Shop áp dụng từ 09/05/2026, Shopee từ 08/05/2026 (Mall từ 29/05/2026).{" "}
         <strong className="text-white">Default rate khi chưa chọn ngành:</strong>{" "}
         TikTok {TIKTOK_DEFAULT_STD}% / {TIKTOK_DEFAULT_MALL}% · Shopee {SHOPEE_DEFAULT_NONMALL}% / {SHOPEE_DEFAULT_MALL}%.{" "}
-        Phí hoa hồng dao động 7-21% tuỳ ngành - <span style={{ color: "#ffd479" }}>luôn chọn ngành hàng để kết quả chính xác nhất.</span>
+        TikTok gọi là <strong className="text-white">Phí hoa hồng</strong>, Shopee gọi là <strong className="text-white">Phí cố định</strong> - dao động 7-21% tuỳ ngành.{" "}
+        <span style={{ color: "#ffd479" }}>Luôn chọn ngành hàng để kết quả chính xác nhất.</span>
         <div className="mt-2 pt-2" style={{ borderTop: "1px solid var(--st-06)" }}>
           <strong className="text-white">Duy trì hiển thị (DVHT) - CHỈ áp Shopee Mall từ 29/05/2026:</strong> Cơ chế tự động trích tiền từ doanh thu mỗi đơn để nạp cho Dịch vụ Hiển thị quảng cáo, giúp duy trì lưu lượng truy cập gian hàng.
           Mức <span style={{ color: "#EE4D2D" }}>tiêu chuẩn 1%</span> áp dụng mặc định cho mọi đơn hàng "Đã giao" của <strong className="text-white">shop Mall</strong>. Người Bán có thể chỉnh từ 1% - 50% tuỳ nhu cầu nạp ads.

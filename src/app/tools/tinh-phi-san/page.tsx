@@ -39,7 +39,7 @@ const FAQS = [
   },
   {
     q: "Phí Mall và Non-Mall khác nhau thế nào? Có nên đăng ký Mall?",
-    a: "Mall trả phí hoa hồng cao hơn Non-Mall 3-5% tuỳ ngành. Đổi lại, Mall có badge thương hiệu chính hãng, ưu tiên hiển thị tìm kiếm, được tham gia campaign sàn lớn, và độ tin cậy buyer cao hơn. Đăng ký Mall phù hợp khi: brand đã có nhận diện, GMV ổn định, margin còn dư để chịu phí cao hơn. Dùng tool so sánh 4 cột để quyết.",
+    a: "Mall trả phí sàn cao hơn Non-Mall 3-5% tuỳ ngành (TikTok gọi là Phí hoa hồng, Shopee gọi là Phí cố định). Đổi lại, Mall có badge thương hiệu chính hãng, ưu tiên hiển thị tìm kiếm, được tham gia campaign sàn lớn, và độ tin cậy buyer cao hơn. Shopee Mall còn bị thêm Phí DVHT 1% (Non-Mall không bị). Đăng ký Mall phù hợp khi: brand đã có nhận diện, GMV ổn định, margin còn dư để chịu phí cao hơn. Dùng tool so sánh 4 cột để quyết.",
   },
   {
     q: "Voucher Extra và Voucher Extra Plus TikTok khác nhau thế nào?",
@@ -67,7 +67,7 @@ const FAQS = [
   },
   {
     q: "Cách giảm phí sàn - có cách nào không?",
-    a: "Phí hoa hồng và phí giao dịch là cố định theo sàn - không thương lượng được. Nhưng có thể tối ưu: (1) chọn ngành cấp 3 phù hợp (đôi khi đặt sai cấp khiến phí cao hơn), (2) cân nhắc kỹ Mall vs Non-Mall, (3) bỏ option không cần (Voucher Extra, Pi Ship nếu không tận dụng), (4) tăng giá bán hoặc giảm voucher seller để tăng margin gross.",
+    a: "Phí sàn (Hoa hồng TikTok / Cố định Shopee) và phí giao dịch là cố định theo bảng - không thương lượng được. Nhưng có thể tối ưu: (1) chọn ngành cấp 3 phù hợp (đôi khi đặt sai cấp khiến phí cao hơn), (2) cân nhắc kỹ Mall vs Non-Mall (Shopee Non-Mall lợi hơn vì không bị DVHT 1%), (3) bỏ option không cần (Voucher Extra, Pi Ship nếu không tận dụng), (4) tăng giá bán hoặc giảm voucher seller để tăng margin gross.",
   },
   {
     q: "Phí sàn 2026 có còn tăng nữa không?",
@@ -132,7 +132,7 @@ export default function Page() {
         "@type": "HowToStep",
         position: 2,
         name: "Tìm ngành hàng",
-        text: "Gõ từ khoá vào ô tìm kiếm (vd 'búp bê', 'sữa rửa mặt', 'máy lọc') - tool tự match ngành cấp 1/2/3 cho cả TikTok và Shopee. Phí hoa hồng hiển thị realtime.",
+        text: "Gõ từ khoá vào ô tìm kiếm (vd 'búp bê', 'sữa rửa mặt', 'máy lọc') - tool tự match ngành cấp 1/2/3 cho cả TikTok và Shopee. Phí hoa hồng (TikTok) / Phí cố định (Shopee) hiển thị realtime.",
       },
       {
         "@type": "HowToStep",
@@ -198,7 +198,7 @@ export default function Page() {
               Tìm ngành hàng nhanh bằng từ khoá, hỗ trợ voucher extra, SFR, pi ship, và chi phí ads/marketing tuỳ chỉnh.
             </p>
             <div className="mb-5 px-4 py-3 rounded-xl text-[0.85rem] leading-[1.6]" style={{ background: "rgba(255,212,121,0.07)", border: "1px solid rgba(255,212,121,0.25)", color: "var(--st-70)" }}>
-              <strong className="text-white">Quan trọng:</strong> Phí hoa hồng dao động <strong style={{ color: "#ffd479" }}>7% - 21%</strong> tuỳ ngành hàng.
+              <strong className="text-white">Quan trọng:</strong> Phí sàn (TikTok gọi là <strong className="text-white">Phí hoa hồng</strong>, Shopee gọi là <strong className="text-white">Phí cố định</strong>) dao động <strong style={{ color: "#ffd479" }}>7% - 21%</strong> tuỳ ngành hàng.
               Hãy <strong className="text-white">chọn ngành hàng</strong> trong tool bên dưới để có phí chính xác - kết quả mặc định chỉ là phí trung bình tham khảo.
             </div>
             <div className="flex flex-wrap gap-2">
@@ -224,7 +224,7 @@ export default function Page() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {[
                 { n: "01", t: "Nhập sản phẩm", d: "Giá bán, COGS, voucher seller áp dụng, và phí ship buyer trả. Đây là 4 thông số quyết định doanh thu thực và phí giao dịch." },
-                { n: "02", t: "Tìm ngành hàng", d: "Gõ từ khoá vào ô tìm kiếm (vd 'búp bê', 'sữa rửa mặt', 'máy lọc') - tool tự match ngành cấp 1/2/3 cho cả TikTok và Shopee. Phí hoa hồng update realtime." },
+                { n: "02", t: "Tìm ngành hàng", d: "Gõ từ khoá vào ô tìm kiếm (vd 'búp bê', 'sữa rửa mặt', 'máy lọc') - tool tự match ngành cấp 1/2/3 cho cả TikTok và Shopee. Phí hoa hồng (TikTok) / Phí cố định (Shopee) update realtime." },
                 { n: "03", t: "So sánh 4 phương án", d: "Output hiện song song lợi nhuận và margin của 4 option (Shopee Non-Mall, Shopee Mall, TikTok Non-Mall, TikTok Mall). Card 'Best' highlight phương án lãi cao nhất." },
               ].map((s) => (
                 <div key={s.n} className="glass p-6">
@@ -261,7 +261,8 @@ export default function Page() {
                 </thead>
                 <tbody style={{ color: "var(--ink-soft)" }}>
                   {[
-                    { l: "Phí hoa hồng (range)", v: ["7% – 13%", "10% – 21%", "11.5% – 15%", "13% – 18%"] },
+                    { l: "Phí cố định (Shopee) / Hoa hồng (TikTok)", v: ["7% – 13%", "10% – 21%", "11.5% – 15%", "13% – 18%"] },
+                    { l: "Duy trì hiển thị (DVHT)", v: ["—", "1% (bắt buộc, chỉnh 1-50%)", "—", "—"], highlight: false },
                     { l: "Phí giao dịch", v: ["6%", "6%", "6%", "6%"] },
                     { l: "Phí xử lý đơn / CSHT", v: ["3.000đ (CSHT)", "3.000đ (CSHT)", "3.000đ", "3.000đ"] },
                     { l: "Voucher Extra", v: ["5.5% (cap 50k)", "5.5% (cap 50k)", "4% (cap 50k)", "4% (cap 50k)"] },
@@ -286,7 +287,7 @@ export default function Page() {
             </div>
 
             <div className="mt-6 rounded-xl p-5 text-[0.92rem] leading-[1.7]" style={{ background: "rgba(20,110,245,0.06)", border: "1px solid rgba(20,110,245,0.22)", color: "var(--st-78)" }}>
-              <strong className="text-white">Kết luận tổng quan:</strong> TikTok Shop có phí hoa hồng <em>cao hơn</em> Shopee 1-3% ở hầu hết ngành. Bù lại, TikTok có sức mạnh live commerce và content viral mà Shopee không có. Quyết định "sàn nào tốt hơn" phụ thuộc <em>sản phẩm, ngành hàng, kênh traffic chính</em> - dùng tool ở trên để test với case cụ thể của bạn.
+              <strong className="text-white">Kết luận tổng quan:</strong> TikTok Shop có Phí hoa hồng <em>cao hơn</em> Phí cố định Shopee 1-3% ở hầu hết ngành. Shopee Mall còn cộng thêm <strong className="text-white">DVHT 1%</strong> (Non-Mall không bị). Bù lại, TikTok có sức mạnh live commerce và content viral mà Shopee không có. Quyết định "sàn nào tốt hơn" phụ thuộc <em>sản phẩm, ngành hàng, kênh traffic chính</em> - dùng tool ở trên để test với case cụ thể của bạn.
             </div>
           </div>
         </section>
@@ -304,7 +305,7 @@ export default function Page() {
                 <ul className="space-y-2.5 text-[0.92rem]" style={{ color: "var(--ink-soft)" }}>
                   <li>• Brand đã có nhận diện, đăng ký giấy phép kinh doanh đầy đủ</li>
                   <li>• GMV ổn định &gt; 200tr/tháng</li>
-                  <li>• Margin gross còn &gt; 20% sau khi trừ phí hoa hồng cao hơn</li>
+                  <li>• Margin gross còn &gt; 20% sau khi trừ phí sàn cao hơn (Shopee Mall thêm DVHT 1%)</li>
                   <li>• Chiến lược dài hạn: build trust, tham gia campaign lớn của sàn</li>
                   <li>• Sản phẩm có giá trị / cao cấp (Beauty cao cấp, Electronics, Fashion brand)</li>
                 </ul>
@@ -331,14 +332,15 @@ export default function Page() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
-                { t: "Phí hoa hồng nền tảng", d: "Phí % sàn lấy trên giá sản phẩm sau khi trừ voucher của seller. Tuỳ ngành hàng cấp 3, dao động 7-18%. Mall thường cao hơn Non-Mall 3-5%." },
+                { t: "Phí hoa hồng (TikTok) / Phí cố định (Shopee)", d: "Phí % sàn lấy trên giá sản phẩm sau khi trừ voucher của seller. TikTok gọi tên 'Phí hoa hồng', Shopee gọi tên 'Phí cố định' - bản chất giống nhau. Tuỳ ngành hàng cấp 3, dao động 7-18%. Mall thường cao hơn Non-Mall 3-5%." },
+                { t: "Duy trì hiển thị (DVHT) - Shopee Mall", d: "Phí riêng của Shopee áp dụng từ 29/05/2026, CHỈ cho shop Mall. Tự động trích 1% doanh thu mỗi đơn (chuẩn) hoặc 1-50% (linh hoạt) để nạp ads bảo trì hiển thị gian hàng. Shopee Non-Mall không bị phí này." },
                 { t: "Phí giao dịch", d: "Phí 6% (cả TikTok và Shopee) tính trên giá thực buyer pay đến tay sàn = (Giá bán + Phí ship buyer trả - Voucher seller)." },
                 { t: "Phí xử lý đơn / Phí cơ sở hạ tầng", d: "Phí cố định 3.000đ/đơn. TikTok gọi là 'Phí xử lý đơn', Shopee gọi là 'Phí cơ sở hạ tầng'." },
                 { t: "Voucher Extra", d: "Gói voucher do sàn tài trợ, seller đăng ký để có thêm voucher giảm giá cho buyer. Phí 4% giá sản phẩm (cap 50.000đ/SP). Có ở cả TikTok và Shopee." },
                 { t: "Voucher Extra Plus (TikTok)", d: "Gói nâng cấp của Voucher Extra - 5.5% (cap 80.000đ). Có nhiều voucher độc quyền + ưu tiên hiển thị. Chỉ chọn 1 trong 2 (không cộng dồn)." },
                 { t: "SFR - Bồi hoàn vận chuyển (TikTok)", d: "Dịch vụ TikTok thay seller xử lý bồi hoàn phí ship cho buyer khi có vấn đề. Phí 1.620đ/đơn - đăng ký." },
                 { t: "Pi Ship (Shopee)", d: "Dịch vụ vận chuyển nội bộ của Shopee. Phí 2.700đ/đơn từ 23/05/2026 - đăng ký. Rate ship rẻ hơn ngoài, tích hợp sâu Seller Center." },
-                { t: "Doanh thu thực", d: "Tiền seller thực sự nhận = Giá bán − Voucher seller. Đây là cơ sở tính phí hoa hồng." },
+                { t: "Doanh thu thực", d: "Tiền seller thực sự nhận = Giá bán − Voucher seller. Đây là cơ sở tính phí sàn (hoa hồng TikTok / cố định Shopee)." },
                 { t: "COGS - Cost of Goods Sold", d: "Giá vốn của sản phẩm. Tính trực tiếp vào lợi nhuận, không liên quan phí sàn." },
                 { t: "Margin (% lợi nhuận)", d: "Tỷ lệ lợi nhuận trên giá bán. Margin tối thiểu nên đạt 10% - dưới đó dễ âm khi có biến động phí hoặc cost ads." },
               ].map((g, i) => (
@@ -359,7 +361,7 @@ export default function Page() {
 
             <div className="space-y-4">
               {[
-                { n: "01", t: "Đặt đúng ngành cấp 3", d: "Sai cấp 3 có thể khiến phí hoa hồng cao hơn 2-3%. Vào Seller Center kiểm tra lại danh mục - đôi khi 1 sản phẩm có thể đặt vào 2-3 ngành cấp 3 khác nhau, chọn ngành có phí thấp nhất nhưng vẫn liên quan." },
+                { n: "01", t: "Đặt đúng ngành cấp 3", d: "Sai cấp 3 có thể khiến phí sàn cao hơn 2-3% (TikTok: hoa hồng / Shopee: cố định). Vào Seller Center kiểm tra lại danh mục - đôi khi 1 sản phẩm có thể đặt vào 2-3 ngành cấp 3 khác nhau, chọn ngành có phí thấp nhất nhưng vẫn liên quan." },
                 { n: "02", t: "Cân nhắc voucher seller - không cần áp đại trà", d: "Voucher seller giảm doanh thu thực, không phải chiêu thức tăng GMV. Chỉ áp dụng khi sản phẩm có volume hoá đơn, hoặc kèm điều kiện (đơn từ X tiền). Tính toán margin sau voucher trước khi tung." },
                 { n: "03", t: "Test Mall vs Non-Mall với case cụ thể", d: "Đừng nghe bảo Mall lúc nào cũng tốt hơn. Với SP giá thấp hoặc margin sát, Mall ăn hết lãi. Dùng tool này test 4 cột - chỉ đăng ký Mall khi profit Mall vẫn > Non-Mall + đủ buffer." },
                 { n: "04", t: "Đăng ký Voucher Extra Plus thay vì Extra (TikTok)", d: "Cap 80k > cap 50k, % chỉ cao hơn 1.5%. Với SP giá > 1.5tr, Plus về mặt phí không khác Extra nhiều nhưng được ưu tiên hiển thị + nhiều voucher độc quyền." },
@@ -385,7 +387,7 @@ export default function Page() {
 
             <div className="space-y-4">
               <div className="rounded-xl p-5" style={{ background: "rgba(20,110,245,0.06)", border: "1px solid rgba(20,110,245,0.22)" }}>
-                <div className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] mb-2" style={{ color: "#9bb6ff" }}>1. Phí hoa hồng nền tảng</div>
+                <div className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] mb-2" style={{ color: "#9bb6ff" }}>1. Phí hoa hồng (TikTok) / Phí cố định (Shopee)</div>
                 <code className="text-[0.95rem] block" style={{ color: "var(--st-85)" }}>
                   Phí HH = (Giá bán − Voucher seller) × % theo ngành
                 </code>
