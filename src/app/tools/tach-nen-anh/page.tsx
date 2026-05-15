@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import GradientBlobs from "@/components/GradientBlobs";
 
 export const dynamic = "force-dynamic";
 
@@ -13,7 +14,8 @@ export default function Page() {
     <>
       <Navbar />
       <main style={{ padding: 40, color: "#fff", background: "#000", minHeight: "100vh", marginTop: 80 }}>
-        <h1>Test - Navbar + Footer</h1>
+        <GradientBlobs />
+        <h1>Test - Navbar + Footer + GradientBlobs</h1>
       </main>
       <Footer />
     </>
