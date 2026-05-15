@@ -274,7 +274,7 @@ export const PLATFORM_CONFIG = {
     txnRate: 6,
     perOrderFee: 3000,
     voucherExtraOptions: { rate: 5.5, cap: 50000 }, // updated 23/05/2026: 4% -> 5.5%
-    piShip: 2700, // updated 23/05/2026: 1620 -> 2700
+    piShip: 1600, // Non-Mall vẫn giữ 1.600đ - chưa tăng
     // Non-Mall KHÔNG áp DVHT
   },
   shopeeMall: {
@@ -285,7 +285,7 @@ export const PLATFORM_CONFIG = {
     txnRate: 6,
     perOrderFee: 3000,
     voucherExtraOptions: { rate: 5.5, cap: 50000 }, // updated 23/05/2026: 4% -> 5.5%
-    piShip: 2700, // updated 23/05/2026: 1620 -> 2700
+    piShip: 2700, // Mall tăng 1.600đ -> 2.700đ từ 23/05/2026
     duyTriHienThiDefault: 1, // % - DVHT chỉ áp Mall từ 29/05/2026, default 1% bắt buộc
   },
 } as const;

@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     "công cụ tính phí sàn", "tính lợi nhuận sàn tmđt",
     "phí shopee tháng 5 2026", "shopee tăng phí 2026",
     "tiktok shop hay shopee", "shopee mall có nên đăng ký",
-    "voucher extra shopee 5.5%", "pi ship shopee 2700đ", "sfr tiktok",
+    "voucher extra shopee 5.5%", "pi ship shopee 1600 2700", "sfr tiktok",
     "phí giao dịch shopee", "phí giao dịch tiktok shop",
     "tính margin shop tmđt", "p&l shopee", "p&l tiktok shop",
   ],
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "vi_VN",
     title: "Tính phí sàn TikTok Shop & Shopee 2026 - Cập nhật 29/05/2026",
-    description: "Phí hoa hồng theo ngành cập nhật 29/05/2026. So sánh Mall vs Non-Mall TikTok Shop & Shopee đồng thời. Có voucher extra 5.5%, pi ship 2.700đ, sfr. Miễn phí.",
+    description: "Phí hoa hồng theo ngành cập nhật 29/05/2026. So sánh Mall vs Non-Mall TikTok Shop & Shopee đồng thời. Có voucher extra 5.5%, pi ship Non-Mall 1.600đ / Mall 2.700đ, sfr. Miễn phí.",
   },
 };
 
@@ -55,7 +55,7 @@ const FAQS = [
   },
   {
     q: "Pi Ship của Shopee có hữu ích không?",
-    a: "Pi Ship là dịch vụ vận chuyển nội bộ của Shopee. Phí 2.700đ/đơn từ 23/05/2026 (tăng từ 1.620đ). Lợi: rate ship rẻ hơn ngoài, tích hợp sâu vào Seller Center, tự động cập nhật trạng thái. Nhược: phụ thuộc Shopee, ít linh động khi có vấn đề. Phù hợp shop có volume cao và ngành hàng nhỏ gọn.",
+    a: "Pi Ship là dịch vụ vận chuyển nội bộ của Shopee. Non-Mall vẫn giữ 1.600đ/đơn, Mall tăng lên 2.700đ/đơn từ 23/05/2026 (trước cùng 1.600đ). Lợi: rate ship rẻ hơn ngoài, tích hợp sâu vào Seller Center, tự động cập nhật trạng thái. Nhược: phụ thuộc Shopee, ít linh động khi có vấn đề. Phù hợp shop có volume cao và ngành hàng nhỏ gọn.",
   },
   {
     q: "Margin bao nhiêu là an toàn cho seller TMĐT?",
@@ -202,7 +202,7 @@ export default function Page() {
               Hãy <strong className="text-white">chọn ngành hàng</strong> trong tool bên dưới để có phí chính xác - kết quả mặc định chỉ là phí trung bình tham khảo.
             </div>
             <div className="flex flex-wrap gap-2">
-              {["Phí TikTok Shop 2026", "Phí Shopee Mall 29/05", "Voucher Extra Plus", "SFR", "Pi Ship 2.700đ", "P&L gian hàng"].map((tag) => (
+              {["Phí TikTok Shop 2026", "Phí Shopee Mall 29/05", "Voucher Extra Plus", "SFR", "Pi Ship 1.600-2.700đ", "P&L gian hàng"].map((tag) => (
                 <span key={tag} className="wf-badge text-[0.72rem]">{tag}</span>
               ))}
             </div>
@@ -267,7 +267,7 @@ export default function Page() {
                     { l: "Phí xử lý đơn / CSHT", v: ["3.000đ (CSHT)", "3.000đ (CSHT)", "3.000đ", "3.000đ"] },
                     { l: "Voucher Extra", v: ["5.5% (cap 50k)", "5.5% (cap 50k)", "4% (cap 50k)", "4% (cap 50k)"] },
                     { l: "Voucher Extra Plus", v: ["-", "-", "5.5% (cap 80k)", "5.5% (cap 80k)"] },
-                    { l: "SFR / Pi Ship", v: ["2.700đ Pi Ship", "2.700đ Pi Ship", "1.620đ SFR", "1.620đ SFR"] },
+                    { l: "SFR / Pi Ship", v: ["1.600đ Pi Ship", "2.700đ Pi Ship", "1.620đ SFR", "1.620đ SFR"] },
                     { l: "Áp dụng từ", v: ["08/05/2026", "08/05/2026", "09/05/2026", "09/05/2026"] },
                     {
                       l: "Tổng phí áp lên SP 500k",
@@ -339,7 +339,7 @@ export default function Page() {
                 { t: "Voucher Extra", d: "Gói voucher do sàn tài trợ, seller đăng ký để có thêm voucher giảm giá cho buyer. Phí 4% giá sản phẩm (cap 50.000đ/SP). Có ở cả TikTok và Shopee." },
                 { t: "Voucher Extra Plus (TikTok)", d: "Gói nâng cấp của Voucher Extra - 5.5% (cap 80.000đ). Có nhiều voucher độc quyền + ưu tiên hiển thị. Chỉ chọn 1 trong 2 (không cộng dồn)." },
                 { t: "SFR - Bồi hoàn vận chuyển (TikTok)", d: "Dịch vụ TikTok thay seller xử lý bồi hoàn phí ship cho buyer khi có vấn đề. Phí 1.620đ/đơn - đăng ký." },
-                { t: "Pi Ship (Shopee)", d: "Dịch vụ vận chuyển nội bộ của Shopee. Phí 2.700đ/đơn từ 23/05/2026 - đăng ký. Rate ship rẻ hơn ngoài, tích hợp sâu Seller Center." },
+                { t: "Pi Ship (Shopee)", d: "Dịch vụ vận chuyển nội bộ của Shopee. Non-Mall 1.600đ/đơn (giữ nguyên), Mall 2.700đ/đơn (tăng từ 23/05/2026). Tự động đăng ký. Rate ship rẻ hơn ngoài, tích hợp sâu Seller Center." },
                 { t: "Doanh thu thực", d: "Tiền seller thực sự nhận = Giá bán − Voucher seller. Đây là cơ sở tính phí sàn (hoa hồng TikTok / cố định Shopee)." },
                 { t: "COGS - Cost of Goods Sold", d: "Giá vốn của sản phẩm. Tính trực tiếp vào lợi nhuận, không liên quan phí sàn." },
                 { t: "Margin (% lợi nhuận)", d: "Tỷ lệ lợi nhuận trên giá bán. Margin tối thiểu nên đạt 10% - dưới đó dễ âm khi có biến động phí hoặc cost ads." },
