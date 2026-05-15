@@ -106,19 +106,24 @@ Avoid: photorealistic, painted, hand-drawn sketch style, cluttered composition, 
 
 const MODEL = args.model || "gpt-image-1";
 const QUALITY = args.quality || "medium"; // low | medium | high
-const COST_PER_IMG = QUALITY === "low" ? 0.011 : QUALITY === "high" ? 0.167 : 0.042;
+const SIZE = args.size || "1536x1024";    // 1024x1024 | 1536x1024 (landscape) | 1024x1536
+// Pricing (gpt-image-1):
+// 1024x1024: low=$0.011 medium=$0.042 high=$0.167
+// 1536x1024: low=$0.016 medium=$0.063 high=$0.25
+const COST_TABLE = {
+  "1024x1024": { low: 0.011, medium: 0.042, high: 0.167 },
+  "1536x1024": { low: 0.016, medium: 0.063, high: 0.25 },
+  "1024x1536": { low: 0.016, medium: 0.063, high: 0.25 },
+};
+const COST_PER_IMG = COST_TABLE[SIZE]?.[QUALITY] || 0.063;
 
 async function generateImage(prompt) {
+  const reqBody = { model: MODEL, prompt: prompt.slice(0, 4000), size: SIZE, quality: QUALITY, n: 1 };
+  if (process.env.DEBUG) console.log("\n   [DEBUG req]", JSON.stringify({ ...reqBody, prompt: reqBody.prompt.slice(0,50)+"..." }));
   const res = await fetch("https://api.openai.com/v1/images/generations", {
     method: "POST",
     headers: { "Authorization": `Bearer ${OPENAI_KEY}`, "Content-Type": "application/json" },
-    body: JSON.stringify({
-      model: MODEL,
-      prompt: prompt.slice(0, 4000),
-      size: "1024x1024",
-      quality: QUALITY,
-      n: 1,
-    }),
+    body: JSON.stringify(reqBody),
   });
   if (!res.ok) {
     const err = await res.text();
@@ -126,11 +131,17 @@ async function generateImage(prompt) {
   }
   const data = await res.json();
   const item = data.data[0];
-  if (item.b64_json) return Buffer.from(item.b64_json, "base64");
+  if (item.b64_json) {
+    const buf = Buffer.from(item.b64_json, "base64");
+    if (process.env.DEBUG) console.log(`   [DEBUG resp] b64 buffer size: ${buf.length} bytes`);
+    return buf;
+  }
   if (item.url) {
     const imgRes = await fetch(item.url);
     if (!imgRes.ok) throw new Error(`Download image failed: ${imgRes.status}`);
-    return Buffer.from(await imgRes.arrayBuffer());
+    const buf = Buffer.from(await imgRes.arrayBuffer());
+    if (process.env.DEBUG) console.log(`   [DEBUG resp] url buffer size: ${buf.length} bytes`);
+    return buf;
   }
   throw new Error("OpenAI returned neither url nor b64_json");
 }
@@ -166,7 +177,7 @@ async function main() {
   console.log("\n🎨 AI Cover Generator");
   console.log("══════════════════════════════════════════════════════════");
   console.log(`Site:    ${SITE}`);
-  console.log(`Model:   ${MODEL} · quality=${QUALITY} · 1024x1024 · ~$${COST_PER_IMG}/img`);
+  console.log(`Model:   ${MODEL} · quality=${QUALITY} · size=${SIZE} · ~$${COST_PER_IMG}/img`);
   console.log(`Auth:    cookie admin_session=${ADMIN_SECRET.slice(0,4)}...`);
 
   console.log("\nFetching posts missing covers...");
