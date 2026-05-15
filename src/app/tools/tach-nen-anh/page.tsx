@@ -6,6 +6,11 @@ import RemoveBgClient from "./RemoveBgClient";
 const SITE = "https://www.nguyenducquang.website";
 const PAGE = `${SITE}/tools/tach-nen-anh`;
 
+// Skip static generation - render at request time to avoid prerender error
+// caused by dynamic import of heavy client component (Transformers.js / WebGPU).
+// SEO still works: Googlebot gets the rendered HTML response.
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Tách nền ảnh AI miễn phí - Xoá nền ảnh sản phẩm online",
   description:
