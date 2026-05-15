@@ -55,6 +55,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // cv-builder hidden from nav, kept indexable but lower priority
     { url: `${baseUrl}/tools/cv-builder`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
     { url: `${baseUrl}/tools/tinh-phi-san`, lastModified: new Date("2026-05-29"), changeFrequency: "weekly", priority: 0.95 },
+    { url: `${baseUrl}/tools/tach-nen-anh`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.92 },
     { url: `${baseUrl}/tools/roas-calculator`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.88 },
     { url: `${baseUrl}/tools/pnl-ecom`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.88 },
     { url: `${baseUrl}/tools/tinh-thue-tncn`, lastModified: new Date("2026-01-01"), changeFrequency: "monthly", priority: 0.93 },

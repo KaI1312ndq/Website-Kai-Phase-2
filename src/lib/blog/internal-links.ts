@@ -48,6 +48,16 @@ const TOOLS: Array<LinkSuggestion & { categories: string[]; tagKeywords: string[
     categories: ["ecom", "shopee", "tiktok", "performance", "Unit Economics", "unit economics"],
     tagKeywords: ["p&l", "pl", "lãi", "lợi nhuận", "profit", "ebitda", "margin", "contribution", "phi san", "unit economics"],
   },
+  {
+    type: "tool",
+    href: "/tools/tach-nen-anh",
+    title: "Tách nền ảnh AI - Free 5 ảnh/ngày",
+    description: "Xoá nền ảnh sản phẩm Shopee/TikTok bằng AI - 5 ảnh free, batch 10, không cần đăng ký.",
+    iconName: "image",
+    color: "#ff7ad9",
+    categories: ["ecom", "shopee", "tiktok", "performance", "tmdt-co-ban"],
+    tagKeywords: ["ảnh", "anh san pham", "shopee", "tiktok", "listing", "ảnh chính", "content", "thumbnail"],
+  },
 ];
 
 const QUIZZES: Array<LinkSuggestion & { categories: string[]; tagKeywords: string[] }> = [

@@ -124,6 +124,12 @@ const links: NavLink[] = [
         badge: "Mới",
       },
       {
+        label: "Tách nền ảnh AI",
+        desc: "Xoá nền ảnh sản phẩm Shopee/TikTok bằng AI - 5 ảnh free/ngày",
+        href: "/tools/tach-nen-anh",
+        badge: "Mới",
+      },
+      {
         label: "ROAS Calculator",
         desc: "Tính break-even ROAS & target ROAS theo phí sàn 2026",
         href: "/tools/roas-calculator",

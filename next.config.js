@@ -32,6 +32,17 @@ const nextConfig = {
   // Compression + perf
   compress: true,
   poweredByHeader: false,
+  // Transformers.js / ONNX runtime - tránh resolve sharp/onnxruntime-node trong browser bundle
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...(config.resolve.fallback || {}),
+        fs: false, path: false, sharp: false,
+        "onnxruntime-node": false,
+      };
+    }
+    return config;
+  },
 };
 
 module.exports = nextConfig;
