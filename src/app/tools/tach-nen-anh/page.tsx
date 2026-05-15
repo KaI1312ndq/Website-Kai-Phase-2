@@ -1,3 +1,7 @@
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import GradientBlobs from "@/components/GradientBlobs";
+
 export const dynamic = "force-dynamic";
 
 export const metadata = {
@@ -7,9 +11,13 @@ export const metadata = {
 
 export default function Page() {
   return (
-    <main style={{ padding: 40, color: "#fff", background: "#000", minHeight: "100vh" }}>
-      <h1>Test page - no imports</h1>
-      <p>If this renders, problem is in imports (Navbar/Footer/GradientBlobs/RemoveBgClient).</p>
-    </main>
+    <>
+      <Navbar />
+      <main style={{ padding: 40, color: "#fff", background: "var(--bg-base)", minHeight: "100vh" }}>
+        <GradientBlobs />
+        <h1>Test - Navbar/Footer/Blobs loaded, no RemoveBgClient</h1>
+      </main>
+      <Footer />
+    </>
   );
 }
