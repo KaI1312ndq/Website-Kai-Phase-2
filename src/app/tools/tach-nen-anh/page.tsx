@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import GradientBlobs from "@/components/GradientBlobs";
-import RemoveBg from "./RemoveBg";
+import RemoveBgClient from "./RemoveBgClient";
 
 const SITE = "https://www.nguyenducquang.website";
 const PAGE = `${SITE}/tools/tach-nen-anh`;
@@ -132,7 +132,7 @@ export default function Page() {
         {/* TOOL */}
         <section className="relative">
           <div className="max-w-[1100px] mx-auto px-6 md:px-10 py-10 md:py-14">
-            <RemoveBg />
+            <RemoveBgClient />
           </div>
         </section>
 
