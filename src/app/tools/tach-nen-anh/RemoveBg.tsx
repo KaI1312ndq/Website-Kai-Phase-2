@@ -85,34 +85,65 @@ export default function RemoveBg() {
   }, []);
 
   /* ─── Load AI model lazy ─── */
+  const [loadError, setLoadError] = useState<string>("");
+
+  async function tryLoadPipeline(transformers: any, opts: any) {
+    return await transformers.pipeline("image-segmentation", "briaai/RMBG-1.4", {
+      progress_callback: (data: any) => {
+        if (data.status === "progress" && typeof data.progress === "number") {
+          setModelProgress(Math.round(data.progress));
+        }
+      },
+      ...opts,
+    });
+  }
+
   async function ensureModel() {
     if (pipelineRef.current) return pipelineRef.current;
-    setModelStatus("loading"); setModelProgress(0);
+    setModelStatus("loading"); setModelProgress(0); setLoadError("");
+
+    let transformers: any;
+    try {
+      transformers = await import("@huggingface/transformers");
+    } catch (err: any) {
+      const msg = `Không tải được Transformers.js: ${err?.message || err}`;
+      console.error("[Transformers import]", err);
+      setLoadError(msg); setModelStatus("error"); throw err;
+    }
 
     try {
-      const transformers = await import("@huggingface/transformers");
-      // @ts-ignore - browser-only flag
       transformers.env.allowLocalModels = false;
-      // @ts-ignore
       transformers.env.useBrowserCache = true;
+    } catch {}
 
-      const pipeline = transformers.pipeline;
-      const pipe = await pipeline("image-segmentation", "briaai/RMBG-1.4", {
-        device: device === "webgpu" ? "webgpu" : "wasm",
-        progress_callback: (data: any) => {
-          if (data.status === "progress" && typeof data.progress === "number") {
-            setModelProgress(Math.round(data.progress));
-          }
-        },
-      } as any);
-      pipelineRef.current = pipe;
-      setModelStatus("ready");
-      return pipe;
-    } catch (err) {
-      console.error(err);
-      setModelStatus("error");
-      throw err;
+    // Strategy: WebGPU first if available, fallback to WASM on any failure
+    let pipe: any;
+    let lastErr: any;
+
+    if (device === "webgpu") {
+      try {
+        pipe = await tryLoadPipeline(transformers, { device: "webgpu", dtype: "fp32" });
+      } catch (err: any) {
+        console.warn("[WebGPU load failed, falling back to WASM]", err);
+        lastErr = err;
+      }
     }
+
+    if (!pipe) {
+      try {
+        pipe = await tryLoadPipeline(transformers, { device: "wasm" });
+      } catch (err: any) {
+        console.error("[WASM load also failed]", err);
+        const detail = err?.message || lastErr?.message || String(err);
+        setLoadError(`Không tải được AI model. Chi tiết: ${detail.slice(0, 200)}`);
+        setModelStatus("error");
+        throw err;
+      }
+    }
+
+    pipelineRef.current = pipe;
+    setModelStatus("ready");
+    return pipe;
   }
 
   /* ─── File handling ─── */
@@ -477,7 +508,15 @@ export default function RemoveBg() {
       )}
       {modelStatus === "error" && (
         <div className="mt-4 rounded-xl p-4" style={{ background: "rgba(255,100,100,0.08)", border: "1px solid rgba(255,100,100,0.3)", color: "#ff8888" }}>
-          Lỗi tải AI model. Thử reload trang hoặc dùng trình duyệt khác (Chrome/Edge mới nhất).
+          <div className="font-semibold mb-1">Lỗi tải AI model</div>
+          {loadError && <div className="text-[0.78rem] mb-2 font-mono break-all opacity-80">{loadError}</div>}
+          <div className="text-[0.82rem] mb-3" style={{ color: "rgba(255,255,255,0.6)" }}>
+            Thử: (1) Reload trang · (2) Tắt VPN/extension chặn fetch · (3) Dùng Chrome/Edge mới nhất · (4) Kiểm tra console (F12) xem chi tiết
+          </div>
+          <button onClick={() => { pipelineRef.current = null; setModelStatus("idle"); setLoadError(""); }}
+            style={{ padding: "6px 14px", borderRadius: 8, background: "rgba(255,100,100,0.15)", border: "1px solid rgba(255,100,100,0.4)", color: "#fff", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>
+            Thử lại
+          </button>
         </div>
       )}
 

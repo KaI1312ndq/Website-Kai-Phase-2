@@ -221,7 +221,8 @@ export function compute(i: CalcInput): CalcResult {
   const totalExtras = extras.reduce((s, e) => s + e.amount, 0);
 
   const profit = netRevenue - totalPlatformFee - totalExtras - i.cogs;
-  const marginPct = i.price > 0 ? (profit / i.price) * 100 : 0;
+  // Margin% = lợi nhuận / doanh thu thực (chuẩn ecom - không dùng giá gốc trước voucher)
+  const marginPct = netRevenue > 0 ? (profit / netRevenue) * 100 : 0;
 
   return {
     revenueGross: i.price,
