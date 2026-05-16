@@ -53,6 +53,10 @@ const IcX = (p: { size?: number }) => <Ic size={p.size} d="M18 6 6 18|M6 6l12 12
 const IcLock = (p: { size?: number }) => <Ic size={p.size} d="M5 11h14v10H5z|M8 11V7a4 4 0 0 1 8 0v4" />;
 const IcCheck = (p: { size?: number }) => <Ic size={p.size} d="M5 12l5 5L20 7" />;
 const IcChip = (p: { size?: number }) => <Ic size={p.size} d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3|M6 6h12v12H6z" />;
+const IcRefresh = (p: { size?: number }) => <Ic size={p.size} d="M3 12a9 9 0 0 1 15-6.7L21 8|M21 3v5h-5|M21 12a9 9 0 0 1-15 6.7L3 16|M3 21v-5h5" />;
+const IcEye = (p: { size?: number }) => <Ic size={p.size} d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z|" />;
+const IcInfo = (p: { size?: number }) => <Ic size={p.size} d="M12 16v-4M12 8h.01" />;
+const IcPlus = (p: { size?: number }) => <Ic size={p.size} d="M12 5v14M5 12h14" />;
 
 /* ═══════════════════════════════════════════════════════════════════ */
 
@@ -68,6 +72,7 @@ export default function RemoveBg() {
   const [todayUsed, setTodayUsed] = useState(0);
   const [showUpgrade, setShowUpgrade] = useState(false);
   const [device, setDevice] = useState<"webgpu" | "wasm" | "unknown">("unknown");
+  const [compareId, setCompareId] = useState<string | null>(null); // show original when hovering/comparing
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const pipelineRef = useRef<any>(null);
@@ -203,6 +208,52 @@ export default function RemoveBg() {
     });
     setItems([]);
   }
+
+  // Reset 1 item về idle để chạy lại (khi AI tách sai)
+  function resetItem(id: string) {
+    setItems(prev => prev.map(x => {
+      if (x.id !== id) return x;
+      if (x.resultUrl) URL.revokeObjectURL(x.resultUrl);
+      return { ...x, status: "idle", resultUrl: undefined, resultBlob: undefined, error: undefined };
+    }));
+  }
+
+  // Re-process 1 item ngay lập tức (nếu AI tách sai và muốn thử với setting khác)
+  async function retryItem(id: string) {
+    const item = items.find(x => x.id === id);
+    if (!item) return;
+    resetItem(id);
+    // Wait state update, then process this 1 item
+    setTimeout(async () => {
+      try {
+        const pipe = await ensureModel();
+        const target = { ...item, status: "idle" as const, resultUrl: undefined, resultBlob: undefined };
+        const processed = await processImage(target, pipe);
+        setItems(prev => prev.map(x => x.id === id ? processed : x));
+        if (processed.status === "done") { bumpUsage(1); setTodayUsed(prev => prev + 1); }
+      } catch {}
+    }, 50);
+  }
+
+  // Mở file picker để thêm ảnh mới (sau khi đã xong batch)
+  function addMore() { fileInputRef.current?.click(); }
+
+  // Clipboard paste handler
+  useEffect(() => {
+    function onPaste(e: ClipboardEvent) {
+      if (!e.clipboardData) return;
+      const files: File[] = [];
+      for (const item of Array.from(e.clipboardData.items)) {
+        if (item.type.startsWith("image/")) {
+          const f = item.getAsFile();
+          if (f) files.push(f);
+        }
+      }
+      if (files.length > 0) addFiles(files);
+    }
+    document.addEventListener("paste", onPaste);
+    return () => document.removeEventListener("paste", onPaste);
+  }, []);
 
   /* ─── Process one image ─── */
   async function processImage(item: ImgItem, pipe: any): Promise<ImgItem> {
@@ -423,7 +474,7 @@ export default function RemoveBg() {
           {items.length === 0 ? "Kéo thả ảnh vào đây hoặc click chọn" : `Thêm ảnh (${items.length}/${MAX_BATCH})`}
         </div>
         <div className="text-[0.82rem]" style={{ color: "var(--st-50)" }}>
-          PNG / JPG / WebP · Tối đa 12MB mỗi ảnh · Batch {MAX_BATCH} ảnh · 100% xử lý trên trình duyệt, ảnh không upload đâu cả
+          PNG / JPG / WebP · Tối đa 12MB mỗi ảnh · Batch {MAX_BATCH} ảnh · Có thể dán ảnh (Ctrl/Cmd+V) · 100% xử lý trên trình duyệt
         </div>
         <input
           ref={fileInputRef}
@@ -533,45 +584,127 @@ export default function RemoveBg() {
         </div>
       )}
 
+      {/* Completion banner - shows when all items done */}
+      {items.length > 0 && doneItems.length === items.length && !processing && (
+        <div className="mt-5 rounded-xl p-4 md:p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-3"
+          style={{ background: "linear-gradient(135deg, rgba(95,255,170,0.08), rgba(20,110,245,0.08))", border: "1px solid rgba(95,255,170,0.3)" }}>
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: "rgba(95,255,170,0.18)", color: "#5fffaa" }}>
+              <IcCheck size={18} />
+            </div>
+            <div>
+              <div className="text-[0.95rem] font-bold text-white">Đã tách xong {doneItems.length}/{items.length} ảnh</div>
+              <div className="text-[0.78rem]" style={{ color: "var(--st-55)" }}>Click ảnh để xem Before/After · Click nút ↻ trên ảnh nếu tách sai để tách lại</div>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2 w-full md:w-auto">
+            <button onClick={downloadZip} className="flex-1 md:flex-initial inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-[0.82rem] font-bold"
+              style={{ background: "rgba(95,255,170,0.15)", border: "1px solid rgba(95,255,170,0.35)", color: "#5fffaa" }}>
+              <IcDownload size={13} /> Tải tất cả .zip
+            </button>
+            <button onClick={addMore} className="flex-1 md:flex-initial inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-[0.82rem] font-bold"
+              style={{ background: "linear-gradient(135deg,#146ef5,#7a3dff)", color: "#fff" }}>
+              <IcPlus size={13} /> Tách thêm ảnh
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Tip when there are errors */}
+      {items.some(x => x.status === "error") && (
+        <div className="mt-3 rounded-xl px-4 py-3 text-[0.82rem] flex items-start gap-2"
+          style={{ background: "rgba(255,150,80,0.08)", border: "1px solid rgba(255,150,80,0.3)", color: "var(--st-65)" }}>
+          <div className="flex-shrink-0 mt-0.5" style={{ color: "#ff9f7a" }}><IcInfo size={14} /></div>
+          <div>
+            <strong className="text-white">Một số ảnh tách lỗi.</strong> Click nút <span className="inline-flex items-center mx-0.5"><IcRefresh size={11} /></span> trên ảnh để thử lại,
+            hoặc upload ảnh khác (background đơn giản hơn / chủ thể rõ ràng hơn cho AI dễ tách).
+          </div>
+        </div>
+      )}
+
       {/* Result grid */}
       {items.length > 0 && (
-        <div className="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {items.map(item => (
-            <div key={item.id} className="relative rounded-xl overflow-hidden" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
-              <div className="aspect-square relative" style={{
-                backgroundImage: item.status === "done" && bgMode === "transparent" ? "url('data:image/svg+xml,%3Csvg width=\"20\" height=\"20\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Crect width=\"10\" height=\"10\" fill=\"%23262630\"/%3E%3Crect x=\"10\" y=\"10\" width=\"10\" height=\"10\" fill=\"%23262630\"/%3E%3C/svg%3E')" : undefined,
-              }}>
-                <img src={item.resultUrl || item.originalUrl} alt="" className="w-full h-full object-contain" />
-                {item.status === "processing" && (
-                  <div className="absolute inset-0 flex items-center justify-center" style={{ background: "rgba(0,0,0,0.6)" }}>
-                    <div className="text-[0.78rem] font-bold" style={{ color: "#7da9ff" }}>Đang xử lý...</div>
-                  </div>
-                )}
-                {item.status === "error" && (
-                  <div className="absolute inset-0 flex items-center justify-center p-3" style={{ background: "rgba(0,0,0,0.7)" }}>
-                    <div className="text-[0.7rem] font-semibold text-center" style={{ color: "#ff8888" }}>{item.error}</div>
-                  </div>
-                )}
-                {item.status === "done" && (
-                  <div className="absolute top-2 right-2 w-6 h-6 rounded-full flex items-center justify-center" style={{ background: "#5fffaa", color: "#000" }}>
-                    <IcCheck size={14} />
-                  </div>
-                )}
-              </div>
-              <div className="p-2.5 flex items-center justify-between gap-2">
-                <div className="text-[0.7rem] truncate flex-1" style={{ color: "var(--st-55)" }}>{item.file.name}</div>
-                {item.status === "done" ? (
-                  <button onClick={() => downloadSingle(item)} className="flex-shrink-0 w-7 h-7 rounded flex items-center justify-center" style={{ background: "rgba(95,255,170,0.15)", color: "#5fffaa" }}>
-                    <IcDownload size={12} />
-                  </button>
-                ) : (
-                  <button onClick={() => removeItem(item.id)} className="flex-shrink-0 w-7 h-7 rounded flex items-center justify-center" style={{ background: "rgba(255,255,255,0.06)", color: "var(--st-50)" }}>
+        <div className="mt-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {items.map(item => {
+            const isDone = item.status === "done";
+            const isProcessing = item.status === "processing";
+            const isError = item.status === "error";
+            const showOriginal = compareId === item.id;
+            const showCheckerBg = isDone && bgMode === "transparent" && !showOriginal;
+            return (
+              <div key={item.id} className="relative rounded-xl overflow-hidden group" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                {/* Image area */}
+                <div
+                  className="aspect-square relative cursor-pointer select-none"
+                  style={{
+                    backgroundImage: showCheckerBg ? "url('data:image/svg+xml,%3Csvg width=\"20\" height=\"20\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Crect width=\"10\" height=\"10\" fill=\"%23262630\"/%3E%3Crect x=\"10\" y=\"10\" width=\"10\" height=\"10\" fill=\"%23262630\"/%3E%3C/svg%3E')" : undefined,
+                  }}
+                  onMouseDown={() => isDone && setCompareId(item.id)}
+                  onMouseUp={() => setCompareId(null)}
+                  onMouseLeave={() => setCompareId(null)}
+                  onTouchStart={() => isDone && setCompareId(item.id)}
+                  onTouchEnd={() => setCompareId(null)}
+                  title={isDone ? "Nhấn giữ để xem ảnh gốc (Before)" : ""}
+                >
+                  <img
+                    src={isDone && !showOriginal ? item.resultUrl : item.originalUrl}
+                    alt=""
+                    className="w-full h-full object-contain"
+                    draggable={false}
+                  />
+                  {isProcessing && (
+                    <div className="absolute inset-0 flex items-center justify-center" style={{ background: "rgba(0,0,0,0.6)" }}>
+                      <div className="text-[0.78rem] font-bold" style={{ color: "#7da9ff" }}>Đang xử lý...</div>
+                    </div>
+                  )}
+                  {isError && (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center p-3 text-center gap-2" style={{ background: "rgba(0,0,0,0.75)" }}>
+                      <div className="text-[0.7rem] font-semibold" style={{ color: "#ff8888" }}>{item.error || "Lỗi xử lý"}</div>
+                      <button onClick={(e) => { e.stopPropagation(); retryItem(item.id); }}
+                        className="inline-flex items-center gap-1 px-3 py-1 rounded text-[0.7rem] font-bold"
+                        style={{ background: "rgba(255,100,100,0.2)", border: "1px solid rgba(255,100,100,0.4)", color: "#fff" }}>
+                        <IcRefresh size={10} /> Thử lại
+                      </button>
+                    </div>
+                  )}
+                  {isDone && !showOriginal && (
+                    <div className="absolute top-2 right-2 w-6 h-6 rounded-full flex items-center justify-center" style={{ background: "#5fffaa", color: "#000" }} title="Đã xong">
+                      <IcCheck size={14} />
+                    </div>
+                  )}
+                  {isDone && showOriginal && (
+                    <div className="absolute top-2 left-2 px-2 py-0.5 rounded text-[0.65rem] font-bold" style={{ background: "rgba(0,0,0,0.7)", color: "#fff" }}>
+                      ẢNH GỐC
+                    </div>
+                  )}
+                </div>
+
+                {/* Footer with actions */}
+                <div className="p-2 flex items-center gap-1.5">
+                  <div className="text-[0.7rem] truncate flex-1 min-w-0" style={{ color: "var(--st-55)" }} title={item.file.name}>{item.file.name}</div>
+                  {isDone && (
+                    <>
+                      <button onClick={() => downloadSingle(item)} title="Tải xuống"
+                        className="flex-shrink-0 w-7 h-7 rounded flex items-center justify-center transition-colors"
+                        style={{ background: "rgba(95,255,170,0.15)", color: "#5fffaa" }}>
+                        <IcDownload size={12} />
+                      </button>
+                      <button onClick={() => retryItem(item.id)} title="Tách lại (nếu AI tách sai)"
+                        className="flex-shrink-0 w-7 h-7 rounded flex items-center justify-center transition-colors"
+                        style={{ background: "rgba(255,179,71,0.12)", color: "#ffb347" }}>
+                        <IcRefresh size={12} />
+                      </button>
+                    </>
+                  )}
+                  <button onClick={() => removeItem(item.id)} title="Xoá ảnh này"
+                    className="flex-shrink-0 w-7 h-7 rounded flex items-center justify-center transition-colors"
+                    style={{ background: "rgba(255,255,255,0.06)", color: "var(--st-50)" }}>
                     <IcX size={12} />
                   </button>
-                )}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 
