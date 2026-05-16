@@ -87,15 +87,28 @@ export default function RemoveBg() {
   /* ─── Load AI model lazy ─── */
   const [loadError, setLoadError] = useState<string>("");
 
+  // Try multiple models - Transformers.js v4 doesn't support all bg-remove models.
+  // Xenova/modnet is officially tested with Transformers.js, fast + small.
+  const MODEL_CANDIDATES = ["Xenova/modnet"];
+
   async function tryLoadPipeline(transformers: any, opts: any) {
-    return await transformers.pipeline("image-segmentation", "briaai/RMBG-1.4", {
-      progress_callback: (data: any) => {
-        if (data.status === "progress" && typeof data.progress === "number") {
-          setModelProgress(Math.round(data.progress));
-        }
-      },
-      ...opts,
-    });
+    let lastErr: any;
+    for (const modelId of MODEL_CANDIDATES) {
+      try {
+        return await transformers.pipeline("image-segmentation", modelId, {
+          progress_callback: (data: any) => {
+            if (data.status === "progress" && typeof data.progress === "number") {
+              setModelProgress(Math.round(data.progress));
+            }
+          },
+          ...opts,
+        });
+      } catch (err) {
+        console.warn(`[Model ${modelId} failed]`, err);
+        lastErr = err;
+      }
+    }
+    throw lastErr;
   }
 
   async function ensureModel() {
@@ -498,7 +511,7 @@ export default function RemoveBg() {
       {modelStatus === "loading" && (
         <div className="mt-4 rounded-xl p-4" style={{ background: "rgba(20,110,245,0.06)", border: "1px solid rgba(20,110,245,0.25)" }}>
           <div className="text-[0.82rem] mb-2" style={{ color: "var(--st-70)" }}>
-            Đang tải AI model lần đầu (~44MB)... <strong className="text-white">{modelProgress}%</strong>
+            Đang tải AI model lần đầu (~25MB)... <strong className="text-white">{modelProgress}%</strong>
           </div>
           <div className="w-full h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.08)" }}>
             <div className="h-full rounded-full transition-all" style={{ width: `${modelProgress}%`, background: "linear-gradient(90deg,#146ef5,#7a3dff)" }} />

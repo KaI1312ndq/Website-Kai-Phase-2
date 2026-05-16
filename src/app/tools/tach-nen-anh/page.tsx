@@ -38,7 +38,7 @@ const FAQS = [
   },
   {
     q: "Ảnh của tôi có bị upload lên server không?",
-    a: "KHÔNG. Tool dùng AI model chạy 100% trên trình duyệt của bạn. Ảnh chưa bao giờ rời máy tính. Đây là lý do tốc độ phụ thuộc vào máy bạn (lần đầu phải tải model 44MB, lần sau dùng cache).",
+    a: "KHÔNG. Tool dùng AI model (MODNet) chạy 100% trên trình duyệt của bạn. Ảnh chưa bao giờ rời máy tính. Đây là lý do tốc độ phụ thuộc vào máy bạn (lần đầu phải tải model ~25MB, lần sau dùng cache).",
   },
   {
     q: "Chất lượng tách nền có tốt bằng remove.bg không?",
