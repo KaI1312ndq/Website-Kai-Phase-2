@@ -19,7 +19,7 @@ type ImgItem = {
 /* ─── Constants ────────────────────────────────────────────────────── */
 const MAX_FILE_SIZE = 12 * 1024 * 1024; // 12MB
 const MAX_BATCH = 10;
-const FREE_DAILY_LIMIT = 5;
+const FREE_DAILY_LIMIT = 10;
 const FREE_BATCH_PER_RUN = 1;
 const STORAGE_KEY = "tach_nen_usage";
 
@@ -399,7 +399,7 @@ export default function RemoveBg() {
         </div>
         {remainingToday === 0 && (
           <button onClick={() => setShowUpgrade(true)} className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[0.78rem] font-bold" style={{ background: "linear-gradient(135deg,#146ef5,#7a3dff)", color: "#fff" }}>
-            <IcLock size={12} /> Upgrade Premium
+            <IcLock size={12} /> Mua Lifetime 19k
           </button>
         )}
       </div>
@@ -584,29 +584,25 @@ export default function RemoveBg() {
             </div>
             <div className="text-[1.3rem] font-bold text-white mb-2">Hết lượt free hôm nay</div>
             <div className="text-[0.92rem] mb-5 leading-relaxed" style={{ color: "var(--st-65)" }}>
-              Bạn đã dùng <strong className="text-white">{FREE_DAILY_LIMIT} ảnh free</strong> hôm nay. Reset 00:00 ngày mai - hoặc nâng cấp Premium để dùng không giới hạn.
+              Bạn đã dùng <strong className="text-white">{FREE_DAILY_LIMIT} ảnh free</strong> hôm nay. Reset 00:00 ngày mai - hoặc <strong className="text-white">mua 1 lần dùng vĩnh viễn</strong> chỉ <strong style={{ color: "#5fffaa" }}>19.000đ</strong>.
             </div>
 
-            <div className="rounded-xl p-4 mb-4" style={{ background: "rgba(20,110,245,0.06)", border: "1px solid rgba(20,110,245,0.25)" }}>
-              <div className="flex items-baseline justify-between mb-1">
-                <div className="text-[0.88rem] font-bold text-white">Premium - 50.000đ/tháng</div>
-                <div className="text-[0.7rem]" style={{ color: "var(--st-50)" }}>~$2</div>
+            <div className="rounded-xl p-5 mb-5" style={{ background: "linear-gradient(135deg, rgba(95,255,170,0.08), rgba(20,110,245,0.08))", border: "1px solid rgba(95,255,170,0.3)" }}>
+              <div className="flex items-baseline justify-between mb-2">
+                <div className="text-[1.05rem] font-bold" style={{ color: "#5fffaa" }}>Lifetime - 19.000đ</div>
+                <div className="text-[0.7rem]" style={{ color: "var(--st-50)" }}>1 lần · dùng mãi mãi</div>
               </div>
-              <ul className="text-[0.82rem] space-y-1" style={{ color: "var(--st-65)" }}>
+              <ul className="text-[0.86rem] space-y-1.5 mt-3" style={{ color: "var(--st-70)" }}>
                 <li>✓ Không giới hạn ảnh/ngày</li>
-                <li>✓ Batch không giới hạn (hiện free: 1 ảnh/run)</li>
+                <li>✓ Batch 10 ảnh/lần không giới hạn</li>
                 <li>✓ Ưu tiên model chất lượng cao</li>
-                <li>✓ Hỗ trợ 1-1 qua Zalo</li>
+                <li>✓ Hỗ trợ 1-1 qua Zalo khi gặp vấn đề</li>
+                <li>✓ Không phải trả thêm bao giờ</li>
               </ul>
             </div>
 
-            <div className="rounded-xl p-4 mb-5" style={{ background: "rgba(95,255,170,0.06)", border: "1px solid rgba(95,255,170,0.25)" }}>
-              <div className="text-[0.88rem] font-bold mb-1" style={{ color: "#5fffaa" }}>Lifetime - 199.000đ (1 lần)</div>
-              <div className="text-[0.78rem]" style={{ color: "var(--st-65)" }}>Tất cả features Premium · Không bao giờ phải trả lại</div>
-            </div>
-
             <a
-              href={`https://zalo.me/0868464658?body=${encodeURIComponent("Mình muốn nâng cấp Premium tool tách nền ảnh")}`}
+              href={`https://zalo.me/0868464658?body=${encodeURIComponent("Mình muốn mua Lifetime 19.000đ tool tách nền ảnh")}`}
               target="_blank"
               rel="noopener"
               className="block w-full py-3 rounded-xl text-[0.92rem] font-bold text-center mb-2"

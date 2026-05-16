@@ -125,7 +125,7 @@ const links: NavLink[] = [
       },
       {
         label: "Tách nền ảnh AI",
-        desc: "Xoá nền ảnh sản phẩm Shopee/TikTok bằng AI - 5 ảnh free/ngày",
+        desc: "Xoá nền ảnh sản phẩm Shopee/TikTok bằng AI · Free 10 ảnh/ngày · 19k lifetime",
         href: "/tools/tach-nen-anh",
         badge: "Mới",
       },

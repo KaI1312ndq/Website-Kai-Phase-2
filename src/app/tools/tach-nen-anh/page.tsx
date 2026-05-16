@@ -26,7 +26,7 @@ export const metadata = {
   openGraph: {
     type: "website",
     title: "Tách nền ảnh AI miễn phí - Xoá nền online không cần đăng ký",
-    description: "Tách nền sản phẩm Shopee/TikTok bằng AI · 5 ảnh free/ngày · Privacy 100% (chạy trên trình duyệt)",
+    description: "Tách nền sản phẩm Shopee/TikTok bằng AI · 10 ảnh free/ngày · Privacy 100% (chạy trên trình duyệt)",
     url: PAGE,
   },
 };
@@ -34,7 +34,7 @@ export const metadata = {
 const FAQS = [
   {
     q: "Tool tách nền ảnh này có tốn phí không?",
-    a: "Tool miễn phí 5 ảnh/ngày, không cần đăng ký, không watermark. Nếu cần nhiều hơn có thể nâng cấp Premium 50.000đ/tháng hoặc Lifetime 199.000đ (1 lần).",
+    a: "Tool miễn phí 10 ảnh/ngày, không cần đăng ký, không watermark. Nếu cần nhiều hơn chỉ cần nạp 1 lần 19.000đ là dùng VĨNH VIỄN, không giới hạn ảnh, không phải trả lại bao giờ.",
   },
   {
     q: "Ảnh của tôi có bị upload lên server không?",
@@ -50,7 +50,7 @@ const FAQS = [
   },
   {
     q: "Có thể xử lý hàng loạt ảnh cùng lúc không?",
-    a: "Có. Drag-drop tối đa 10 ảnh/lần, xử lý tuần tự, kết quả tải về dưới dạng .zip. Mỗi ảnh tối đa 12MB. Free 5 ảnh/ngày, Premium không giới hạn.",
+    a: "Có. Drag-drop tối đa 10 ảnh/lần, xử lý tuần tự, kết quả tải về dưới dạng .zip. Mỗi ảnh tối đa 12MB. Free 10 ảnh/ngày, Lifetime 19k không giới hạn ảnh/ngày.",
   },
   {
     q: "Nền trắng cho Shopee có chuẩn không?",
@@ -75,7 +75,7 @@ const appLd = {
   offers: { "@type": "Offer", price: 0, priceCurrency: "VND" },
   creator: { "@type": "Person", name: "Nguyễn Đức Quảng", url: SITE },
   featureList: [
-    "Tách nền ảnh AI miễn phí 5 ảnh/ngày",
+    "Tách nền ảnh AI miễn phí 10 ảnh/ngày",
     "Xử lý 100% trên trình duyệt - ảnh không upload",
     "Hỗ trợ batch 10 ảnh cùng lúc",
     "Nền trong suốt PNG / nền trắng / nền màu tuỳ chọn",
@@ -131,7 +131,7 @@ export default function Page() {
               không watermark, ảnh không upload lên server - 100% xử lý trên trình duyệt của bạn.
             </p>
             <div className="flex flex-wrap gap-2 mb-2">
-              {["Miễn phí 5 ảnh/ngày", "Không watermark", "Batch 10 ảnh", "Privacy 100%", "Nền trong suốt / trắng / màu"].map(t => (
+              {["Miễn phí 10 ảnh/ngày", "Không watermark", "Batch 10 ảnh", "Privacy 100%", "Nền trong suốt / trắng / màu"].map(t => (
                 <span key={t} className="wf-badge text-[0.72rem]">{t}</span>
               ))}
             </div>
@@ -204,13 +204,13 @@ export default function Page() {
                 </thead>
                 <tbody style={{ color: "var(--ink-soft)" }}>
                   {[
-                    ["Free tier", "5 ảnh/ngày", "1 ảnh full HD/tháng", "Hạn chế watermark"],
+                    ["Free tier", "10 ảnh/ngày", "1 ảnh full HD/tháng", "Hạn chế watermark"],
                     ["Privacy", "100% browser, ảnh không upload", "Upload server", "Upload server"],
                     ["Batch xử lý", "10 ảnh/lần (free)", "Pro $$ mới có", "Pro $$ mới có"],
                     ["Đăng ký tài khoản", "Không cần", "Có (email)", "Có (email)"],
                     ["Watermark trên free", "Không", "Output thumbnail thôi", "Có"],
                     ["Tiếng Việt", "Có", "Không", "Không"],
-                    ["Premium giá", "50k/tháng hoặc 199k lifetime", "$9/tháng (~225k)", "$13/tháng (~325k)"],
+                    ["Premium giá", "19k lifetime (1 lần)", "$9/tháng (~225k)", "$13/tháng (~325k)"],
                   ].map((row, i) => (
                     <tr key={i} style={{ borderTop: "1px solid var(--line)" }}>
                       <td className="px-4 py-3 font-semibold text-white">{row[0]}</td>

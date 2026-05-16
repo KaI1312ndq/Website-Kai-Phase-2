@@ -51,7 +51,7 @@ const TOOLS: Array<LinkSuggestion & { categories: string[]; tagKeywords: string[
   {
     type: "tool",
     href: "/tools/tach-nen-anh",
-    title: "Tách nền ảnh AI - Free 5 ảnh/ngày",
+    title: "Tách nền ảnh AI - Free 10 ảnh/ngày",
     description: "Xoá nền ảnh sản phẩm Shopee/TikTok bằng AI - 5 ảnh free, batch 10, không cần đăng ký.",
     iconName: "image",
     color: "#ff7ad9",

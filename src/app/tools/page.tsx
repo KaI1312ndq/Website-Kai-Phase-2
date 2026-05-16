@@ -54,7 +54,7 @@ const TOOLS = [
     href: "/tools/tach-nen-anh",
     badge: "Mới · AI",
     title: "Tách nền ảnh AI",
-    desc: "Xoá nền ảnh sản phẩm cho Shopee/TikTok bằng AI chạy 100% trên trình duyệt. 5 ảnh free/ngày, batch 10 ảnh, nền trong suốt/trắng/màu, crop tỷ lệ chuẩn sàn. Không upload server, không watermark.",
+    desc: "Xoá nền ảnh sản phẩm cho Shopee/TikTok bằng AI chạy 100% trên trình duyệt. Free 10 ảnh/ngày · Mua 19k lifetime dùng vĩnh viễn. Batch 10 ảnh, nền trong suốt/trắng/màu, crop tỷ lệ chuẩn sàn. Không upload server, không watermark.",
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ff7ad9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="9" cy="9" r="2" /><path d="m21 15-3-3-7 7" />
