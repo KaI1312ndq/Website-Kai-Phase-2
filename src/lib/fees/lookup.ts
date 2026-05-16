@@ -192,14 +192,16 @@ export function compute(i: CalcInput): CalcResult {
 
   const perOrder = i.perOrderFee;
 
+  // Voucher Extra / Extra+ - tính trên doanh thu thực (giá sau seller voucher),
+  // không phải giá gốc. Theo CT chính thức Shopee/TikTok 2026.
   let voucherExtra = 0;
   if (i.voucherExtra) {
-    const raw = i.price * (i.voucherExtra.rate / 100);
+    const raw = netRevenue * (i.voucherExtra.rate / 100);
     voucherExtra = i.voucherExtra.cap ? Math.min(raw, i.voucherExtra.cap) : raw;
   }
   let voucherExtraPlus = 0;
   if (i.voucherExtraPlus) {
-    const raw = i.price * (i.voucherExtraPlus.rate / 100);
+    const raw = netRevenue * (i.voucherExtraPlus.rate / 100);
     voucherExtraPlus = i.voucherExtraPlus.cap ? Math.min(raw, i.voucherExtraPlus.cap) : raw;
   }
   const piShip = i.piShip ?? 0;
