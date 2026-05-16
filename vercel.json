@@ -3,11 +3,5 @@
   "buildCommand": "next build",
   "devCommand": "next dev",
   "installCommand": "npm install",
-  "regions": ["sin1"],
-  "crons": [
-    {
-      "path": "/api/cron/daily-blogs",
-      "schedule": "0 23 * * *"
-    }
-  ]
+  "regions": ["sin1"]
 }
