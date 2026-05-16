@@ -5,9 +5,10 @@ import {
   IcSearch, IcFilter, IcSortDown, IcPlus, IcX, IcRefresh, IcDownload, IcLogout,
   IcStar, IcImage, IcUpload, IcTrash, IcCopy, IcExternal, IcEye, IcFire,
   IcTag, IcGrip, IcCheck, IcRows, IcLayoutList, IcBook, IcCamera, IcFileEdit,
-  IcPencil, IcAlertCircle, IcArrowReorder, IcPen, IcSparkles,
+  IcPencil, IcAlertCircle, IcArrowReorder, IcPen, IcSparkles, IcShare,
 } from "./Icons";
 import PostEditor from "./PostEditor";
+import ShareKit from "./ShareKit";
 
 /* ─── Types ─────────────────────────────────────────────────────────── */
 export type Post = {
@@ -328,6 +329,7 @@ export default function PostsClient({ authed }: { authed: boolean }) {
   const [showSort, setShowSort] = useState(false);
   const [bulkCat, setBulkCat] = useState("");
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
+  const [shareKitId, setShareKitId] = useState<string | null>(null);
   const [toast, setToast] = useState<{ msg: string; ok: boolean } | null>(null);
 
   const [reorderMode, setReorderMode] = useState(false);
@@ -814,6 +816,10 @@ export default function PostsClient({ authed }: { authed: boolean }) {
                             style={{ padding: "5px 8px", borderRadius: 6, background: "rgba(20,110,245,0.12)", color: "#7da9ff", border: "1px solid rgba(20,110,245,0.25)", cursor: "pointer", display: "flex", alignItems: "center", gap: 4, fontSize: 11, fontWeight: 600 }}>
                             <IcPencil size={11} /> Sửa
                           </button>
+                          <button onClick={() => setShareKitId(post._id)} title="Share Kit - caption sẵn cho mỗi nền tảng"
+                            style={{ padding: "5px 7px", borderRadius: 6, background: "rgba(95,255,170,0.1)", color: "#5fffaa", border: "1px solid rgba(95,255,170,0.25)", cursor: "pointer", display: "flex" }}>
+                            <IcShare size={12} />
+                          </button>
                           <button onClick={() => duplicatePost(post._id)} title="Nhân bản"
                             style={{ padding: "5px 7px", borderRadius: 6, background: "rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.5)", border: "1px solid rgba(255,255,255,0.08)", cursor: "pointer", display: "flex" }}>
                             <IcCopy size={12} />
@@ -892,6 +898,12 @@ export default function PostsClient({ authed }: { authed: boolean }) {
           </div>
         </div>
       )}
+
+      {/* Share Kit modal */}
+      {shareKitId && (() => {
+        const p = posts.find(x => x._id === shareKitId);
+        return p ? <ShareKit post={p} onClose={() => setShareKitId(null)} /> : null;
+      })()}
 
       {/* Editor (new + edit existing) */}
       {(editingPostId === "new" || editing) && (
