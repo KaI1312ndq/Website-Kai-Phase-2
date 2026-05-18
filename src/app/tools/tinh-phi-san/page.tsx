@@ -50,8 +50,8 @@ const FAQS = [
     a: "Phí giao dịch (6%) cả TikTok và Shopee đều tính theo công thức: (Giá bán + Phí ship buyer trả - Voucher seller) × 6%. Đây là số tiền buyer thực sự pay đến tay sàn, không phải doanh thu thực của seller. Đó là lý do tool có input 'Phí ship buyer trả' - nếu để 0 (hiểu nhầm là không tính), bạn sẽ thấy phí giao dịch thấp hơn thực tế.",
   },
   {
-    q: "SFR (Bồi hoàn vận chuyển) là gì?",
-    a: "SFR là phí TikTok Shop thu của seller khi xử lý các trường hợp bồi hoàn phí vận chuyển cho buyer (vd: hoàn đơn). Phí 1.620đ/đơn - chỉ áp dụng khi seller đăng ký gói SFR. Nếu không đăng ký, seller phải tự xử lý bồi hoàn - thường tốn thời gian hơn.",
+    q: "SFR (Shipping Fee Refund) là gì? Phí bao nhiêu?",
+    a: "SFR là phí dịch vụ TikTok Shop cho chương trình Hoàn phí vận chuyển - chỉ phát sinh khi đơn hàng giao thành công. Phí dao động từ 1.620đ đến 10.738đ/đơn, tính dựa trên Tỷ lệ Hàng Hoàn (THHT) của từng gian hàng - shop có tỷ lệ hoàn càng cao thì phí càng cao. Tool tự động dùng mức MAX 10.738đ để tính worst-case, bạn có thể kéo slider để chỉnh theo THHT thực tế của shop.",
   },
   {
     q: "Pi Ship của Shopee có hữu ích không?",
@@ -267,7 +267,7 @@ export default function Page() {
                     { l: "Phí xử lý đơn / CSHT", v: ["3.000đ (CSHT)", "3.000đ (CSHT)", "3.000đ", "3.000đ"] },
                     { l: "Voucher Extra", v: ["5.5% (cap 50k)", "5.5% (cap 50k)", "4% (cap 50k)", "4% (cap 50k)"] },
                     { l: "Voucher Extra Plus", v: ["-", "-", "5.5% (cap 80k)", "5.5% (cap 80k)"] },
-                    { l: "SFR / Pi Ship", v: ["1.600đ Pi Ship", "2.700đ Pi Ship", "1.620đ SFR", "1.620đ SFR"] },
+                    { l: "SFR / Pi Ship", v: ["1.600đ Pi Ship", "2.700đ Pi Ship", "1.620 - 10.738đ SFR (tuỳ THHT)", "1.620 - 10.738đ SFR (tuỳ THHT)"] },
                     { l: "Áp dụng từ", v: ["08/05/2026", "08/05/2026", "09/05/2026", "09/05/2026"] },
                     {
                       l: "Tổng phí áp lên SP 500k",
@@ -338,7 +338,7 @@ export default function Page() {
                 { t: "Phí xử lý đơn / Phí cơ sở hạ tầng", d: "Phí cố định 3.000đ/đơn. TikTok gọi là 'Phí xử lý đơn', Shopee gọi là 'Phí cơ sở hạ tầng'." },
                 { t: "Voucher Extra", d: "Gói voucher do sàn tài trợ, seller đăng ký để có thêm voucher giảm giá cho buyer. Phí 4% giá sản phẩm (cap 50.000đ/SP). Có ở cả TikTok và Shopee." },
                 { t: "Voucher Extra Plus (TikTok)", d: "Gói nâng cấp của Voucher Extra - 5.5% (cap 80.000đ). Có nhiều voucher độc quyền + ưu tiên hiển thị. Chỉ chọn 1 trong 2 (không cộng dồn)." },
-                { t: "SFR - Bồi hoàn vận chuyển (TikTok)", d: "Dịch vụ TikTok thay seller xử lý bồi hoàn phí ship cho buyer khi có vấn đề. Phí 1.620đ/đơn - đăng ký." },
+                { t: "SFR - Shipping Fee Refund (TikTok)", d: "Phí dịch vụ TikTok cho chương trình Hoàn phí vận chuyển. Dao động 1.620đ - 10.738đ/đơn tuỳ Tỷ lệ Hàng Hoàn (THHT) của gian hàng. Shop hoàn nhiều = phí cao. Chỉ tính khi đơn giao thành công. Cách giảm: tối ưu đóng gói, giảm hàng hoàn." },
                 { t: "Pi Ship (Shopee)", d: "Dịch vụ vận chuyển nội bộ của Shopee. Non-Mall 1.600đ/đơn (giữ nguyên), Mall 2.700đ/đơn (tăng từ 23/05/2026). Tự động đăng ký. Rate ship rẻ hơn ngoài, tích hợp sâu Seller Center." },
                 { t: "Doanh thu thực", d: "Tiền seller thực sự nhận = Giá bán − Voucher seller. Đây là cơ sở tính phí sàn (hoa hồng TikTok / cố định Shopee)." },
                 { t: "COGS - Cost of Goods Sold", d: "Giá vốn của sản phẩm. Tính trực tiếp vào lợi nhuận, không liên quan phí sàn." },

@@ -268,6 +268,10 @@ export default function Calculator() {
   // TikTok opt-ins
   const [ttVoucher, setTtVoucher] = useState<TtVoucher>("none");
   const [ttSfr, setTtSfr] = useState(false);
+  // SFR dao động 1.620 - 10.738đ tuỳ tỷ lệ hàng hoàn. Default MAX để tính worst-case.
+  const [ttSfrAmount, setTtSfrAmount] = useState(10738);
+  const SFR_MIN = 1620;
+  const SFR_MAX = 10738;
 
   // Extras
   const [extras, setExtras] = useState<ExtraCost[]>(DEFAULT_EXTRAS);
@@ -289,7 +293,7 @@ export default function Calculator() {
       : undefined;
     const vep = isTt && ttVoucher === "extraPlus" ? (cfg as any).voucherExtraPlusOptions : undefined;
     const ps = isSp && spPiShip ? (cfg as any).piShip : undefined;
-    const sfr = isTt && ttSfr ? (cfg as any).sfr : undefined;
+    const sfr = isTt && ttSfr ? ttSfrAmount : undefined;
     // DVHT CHỈ áp Shopee Mall (Non-Mall không bị) - default ON 1% khi chọn Mall
     const dvht = p === "shopeeMall" && spDuyTri ? spDuyTriRate : undefined;
 
@@ -305,7 +309,7 @@ export default function Calculator() {
         extraCosts: extras,
       }),
     };
-  }), [price, cogs, sellerVoucher, shippingBuyer, ttSelection, spSelection, ttVoucher, ttSfr, spVoucherExtra, spPiShip, spDuyTri, spDuyTriRate, extras]);
+  }), [price, cogs, sellerVoucher, shippingBuyer, ttSelection, spSelection, ttVoucher, ttSfr, ttSfrAmount, spVoucherExtra, spPiShip, spDuyTri, spDuyTriRate, extras]);
 
   const bestIdx = useMemo(() => {
     let best = 0, max = -Infinity;
@@ -487,7 +491,54 @@ export default function Calculator() {
 
             <div>
               <label className="block text-[0.78rem] font-semibold mb-2 text-white">Phí option khác <span className="font-normal" style={{ color: "var(--st-45)" }}>- đăng ký</span></label>
-              <CheckboxRow checked={ttSfr} onChange={setTtSfr} label="SFR - Bồi hoàn vận chuyển" hint="1.620đ/đơn" />
+              <div className="rounded-lg p-3" style={{ background: ttSfr ? "rgba(255,51,88,0.06)" : "rgba(255,255,255,0.03)", border: `1px solid ${ttSfr ? "rgba(255,51,88,0.25)" : "rgba(255,255,255,0.08)"}` }}>
+                <div className="flex items-start justify-between gap-3">
+                  <label className="flex items-start gap-2.5 cursor-pointer flex-1">
+                    <input type="checkbox" checked={ttSfr} onChange={(e) => setTtSfr(e.target.checked)} className="mt-0.5 w-4 h-4" style={{ accentColor: "#ff3358" }} />
+                    <div>
+                      <div className="text-[0.82rem] font-semibold text-white">SFR - Bồi hoàn vận chuyển</div>
+                      <div className="text-[0.7rem] mt-0.5" style={{ color: "var(--st-55)" }}>
+                        Dao động 1.620đ - 10.738đ/đơn tuỳ tỷ lệ hàng hoàn (THHT). Mặc định MAX để tính worst-case.
+                      </div>
+                    </div>
+                  </label>
+                </div>
+                {ttSfr && (
+                  <div className="flex items-center gap-2 mt-3 pt-3" style={{ borderTop: "1px solid rgba(255,51,88,0.18)" }}>
+                    <span className="text-[0.72rem]" style={{ color: "var(--st-60)" }}>Mức áp dụng:</span>
+                    <div className="flex items-center gap-2 flex-1">
+                      <input
+                        type="range" min={SFR_MIN} max={SFR_MAX} step={1}
+                        value={ttSfrAmount}
+                        onChange={e => setTtSfrAmount(parseInt(e.target.value) || SFR_MIN)}
+                        className="flex-1 h-1 rounded-full appearance-none"
+                        style={{
+                          background: `linear-gradient(to right, #ff3358 0%, #ff3358 ${((ttSfrAmount - SFR_MIN) / (SFR_MAX - SFR_MIN)) * 100}%, rgba(255,255,255,0.1) ${((ttSfrAmount - SFR_MIN) / (SFR_MAX - SFR_MIN)) * 100}%, rgba(255,255,255,0.1) 100%)`,
+                          accentColor: "#ff3358",
+                        }}
+                      />
+                      <input
+                        type="number" min={SFR_MIN} max={SFR_MAX} step={100}
+                        value={ttSfrAmount}
+                        onChange={e => {
+                          const v = parseInt(e.target.value) || SFR_MIN;
+                          setTtSfrAmount(Math.max(SFR_MIN, Math.min(SFR_MAX, v)));
+                        }}
+                        className="w-20 text-center text-[0.78rem] font-bold rounded py-0.5"
+                        style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,51,88,0.3)", color: "#ff8da3" }}
+                      />
+                      <span className="text-[0.72rem] font-semibold" style={{ color: "#ff8da3" }}>đ</span>
+                    </div>
+                  </div>
+                )}
+                {ttSfr && (
+                  <div className="flex items-center justify-between mt-2 text-[0.65rem]" style={{ color: "var(--st-45)" }}>
+                    <button onClick={() => setTtSfrAmount(SFR_MIN)} className="hover:underline" style={{ color: ttSfrAmount === SFR_MIN ? "#ff8da3" : "var(--st-45)" }}>Min: 1.620đ</button>
+                    <button onClick={() => setTtSfrAmount(Math.round((SFR_MIN + SFR_MAX) / 2))} className="hover:underline" style={{ color: "var(--st-45)" }}>~Mid: 6.179đ</button>
+                    <button onClick={() => setTtSfrAmount(SFR_MAX)} className="hover:underline font-semibold" style={{ color: ttSfrAmount === SFR_MAX ? "#ff8da3" : "var(--st-45)" }}>Max: 10.738đ</button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </Section>
@@ -626,7 +677,7 @@ export default function Calculator() {
                       {r.result.voucherExtra > 0 && <Row label="Voucher Extra" val={-r.result.voucherExtra} muted pct={pct(r.result.voucherExtra, price)} />}
                       {r.result.voucherExtraPlus > 0 && <Row label="Voucher Extra+" val={-r.result.voucherExtraPlus} muted pct={pct(r.result.voucherExtraPlus, price)} />}
                       {r.result.duyTriHienThi > 0 && <Row label={`Duy trì hiển thị · ${spDuyTriRate}%`} val={-r.result.duyTriHienThi} muted pct={pct(r.result.duyTriHienThi, price)} />}
-                      {r.result.sfr > 0 && <Row label="SFR" val={-r.result.sfr} muted pct={pct(r.result.sfr, price)} />}
+                      {r.result.sfr > 0 && <Row label={`SFR · ${fmt(r.result.sfr)}đ`} val={-r.result.sfr} muted pct={pct(r.result.sfr, price)} />}
                       {r.result.piShip > 0 && <Row label="Pi Ship" val={-r.result.piShip} muted pct={pct(r.result.piShip, price)} />}
                     </div>
                   </div>

@@ -256,7 +256,10 @@ export const PLATFORM_CONFIG = {
     perOrderFee: 3000,
     voucherExtraOptions: { rate: 4, cap: 50000 },
     voucherExtraPlusOptions: { rate: 5.5, cap: 80000 },
-    sfr: 1620,
+    // SFR dao động theo tỷ lệ hàng hoàn (THHT) - default = MAX cho tính worst-case
+    sfrMin: 1620,
+    sfrMax: 10738,
+    sfrDefault: 10738,
   },
   tiktokMall: {
     label: "TikTok Shop · Mall",
@@ -267,7 +270,9 @@ export const PLATFORM_CONFIG = {
     perOrderFee: 3000,
     voucherExtraOptions: { rate: 4, cap: 50000 },
     voucherExtraPlusOptions: { rate: 5.5, cap: 80000 },
-    sfr: 1620,
+    sfrMin: 1620,
+    sfrMax: 10738,
+    sfrDefault: 10738,
   },
   shopeeNonMall: {
     label: "Shopee · Non-Mall",
