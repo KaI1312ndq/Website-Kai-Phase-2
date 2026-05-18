@@ -28,8 +28,10 @@ export async function POST(req: NextRequest) {
     }
 
     // Persist application vào Supabase (luôn lưu, kể cả email gửi fail)
+    let dbSaved = false;
+    let dbError: string | null = null;
     try {
-      await getSupabaseAdmin().from("course_applications").insert({
+      const { error: insErr } = await getSupabaseAdmin().from("course_applications").insert({
         course_slug: "ecom-foundation-k1",
         name,
         email,
@@ -38,11 +40,18 @@ export async function POST(req: NextRequest) {
         experience: typeof stage === "string" ? stage : null,
         meta: { stage, hasLaptop, commit, slot },
       });
+      if (insErr) {
+        dbError = `${insErr.code || ""} ${insErr.message}`.trim();
+        console.error("[course-apply] Supabase insert error:", insErr);
+      } else {
+        dbSaved = true;
+      }
     } catch (e) {
-      console.warn("[course-apply] Supabase insert failed (non-blocking):", e);
+      dbError = e instanceof Error ? e.message : String(e);
+      console.error("[course-apply] Supabase insert exception:", e);
     }
 
-    const subject = `[Ecom Foundation · K1] Application - ${name}`;
+    const subject = `[Ecom Foundation · K1] Application - ${name}${dbSaved ? "" : " ⚠ DB-FAILED"}`;
     const fields = {
       "Họ tên": name,
       Email: email,
@@ -52,6 +61,7 @@ export async function POST(req: NextRequest) {
       "Laptop + Excel": hasLaptop === "yes" ? "Có" : hasLaptop === "no" ? "Chưa" : "-",
       "Cam kết tham dự": COMMIT[commit] || "-",
       "Slot quick meet": SLOT[slot] || slot || "-",
+      ...(dbSaved ? {} : { "⚠ DB Save": `FAILED - ${dbError || "unknown"} (backfill manually)` }),
     };
 
     let delivered = false;
