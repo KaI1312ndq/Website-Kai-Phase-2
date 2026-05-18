@@ -18,7 +18,7 @@ const IcExternal = (p: { size?: number }) => <Ic size={p.size} d="M15 3h6v6|M10 
 const IcRefresh = (p: { size?: number }) => <Ic size={p.size} d="M3 12a9 9 0 0 1 15-6.7L21 8|M21 3v5h-5|M21 12a9 9 0 0 1-15 6.7L3 16|M3 21v-5h5" />;
 
 /* ─── Types ──────────────────────────────────────────────────────── */
-type Range = 7 | 30 | 90;
+type Range = 1 | 7 | 30 | 90;
 type Data = {
   range: number;
   summary: { totalViews: number; uniqueVisitors: number; mobilePercent: number; topCountry: string };
@@ -75,18 +75,24 @@ function StatCard({ Icon, label, value, color, sub }: { Icon: any; label: string
 /* ─── Bar chart ──────────────────────────────────────────────────── */
 function BarChart({ data }: { data: { date: string; views: number }[] }) {
   const max = Math.max(...data.map(d => d.views), 1);
-  const barWidth = 100 / data.length;
+  const total = data.reduce((s, d) => s + d.views, 0);
+  // Smart label: hourly = "HH:00", daily ISO = "MM-DD"
+  const formatLabel = (raw: string) => raw.length === 5 && raw.includes(":") ? raw : raw.slice(5);
+  // Show ~6 labels evenly along x-axis to avoid clutter
+  const labelStride = Math.max(1, Math.ceil(data.length / 8));
+
   return (
-    <div style={{ width: "100%", height: 220, position: "relative" }}>
-      <svg width="100%" height="100%" viewBox={`0 0 ${data.length * 10} 100`} preserveAspectRatio="none" style={{ overflow: "visible" }}>
+    <div style={{ width: "100%", height: 240, position: "relative" }}>
+      <svg width="100%" height="200" viewBox={`0 0 ${data.length * 10} 100`} preserveAspectRatio="none" style={{ overflow: "visible" }}>
         {data.map((d, i) => {
-          const h = (d.views / max) * 95;
+          // Min visible bar 1.5px khi có views, 0 nếu không có view
+          const h = d.views > 0 ? Math.max((d.views / max) * 95, 2) : 0;
           return (
-            <g key={d.date}>
+            <g key={d.date + i}>
               <rect
                 x={i * 10 + 1} y={100 - h}
                 width={8} height={h}
-                fill="url(#barGradient)"
+                fill={d.views > 0 ? "url(#barGradient)" : "rgba(255,255,255,0.06)"}
                 rx={1}
               >
                 <title>{d.date}: {d.views.toLocaleString()} views</title>
@@ -101,10 +107,13 @@ function BarChart({ data }: { data: { date: string; views: number }[] }) {
           </linearGradient>
         </defs>
       </svg>
-      <div style={{ display: "flex", justifyContent: "space-between", marginTop: 6, fontSize: 10, color: "rgba(255,255,255,0.35)" }}>
-        <span>{data[0]?.date?.slice(5)}</span>
-        <span>{data[Math.floor(data.length / 2)]?.date?.slice(5)}</span>
-        <span>{data[data.length - 1]?.date?.slice(5)}</span>
+      <div style={{ display: "flex", marginTop: 6, fontSize: 10, color: "rgba(255,255,255,0.35)", justifyContent: "space-between", padding: "0 2px" }}>
+        {data.map((d, i) => i % labelStride === 0 || i === data.length - 1 ? (
+          <span key={i} style={{ flex: 1, textAlign: "center" }}>{formatLabel(d.date)}</span>
+        ) : null)}
+      </div>
+      <div style={{ marginTop: 8, fontSize: 11, color: "rgba(255,255,255,0.4)", textAlign: "center" }}>
+        Tổng <strong style={{ color: "#fff" }}>{total.toLocaleString()}</strong> pageviews · Peak <strong style={{ color: "#fff" }}>{max}</strong> views/{data[0]?.date?.includes(":") ? "giờ" : "ngày"}
       </div>
     </div>
   );
@@ -174,13 +183,13 @@ export default function AnalyticsClient({ authed }: { authed: boolean }) {
           <div style={{ fontSize: 17, fontWeight: 800 }}>Analytics</div>
         </div>
         <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-          {([7, 30, 90] as Range[]).map(r => (
+          {([1, 7, 30, 90] as Range[]).map(r => (
             <button key={r} onClick={() => setRange(r)}
               style={{ padding: "6px 14px", borderRadius: 8, fontSize: 12.5, fontWeight: 600, cursor: "pointer",
                 background: range === r ? "rgba(20,110,245,0.2)" : "rgba(255,255,255,0.04)",
                 color: range === r ? "#7da9ff" : "rgba(255,255,255,0.6)",
                 border: `1px solid ${range === r ? "#146ef5" : "rgba(255,255,255,0.08)"}`,
-              }}>{r} ngày</button>
+              }}>{r === 1 ? "24 giờ" : `${r} ngày`}</button>
           ))}
           <button onClick={load} title="Reload" style={{ padding: 7, borderRadius: 8, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.7)", cursor: "pointer", display: "flex", marginLeft: 4 }}>
             <IcRefresh size={13} />
@@ -197,7 +206,7 @@ export default function AnalyticsClient({ authed }: { authed: boolean }) {
           <>
             {/* Summary cards */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 12, marginBottom: 24 }}>
-              <StatCard Icon={IcEye} label={`Pageviews (${range} ngày)`} value={data.summary.totalViews.toLocaleString()} color="#5fffaa" />
+              <StatCard Icon={IcEye} label={`Pageviews (${range === 1 ? "24 giờ" : range + " ngày"})`} value={data.summary.totalViews.toLocaleString()} color="#5fffaa" />
               <StatCard Icon={IcUsers} label="Unique visitors" value={data.summary.uniqueVisitors.toLocaleString()} color="#7da9ff"
                 sub={data.summary.uniqueVisitors > 0 ? `${(data.summary.totalViews / data.summary.uniqueVisitors).toFixed(1)} views/visitor` : ""} />
               <StatCard Icon={IcPhone} label="Mobile" value={`${data.summary.mobilePercent}%`} color="#ff7ad9"
@@ -208,7 +217,7 @@ export default function AnalyticsClient({ authed }: { authed: boolean }) {
             {/* Daily traffic */}
             <div style={{ padding: 20, borderRadius: 14, background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", marginBottom: 16 }}>
               <div style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.45)", marginBottom: 14, textTransform: "uppercase", letterSpacing: "0.1em" }}>
-                Pageviews theo ngày
+                {range === 1 ? "Pageviews theo giờ (24h gần nhất, giờ VN)" : "Pageviews theo ngày"}
               </div>
               <BarChart data={data.daily} />
             </div>

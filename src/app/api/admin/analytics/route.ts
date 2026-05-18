@@ -22,7 +22,9 @@ function isAuthed(req: NextRequest) {
 export async function GET(req: NextRequest) {
   if (!isAuthed(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
+  // range = 1 -> hourly bucket (24h), > 1 -> daily bucket (7/30/90 ngày)
   const rangeDays = Math.min(90, Math.max(1, parseInt(req.nextUrl.searchParams.get("range") || "30")));
+  const hourly = rangeDays === 1;
   const since = new Date(Date.now() - rangeDays * 86400000).toISOString();
 
   try {
@@ -43,19 +45,43 @@ export async function GET(req: NextRequest) {
     const mobile = rows.filter(r => r.device === "mobile").length;
     const mobilePercent = totalViews > 0 ? Math.round((mobile / totalViews) * 100) : 0;
 
-    // Daily buckets
-    const dayMap = new Map<string, number>();
-    for (let d = 0; d < rangeDays; d++) {
-      const day = new Date(Date.now() - d * 86400000).toISOString().slice(0, 10);
-      dayMap.set(day, 0);
+    // Time buckets - hourly (24 bars) hoặc daily (rangeDays bars)
+    const buckets = new Map<string, number>();
+    const now = Date.now();
+    if (hourly) {
+      // 24 buckets: each hour from (now - 24h) to now. Label = "HH:00" trong Asia/Ho_Chi_Minh (UTC+7)
+      for (let h = 23; h >= 0; h--) {
+        const t = new Date(now - h * 3600000);
+        // Format key as ISO hour (UTC), display as VN hour
+        const key = t.toISOString().slice(0, 13); // "2026-05-18T15"
+        buckets.set(key, 0);
+      }
+      rows.forEach(r => {
+        const key = (r.created_at as string).slice(0, 13);
+        if (buckets.has(key)) buckets.set(key, (buckets.get(key) || 0) + 1);
+      });
+    } else {
+      for (let d = rangeDays - 1; d >= 0; d--) {
+        const day = new Date(now - d * 86400000).toISOString().slice(0, 10);
+        buckets.set(day, 0);
+      }
+      rows.forEach(r => {
+        const day = (r.created_at as string).slice(0, 10);
+        if (buckets.has(day)) buckets.set(day, (buckets.get(day) || 0) + 1);
+      });
     }
-    rows.forEach(r => {
-      const day = (r.created_at as string).slice(0, 10);
-      if (dayMap.has(day)) dayMap.set(day, (dayMap.get(day) || 0) + 1);
-    });
-    const daily = Array.from(dayMap.entries())
-      .map(([date, views]) => ({ date, views }))
-      .sort((a, b) => a.date.localeCompare(b.date));
+    const daily = Array.from(buckets.entries())
+      .map(([key, views]) => {
+        if (hourly) {
+          // "2026-05-18T15" -> +7h cho VN -> "22:00 (18/5)"
+          const d = new Date(key + ":00:00Z");
+          const vnHour = (d.getUTCHours() + 7) % 24;
+          const label = `${String(vnHour).padStart(2, "0")}:00`;
+          return { date: label, views, _key: key };
+        }
+        return { date: key, views, _key: key };
+      })
+      .sort((a, b) => a._key.localeCompare(b._key));
 
     // Top paths
     const pathMap = new Map<string, number>();
