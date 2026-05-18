@@ -640,6 +640,9 @@ export default function PostsClient({ authed }: { authed: boolean }) {
           <button onClick={() => setEditingPostId("new")} style={{ padding: "8px 16px", borderRadius: 10, background: "linear-gradient(135deg,#146ef5,#7a3dff)", color: "#fff", fontWeight: 700, fontSize: 13, border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }}>
             <IcPlus size={14} /> Bài mới
           </button>
+          <a href="/admin/analytics" title="Analytics" style={{ ...btn, padding: "7px 12px", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}>
+            <IcEye size={14} /> Analytics
+          </a>
           <button onClick={loadPosts} title="Làm mới" style={{ ...btn, padding: "7px 9px" }}><IcRefresh size={14} /></button>
           <button onClick={logout} title="Đăng xuất" style={{ padding: "7px 11px", borderRadius: 9, background: "rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.45)", border: "1px solid rgba(255,255,255,0.08)", cursor: "pointer", display: "flex", alignItems: "center", gap: 6, fontSize: 12 }}><IcLogout size={13} /> Thoát</button>
         </div>
