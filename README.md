@@ -59,6 +59,7 @@ Personal brand site cho **Nguyễn Đức Quảng** (Ecom Growth Expert · 60+ p
     │   ├── sitemap.ts                   # Auto sitemap (posts + categories + quiz + tools)
     │   │
     │   ├── ecom-foundation/             # Khoá học landing
+    │   │   └── lo-trinh/                # Lộ trình đào tạo chi tiết (data: src/lib/training-roadmap.ts)
     │   ├── courses/ + resources/        # Khoá học hub + Tài nguyên hub
     │   │
     │   ├── tools/
@@ -156,6 +157,7 @@ Personal brand site cho **Nguyễn Đức Quảng** (Ecom Growth Expert · 60+ p
 |---|---|---|
 | `/` | Static | Homepage (Hero + 11 sections + 85 brands marquee) |
 | `/ecom-foundation` | Static | Khoá học landing |
+| `/ecom-foundation/lo-trinh` | Static | Lộ trình đào tạo chi tiết: 5 phase, 12 buổi (mục tiêu/pre-read/workshop/bài tập), 3 checkpoint, skill matrix S0-S4, chấm điểm, 3 tháng mentoring |
 | `/courses`, `/resources` | Static | Hub khoá học + tài nguyên |
 | **`/tools`** + 4 tool pages | Static | Phí sàn, ROAS, P&L, TNCN 2026 |
 | **`/quiz`** | Static | Hub với 4 section grouped + quick-jump |

@@ -414,6 +414,17 @@ function CurriculumSection() {
             );
           })}
         </div>
+
+        <Reveal delay={0.1}>
+          <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-4 rounded-xl p-5" style={{ background: "rgba(20,110,245,0.08)", border: "1px solid rgba(20,110,245,0.25)" }}>
+            <p className="flex-1 text-[0.9rem]" style={{ color: "var(--st-78)" }}>
+              Xem mục tiêu, bài tập, checkpoint, skill matrix và cách chấm điểm tốt nghiệp của từng buổi.
+            </p>
+            <Link href="/ecom-foundation/lo-trinh" className="btn btn-primary flex-shrink-0">
+              Lộ trình đào tạo chi tiết
+            </Link>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
